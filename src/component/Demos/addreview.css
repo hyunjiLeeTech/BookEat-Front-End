@@ -1,0 +1,11 @@
+form{
+    width: 60%;
+}
+
+form div{
+    margin:5%;
+}
+
+form div p{
+    font-size: 2rem;
+}

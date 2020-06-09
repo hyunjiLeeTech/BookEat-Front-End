@@ -1,0 +1,25 @@
+#top-banner{
+    display: flex;justify-content: space-around;
+
+}
+
+#title{
+    font-size: 2rem;
+    font-weight: bolder;
+}
+
+.ReviewItem{
+
+    border-radius: 3px;
+    margin: 0%;
+}
+
+.ReviewItem .inner-wrapper{
+    margin:5%;
+    border: grey 1px solid;
+}
+
+.ReviewItem .inner-wrapper #foodPic{
+    width: 100%;
+    height: auto;
+}
