@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import MainContainer from '../Style/MainContainer'
 import './SignUp.css'
-
+import jQuery from 'jquery';
+import Axios from 'axios';
 
 class SignUp extends Component {
   constructor(props) {
@@ -32,9 +33,19 @@ class SignUp extends Component {
     console.log(this.state);
   }
 
+  componentDidMount(){
+    var $ = jQuery;
+    Axios.get("http://localhost:3001/ex").then(res=>{
+      $("#fromserver").text(res.data.answer);
+    })
+  }
+
   render() {
     return (
       <MainContainer>
+        <div>
+          <p id="fromserver">place holder</p>
+        </div>
         <div class="container">
           <div class="page-header">
             <h1>Welcome to BookEat!</h1>
