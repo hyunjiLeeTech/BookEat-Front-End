@@ -35,8 +35,8 @@ class SignUp extends Component {
   render() {
     return (
       <MainContainer>
-        <div class="container">
-          <div class="page-header">
+        <div className="container">
+          <div className="page-header">
             <h1>Welcome to BookEat!</h1>
           </div>
         </div>

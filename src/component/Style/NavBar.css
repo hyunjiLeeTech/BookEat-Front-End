@@ -1,0 +1,21 @@
+/*
+ * Top navigation BookEat Title
+ */
+ .navbar-fixed-top {
+    border: 0;
+  }
+
+
+/*
+* Home Navigation
+*/
+.topbar{
+   
+    background-color:   #F1FAEE;
+}
+
+.lowerbar{
+    
+    background-color: #1D3557;
+}
+
