@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import MainContainer from "../Style/MainContainer";
-import "./SignUp.css";
 
-class LoginPageTest extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,12 +62,11 @@ class LoginPageTest extends Component {
           <button type="submit" className="btn btn-primary">
             Login
           </button>
-
-          <h5>Forget your password?</h5>
+          <h5> Forget Password? </h5>
         </form>
       </MainContainer>
     );
   }
 }
 
-export default LoginPageTest;
+export default LoginPage;

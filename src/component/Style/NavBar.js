@@ -2,42 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 
-const NavBar = () => {
+function NavBar() {
   return (
-    <nav className="navbar navbar-default navbar-fixed-top">
-      <div className="topbar">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <Link className="navbar-brand" to="/">
-              BookEat
-            </Link>
-          </div>
-          <ul className="nav navbar-nav navbar-right">
-            <li>
-              <Link className="glyphicon glyphicon-user" to="/SignUp">
-                Sign Up
-              </Link>
-            </li>
-            <li>
-              <Link className="glyphicon glyphicon-log-in" to="/">
-                Login
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="lowerbar">
-        <ul className="nav navbar-nav">
-          <li>
-            {" "}
-            <Link className="navbar-brand" to="/">
-              Home
-            </Link>{" "}
-          </li>
-        </ul>
-      </div>
+    <nav>
+      <a href="/"> Home </a> | <a href="/SignUp">SignUp</a> |{" "}
+      <a href="/LoginPage">Login</a>
     </nav>
   );
-};
+}
 
 export default NavBar;
