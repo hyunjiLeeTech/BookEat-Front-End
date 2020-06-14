@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MainContainer from '../Style/MainContainer'
+import MainContainer from '../../Style/MainContainer'
 
 class RestaurantSignUp extends Component {
 

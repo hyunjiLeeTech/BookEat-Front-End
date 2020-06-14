@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 //import GoogleSignIn from 'react-google-signin'
-import MainContainer from '../Style/MainContainer'
+import MainContainer from '../../Style/MainContainer'
 import './SignUp.css'
 
 
@@ -11,11 +11,17 @@ class SignUp extends Component {
     super(props);
     this.state = {
       firstname: '',
+      firstnameError: '',
       lastname: '',
+      lastnameError: '',
       email: '',
+      emailError: '',
       phonenumber: '',
+      phonenumberError: '',
       password: '',
-      confirmpw: ''
+      passwordError: '',
+      confirmpw: '',
+      confirmpwError: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,6 +39,10 @@ class SignUp extends Component {
     console.log(this.state);
   }
 
+  handdleError = (e) => {
+    console.log(this.state)
+  }
+
   // Google Sign In 
   // onSignIn(userProfile, accessToken) {
   //   console.log(userProfile)
@@ -45,12 +55,12 @@ class SignUp extends Component {
   componentDidMount(){
     var t1 = document.getElementById("firstname");
     t1.onkeypress = function(event){
-      if(event.keyCode == 32) return false;
+      if(event.keyCode === 32) return false;
     }
 
     var t2 = document.getElementById("lastname");
     t2.onkeypress = function(e){
-      if(e.keyCode == 32) return false;
+      if(e.keyCode === 32) return false;
     }
   }
 
@@ -70,7 +80,7 @@ class SignUp extends Component {
               <label htmlFor="firstname" >
                 First Name:
                 
-                  <input type="text" id="firstname" vakue="this.state.firstname" className="signup form-control" onChange={this.handleChange} />
+                  <input type="text" id="firstname" value={this.state.firstname} className="signup form-control" onChange={this.handleChange} handdleError={this.state.firstnameError}/>
                   
               </label>
             </div>
@@ -78,36 +88,36 @@ class SignUp extends Component {
             <div className="form-group">
               <label htmlFor="lastname">
                 Last Name:
-        <input type="text" id="lastname" className="form-control" onChange={this.handleChange} />
+        <input type="text" id="lastname" value={this.state.lastname} className="form-control" onChange={this.handleChange} handdleError={this.state.lastnameError}/>
               </label>
             </div>
             <div className="form-group">
               <label htmlFor="email">
                 Email:
-        <input type="email" id="email" className="form-control" onChange={this.handleChange} />
+        <input type="email" id="email" className="form-control" value={this.state.email} onChange={this.handleChange} handdleError={this.state.emailError}/>
               </label>
             </div>
             <div className="form-group">
               <label htmlFor="phonenumber">
                 Phone Number:
-        <input type="text" id="phonenumber" className="form-control" onChange={this.handleChange} />
+        <input type="text" id="phonenumber" className="form-control" value={this.state.phonenumber} onChange={this.handleChange} handdleError={this.state.phonenumberError}/>
               </label>
             </div>
             <div className="form-group">
               <label htmlFor="password">
                 Password:
-        <input type="password" id="password" className="form-control" onChange={this.handleChange} />
+        <input type="password" id="password" className="form-control" value={this.state.password} onChange={this.handleChange} handdleError={this.state.passwordError}/>
               </label>
             </div>
             <div className="form-group">
               <label htmlFor="confirmpw">
                 Password Confirmation:
-        <input type="password" id="confirmpw" className="form-control" onChange={this.handleChange} />
+        <input type="password" id="confirmpw" className="form-control" value={this.state.confirmpw} onChange={this.handleChange} handdleError={this.state.confirmpwError}/>
               </label>
             </div>
             <div className="text-center">
               <button type="submit" className="btn btn-primary" >Sign Up</button>
-              <p>Already a member? <Link> Log In </Link></p>
+              <p>Already a member? <Link to='/SignUp'> Log In </Link></p>
             </div>
           </div>
         </form>
@@ -126,8 +136,8 @@ class SignUp extends Component {
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-xs-6 col-md-4">
+          <div className="row">
+            <div className="col-xs-6 col-md-4">
               
                 <h4>Test</h4>
               
