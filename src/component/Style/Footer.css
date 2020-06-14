@@ -5,3 +5,9 @@
 .bg-muted{
     background-color:  #1D3557;
 }
+
+footer.page-footer{
+    display: block !important;
+}
+  
+  

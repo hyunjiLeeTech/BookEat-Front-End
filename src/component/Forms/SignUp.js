@@ -42,6 +42,18 @@ class SignUp extends Component {
   //   this.googleAuth.signOut();
   // }
 
+  componentDidMount(){
+    var t1 = document.getElementById("firstname");
+    t1.onkeypress = function(e){
+      if(e.keyCode == 32) return false;
+    }
+
+    var t2 = document.getElementById("lastname");
+    t2.onkeypress = function(e){
+      if(e.keyCode == 32) return false;
+    }
+  }
+
   render() {
     return (
       <MainContainer>
