@@ -4,9 +4,7 @@ import './NavBar.css'
 
 
 const NavBar = () => {
-
     return (
-
         <nav className="navbar navbar-default navbar-fixed-top">
             <div className="topbar">
                 <div className="container-fluid">
@@ -19,18 +17,13 @@ const NavBar = () => {
                     </ul>
                 </div>
             </div>
-            <div className="lowerbar" >
-                <ul className="nav navbar-nav" >
+            <div className="lowerbar bg-muted" >
+                <ul className="nav navbar-nav bg-muted" >
                     <li> <Link className="navbar-brand" to="/">Home</Link> </li>
                 </ul>
             </div>
-
         </nav>
-
-
     )
-
-
 }
 
 export default NavBar;

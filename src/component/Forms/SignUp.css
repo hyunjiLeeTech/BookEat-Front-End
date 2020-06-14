@@ -1,8 +1,14 @@
-/* 
-*Form 
+/*
+* Restaurant Box 
 */
-.center_div{
-    margin: 0 auto;
-    width:30%;
-    margin-top:8%;
-  }
+
+.resbox{
+    width: 320px;
+    padding: 10px;
+    border: 4px solid  #457B9D;
+    margin: 0;
+}
+
+.resbox p {
+    text-align: center;
+}

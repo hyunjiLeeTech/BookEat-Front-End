@@ -1,18 +1,22 @@
 import React, { Component } from 'react'
-import SignUp from './component/Forms/SignUp'
 import { Route, Switch } from 'react-router-dom'
+import SignUp from './component/Forms/SignUp'
+import Home from './Home/Home'
+import RestaurantSignUp from './component/Forms/RestaurantSignUp'
 
 class App extends Component {
   render() {
     return (
       <Switch>
         <Route exact path='/' render={() => (
-          <SignUp />
+          <Home />
         )} />
         <Route exact path='/SignUp' render={() => (
           <SignUp />
         )} />
-      
+        <Route exact path='/RestaurantSignUp' render={() => (
+          <RestaurantSignUp/>
+        )} />
       </Switch>
     )
   }
