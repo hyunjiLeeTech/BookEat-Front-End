@@ -7,7 +7,6 @@ class MainContainer extends Component {
   render() {
     return (
       <div>
-        <NavBar />
         <div className="body">
           <div className="container">
             {/* <div className="container center_div"> */}
@@ -15,9 +14,6 @@ class MainContainer extends Component {
             {/* </div> */}
           </div>
         </div>
-        <div className="footer">
-            <Footer />
-          </div>
       </div>
     )
   }

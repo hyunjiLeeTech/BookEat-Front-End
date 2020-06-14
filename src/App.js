@@ -3,10 +3,14 @@ import { Route, Switch } from 'react-router-dom'
 import SignUp from './component/Forms/SignUp'
 import Home from './Home/Home'
 import RestaurantSignUp from './component/Forms/RestaurantSignUp'
+import NavBar from './component/Style/NavBar'
+import Footer from './component/Style/Footer'
 
 class App extends Component {
   render() {
     return (
+      <div>
+      <NavBar />
       <Switch>
         <Route exact path='/' render={() => (
           <Home />
@@ -18,6 +22,8 @@ class App extends Component {
           <RestaurantSignUp/>
         )} />
       </Switch>
+      <Footer />
+      </div>
     )
   }
 }
