@@ -44,8 +44,8 @@ class SignUp extends Component {
 
   componentDidMount(){
     var t1 = document.getElementById("firstname");
-    t1.onkeypress = function(e){
-      if(e.keyCode == 32) return false;
+    t1.onkeypress = function(event){
+      if(event.keyCode == 32) return false;
     }
 
     var t2 = document.getElementById("lastname");
