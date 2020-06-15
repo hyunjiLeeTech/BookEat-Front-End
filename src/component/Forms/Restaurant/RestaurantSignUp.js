@@ -1,5 +1,41 @@
 import React, { Component } from 'react'
 import MainContainer from '../../Style/MainContainer'
+import Parser from 'html-react-parser'
+
+//Validation 
+const regExpEmail = RegExp(
+    /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
+);
+
+const regExpPhone = RegExp(
+    /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+);
+
+const regExpPassword = RegExp(
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
+);
+
+const formValid = ({ isError, ...rest }) => {
+    let isValid = false;
+
+    Object.values(isError).forEach(val => {
+        if (val.length > 0) {
+            isValid = false
+        } else {
+            isValid = true
+        }
+    });
+
+    Object.values(rest).forEach(val => {
+        if (val === null) {
+            isValid = false
+        } else {
+            isValid = true
+        }
+    });
+
+    return isValid;
+};
 
 class RestaurantSignUp extends Component {
 
@@ -16,7 +52,20 @@ class RestaurantSignUp extends Component {
             email: '',
             businessnumber: '',
             password: '',
-            confirmpw: ''
+            confirmpw: '',
+            isError: {
+                resname: '&#160;',
+                streetnumber: '&#160;',
+                streetname: '&#160;',
+                province: '&#160;',
+                city: '&#160;',
+                postalcode: '&#160;',
+                phonenumber: '&#160;',
+                email: '&#160;',
+                businessnumber: '&#160;',
+                password: '&#160;',
+                confirmpw: '&#160;'
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -24,6 +73,47 @@ class RestaurantSignUp extends Component {
     }
 
     handleChange = (e) => {
+        e.preventDefault();
+        const { name, value } = e.target;
+        let isError = { ...this.state.isError };
+        switch (name) {
+            case "firstname":
+                isError.firstname =
+                    value.length >= 1 && value.length <= 32 ? "&#160;" : "Atleast 1 character required";
+                break;
+            case "lastname":
+                isError.lastname =
+                    value.length >= 1 && value.length <= 32 ? "&#160;" : "Atleast 1 character required";
+                break;
+            case "email":
+                isError.email = regExpEmail.test(value)
+                    ? "&#160;"
+                    : "Email address is invalid";
+                break;
+            case "phonenumber":
+                isError.phonenumber = regExpPhone.test(value)
+                    ? "&#160;" : "Phone Number is invalid";
+                break;
+            case "password":
+                isError.password = regExpPassword.test(value)
+                    ? "&#160;" : "Atleast 6 characters required"
+                //this.state.password = value;
+                this.setState({
+                    [e.target.password]: e.target.value
+                })
+                break;
+            case "confirmpw":
+                //this.state.confirmpw = value;
+                this.setState({
+                    [e.target.confirmpw]: e.target.value
+                })
+                isError.confirmpw =
+                    this.state.confirmpw === this.state.password ? "&#160;" : "Password not matching"
+                console.log(this.state.confirmpw === this.state.password);
+                break;
+            default:
+                break;
+        }
         this.setState({
             [e.target.id]: e.target.value
         });
@@ -35,6 +125,7 @@ class RestaurantSignUp extends Component {
     }
 
     render() {
+        const { isError } = this.state;
         return (
 
             <MainContainer>
@@ -91,42 +182,42 @@ class RestaurantSignUp extends Component {
 
                         <div className="form-group row">
                             <label htmlFor="phonenumber" className="col-sm-2 col-form-label">Phone Number </label>
-                                <div className="col-sm-3">
+                            <div className="col-sm-3">
                                 <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber} placeholder="Phone Number"
                                     className="form-control" onChange={this.handleChange} />
                             </div>
 
                             <label htmlFor="email" className="col-sm-2 col-form-label"> Email </label>
-                               <div className="col-sm-5">
+                            <div className="col-sm-5">
                                 <input type="email" id="email" name="email" value={this.state.email} placeholder="Email Address"
                                     className="form-control" onChange={this.handleChange} />
                             </div>
                         </div>
-                        
+
                         <div className="form-group row">
                             <label htmlFor="businessnumber" className="col-sm-2 col-form-label">Business Number </label>
-                                <div className="col-sm-10">
-                                    <input type="text" id="businessnumber" name="businessnumber" value={this.state.businessnumber} placeholder="Business Number"
+                            <div className="col-sm-10">
+                                <input type="text" id="businessnumber" name="businessnumber" value={this.state.businessnumber} placeholder="Business Number"
                                     className="form-control" onChange={this.handleChange} />
-                                     <small> 9 digits Business Number</small>
-                                </div>
+                                <small> 9 digits Business Number</small>
+                            </div>
                         </div>
 
                         <div className="form-group row">
                             <label htmlFor="password" className="col-sm-2 col-form-label"> Password </label>
-                                <div className="col-sm-4">
-                                    <input type="password" id="password" name="password" value={this.state.password} placeholder="Password"
+                            <div className="col-sm-4">
+                                <input type="password" id="password" name="password" value={this.state.password} placeholder="Password"
                                     className="form-control" onChange={this.handleChange} />
-                                </div>
+                            </div>
 
                             <label htmlFor="confirmpw" className="col-sm-2 col-form-label">Password Confirmation </label>
-                                <div className="col-sm-4">
-                                     <input type="password" id="confirmpw" name="confirmpw" value={this.state.password} placeholder="Confirm Password"
+                            <div className="col-sm-4">
+                                <input type="password" id="confirmpw" name="confirmpw" value={this.state.password} placeholder="Confirm Password"
                                     className="form-control" onChange={this.handleChange} />
-                                 </div>
+                            </div>
                         </div>
-                        
-                    
+
+
                         <button type="submit" className="btn btn-primary" >Sign Up</button>
 
                     </form>

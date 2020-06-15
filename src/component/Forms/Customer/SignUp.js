@@ -11,8 +11,12 @@ const regExpEmail = RegExp(
   /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
 );
 
-const regExpPhone =  RegExp(
+const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+);
+
+const regExpPassword = RegExp(
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
 );
 
 const formValid = ({ isError, ...rest }) => {
@@ -65,12 +69,10 @@ class SignUp extends Component {
     e.preventDefault();
     const { name, value } = e.target;
     let isError = { ...this.state.isError };
-    //console.log(name);
-    //console.log(value);
     switch (name) {
       case "firstname":
         isError.firstname =
-          value.length >= 1 && value.length <= 32 ?  "&#160;" : "Atleast 1 character required";
+          value.length >= 1 && value.length <= 32 ? "&#160;" : "Atleast 1 character required";
         break;
       case "lastname":
         isError.lastname =
@@ -81,20 +83,25 @@ class SignUp extends Component {
           ? "&#160;"
           : "Email address is invalid";
         break;
-        case "phonenumber":
+      case "phonenumber":
         isError.phonenumber = regExpPhone.test(value)
           ? "&#160;" : "Phone Number is invalid";
         break;
       case "password":
-        isError.password =
-          value.length >= 6 && value.length <= 32  ? "&#160;" : "Atleast 6 characters required"
-        //console.log(value.length);
-        this.state.password = value;
+        isError.password = regExpPassword.test(value)
+          ? "&#160;" : "Atleast 6 characters required"
+        //this.state.password = value;
+        this.setState({
+          [e.target.password]: e.target.value
+        })
         break;
       case "confirmpw":
-        this.state.confirmpw = value;
+        //this.state.confirmpw = value;
+        this.setState({
+          [e.target.confirmpw]: e.target.value
+        })
         isError.confirmpw =
-        this.state.confirmpw === this.state.password  ? "&#160;" : "Password not matching"
+          this.state.confirmpw === this.state.password ? "&#160;" : "Password not matching"
         console.log(this.state.confirmpw === this.state.password);
         break;
       default:
@@ -105,11 +112,10 @@ class SignUp extends Component {
       [e.target.id]: e.target.value
     });
   }
-   
+
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // e.target.className += "was-validated";
     if (formValid(this.state)) {
       console.log(this.state)
     } else {
@@ -128,20 +134,30 @@ class SignUp extends Component {
   // }
 
   componentDidMount() {
-  
 
+    // Avoid spacing on the form
     var t1 = document.getElementById("firstname");
     t1.onkeypress = function (event) {
       if (event.keyCode === 32) return false;
     }
-
-    $("#conditionbtn").on("click", ()=>{
+    var t2 = document.getElementById("email");
+    t2.onkeypress = function (e) {
+      if (e.keyCode === 32) return false;
+    }
+    var t3 = document.getElementById("password");
+    t3.onkeypress = function (e) {
+      if (e.keyCode === 32) return false;
+    }
+    var t4 = document.getElementById("confirmpw");
+    t4.onkeypress = function (e) {
+      if (e.keyCode === 32) return false;
+    }
+    // Accept term and condition click link 
+    $("#conditionbtn").on("click", () => {
       $("#accept-terms").removeAttr("disabled");
     })
-    // var t2 = document.getElementById("lastname");
-    // t2.onkeypress = function (e) {
-    //   if (e.keyCode === 32) return false;
-    // }
+
+
 
   }
 
@@ -154,6 +170,8 @@ class SignUp extends Component {
         <div className="container">
           <div className="page-header text-center">
             <h1>Welcome to BookEat!</h1>
+    <p>{this.state.password}</p>
+    <p>{this.state.confirmpw}</p>
           </div>
 
           <form onSubmit={this.handleSubmit} noValidate>
@@ -164,9 +182,9 @@ class SignUp extends Component {
                 <div className="col-sm-6">
                   <input type="text" id="firstname" name="firstname" value={this.state.firstname} placeholder="First Name"
                     className={isError.firstname.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                    {isError.firstname.length > 0 && (
-                        <span className="invalid-feedback">{Parser(isError.firstname)}</span>
-                    )}
+                  {isError.firstname.length > 0 && (
+                    <span className="invalid-feedback">{Parser(isError.firstname)}</span>
+                  )}
                 </div>
               </div>
 
@@ -174,10 +192,10 @@ class SignUp extends Component {
                 <label htmlFor="lastname" className="col-sm-2 col-form-label">Last Name </label>
                 <div className="col-sm-6">
                   <input type="text" id="lastname" name="lastname" value={this.state.lastname} placeholder="Last Name"
-                    className={isError.lastname.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange}  required />
-                    {isError.lastname.length > 0 && (
-                        <span className="invalid-feedback">{Parser(isError.lastname)}</span>
-                    )}
+                    className={isError.lastname.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                  {isError.lastname.length > 0 && (
+                    <span className="invalid-feedback">{Parser(isError.lastname)}</span>
+                  )}
                 </div>
               </div>
 
@@ -186,9 +204,9 @@ class SignUp extends Component {
                 <div className="col-sm-6">
                   <input type="email" name='email' id="email" className={isError.email.length > 0 ? "is-invalid form-control" : "form-control"} value={this.state.email} placeholder="Email"
                     onChange={this.handleChange} required />
-                    {isError.email.length > 0 && (
-                        <span className="invalid-feedback">{Parser(isError.email)}</span>
-                    )}
+                  {isError.email.length > 0 && (
+                    <span className="invalid-feedback">{Parser(isError.email)}</span>
+                  )}
                 </div>
               </div>
 
@@ -196,22 +214,22 @@ class SignUp extends Component {
               <div className="form-group row">
                 <label htmlFor="phonenumber" className="col-sm-2 col-form-label">Phone Number </label>
                 <div className="col-sm-6">
-                  <input type="number" id="phonenumber" className={isError.phonenumber.length > 0 ? "is-invalid form-control" : "form-control"} value={this.state.phonenumber} placeholder="Phone Number"
-                    onChange={this.handleChange}  required />
-                    {isError.phonenumber.length > 0 && (
-                        <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
-                    )}
+                  <input type="number" id="phonenumber" name="phonenumber" className={isError.phonenumber.length > 0 ? "is-invalid form-control" : "form-control"} value={this.state.phonenumber} placeholder="Phone Number"
+                    onChange={this.handleChange} required />
+                  {isError.phonenumber.length > 0 && (
+                    <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
+                  )}
                 </div>
               </div>
 
               <div className="form-group row">
-                <label htmlFor="password"  className="col-sm-2 col-form-label">Password </label>
+                <label htmlFor="password" className="col-sm-2 col-form-label">Password </label>
                 <div className="col-sm-6">
                   <input name="password" type="password" id="password" className={isError.password.length > 0 ? "is-invalid form-control" : "form-control"} value={this.state.password} placeholder="Password"
                     onChange={this.handleChange} required />
-                    {isError.password.length > 0 && (
-                        <span className="invalid-feedback">{Parser(isError.password)}</span>
-                    )}
+                  {isError.password.length > 0 && (
+                    <span className="invalid-feedback">{Parser(isError.password)}</span>
+                  )}
                 </div>
               </div>
 
@@ -219,10 +237,10 @@ class SignUp extends Component {
                 <label htmlFor="confirmpw" className="col-sm-2 col-form-label">Password Confirmation </label>
                 <div className="col-sm-6">
                   <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 0 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
-                    onChange={this.handleChange}  required />
-                    {isError.confirmpw.length > 0 && (
-                        <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
-                    )}
+                    onChange={this.handleChange} required />
+                  {isError.confirmpw.length > 0 && (
+                    <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
+                  )}
                 </div>
               </div>
 
