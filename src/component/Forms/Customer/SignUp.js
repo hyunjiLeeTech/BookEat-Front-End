@@ -6,6 +6,7 @@ import './SignUp.css'
 import Parser from 'html-react-parser'
 import $ from 'jquery'
 
+
 //Validation 
 const regExpEmail = RegExp(
   /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
@@ -90,16 +91,10 @@ class SignUp extends Component {
       case "password":
         isError.password = regExpPassword.test(value)
           ? "&#160;" : "Atleast 6 characters required"
-        //this.state.password = value;
-        this.setState({
-          [e.target.password]: e.target.value
-        })
+        this.state.password = value;
         break;
       case "confirmpw":
-        //this.state.confirmpw = value;
-        this.setState({
-          [e.target.confirmpw]: e.target.value
-        })
+        this.state.confirmpw = value;
         isError.confirmpw =
           this.state.confirmpw === this.state.password ? "&#160;" : "Password not matching"
         console.log(this.state.confirmpw === this.state.password);
@@ -157,21 +152,19 @@ class SignUp extends Component {
       $("#accept-terms").removeAttr("disabled");
     })
 
-
-
   }
 
   render() {
     const { isError } = this.state;
-
+   
     return (
       <MainContainer>
 
         <div className="container">
           <div className="page-header text-center">
             <h1>Welcome to BookEat!</h1>
-    <p>{this.state.password}</p>
-    <p>{this.state.confirmpw}</p>
+            <p>{this.state.password}</p>
+            <p>{this.state.confirmpw}</p>
           </div>
 
           <form onSubmit={this.handleSubmit} noValidate>
@@ -248,7 +241,8 @@ class SignUp extends Component {
                 <div className="form-check">
                   <input type="checkbox" id="accept-terms" disabled className="form-check-input" required />
                 </div>
-                <label htmlFor="accept-terms" className="form-check-label">Accept <a id="conditionbtn" target="_blank" href="https://google.ca">Terms &amp; Conditions</a></label>
+                <label htmlFor="accept-terms" className="form-check-label">Accept <Link id="conditionbtn" target="_blank" to="/TermsAndCondition">Terms &amp; Conditions</Link></label>
+        
               </div>
               <div className="text-center">
                 <button type="submit" className="btn btn-primary" >Sign Up</button>

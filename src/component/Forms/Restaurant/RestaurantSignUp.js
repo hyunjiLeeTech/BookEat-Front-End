@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MainContainer from '../../Style/MainContainer'
 import Parser from 'html-react-parser'
 
+
 //Validation 
 const regExpEmail = RegExp(
     /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
@@ -13,6 +14,10 @@ const regExpPhone = RegExp(
 
 const regExpPassword = RegExp(
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
+);
+
+const regExpPostal = RegExp(
+    /^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/
 );
 
 const formValid = ({ isError, ...rest }) => {
@@ -77,13 +82,30 @@ class RestaurantSignUp extends Component {
         const { name, value } = e.target;
         let isError = { ...this.state.isError };
         switch (name) {
-            case "firstname":
-                isError.firstname =
+            case "resname":
+                isError.resname =
+                    value.length >= 1 && value.length <= 50 ? "&#160;" : "Atleast 1 character required";
+                break;
+            case "streetnumber":
+                isError.streetnumber =
+                    value.length >= 1 && value.length <= 8 ? "&#160;" : "Atleast 1 character required";
+                break;
+            case "streetname":
+                isError.streetname =
+                    value.length >= 1 && value.length <= 255 ? "&#160;" : "Atleast 1 character required";
+                break;
+            case "city":
+                isError.city =
+                    value.length >= 1 && value.length <= 50 ? "&#160;" : "Atleast 1 character required";
+                break;
+            case "province":
+                isError.province =
                     value.length >= 1 && value.length <= 32 ? "&#160;" : "Atleast 1 character required";
                 break;
-            case "lastname":
-                isError.lastname =
-                    value.length >= 1 && value.length <= 32 ? "&#160;" : "Atleast 1 character required";
+            case "postalcode":
+                isError.postalcode = regExpPostal.test(value)
+                    ? "&#160;" 
+                    : "Atleast 1 character required";
                 break;
             case "email":
                 isError.email = regExpEmail.test(value)
@@ -94,19 +116,17 @@ class RestaurantSignUp extends Component {
                 isError.phonenumber = regExpPhone.test(value)
                     ? "&#160;" : "Phone Number is invalid";
                 break;
+            case "businessnumber":
+                isError.businessnumber =
+                    value.length >= 1 && value.length <= 9 ? "&#160;" : "Atleast 1 character required";
+                break;
             case "password":
                 isError.password = regExpPassword.test(value)
                     ? "&#160;" : "Atleast 6 characters required"
-                //this.state.password = value;
-                this.setState({
-                    [e.target.password]: e.target.value
-                })
+                this.state.password = value;
                 break;
             case "confirmpw":
-                //this.state.confirmpw = value;
-                this.setState({
-                    [e.target.confirmpw]: e.target.value
-                })
+                this.state.confirmpw = value;
                 isError.confirmpw =
                     this.state.confirmpw === this.state.password ? "&#160;" : "Password not matching"
                 console.log(this.state.confirmpw === this.state.password);
@@ -121,7 +141,11 @@ class RestaurantSignUp extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        if (formValid(this.state)) {
+            console.log(this.state)
+          } else {
+            console.log("Form is invalid!");
+          }
     }
 
     render() {
@@ -140,21 +164,30 @@ class RestaurantSignUp extends Component {
                             <label htmlFor="resname" className="col-sm-2 col-form-label"> Restaurant Name</label>
                             <div className="col-sm-10">
                                 <input type="text" id="resname" name="resname" value={this.state.resname} placeholder="Restaurant Name"
-                                    className="form-control" onChange={this.handleChange} required />
+                                    className={isError.resname.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                {isError.resname.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.resname)}</span>
+                                )}
                             </div>
                         </div>
 
                         <div className="form-group row">
                             <label htmlFor="streetnumber" className="col-sm-2 col-form-label"> Street Number</label>
                             <div className="col-sm-2">
-                                <input type="text" id="streetnumber" name="streetnumber" value={this.state.streetnumber} placeholder="Street Number"
-                                    className="form-control" onChange={this.handleChange} required />
+                                <input type="number" id="streetnumber" name="streetnumber" value={this.state.streetnumber} placeholder="Street Number"
+                                    className={isError.streetnumber.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                {isError.resname.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.streetnumber)}</span>
+                                )}
                             </div>
 
                             <label htmlFor="streetname" className="col-sm-2 col-form-label"> Street Name</label>
                             <div className="col-sm-6">
                                 <input type="text" id="streetname" name="streetname" value={this.state.streetname} placeholder="Street Name"
-                                    className="form-control" onChange={this.handleChange} required />
+                                    className={isError.streetname.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                {isError.streetname.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.streetname)}</span>
+                                )}
                             </div>
                         </div>
 
@@ -162,19 +195,28 @@ class RestaurantSignUp extends Component {
                             <label htmlFor="city" className="col-sm-2 col-form-label">City</label>
                             <div className="col-sm-2">
                                 <input type="text" id="city" name="city" value={this.state.city} placeholder="City"
-                                    className="form-control" onChange={this.handleChange} required />
+                                    className={isError.city.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                {isError.city.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.city)}</span>
+                                )}
                             </div>
 
                             <label htmlFor="province" className="col-sm-2 col-form-label"> Province </label>
                             <div className="col-sm-2">
                                 <input type="text" id="province" name="province" value={this.state.province} placeholder="Province"
-                                    className="form-control" onChange={this.handleChange} required />
+                                    className={isError.province.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                {isError.province.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.province)}</span>
+                                )}
                             </div>
 
                             <label htmlFor="postalcode" className="col-sm-2 col-form-label"> Postal Code</label>
                             <div className="col-sm-2">
                                 <input type="text" id="postalcode" name="postalcode" value={this.state.postalcode} placeholder="Postal Code"
-                                    className="form-control" onChange={this.handleChange} required />
+                                    className={isError.postalcode.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                {isError.postalcode.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.postalcode)}</span>
+                                )}
                             </div>
 
                         </div>
@@ -183,14 +225,21 @@ class RestaurantSignUp extends Component {
                         <div className="form-group row">
                             <label htmlFor="phonenumber" className="col-sm-2 col-form-label">Phone Number </label>
                             <div className="col-sm-3">
-                                <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber} placeholder="Phone Number"
-                                    className="form-control" onChange={this.handleChange} />
+                                <input type="number" id="phonenumber" name="phonenumber" value={this.state.phonenumber} placeholder="Phone Number"
+                                    className={isError.phonenumber.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} />
+                                {isError.phonenumber.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
+                                )}
+
                             </div>
 
                             <label htmlFor="email" className="col-sm-2 col-form-label"> Email </label>
                             <div className="col-sm-5">
                                 <input type="email" id="email" name="email" value={this.state.email} placeholder="Email Address"
-                                    className="form-control" onChange={this.handleChange} />
+                                    className={isError.email.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} />
+                                {isError.email.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.email)}</span>
+                                )}
                             </div>
                         </div>
 
@@ -198,8 +247,11 @@ class RestaurantSignUp extends Component {
                             <label htmlFor="businessnumber" className="col-sm-2 col-form-label">Business Number </label>
                             <div className="col-sm-10">
                                 <input type="text" id="businessnumber" name="businessnumber" value={this.state.businessnumber} placeholder="Business Number"
-                                    className="form-control" onChange={this.handleChange} />
+                                    className={isError.businessnumber.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} />
                                 <small> 9 digits Business Number</small>
+                                {isError.businessnumber.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.businessnumber)}</span>
+                                )}
                             </div>
                         </div>
 
@@ -207,13 +259,19 @@ class RestaurantSignUp extends Component {
                             <label htmlFor="password" className="col-sm-2 col-form-label"> Password </label>
                             <div className="col-sm-4">
                                 <input type="password" id="password" name="password" value={this.state.password} placeholder="Password"
-                                    className="form-control" onChange={this.handleChange} />
+                                    className={isError.password.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} />
+                                {isError.password.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.password)}</span>
+                                )}
                             </div>
 
                             <label htmlFor="confirmpw" className="col-sm-2 col-form-label">Password Confirmation </label>
                             <div className="col-sm-4">
                                 <input type="password" id="confirmpw" name="confirmpw" value={this.state.password} placeholder="Confirm Password"
-                                    className="form-control" onChange={this.handleChange} />
+                                    className={isError.confirmpw.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} />
+                                {isError.confirmpw.length > 0 && (
+                                    <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
+                                )}
                             </div>
                         </div>
 

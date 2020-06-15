@@ -5,6 +5,7 @@ import Home from './Home/Home'
 import RestaurantSignUp from './component/Forms/Restaurant/RestaurantSignUp'
 import NavBar from './component/Style/NavBar'
 import Footer from './component/Style/Footer'
+import TermsAndCondition from './component/Forms/Customer/TermsAndCondition'
 
 class App extends Component {
   render() {
@@ -20,6 +21,9 @@ class App extends Component {
           )} />
           <Route exact path='/RestaurantSignUp' render={() => (
             <RestaurantSignUp />
+          )} />
+          <Route exact path='/TermsAndCondition' render={() => (
+            <TermsAndCondition />
           )} />
         </Switch>
         <div className="footer">
