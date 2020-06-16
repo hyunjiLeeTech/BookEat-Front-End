@@ -6,6 +6,10 @@ import RestaurantSignUp from './component/Forms/Restaurant/RestaurantSignUp'
 import NavBar from './component/Style/NavBar'
 import Footer from './component/Style/Footer'
 import TermsAndCondition from './component/Forms/Customer/TermsAndCondition'
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+
 
 class App extends Component {
   render() {

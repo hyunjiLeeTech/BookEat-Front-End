@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MainContainer from '../../Style/MainContainer'
 import Parser from 'html-react-parser'
-
+import $ from 'jquery';
 
 //Validation 
 const regExpEmail = RegExp(
@@ -77,37 +77,51 @@ class RestaurantSignUp extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange = (e) => {
+    handleChange(e) {
         e.preventDefault();
         const { name, value } = e.target;
-        let isError = { ...this.state.isError };
+        let thisIsError = this.state.isError;
+        let isError = {...this.state.isError};
+        console.log(thisIsError == isError);
         switch (name) {
             case "resname":
+                console.log("resname")
                 isError.resname =
-                    value.length >= 1 && value.length <= 50 ? "&#160;" : "Atleast 1 character required";
+                    value.length >= 3 && value.length <= 50 ? "&#160;" : "Atleast 3 character required";
+                console.log(this.state.isError.resname);
                 break;
             case "streetnumber":
+                console.log("streetnumber")
+
                 isError.streetnumber =
                     value.length >= 1 && value.length <= 8 ? "&#160;" : "Atleast 1 character required";
                 break;
             case "streetname":
+                console.log("streetname")
+
                 isError.streetname =
                     value.length >= 1 && value.length <= 255 ? "&#160;" : "Atleast 1 character required";
                 break;
             case "city":
+                console.log("city")
+
                 isError.city =
                     value.length >= 1 && value.length <= 50 ? "&#160;" : "Atleast 1 character required";
                 break;
             case "province":
+                console.log("province")
+
                 isError.province =
                     value.length >= 1 && value.length <= 32 ? "&#160;" : "Atleast 1 character required";
                 break;
             case "postalcode":
+
                 isError.postalcode = regExpPostal.test(value)
                     ? "&#160;" 
                     : "Atleast 1 character required";
                 break;
             case "email":
+
                 isError.email = regExpEmail.test(value)
                     ? "&#160;"
                     : "Email address is invalid";
@@ -132,6 +146,7 @@ class RestaurantSignUp extends Component {
                 console.log(this.state.confirmpw === this.state.password);
                 break;
             default:
+                console.log("default")
                 break;
         }
         this.setState({
@@ -147,7 +162,7 @@ class RestaurantSignUp extends Component {
             console.log("Form is invalid!");
           }
     }
-
+    
     render() {
         const { isError } = this.state;
         return (
@@ -165,9 +180,9 @@ class RestaurantSignUp extends Component {
                             <div className="col-sm-10">
                                 <input type="text" id="resname" name="resname" value={this.state.resname} placeholder="Restaurant Name"
                                     className={isError.resname.length > 0 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                {isError.resname.length > 0 && (
-                                    <span className="invalid-feedback">{Parser(isError.resname)}</span>
-                                )}
+                                
+                                    <span className="invalid-feedback">{Parser(this.state.isError.resname)}</span>
+                                
                             </div>
                         </div>
 
