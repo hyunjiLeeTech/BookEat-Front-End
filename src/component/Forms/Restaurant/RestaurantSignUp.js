@@ -77,14 +77,14 @@ class RestaurantSignUp extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange = (e) => {
+    handleChange(e) {
         e.preventDefault();
         const { name, value } = e.target;
-        let isError = { ...this.state.isError };
+        let isError = this.state.isError;
         switch (name) {
             case "resname":
                 isError.resname =
-                    value.length >= 1 && value.length <= 50 ? "&#160;" : "Atleast 1 character required";
+                    value.length >= 3 && value.length <= 50 ? "&#160;" : "Atleast 3 character required";
                 break;
             case "streetnumber":
                 isError.streetnumber =
@@ -92,15 +92,15 @@ class RestaurantSignUp extends Component {
                 break;
             case "streetname":
                 isError.streetname =
-                    value.length >= 1 && value.length <= 255 ? "&#160;" : "Atleast 1 character required";
+                    value.length >= 4 && value.length <= 255 ? "&#160;" : "Atleast 4 character required";
                 break;
             case "city":
                 isError.city =
-                    value.length >= 1 && value.length <= 50 ? "&#160;" : "Atleast 1 character required";
+                    value.length >= 2 && value.length <= 50 ? "&#160;" : "Atleast 2 character required";
                 break;
             case "province":
                 isError.province =
-                    value.length >= 1 && value.length <= 32 ? "&#160;" : "Atleast 1 character required";
+                    value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
                 break;
             case "postalcode":
                 isError.postalcode = regExpPostal.test(value)
