@@ -1,30 +1,8 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const NavBar = () => {
     return (
-<<<<<<< HEAD
-        <nav className="navbar navbar-default navbar-fixed-top">
-            <div className="topbar">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <Link className="navbar-brand" to="/">BookEat</Link>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="nav navbar-nav navbar-right">
-                            <li className="nav-item"><Link className="glyphicon glyphicon-user" to="/SignUp">Sign Up</Link></li>
-                            <li className="nav-item"><Link className="glyphicon glyphicon-log-in" to="/">Login</Link></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div className="lowerbar bg-muted" >
-                <ul className="nav navbar-nav bg-muted" >
-                    <li className="nav-item"> <Link className="navbar-brand" to="/">Home</Link> </li>
-=======
         // <nav className="navbar navbar-default navbar-fixed-top">
         //     <div className="topbar">
         //         <div className="container-fluid">
@@ -49,7 +27,7 @@ const NavBar = () => {
         //     </div>
         // </nav>
 
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <NavLink to="/" className="nav-link">BookEat</NavLink> 
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
@@ -65,9 +43,9 @@ const NavBar = () => {
                         <NavLink to="/profile" className="nav-link">Profile</NavLink> 
                     </li>
 
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <a className="nav-link disabled" href="#">Disabled</a>
-                    </li>
+                    </li> */}
                 </ul>
                 <ul className="navbar-nav navbar-right">
                     <li className="nav-item">
@@ -75,9 +53,8 @@ const NavBar = () => {
                         <NavLink to="/signup" className="nav-link">Sign up</NavLink> 
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/login" className="nav-link">login</NavLink> 
+                        <NavLink to="/login" className="nav-link">Login</NavLink> 
                     </li>
->>>>>>> sc
                 </ul>
             </div>
         </nav>
