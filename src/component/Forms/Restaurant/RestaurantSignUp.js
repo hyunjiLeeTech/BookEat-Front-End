@@ -80,22 +80,12 @@ class RestaurantSignUp extends Component {
     handleChange(e) {
         e.preventDefault();
         const { name, value } = e.target;
-<<<<<<< HEAD
         let isError = this.state.isError;
-=======
-        let thisIsError = this.state.isError;
-        let isError = {...this.state.isError};
-        console.log(thisIsError == isError);
->>>>>>> sc
         switch (name) {
             case "resname":
                 console.log("resname")
                 isError.resname =
                     value.length >= 3 && value.length <= 50 ? "&#160;" : "Atleast 3 character required";
-<<<<<<< HEAD
-=======
-                console.log(this.state.isError.resname);
->>>>>>> sc
                 break;
             case "streetnumber":
                 console.log("streetnumber")

@@ -3,28 +3,6 @@ import { Link, NavLink } from 'react-router-dom'
 
 const NavBar = () => {
     return (
-<<<<<<< HEAD
-        <nav className="navbar navbar-default navbar-fixed-top">
-            <div className="topbar">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <Link className="navbar-brand" to="/">BookEat</Link>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="nav navbar-nav navbar-right">
-                            <li className="nav-item"><Link className="glyphicon glyphicon-user" to="/SignUp">Sign Up</Link></li>
-                            <li className="nav-item"><Link className="glyphicon glyphicon-log-in" to="/">Login</Link></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div className="lowerbar bg-muted" >
-                <ul className="nav navbar-nav bg-muted" >
-                    <li className="nav-item"> <Link className="navbar-brand" to="/">Home</Link> </li>
-=======
         // <nav className="navbar navbar-default navbar-fixed-top">
         //     <div className="topbar">
         //         <div className="container-fluid">
@@ -77,7 +55,6 @@ const NavBar = () => {
                     <li className="nav-item">
                         <NavLink to="/login" className="nav-link">login</NavLink> 
                     </li>
->>>>>>> sc
                 </ul>
             </div>
         </nav>
