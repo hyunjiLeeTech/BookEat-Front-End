@@ -1,23 +1,9 @@
-/*
- * Top navigation BookEat Title
- */
- .navbar-fixed-top {
-    border: 0;
-  }
 
-
-/*
-* Home Navigation
-*/
-.topbar{
-   
-    background-color:   #F1FAEE;
+/* Modify the backgorund color */ 
+.navbar-custom  { 
+  background-color: #1D3557 !important; 
 }
 
-.lowerbar .bg-muted{
-    width: 200%;
-    background-color: #1D3557;
-}
 
 
 

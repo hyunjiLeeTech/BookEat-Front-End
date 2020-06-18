@@ -13,3 +13,10 @@
     text-align: center;
 }
 
+#accept-terms{
+    width: 2rem;
+    height: 2rem;
+}
+#termsmodal{
+    margin-left: 7%;
+}

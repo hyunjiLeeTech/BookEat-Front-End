@@ -15,7 +15,7 @@ class ViewCustomerProfile extends Component {
           </div>
 
           <form onSubmit={this.handleSubmit} noValidate>
-            <div className="col-xs-12 col-md-8 ">
+            <div className="col-xs-12 col-md-12 ">
               <div className="form-group row">
                 <label htmlFor="firstname" className="col-sm-2 col-form-label">
                   {" "}
@@ -26,7 +26,7 @@ class ViewCustomerProfile extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-xs-12 col-md-8 ">
+            <div className="col-xs-12 col-md-12 ">
               <div className="form-group row">
                 <label htmlFor="lastname" className="col-sm-2 col-form-label">
                   {" "}
@@ -37,21 +37,21 @@ class ViewCustomerProfile extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-xs-12 col-md-8 ">
+            <div className="col-xs-12 col-md-12">
               <div className="form-group row">
                 <label htmlFor="password" className="col-sm-2 col-form-label">
                   {" "}
                   Password{" "}
                 </label>
-                <div className="col-sm-6">
-                  <input type="password" id="password" name="password" />
-                  <Link to="/ChangePassword">
-                    <button type="submit"> Chanege Password </button>
+                <div className="col-sm-6" id="password-field">
+                  <input className="" type="password" id="password" name="password" />
+                  <Link className="btn btn-primary" to="/ChangePassword">
+                    Change Password
                   </Link>
                 </div>
               </div>
             </div>
-            <div className="col-xs-12 col-md-8 ">
+            <div className="col-xs-12 col-md-12">
               <div className="form-group row">
                 <label htmlFor="email" className="col-sm-2 col-form-label">
                   {" "}
@@ -62,7 +62,7 @@ class ViewCustomerProfile extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-xs-12 col-md-8 ">
+            <div className="col-xs-12 col-md-12">
               <div className="form-group row">
                 <label
                   htmlFor="phonenumber"
@@ -76,7 +76,7 @@ class ViewCustomerProfile extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-xs-12 col-md-8 ">
+            <div className="col-xs-12 col-md-12">
               <div className="form-group row">
                 <label
                   htmlFor="reservationHistory"
@@ -85,31 +85,36 @@ class ViewCustomerProfile extends Component {
                   {" "}
                   Reservation{" "}
                 </label>
-                <div className="col-sm-6">
-                  <input type="text" id="reservation" name="reservation" />
-                </div>
-                <div className="col-xs-12 col-md-8 ">
-                  <div className="form-group row">
-                    <div className="col-sm-6">
-                      <button type="button" className="b1">
-                        {" "}
+                <div className="col-sm-10 row">
+                  <div className="col-md-4">                  <input type="text" style={{height: "30px"}} id="reservation"  name="reservation" />
+</div>
+
+                  <div className="col-md-8">
+                    <div className="form-group row">
+                      <div className="col-md-4">
+                        <button type="button" className="b1 btn btn-primary">
+                          {" "}
                         Reservation History{" "}
-                      </button>
-                    </div>
-                    <div className="col-sm-6">
-                      <button type="button" className="b1">
-                        {" "}
+                        </button>
+                      </div>
+                      <div className="col-md-4">
+                        <button type="button" className="b1 btn btn-primary">
+                          {" "}
                         Change reservation{" "}
-                      </button>
-                    </div>
-                    <div className="col-sm-6">
-                      <button type="button" className="b1">
-                        {" "}
+                        </button>
+                      </div>
+                      <div className="col-md-4">
+                        <button type="button" className="b1 btn btn-primary">
+                          {" "}
                         Cancel reservation{" "}
-                      </button>
+                        </button>
+                      </div>
                     </div>
                   </div>
+
+
                 </div>
+
               </div>
             </div>
 
