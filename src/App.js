@@ -5,7 +5,6 @@ import Home from './Home/Home'
 import RestaurantSignUp from './component/Forms/Restaurant/RestaurantSignUp'
 import NavBar from './component/Style/NavBar'
 import Footer from './component/Style/Footer'
-import TermsAndCondition from './component/Forms/Customer/TermsAndCondition'
 import RestaurantProfile from './Profile/Restaurant/RestaurantProfile'
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -23,9 +22,6 @@ class App extends Component {
           )} />
           <Route exact path='/SignUp' render={() => (
             <SignUp />
-          )} />
-          <Route exact path='/TermsAndCondition' render={() => (
-            <TermsAndCondition />
           )} />
           <Route exact path='/RestaurantSignUp' render={() => (
             <RestaurantSignUp />
