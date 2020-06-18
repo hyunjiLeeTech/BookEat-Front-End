@@ -14,8 +14,10 @@
     background-color:   #F1FAEE;
 }
 
-.lowerbar{
-    
+.lowerbar .bg-muted{
+    width: 200%;
     background-color: #1D3557;
 }
+
+
 

@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import NavBar from "./NavBar";
+import "./MainContainer.css";
 
 class MainContainer extends Component {
   render() {
     return (
       <div>
-        <h4>BookEat</h4>
-        <NavBar title="Home" />
-        <div className="container-fluid">
-          <div className="container center_div">{this.props.children}</div>
+        <div className="body">
+          <div className="container">
+            {/* <div className="container center_div"> */}
+            {this.props.children}
+            {/* </div> */}
+          </div>
         </div>
       </div>
     );
