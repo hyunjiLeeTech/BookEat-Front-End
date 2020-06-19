@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import MainContainer from '../../Style/MainContainer'
 import Parser from 'html-react-parser'
-import $ from 'jquery';
 
 //Validation 
 const regExpEmail = RegExp(
@@ -176,8 +175,8 @@ class RestaurantSignUp extends Component {
         t5.onkeypress = function (e) {
             if (e.keyCode === 32) return false;
         }
-        var t4 = document.getElementById("phonenumber");
-        t4.onkeypress = function (e) {
+        var t6 = document.getElementById("phonenumber");
+        t6.onkeypress = function (e) {
             if (e.keyCode === 32) return false;
         }
        
