@@ -165,6 +165,12 @@ class RestaurantProfile extends Component {
 
     }
 
+    handleMultiplePictures = (e) =>{
+        this.setState({
+            picture: [...this.state.picture,
+                      ...e.target.pictures]
+        })
+    }
     componentDidMount(){
         // Avoid spacing on the form
         var t1 = document.getElementById("streetnumber");
@@ -301,7 +307,7 @@ class RestaurantProfile extends Component {
                                 <label htmlFor="cuisineStyle" className="col-sm-2 col-form-label">Cuisine Style</label>
                                 <div className="col-md-10">
                                     <select className="custom-select " id="cuisineStyle" name="cuisineStyle" value={this.state.cuisineStyle} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
+                                        <option>Choose...</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
@@ -314,7 +320,7 @@ class RestaurantProfile extends Component {
                                 <label htmlFor="category" className="col-sm-2 col-form-label">Category</label>
                                 <div className="col-md-10">
                                     <select className="custom-select " id="category" name="category" value={this.state.category} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
+                                        <option >Choose...</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
@@ -326,7 +332,7 @@ class RestaurantProfile extends Component {
                                 <label htmlFor="priceRange" className="col-sm-2 col-form-label">Price Range</label>
                                 <div className="col-md-10">
                                     <select className="custom-select " id="priceRange" name="priceRange" value={this.state.priceRange} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
+                                        <option >Choose...</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
@@ -339,108 +345,456 @@ class RestaurantProfile extends Component {
                                 <div className="col-md-10">
                                     <label htmlFor="monday" className="col-sm-2 col-form-label">Monday</label>
                                     <select className="custom-select col-md-3" id="monday" name="monday" value={this.state.monday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option >Choose Open Time</option>
+                                        <option value="7am">7:00 AM</option>
+                                        <option value="730am">7:30 AM</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="830am">8:30 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
                                     </select>
                                         ~
                                     <select className="custom-select col-md-3" id="monday" name="monday" value={this.state.monday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option >Choose Close Time</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
+                                        <option value="9pm">9:00 PM</option>
+                                        <option value="930pm">9:30 PM</option>
+                                        <option value="10pm">10:00 PM</option>
+                                        <option value="1030pm">10:30 PM</option>
+                                        <option value="11pm">11:00 PM</option>
+                                        <option value="1130pm">11:30 PM</option>
+                                        <option value="12am">12:00 AM</option>
+                                        <option value="1230am">12:30 AM</option>
+                                        <option value="1am">1:00 AM</option>
+                                        <option value="130am">1:30 AM</option>
                                     </select>
+                                    <label className="col-sm-1 col-form-label"></label>
+                                    <button type="button" className="btn btn-outline-dark col-sm-2"> Not Open </button>
                                 </div>
 
                                 <label className="col-sm-2 col-form-label"></label>
                                 <div className="col-md-10">
                                     <label htmlFor="tuesday" className="col-sm-2 col-form-label">Tuesday</label>
                                     <select className="custom-select col-md-3" id="tuesday" name="tuesday" value={this.state.tuesday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Open Time</option>
+                                        <option value="7am">7:00 AM</option>
+                                        <option value="730am">7:30 AM</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="830am">8:30 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
                                     </select>
                                     ~
                                     <select className="custom-select col-md-3" id="tuesday" name="tuesday" value={this.state.tuesday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Close Time</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
+                                        <option value="9pm">9:00 PM</option>
+                                        <option value="930pm">9:30 PM</option>
+                                        <option value="10pm">10:00 PM</option>
+                                        <option value="1030pm">10:30 PM</option>
+                                        <option value="11pm">11:00 PM</option>
+                                        <option value="1130pm">11:30 PM</option>
+                                        <option value="12am">12:00 AM</option>
+                                        <option value="1230am">12:30 AM</option>
+                                        <option value="1am">1:00 AM</option>
+                                        <option value="130am">1:30 AM</option>
                                     </select>
+                                    <label className="col-sm-1 col-form-label"></label>
+                                    <button type="button" className="btn btn-outline-dark col-sm-2"> Not Open </button>
                                 </div>
 
                                 <label className="col-sm-2 col-form-label"></label>
                                 <div className="col-md-10">
                                     <label htmlFor="wednesday" className="col-sm-2 col-form-label">Wednesday</label>
                                     <select className="custom-select col-md-3" id="wednesday" name="wednesday" value={this.state.wednesday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Open Time</option>
+                                        <option value="7am">7:00 AM</option>
+                                        <option value="730am">7:30 AM</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="830am">8:30 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
                                     </select>
                                     ~
                                     <select className="custom-select col-md-3" id="wednesday" name="wednesday" value={this.state.wednesday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Close Time</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
+                                        <option value="9pm">9:00 PM</option>
+                                        <option value="930pm">9:30 PM</option>
+                                        <option value="10pm">10:00 PM</option>
+                                        <option value="1030pm">10:30 PM</option>
+                                        <option value="11pm">11:00 PM</option>
+                                        <option value="1130pm">11:30 PM</option>
+                                        <option value="12am">12:00 AM</option>
+                                        <option value="1230am">12:30 AM</option>
+                                        <option value="1am">1:00 AM</option>
+                                        <option value="130am">1:30 AM</option>
                                     </select>
+                                    <label className="col-sm-1 col-form-label"></label>
+                                    <button type="button" className="btn btn-outline-dark col-sm-2"> Not Open </button>
                                 </div>
 
                                 <label className="col-sm-2 col-form-label"></label>
                                 <div className="col-md-10">
                                     <label htmlFor="thursday" className="col-sm-2 col-form-label">Thursday</label>
                                     <select className="custom-select col-md-3" id="thursday" name="thursday" value={this.state.thursday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Open Time</option>
+                                        <option value="7am">7:00 AM</option>
+                                        <option value="730am">7:30 AM</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="830am">8:30 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
                                     </select>
                                     ~
                                     <select className="custom-select col-md-3" id="thursday" name="thursday" value={this.state.thursday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Close Time</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
+                                        <option value="9pm">9:00 PM</option>
+                                        <option value="930pm">9:30 PM</option>
+                                        <option value="10pm">10:00 PM</option>
+                                        <option value="1030pm">10:30 PM</option>
+                                        <option value="11pm">11:00 PM</option>
+                                        <option value="1130pm">11:30 PM</option>
+                                        <option value="12am">12:00 AM</option>
+                                        <option value="1230am">12:30 AM</option>
+                                        <option value="1am">1:00 AM</option>
+                                        <option value="130am">1:30 AM</option>
                                     </select>
+                                    <label className="col-sm-1 col-form-label"></label>
+                                    <button type="button" className="btn btn-outline-dark col-sm-2"> Not Open </button>
                                 </div>
 
                                 <label className="col-sm-2 col-form-label"></label>
                                 <div className="col-md-10">
                                     <label htmlFor="friday" className="col-sm-2 col-form-label">Friday</label>
                                     <select className="custom-select col-md-3" id="friday" name="friday" value={this.state.friday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Open Time</option>
+                                        <option value="7am">7:00 AM</option>
+                                        <option value="730am">7:30 AM</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="830am">8:30 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
                                     </select>
                                     ~
                                     <select className="custom-select col-md-3" id="friday" name="friday" value={this.state.friday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Close Time</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
+                                        <option value="9pm">9:00 PM</option>
+                                        <option value="930pm">9:30 PM</option>
+                                        <option value="10pm">10:00 PM</option>
+                                        <option value="1030pm">10:30 PM</option>
+                                        <option value="11pm">11:00 PM</option>
+                                        <option value="1130pm">11:30 PM</option>
+                                        <option value="12am">12:00 AM</option>
+                                        <option value="1230am">12:30 AM</option>
+                                        <option value="1am">1:00 AM</option>
+                                        <option value="130am">1:30 AM</option>
                                     </select>
+                                    <label className="col-sm-1 col-form-label"></label>
+                                    <button type="button" className="btn btn-outline-dark col-sm-2"> Not Open </button>
                                 </div>
 
                                 <label className="col-sm-2 col-form-label"></label>
                                 <div className="col-md-10">
                                     <label htmlFor="saturday" className="col-sm-2 col-form-label">Saturday</label>
                                     <select className="custom-select col-md-3" id="saturday" name="saturday" value={this.state.saturday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Open Time</option>
+                                        <option value="7am">7:00 AM</option>
+                                        <option value="730am">7:30 AM</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="830am">8:30 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
                                     </select>
                                     ~
                                     <select className="custom-select col-md-3" id="saturday" name="saturday" value={this.state.saturday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Close Time</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
+                                        <option value="9pm">9:00 PM</option>
+                                        <option value="930pm">9:30 PM</option>
+                                        <option value="10pm">10:00 PM</option>
+                                        <option value="1030pm">10:30 PM</option>
+                                        <option value="11pm">11:00 PM</option>
+                                        <option value="1130pm">11:30 PM</option>
+                                        <option value="12am">12:00 AM</option>
+                                        <option value="1230am">12:30 AM</option>
+                                        <option value="1am">1:00 AM</option>
+                                        <option value="130am">1:30 AM</option>
                                     </select>
+                                    <label className="col-sm-1 col-form-label"></label>
+                                    <button type="button" className="btn btn-outline-dark col-sm-2"> Not Open </button>
                                 </div>
 
 
@@ -448,25 +802,83 @@ class RestaurantProfile extends Component {
                                 <div className="col-md-10">
                                     <label htmlFor="sunday" className="col-sm-2 col-form-label">Sunday</label>
                                     <select className="custom-select col-md-3" id="sunday" name="sunday" value={this.state.sunday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Open Time</option>
+                                        <option value="7am">7:00 AM</option>
+                                        <option value="730am">7:30 AM</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="830am">8:30 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
                                     </select>
                                     ~
                                     <select className="custom-select col-md-3" id="sunday" name="sunday" value={this.state.sunday} onChange={this.handleChange}>
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <option >Choose Close Time</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
+                                        <option value="9pm">9:00 PM</option>
+                                        <option value="930pm">9:30 PM</option>
+                                        <option value="10pm">10:00 PM</option>
+                                        <option value="1030pm">10:30 PM</option>
+                                        <option value="11pm">11:00 PM</option>
+                                        <option value="1130pm">11:30 PM</option>
+                                        <option value="12am">12:00 AM</option>
+                                        <option value="1230am">12:30 AM</option>
+                                        <option value="1am">1:00 AM</option>
+                                        <option value="130am">1:30 AM</option>
                                     </select>
+                                    <label className="col-sm-1 col-form-label"></label>
+                                    <button type="button" className="btn btn-outline-dark col-sm-2"> Not Open </button>
                                 </div>
                             </div>
 
                             <div className="form-group row">
                                 <label htmlFor="picture" className="col-sm-2 col-form-label">Restaurant Picture</label>
                                 <div className="custom-file col-md-10">
-                                    <input type="file" className="custom-file-input col-md-10" id="picture" name="picture" value={this.state.picture} onChange={this.handleChange}/>
+                                    <input type="file" multiple className="custom-file-input col-md-10" id="picture" name="picture" value={this.state.picture} onChange={this.handleMultiplePictures}/>
                                     <label className="custom-file-label form-group" htmlFor="picture">Upload Picture</label>
                                 </div>
                             </div>
