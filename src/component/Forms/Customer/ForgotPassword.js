@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
+import "./SignUp.js";
+import Parser from "html-react-parser";
 import $ from "jquery";
 
 //Validation
@@ -82,45 +85,61 @@ class ForgotPassword extends Component {
       $("#accept-terms").removeAttr("disabled");
     });
   }
+
   render() {
+    const { isError } = this.state;
+
     return (
       <MainContainer>
-        <div>
-          <h3> Forgot your password ?</h3>
-          <p>
+        <div className="container">
+          <div className="page-header text-center">
+            <br />
+            <br />
+            <h3>Forgot your password ?</h3>
+            <p></p>
             Enter the email address associated with your account, and we'll send
             you a link to reset your password.
-          </p>
+            <br />
+            <br />
+            <br />
+          </div>
         </div>
 
         <form onSubmit={this.handleSubmit} noValidate>
-          <div className="col-xs-12 col-md-8 ">
-            <div className="form-group row">
-              <label htmlFor="email" className="col-sm-2 col-form-label">
-                Email address
-              </label>
-              <div className="col-sm-6">
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  // className={
-                  //   isError.email.length > 0
-                  //     ? "is-invalid form-control"
-                  //     : "form-control"
-                  // }
-                  value={this.state.email}
-                  placeholder="Email"
-                  onChange={this.handleChange}
-                  required
-                />
-              </div>
+          <div className="form-group row">
+            <div className="col-sm-1"></div>
+            <label htmlFor="email" className="col-sm-2 col-form-label">
+              {" "}
+              Email{" "}
+            </label>
+            <div className="col-sm-6">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                className={
+                  isError.email.length > 0
+                    ? "is-invalid form-control"
+                    : "form-control"
+                }
+                value={this.state.email}
+                placeholder="Email"
+                onChange={this.handleChange}
+                required
+              />
+              {isError.email.length > 0 && (
+                <span className="invalid-feedback">
+                  {Parser(isError.email)}
+                </span>
+              )}
             </div>
-            <div className="text-front">
-              <button type="submit" className="btn btn-primary">
-                Send reset link
-              </button>
-            </div>
+          </div>
+
+          <div className="form-group "></div>
+          <div className="text-center">
+            <button type="submit" className="btn btn-primary">
+              Send reset link
+            </button>
           </div>
         </form>
       </MainContainer>
