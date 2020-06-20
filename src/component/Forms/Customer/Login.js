@@ -108,99 +108,103 @@ class Login extends Component {
 
     return (
       <MainContainer>
-        <div className="container">
-          <div className="page-header text-center">
-            <h1>Log in</h1>
-            <p>{this.state.password}</p>
-            <p>{this.state.confirmpw}</p>
-          </div>
-          <div>
-            <Link to="/ExternalLogin">
-              <img src={FaceBook} alt="FaceBook"></img>
-            </Link>
-          </div>
-          <div>
-            <Link to="/ExternalLogin">
-              <img src={Google} alt="Google"></img>
-            </Link>
+        <div className="card">
+          <div className="card-body">
+            <div className="page-header text-center">
+              <h1>Log in</h1>
+              <p>{this.state.password}</p>
+              <p>{this.state.confirmpw}</p>
+            </div>
+            <div className="form=group text-center">
+              <div>
+                <Link to="/ExternalLogin">
+                  <img src={FaceBook} alt="FaceBook"></img>
+                </Link>
+              </div>
+              <div>
+                <Link to="/ExternalLogin">
+                  <img src={Google} alt="Google"></img>
+                </Link>
+              </div>
+            </div>
+
+            <form onSubmit={this.handleSubmit} noValidate>
+              <div className="col-xs-12 col-md-8 ">
+                <div className="form-group row">
+                  <label htmlFor="email" className="col-sm-2 col-form-label">
+                    {" "}
+                    Email{" "}
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      className={
+                        isError.email.length > 0
+                          ? "is-invalid form-control"
+                          : "form-control"
+                      }
+                      value={this.state.email}
+                      placeholder="Email"
+                      onChange={this.handleChange}
+                      required
+                    />
+                    {isError.email.length > 0 && (
+                      <span className="invalid-feedback">
+                        {Parser(isError.email)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label htmlFor="password" className="col-sm-2 col-form-label">
+                    Password{" "}
+                  </label>
+                  <div className="col-sm-6">
+                    <input
+                      name="password"
+                      type="password"
+                      id="password"
+                      className={
+                        isError.password.length > 0
+                          ? "is-invalid form-control"
+                          : "form-control"
+                      }
+                      value={this.state.password}
+                      placeholder="Password"
+                      onChange={this.handleChange}
+                      required
+                    />
+                    {isError.password.length > 0 && (
+                      <span className="invalid-feedback">
+                        {Parser(isError.password)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group ">
+                <div className="text-center">
+                  <Link to="/">
+                    <button type="submit" className="btn btn-primary">
+                      Log in
+                    </button>
+                  </Link>
+                  <p>
+                    <br />
+                    <br />
+                    <Link to="/SignUp"> Don't have an account ? </Link>
+                  </p>
+                  <p>
+                    <Link to="/ForgotPassword"> Forget your password ? </Link>
+                  </p>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-
-        <form onSubmit={this.handleSubmit} noValidate>
-          <div className="col-xs-12 col-md-8 ">
-            <div className="form-group row">
-              <label htmlFor="email" className="col-sm-2 col-form-label">
-                {" "}
-                Email{" "}
-              </label>
-              <div className="col-sm-6">
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className={
-                    isError.email.length > 0
-                      ? "is-invalid form-control"
-                      : "form-control"
-                  }
-                  value={this.state.email}
-                  placeholder="Email"
-                  onChange={this.handleChange}
-                  required
-                />
-                {isError.email.length > 0 && (
-                  <span className="invalid-feedback">
-                    {Parser(isError.email)}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label htmlFor="password" className="col-sm-2 col-form-label">
-                Password{" "}
-              </label>
-              <div className="col-sm-6">
-                <input
-                  name="password"
-                  type="password"
-                  id="password"
-                  className={
-                    isError.password.length > 0
-                      ? "is-invalid form-control"
-                      : "form-control"
-                  }
-                  value={this.state.password}
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                  required
-                />
-                {isError.password.length > 0 && (
-                  <span className="invalid-feedback">
-                    {Parser(isError.password)}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <div className="form-group "></div>
-            <div className="text-center">
-              <Link to="/">
-                <button type="submit" className="btn btn-primary">
-                  Log in
-                </button>
-              </Link>
-              <p>
-                <br />
-                <br />
-                <Link to="/SignUp"> Don't have an account ? </Link>
-              </p>
-              <p>
-                <Link to="/ForgotPassword"> Forget your password ? </Link>
-              </p>
-            </div>
-          </div>
-        </form>
       </MainContainer>
     );
   }
