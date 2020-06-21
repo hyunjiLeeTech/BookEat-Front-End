@@ -1,0 +1,21 @@
+.page-footer .bg-muted{
+    background-color:  #1D3557;
+}
+
+.bg-muted{
+    background-color:  #1D3557;
+}
+
+/* footer.page-footer{
+    display: block !important;
+} */
+  
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  

@@ -1,0 +1,22 @@
+/*
+* Restaurant Box 
+*/
+
+.resbox{
+    width: 320px;
+    padding: 10px;
+    border: 4px solid  #457B9D;
+    margin: 0;
+}
+
+.resbox p {
+    text-align: center;
+}
+
+#accept-terms{
+    width: 2rem;
+    height: 2rem;
+}
+#termsmodal{
+    margin-left: 7%;
+}
