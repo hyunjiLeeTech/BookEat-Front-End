@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import {withRouter, Route, Switch } from 'react-router-dom'
 import SignUp from './component/Forms/Customer/SignUp'
 import Home from './Home/Home'
 import RestaurantSignUp from './component/Forms/Restaurant/RestaurantSignUp'
@@ -21,11 +21,17 @@ import ChangePassword from "./component/Forms/Customer/ChangePassword";
 
 
 class App extends Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+        console.log('Route change!');
+    }
+}
   render() {
+
     return (
       <div>
         <NavBar />
-        <Switch>
+        <Switch >
           <Route exact path="/" render={() => <Home />} />
           <Route exact path="/SignUp" render={() => <SignUp />} />
           <Route exact path="/Login" render={() => <Login />} />
@@ -70,4 +76,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(props => <App {...props}/>);
