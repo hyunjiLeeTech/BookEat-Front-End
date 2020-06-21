@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 //import GoogleSignIn from 'react-google-signin'
 import MainContainer from '../../Style/MainContainer'
 import './SignUp.css'
@@ -24,19 +24,19 @@ const regExpPassword = RegExp(
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
 
-  Object.values(isError).forEach(val => {
+  Object.values(isError).forEach((val) => {
     if (val.length > 0) {
-      isValid = false
+      isValid = false;
     } else {
-      isValid = true
+      isValid = true;
     }
   });
 
-  Object.values(rest).forEach(val => {
+  Object.values(rest).forEach((val) => {
     if (val === null) {
-      isValid = false
+      isValid = false;
     } else {
-      isValid = true
+      isValid = true;
     }
   });
 
@@ -47,20 +47,20 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: '',
-      lastname: '',
-      email: '',
-      phonenumber: '',
-      password: '',
-      confirmpw: '',
+      firstname: "",
+      lastname: "",
+      email: "",
+      phonenumber: "",
+      password: "",
+      confirmpw: "",
       isError: {
-        firstname: '&#160;',
-        lastname: '&#160;',
-        email: '&#160;',
-        phonenumber: '&#160;',
-        password: '&#160;',
-        confirmpw: '&#160;'
-      }
+        firstname: "&#160;",
+        lastname: "&#160;",
+        email: "&#160;",
+        phonenumber: "&#160;",
+        password: "&#160;",
+        confirmpw: "&#160;",
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -88,11 +88,13 @@ class SignUp extends Component {
         break;
       case "phonenumber":
         isError.phonenumber = regExpPhone.test(value)
-          ? "&#160;" : "Phone Number is invalid";
+          ? "&#160;"
+          : "Phone Number is invalid";
         break;
       case "password":
         isError.password = regExpPassword.test(value)
-          ? "&#160;" : "Atleast 6 characters required"
+          ? "&#160;"
+          : "Atleast 6 characters required";
         this.state.password = value;
         break;
       case "confirmpw":
@@ -105,10 +107,9 @@ class SignUp extends Component {
     }
     this.setState({
       isError,
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
-  }
-
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -142,25 +143,24 @@ class SignUp extends Component {
   // }
 
   componentDidMount() {
-
     // Avoid spacing on the form
     var t1 = document.getElementById("firstname");
     t1.onkeypress = function (event) {
       if (event.keyCode === 32) return false;
-    }
+    };
     var t2 = document.getElementById("email");
     t2.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
-    }
+    };
     var t3 = document.getElementById("password");
     t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
-    }
+    };
     var t4 = document.getElementById("confirmpw");
     t4.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
-    }
-    // Accept term and condition click link 
+    };
+    // Accept term and condition click link
     $("#conditionbtn").on("click", () => {
       $("#accept-terms").removeAttr("disabled");
     })
@@ -183,7 +183,6 @@ class SignUp extends Component {
 
     return (
       <MainContainer>
-
         <div className="container">
           <div className="page-header text-center">
             <h1>Welcome to BookEat!</h1>
