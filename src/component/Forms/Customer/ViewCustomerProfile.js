@@ -105,6 +105,7 @@ class ViewCustomerProfile extends Component {
 
   render() {
     const { isError } = this.state;
+
     return (
       <MainContainer>
         <div class="container mt-3">
@@ -430,6 +431,7 @@ class ViewCustomerProfile extends Component {
                 </table>
               </div>
             </div>
+
             <div id="myReview" class="container tab-pane fade">
               <div className="form-group">
                 <br />
