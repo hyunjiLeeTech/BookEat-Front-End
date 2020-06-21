@@ -14,8 +14,8 @@ class MainContainer extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default MainContainer; 
+export default MainContainer;
