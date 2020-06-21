@@ -222,7 +222,7 @@ class ViewCustomerProfile extends Component {
               </div>
             </div>
 
-            <div id="password" class="container tab-pane active card">
+            <div id="password" class="container tab-pane card">
               <div className="card-body">
                 <br />
                 <h3>Change password</h3>
