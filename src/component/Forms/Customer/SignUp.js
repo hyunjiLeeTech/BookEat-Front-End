@@ -6,6 +6,8 @@ import './SignUp.css'
 import Parser from 'html-react-parser'
 import $ from 'jquery'
 import Axios from 'axios'
+import sha256 from 'crypto-js/sha256';
+
 const serverAddress = "http://localhost:5000"
 
 //Validation 
@@ -114,6 +116,8 @@ class SignUp extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
+      this.state.password = sha256(this.state.password).toString(); //hashing password
+      this.state.confirmpw = sha256(this.state.confirmpw).toString()
       console.log(this.state)
       Axios.post(serverAddress + "/customers/add", this.state).then(res => {
         console.log(res)
