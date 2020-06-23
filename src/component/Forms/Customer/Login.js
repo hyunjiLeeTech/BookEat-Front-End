@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
 import "./SignUp.js";
 import Parser from "html-react-parser";
-import $ from "jquery";
-import FaceBook from "../../../Image/FACEBOOK.PNG";
-import Google from "../../../Image/google.PNG";
+//import FaceBook from "../../../Image/FACEBOOK.PNG";
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -13,6 +13,10 @@ const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
 );
+
+//Google ID
+const CLIENT_ID = '377822834291-u5q8t038me7rn1k5gieq1b6qrohgqedf.apps.googleusercontent.com';
+
 
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
@@ -42,6 +46,8 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
+      isLogined: false,
+      accessToken: '',
       isError: {
         email: "&#160;",
         password: "&#160;",
@@ -50,6 +56,10 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.login = this.login.bind(this);
+    this.handleLoginFailure = this.handleLoginFailure.bind(this);
+    this.logout = this.logout.bind(this);
+    this.handleLogoutFailure = this.handleLogoutFailure.bind(this);
   }
 
   handleChange = (e) => {
@@ -86,6 +96,31 @@ class Login extends Component {
     }
   };
 
+  //Google Log In
+  login(response) {
+    if (response.Zi.access_token) {
+      this.setState(state => ({
+        isLogined: true,
+        accessToken: response.Zi.access_token
+      }));
+    }
+  }
+
+  logout(response) {
+    this.setState(state => ({
+      isLogined: false,
+      accessToken: ''
+    }));
+  }
+
+  handleLoginFailure(response) {
+    alert('Failed to log in')
+  }
+
+  handleLogoutFailure(response) {
+    alert('Failed to log out')
+  }
+
   componentDidMount() {
     // Avoid spacing on the form
 
@@ -97,10 +132,34 @@ class Login extends Component {
     t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
-    // Accept term and condition click link
-    $("#conditionbtn").on("click", () => {
-      $("#accept-terms").removeAttr("disabled");
-    });
+
+    //Facebook LogIn
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        appId: '186311976091336',
+        cookie: true,
+        xfbml: true,
+        version: 'v7.0'
+      });
+
+      window.FB.AppEvents.logPageView();
+
+    };
+
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+  }
+
+  // Facebook
+  responseFacebook(response) {
+    console.log(response)
   }
 
   render() {
@@ -112,28 +171,48 @@ class Login extends Component {
           <div className="card-body">
             <div className="page-header text-center">
               <h3>Log in</h3>
-              <p>{this.state.password}</p>
-              <p>{this.state.confirmpw}</p>
             </div>
             <div className="form-group text-center">
+
               <div>
-                <Link to="/ExternalLogin">
-                  <img src={FaceBook} alt="FaceBook"></img>
-                </Link>
+                 <FacebookLogin
+                appId="186311976091336"
+                autoLoad={true}
+                fields="name,email,picture"
+                callback={this.responseFacebook}
+              />
               </div>
+            
               <div>
-                <Link to="/ExternalLogin">
-                  <img src={Google} alt="Google"></img>
-                </Link>
+                {this.state.isLogined ?
+                  <GoogleLogout
+                    clientId={CLIENT_ID}
+                    buttonText='Logout'
+                    onLogoutSuccess={this.logout}
+                    onFailure={this.handleLogoutFailure}
+                  >
+                  </GoogleLogout> : <GoogleLogin
+                    clientId={CLIENT_ID}
+                    buttonText='Login'
+                    onSuccess={this.login}
+                    onFailure={this.handleLoginFailure}
+                    cookiePolicy={'single_host_origin'}
+                    responseType='code,token'
+                  />
+                }
+                {this.state.accessToken ? <h5>Your Access Token: <br /><br /> {this.state.accessToken}</h5> : null}
+
               </div>
+
+
+
             </div>
 
             <form onSubmit={this.handleSubmit} noValidate>
               <div className="form-group row">
                 <div className="col-sm-1"></div>
                 <label htmlFor="email" className="col-sm-2 col-form-label">
-                  {" "}
-                  Email{" "}
+                  Email
                 </label>
                 <div className="col-sm-6">
                   <input
@@ -141,7 +220,7 @@ class Login extends Component {
                     name="email"
                     id="email"
                     className={
-                      isError.email.length > 0
+                      isError.email.length > 6
                         ? "is-invalid form-control"
                         : "form-control"
                     }
@@ -150,18 +229,18 @@ class Login extends Component {
                     onChange={this.handleChange}
                     required
                   />
-                  {isError.email.length > 0 && (
+                  
                     <span className="invalid-feedback">
                       {Parser(isError.email)}
                     </span>
-                  )}
+                 
                 </div>
               </div>
 
               <div className="form-group row">
                 <div className="col-sm-1"></div>
                 <label htmlFor="password" className="col-sm-2 col-form-label">
-                  Password{" "}
+                  Password
                 </label>
                 <div className="col-sm-6 ">
                   <input
@@ -169,7 +248,7 @@ class Login extends Component {
                     type="password"
                     id="password"
                     className={
-                      isError.password.length > 0
+                      isError.password.length > 6
                         ? "is-invalid form-control"
                         : "form-control"
                     }
@@ -178,11 +257,11 @@ class Login extends Component {
                     onChange={this.handleChange}
                     required
                   />
-                  {isError.password.length > 0 && (
+                 
                     <span className="invalid-feedback">
                       {Parser(isError.password)}
                     </span>
-                  )}
+              
                 </div>
               </div>
 
