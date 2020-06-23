@@ -308,7 +308,7 @@ class RestaurantSignUp extends Component {
                             </div>
                         </div>
 
-
+            
                         <button type="submit" className="btn btn-primary" >Sign Up</button>
 
                     </form>
