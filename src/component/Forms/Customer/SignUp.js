@@ -7,8 +7,7 @@ import Parser from 'html-react-parser'
 import $ from 'jquery'
 import Axios from 'axios'
 import sha256 from 'crypto-js/sha256';
-
-const serverAddress = "http://localhost:5000"
+import serverAddress from '../../../Services/ServerUrl';
 
 //Validation 
 const regExpEmail = RegExp(

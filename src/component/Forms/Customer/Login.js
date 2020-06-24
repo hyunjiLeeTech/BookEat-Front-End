@@ -6,6 +6,11 @@ import Parser from "html-react-parser";
 import $ from "jquery";
 import FaceBook from "../../../Image/FACEBOOK.PNG";
 import Google from "../../../Image/google.PNG";
+import Axios from 'axios'
+import serverAddress from '../../../Services/ServerUrl';
+import authService from '../../../Services/AuthService';
+import authHeader from "../../../Services/DataService";
+import sha256 from 'crypto-js/sha256';
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -81,6 +86,19 @@ class Login extends Component {
     e.preventDefault();
     if (formValid(this.state)) {
       console.log(this.state);
+      this.state.password = sha256(this.state.password).toString(); //hashing password
+      authService.login(this.state.email, this.state.password).then(res => {
+        console.log(res);
+        console.log(authService.getCurrentUser())
+          console.log("Testing auth");
+          Axios.get(serverAddress+'/testauth', {
+            headers: authHeader() //set auth header
+          }).then(res => {
+            console.log(res);
+          }).catch(err => console.log(err));
+      })
+      
+
     } else {
       console.log("Form is invalid!");
     }
@@ -188,11 +206,11 @@ class Login extends Component {
 
               <div className="form-group  ">
                 <div className="text-center">
-                  <Link to="/">
-                    <button type="submit" className="btn btn-primary">
-                      Log in
+
+                  <button type="submit" className="btn btn-primary">
+                    Log in
                     </button>
-                  </Link>
+
                   <p>
                     <br />
                     <br />
