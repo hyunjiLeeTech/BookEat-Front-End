@@ -85,26 +85,38 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
+      $("#login-btn").attr("disabled", "true").text("Please Wait")
       console.log(this.state);
-      this.state.password = sha256(this.state.password).toString(); //hashing password
-      authService.login(this.state.email, this.state.password).then(res => {
-        console.log(res);
-        console.log(authService.getCurrentUser())
+      var hashedpw = sha256(this.state.password).toString(); //hashing password
+      authService.login(this.state.email, hashedpw).then(res => {
+        if (res.errcode === 0) {
+          console.log(authService.getCurrentUser());
           console.log("Testing auth");
-          Axios.get(serverAddress+'/testauth', {
+          Axios.get(serverAddress + '/testauth', {
             headers: authHeader() //set auth header
           }).then(res => {
             console.log(res);
-          }).catch(err => console.log(err));
-      })
-      
+            window.location.href = "/" //redirect to home page after login, set location.href to refresh the page.
 
+          }).catch(err => console.log(err)); //TODO: err handling needs to be finished
+        } else { //TODO: Login operation failed on serverside
+          console.log(res.errmsg)
+        }
+      })
     } else {
       console.log("Form is invalid!");
     }
   };
 
   componentDidMount() {
+    if (authService.getCurrentUser() != null) {
+      console.log("Already logged in, redirecting to log out");
+      //url params can be modified.
+      window.location.href = "/logout?redirectUrl=/login&message=You already logged in"
+    }
+
+
+
     // Avoid spacing on the form
 
     var t2 = document.getElementById("email");
@@ -207,7 +219,7 @@ class Login extends Component {
               <div className="form-group  ">
                 <div className="text-center">
 
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" id="login-btn" className="btn btn-primary">
                     Log in
                     </button>
 
