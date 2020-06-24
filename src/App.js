@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {withRouter, Route, Switch } from 'react-router-dom'
+import { withRouter, Route, Switch } from 'react-router-dom'
 import SignUp from './component/Forms/Customer/SignUp'
 import Home from './Home/Home'
 import RestaurantSignUp from './component/Forms/Restaurant/RestaurantSignUp'
@@ -17,15 +17,15 @@ import ForgotPassword from "./component/Forms/Customer/ForgotPassword";
 import ViewCustomerProfile from "./component/Forms/Customer/ViewCustomerProfile";
 import ReservationHistory from "./component/Forms/Customer/ReservationHistory";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
-
+import Logout from './component/Forms/Logout';
 
 
 class App extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-        console.log('Route change!');
+      console.log('Route change!');
     }
-}
+  }
   render() {
 
     return (
@@ -37,6 +37,7 @@ class App extends Component {
           <Route exact path="/Login" render={() => <Login />} />
           <Route exact path="/ExternalLogin" render={() => <ExternalLogin />} />
           <Route exact path="/ConfirmLogin" render={() => <ConfirmLogin />} />
+          <Route path='/logout' component={Logout} />
           <Route
             exact
             path="/ViewCustomerProfile"
@@ -76,4 +77,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(props => <App {...props}/>);
+export default withRouter(props => <App {...props} />);
