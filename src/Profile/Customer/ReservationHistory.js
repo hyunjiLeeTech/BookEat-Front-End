@@ -1,5 +1,5 @@
 import React from "react";
-import MainContainer from "../../Style/MainContainer";
+import MainContainer from "../../component/Style/MainContainer";
 
 function ReservationHistory() {
   return (

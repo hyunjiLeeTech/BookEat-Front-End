@@ -212,14 +212,14 @@ class RestaurantProfile extends Component {
                                 
                             </li>
                             <li className="nav-item">
-                                <Link to='/'>
+                                <Link to='/Manager'>
                                     <button className="nav-link" >Manager</button>
                                 </Link>
                                 
                             </li>
                             <li className="nav-item">
-                                <Link to='/'>
-                                    <button className="nav-link disabled">Settings</button>
+                                <Link to='/ChangePassword'>
+                                    <button className="nav-link">Password</button>
                                 </Link>
                                 
                             </li>
@@ -307,10 +307,27 @@ class RestaurantProfile extends Component {
                                 <label htmlFor="cuisineStyle" className="col-sm-2 col-form-label">Cuisine Style</label>
                                 <div className="col-md-10">
                                     <select className="custom-select " id="cuisineStyle" name="cuisineStyle" value={this.state.cuisineStyle} onChange={this.handleChange}>
-                                        <option>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option>Choose Style</option>
+                                        <option value="american">American</option>
+                                        <option value="italian">Italian</option>
+                                        <option value="steakhouse">Steak House</option>
+                                        <option value="seafood">Seafood</option>
+                                        <option value="french">French</option>
+                                        <option value="indian">Indian</option>
+                                        <option value="japanese">Japanese</option>
+                                        <option value="british">British</option>
+                                        <option value="barbecue">Barbecue</option>
+                                        <option value="tapas">Tapas</option>
+                                        <option value="grill">Grill</option>
+                                        <option value="conformfood">Conform Food</option>
+                                        <option value="afternoontea">Afternoon Tea</option>
+                                        <option value="burgers">Burgers</option>
+                                        <option value="canadian">Canadian</option>
+                                        <option value="vegan">Vegan</option>
+                                        <option value="vegiterian">Vegetarian</option>
+                                        <option value="asian">Asian</option>
+                                        <option value="european">European</option>
+                                        <option value="continental">Continental</option>
                                     </select>
                                 </div>
                             </div>
@@ -320,10 +337,14 @@ class RestaurantProfile extends Component {
                                 <label htmlFor="category" className="col-sm-2 col-form-label">Category</label>
                                 <div className="col-md-10">
                                     <select className="custom-select " id="category" name="category" value={this.state.category} onChange={this.handleChange}>
-                                        <option >Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option >Choose Category</option>
+                                        <option value="ethinic">Ethinic</option>
+                                        <option value="fastfood">Fast Food</option>
+                                        <option value="fastcasual">Fast Casual</option>
+                                        <option value="casualdining">Casual Dining</option>
+                                        <option value="premiumdining">Premium Dining</option>
+                                        <option value="familydining">Family Dining</option>
+                                        <option value="finedining">Fine Dining</option>
                                     </select>
                                 </div>
                             </div>
@@ -332,10 +353,10 @@ class RestaurantProfile extends Component {
                                 <label htmlFor="priceRange" className="col-sm-2 col-form-label">Price Range</label>
                                 <div className="col-md-10">
                                     <select className="custom-select " id="priceRange" name="priceRange" value={this.state.priceRange} onChange={this.handleChange}>
-                                        <option >Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option >Choose Range</option>
+                                        <option value="low">$0-$50</option>
+                                        <option value="medium">$50-$100</option>
+                                        <option value="high">$100+</option>
                                     </select>
                                 </div>
                             </div>
@@ -893,10 +914,16 @@ class RestaurantProfile extends Component {
                             </div>
 
                         </form>
-
-                        <Link to="/">
-                            <button className="btn btn-primary">Go somewhere</button>
-                        </Link>
+                        <div className="panel-footer row ">
+                            <div className="col-sm-6 text-left">
+                            <button className="btn btn-primary">Save</button>
+                            </div>
+                            
+                            <div className="col-sm-6 text-right">
+                                <button className="btn btn-primary">Edit</button>
+                            </div>
+                        </div>
+                       
                         
                     </div>
                 </div>

@@ -10,7 +10,7 @@ class Footer extends Component{
     var headerHeight = $("nav.navbar").height();
     var bodyHeight = $("div.body").height();
     var footerHeight = $("div.footer").height();
-    if(bodyHeight == NaN) bodyHeight = 0;
+    if(bodyHeight === isNaN) bodyHeight = 0;
     if((headerHeight + bodyHeight + footerHeight)<screenHeight){
       console.log("in")
       var fix = screenHeight - headerHeight - footerHeight;
@@ -20,13 +20,14 @@ class Footer extends Component{
 
   componentDidMount(){
 
+    
     window.onresize=function(){
       $("div.body").css("height", "");
       var screenHeight = $(window).height();
       var headerHeight = $("nav.navbar").height();
       var bodyHeight = $("div.body").height();
       var footerHeight = $("div.footer").height();
-      if(bodyHeight == NaN) bodyHeight = 0;
+      if(bodyHeight === isNaN) bodyHeight = 0;
       console.log("resize")
       console.log(screenHeight);
       console.log(headerHeight);
@@ -39,7 +40,7 @@ class Footer extends Component{
         $("div.body").css("height", fix + "px");
       }
     }
-    if(bodyHeight == NaN) bodyHeight = 0;
+    if(bodyHeight === isNaN) bodyHeight = 0;
 
     var screenHeight = $(window).height();
     var headerHeight = $("nav.navbar").height();

@@ -40,7 +40,7 @@ const NavBar = () => {
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
                         {/* <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a> */}
-                        <NavLink to="/home" className="nav-link">Home</NavLink> 
+                        <NavLink to="/" className="nav-link">Home</NavLink> 
                     </li>
                     <li className="nav-item">
                         <NavLink to="/profile" className="nav-link">Profile</NavLink> 
