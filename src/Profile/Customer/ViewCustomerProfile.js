@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MainContainer from "../../Style/MainContainer";
+import MainContainer from "../../component/Style/MainContainer";
 import { Link } from "react-router-dom";
 import Parser from "html-react-parser";
 import $ from "jquery";

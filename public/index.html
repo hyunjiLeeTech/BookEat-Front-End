@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/Article">
 
 <head>
   <meta charset="utf-8" />
@@ -25,7 +25,29 @@
  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
     integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+     <!-- BEGIN Pre-requisites Google-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+  </script>
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+  </script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
+  <script src="https://apis.google.com/js/api.js" async defer></script>
+  <!-- END Pre-requisites Google-->
+
+  <!-- Google API Function -->
+  <!-- <script>
+    function start() {
+      gapi.load('auth2', function() {
+        auth2 = gapi.auth2.init({
+          client_id: '377822834291-u5q8t038me7rn1k5gieq1b6qrohgqedf.apps.googleusercontent.com'
+          // Scopes to request in addition to 'profile' and 'email'
+          //scope: 'additional_scope'
+        });
+      });
+    }
+  </script> -->
+  <!-- End Google API Function -->
 
   <title>BookEat</title>
 </head>
