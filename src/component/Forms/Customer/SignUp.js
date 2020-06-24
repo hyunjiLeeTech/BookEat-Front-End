@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-//import GoogleSignIn from 'react-google-signin'
+import { gapi } from 'gapi-script';
 import MainContainer from '../../Style/MainContainer'
 import './SignUp.css'
 import Parser from 'html-react-parser'
 import $ from 'jquery'
 import Axios from 'axios'
-const serverAddress = "http://localhost:5000"
+import sha256 from 'crypto-js/sha256';
+import serverAddress from '../../../Services/ServerUrl';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import Facebook from '../../../Image/FaceSign.jpg'
+
 
 //Validation 
 const regExpEmail = RegExp(
@@ -20,6 +24,11 @@ const regExpPhone = RegExp(
 const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
 );
+
+//Facebook
+const responseFacebook = (response) => {
+  console.log(response);
+};
 
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
@@ -53,6 +62,7 @@ class SignUp extends Component {
       phonenumber: "",
       password: "",
       confirmpw: "",
+      isSignedIn: false,
       isError: {
         firstname: "&#160;",
         lastname: "&#160;",
@@ -114,15 +124,17 @@ class SignUp extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
+      this.state.password = sha256(this.state.password).toString(); //hashing password
+      this.state.confirmpw = sha256(this.state.confirmpw).toString()
       console.log(this.state)
-      Axios.post(serverAddress + "/customers/add", this.state).then(res => {
+      Axios.post(serverAddress + "/customersignup", this.state).then(res => {
         console.log(res)
-        if(res.data.errcode == 0){
+        if (res.data.errcode === 0) {
           $("#signResultText").text("Congrats, You can now log into BookEat using your account").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
-          .addClass("alert-success");
-        }else{
+            .addClass("alert-success");
+        } else {
           $("#signResultText").text("Sorry, " + res.data.errmsg).removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
-          .addClass("alert-danger");;
+            .addClass("alert-danger");;
         }
       }).catch(err => {
         console.log(err)
@@ -134,15 +146,38 @@ class SignUp extends Component {
   }
 
   // Google Sign In 
-  // onSignIn(userProfile, accessToken) {
-  //   console.log(userProfile)
-  // }
 
-  // signOut() {
-  //   this.googleAuth.signOut();
-  // }
+  onSuccess() {
+    console.log('on success')
+    this.setState({
+      isSignedIn: true,
+      err: null
+    })
+  }
+
+  onLoginFailed(err) {
+    this.setState({
+      isSignedIn: false,
+      error: err,
+    })
+  }
+
+  getContent() {
+    if (this.state.isSignedIn) {
+      return <p>hello user, you're signed in </p>
+    } else {
+      return (
+        <div>
+          <p>You are not signed in. Click here to sign in.</p>
+          <button id="loginButton">Login with Google</button>
+        </div>
+      )
+    }
+
+  }
 
   componentDidMount() {
+    const successCallback = this.onSuccess.bind(this);
     // Avoid spacing on the form
     var t1 = document.getElementById("firstname");
     t1.onkeypress = function (event) {
@@ -164,6 +199,34 @@ class SignUp extends Component {
     $("#conditionbtn").on("click", () => {
       $("#accept-terms").removeAttr("disabled");
     })
+
+    //Google Sign In
+    window.gapi.load('auth2', () => {
+      this.auth2 = gapi.auth2.init({
+        client_id: '377822834291-u5q8t038me7rn1k5gieq1b6qrohgqedf.apps.googleusercontent.com',
+      })
+
+      this.auth2.then(() => {
+        console.log('on init');
+        this.setState({
+          isSignedIn: this.auth2.isSignedIn.get(),
+        });
+      });
+    });
+
+    window.gapi.load('signin2', function () {
+      // Method 3: render a sign in button
+      // using this method will show Signed In if the user is already signed in
+      var opts = {
+        width: 200,
+        height: 50,
+        client_id: '377822834291-u5q8t038me7rn1k5gieq1b6qrohgqedf.apps.googleusercontent.com',
+        onsuccess: successCallback
+      }
+      gapi.signin2.render('loginButton', opts)
+    })
+
+
   }
 
   handleTerms(result, dom) {
@@ -266,7 +329,7 @@ class SignUp extends Component {
                 </div>
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#signResultModal" >Sign Up</button>
-                  <p>Already a member? <Link to='/SignUp'> Log In </Link></p>
+                  <p>Already a member? <Link to='/Login'> Log In </Link></p>
                 </div>
               </div>
             </form>
@@ -275,26 +338,26 @@ class SignUp extends Component {
             <div className="col-xs-6 col-md-4">
               <div className="resbox">
                 <h4>Be part of BookEat</h4>
-                <p>Want to advertise your restaurant?
-            Sign Up here and be part of the BookEat Family!</p>
+                <p>Want to advertise your restaurant? Sign Up here and be part of the BookEat Family!</p>
                 <div className="text-center">
                   <Link to="/RestaurantSignUp">
                     <button className="btn btn-primary">Restaurant Sign Up</button>
                   </Link>
                 </div>
               </div>
+              {/* GoogleSignUp */}
+              {this.getContent()}
+              <br></br>
+              <FacebookLogin
+                appId="186311976091336"
+                autoLoad={true}
+                callback={responseFacebook}
+                render={renderProps => (
+                  <button onClick={renderProps.onClick}><img src={Facebook} alt= ""/></button>
+                )}
+              />
             </div>
-
-            {/* <div className="row">
-                            <div className="col-xs-6 col-md-4">
-
-                                <h4>Test</h4>
-
-
-                            </div>
-
-                        </div> */}
-
+            
           </div>
 
           <div className="modal fade" id="TmersModal" tabIndex="-1" role="dialog" aria-labelledby="TermsModalLabel" aria-hidden="true">
@@ -425,15 +488,6 @@ class SignUp extends Component {
               </div>
             </div>
           </div>
-
-
-
-
-          {/* <GoogleSignIn clientId="YOUR_CLIENT_ID"
-          ref={g => this.googleAuth = g}
-          onSuccess={this.onSignIn.bind(this)}
-        />
-        <button onClick={this.signOut.bind(this)}> Sign Out </button> */}
         </div>
       </MainContainer>
     );

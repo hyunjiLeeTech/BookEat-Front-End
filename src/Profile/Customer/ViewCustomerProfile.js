@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MainContainer from "../../Style/MainContainer";
+import MainContainer from "../../component/Style/MainContainer";
 import { Link } from "react-router-dom";
 import Parser from "html-react-parser";
 import $ from "jquery";
@@ -222,7 +222,7 @@ class ViewCustomerProfile extends Component {
               </div>
             </div>
 
-            <div id="password" class="container tab-pane active card">
+            <div id="password" class="container tab-pane card">
               <div className="card-body">
                 <br />
                 <h3>Change password</h3>

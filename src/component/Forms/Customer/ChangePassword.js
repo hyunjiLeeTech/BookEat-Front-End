@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
 import Parser from "html-react-parser";
-import $ from "jquery";
 
 //Validation
 const regExpPassword = RegExp(
@@ -37,9 +36,11 @@ class ChangePassword extends Component {
     this.state = {
       password: "",
       newPassword: "",
+      confirmPassword: "",
       isError: {
         password: "&#160;",
         newPassword: "&#160;",
+        confirmPassword: "&#160;"
       },
     };
 
@@ -64,6 +65,11 @@ class ChangePassword extends Component {
           : "At least 6 characters required";
         this.state.newPassword = value;
         break;
+      case "confirmPassword":
+        this.state.confirmPassword = value;
+        isError.confirmPassword =
+          this.state.confirmPassword === this.state.newPassword
+            ? "&#160;" : "Password not matching"
       default:
         break;
     }
@@ -84,19 +90,18 @@ class ChangePassword extends Component {
 
   componentDidMount() {
     // Avoid spacing on the form
-
     var t3 = document.getElementById("password");
     t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
     var t2 = document.getElementById("newPassword");
-    t3.onkeypress = function (e) {
+    t2.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
-    // Accept term and condition click link
-    $("#conditionbtn").on("click", () => {
-      $("#accept-terms").removeAttr("disabled");
-    });
+    var t1 = document.getElementById("confirmPassword");
+    t1.onkeypress = function (e) {
+      if (e.keyCode === 32) return false;
+    };
   }
 
   render() {
@@ -104,11 +109,41 @@ class ChangePassword extends Component {
 
     return (
       <MainContainer>
-        <div className="container">
+
+
+        <div className="card">
+          <div className="card-header">
+            <ul className="nav nav-tabs card-header-tabs">
+              <li className="nav-item">
+                <Link to='/RestaurantProfile'>
+                  <button className="nav-link"> My Profile</button>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to='/'>
+                  <button className="nav-link" >Menu</button>
+                </Link>
+
+              </li>
+              <li className="nav-item">
+                <Link to='/Manager'>
+                  <button className="nav-link" >Manager</button>
+                </Link>
+
+              </li>
+              <li className="nav-item">
+                <Link to='/ChangePassword'>
+                  <button className="nav-link active">Password</button>
+                </Link>
+
+              </li>
+            </ul>
+          </div>
+          <div className="card-body">
+          <div className="container">
           <div className="page-header text-center">
             <h1>Change Password</h1>
-            <p>{this.state.password}</p>
-            <p>{this.state.confirmpw}</p>
+            <br/>
           </div>
         </div>
 
@@ -116,7 +151,7 @@ class ChangePassword extends Component {
           <div className="col-xs-12 col-md-8 ">
             <div className="form-group row">
               <label htmlFor="password" className="col-sm-2 col-form-label">
-                Old Password{" "}
+                Old Password
               </label>
               <div className="col-sm-6">
                 <input
@@ -124,20 +159,20 @@ class ChangePassword extends Component {
                   type="password"
                   id="password"
                   className={
-                    isError.password.length > 0
+                    isError.password.length > 6
                       ? "is-invalid form-control"
                       : "form-control"
                   }
                   value={this.state.password}
-                  placeholder="Password"
+                  placeholder="Old Password"
                   onChange={this.handleChange}
                   required
                 />
-                {isError.password.length > 0 && (
-                  <span className="invalid-feedback">
-                    {Parser(isError.password)}
-                  </span>
-                )}
+
+                <span className="invalid-feedback">
+                  {Parser(isError.password)}
+                </span>
+
               </div>
             </div>
           </div>
@@ -145,7 +180,7 @@ class ChangePassword extends Component {
           <div className="col-xs-12 col-md-8 ">
             <div className="form-group row">
               <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                New Password{" "}
+                New Password
               </label>
               <div className="col-sm-6">
                 <input
@@ -153,20 +188,20 @@ class ChangePassword extends Component {
                   type="password"
                   id="newPassword"
                   className={
-                    isError.newPassword.length > 0
+                    isError.newPassword.length > 6
                       ? "is-invalid form-control"
                       : "form-control"
                   }
                   value={this.state.newPassword}
-                  placeholder="newPassword"
+                  placeholder="New Password"
                   onChange={this.handleChange}
                   required
                 />
-                {isError.newPassword.length > 0 && (
-                  <span className="invalid-feedback">
-                    {Parser(isError.newPassword)}
-                  </span>
-                )}
+
+                <span className="invalid-feedback">
+                  {Parser(isError.newPassword)}
+                </span>
+
               </div>
             </div>
           </div>
@@ -174,7 +209,7 @@ class ChangePassword extends Component {
           <div className="col-xs-12 col-md-8 ">
             <div className="form-group row">
               <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                Password confirmation{" "}
+                Confirm New Password
               </label>
               <div className="col-sm-6">
                 <input
@@ -182,20 +217,20 @@ class ChangePassword extends Component {
                   type="password"
                   id="confirmPassword"
                   className={
-                    isError.newPassword.length > 0
+                    isError.confirmPassword.length > 6
                       ? "is-invalid form-control"
                       : "form-control"
                   }
-                  value={this.state.newPassword}
+                  value={this.state.confirmPassword}
                   placeholder="Password confirmation"
                   onChange={this.handleChange}
                   required
                 />
-                {isError.newPassword.length > 0 && (
-                  <span className="invalid-feedback">
-                    {Parser(isError.newPassword)}
-                  </span>
-                )}
+
+                <span className="invalid-feedback">
+                  {Parser(isError.confirmPassword)}
+                </span>
+
               </div>
             </div>
 
@@ -210,6 +245,14 @@ class ChangePassword extends Component {
             </div>
           </div>
         </form>
+            
+
+
+          </div>
+        </div>
+
+
+        
       </MainContainer>
     );
   }
