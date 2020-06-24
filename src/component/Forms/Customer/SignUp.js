@@ -127,7 +127,7 @@ class SignUp extends Component {
       this.state.password = sha256(this.state.password).toString(); //hashing password
       this.state.confirmpw = sha256(this.state.confirmpw).toString()
       console.log(this.state)
-      Axios.post(serverAddress + "/customers/add", this.state).then(res => {
+      Axios.post(serverAddress + "/customersignup", this.state).then(res => {
         console.log(res)
         if (res.data.errcode === 0) {
           $("#signResultText").text("Congrats, You can now log into BookEat using your account").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
