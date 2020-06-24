@@ -13,6 +13,9 @@ class AuthService {
             .then(response => {
                 if (response.data.errcode === 0) {
                     localStorage.setItem("user", JSON.stringify(response.data));
+                } else {
+                    console.log('login failed: ');
+                    console.log(response.data)
                 }
                 return response.data;
             }).catch(err => console.log("AuthService Login: err: " + err));
