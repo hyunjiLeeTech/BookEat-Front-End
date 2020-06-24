@@ -11,7 +11,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
 import Login from "./component/Forms/Customer/Login";
-import ExternalLogin from "./component/Forms/Customer/ExternalLogin";
 import ConfirmLogin from "./component/Forms/Customer/ConfirmLogin";
 import ForgotPassword from "./component/Forms/Customer/ForgotPassword";
 import ViewCustomerProfile from "./component/Forms/Customer/ViewCustomerProfile";
@@ -29,7 +28,6 @@ class App extends Component {
           <Route exact path="/" render={() => <Home />} />
           <Route exact path="/SignUp" render={() => <SignUp />} />
           <Route exact path="/Login" render={() => <Login />} />
-          <Route exact path="/ExternalLogin" render={() => <ExternalLogin />} />
           <Route exact path="/ConfirmLogin" render={() => <ConfirmLogin />} />
           <Route
             exact
