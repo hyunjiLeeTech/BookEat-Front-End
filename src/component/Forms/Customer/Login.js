@@ -114,6 +114,7 @@ class Login extends Component {
           }).catch(err => console.log(err)); //TODO: err handling needs to be finished
         } else { //TODO: Login operation failed on serverside
           console.log(res.errmsg)
+          alert(res.errmsg);
         }
       })
     } else {
