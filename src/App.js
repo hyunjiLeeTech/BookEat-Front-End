@@ -18,6 +18,8 @@ import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
 import ReservationHistory from "./Profile/Customer/ReservationHistory";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import ManagerProfile from './Profile/Manager/ManagerProfile'
+import EmailConfirmation from './RedirectPages/EmailConfirmation'
+import NotFound from './RedirectPages/NotFound'
 
 
 
@@ -65,6 +67,14 @@ class App extends Component {
           <Route
             exact path="/ManagerProfile"
             render={() => <ManagerProfile />}
+          />
+          <Route
+            exact path="/EmailConfirmation"
+            render={() => <EmailConfirmation />}
+          />
+           <Route
+            exact path="/NotFound"
+            render={() => <NotFound/>}
           />
         </Switch>
         <div className="footer">
