@@ -17,6 +17,7 @@ import ForgotPassword from "./component/Forms/Customer/ForgotPassword";
 import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
 import ReservationHistory from "./Profile/Customer/ReservationHistory";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
+import ManagerProfile from './Profile/Manager/ManagerProfile'
 
 
 
@@ -60,6 +61,10 @@ class App extends Component {
           <Route
             exact path="/Manager"
             render={() => <Manager />}
+          />
+          <Route
+            exact path="/ManagerProfile"
+            render={() => <ManagerProfile />}
           />
         </Switch>
         <div className="footer">
