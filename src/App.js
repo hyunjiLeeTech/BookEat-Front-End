@@ -18,7 +18,7 @@ import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
 import ReservationHistory from "./Profile/Customer/ReservationHistory";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import Logout from './component/Forms/Logout';
-
+import Layout from './component/RestaurantLayout/Layout';
 
 class App extends Component {
   componentDidUpdate(prevProps) {
@@ -37,6 +37,7 @@ class App extends Component {
           <Route exact path="/Login" render={() => <Login />} />
           <Route exact path="/ConfirmLogin" render={() => <ConfirmLogin />} />
           <Route path='/logout' component={Logout} />
+          <Route path='/layout' component={Layout} />
           <Route
             exact
             path="/ViewCustomerProfile"
