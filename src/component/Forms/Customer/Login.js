@@ -115,6 +115,8 @@ class Login extends Component {
         } else { //TODO: Login operation failed on serverside
           console.log(res.errmsg)
           alert(res.errmsg);
+          $("#login-btn").attr("disabled", "false").text("Login");
+          $("#passowrd").text("");
         }
       })
     } else {
