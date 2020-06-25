@@ -139,11 +139,11 @@ class Login extends Component {
   }
 
   handleLoginFailure(response) {
-    alert('Failed to log in')
+    console.log('Failed to log in')
   }
 
   handleLogoutFailure(response) {
-    alert('Failed to log out')
+    console.log('Failed to log out')
   }
 
   componentDidMount() {
