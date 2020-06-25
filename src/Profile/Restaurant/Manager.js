@@ -163,6 +163,12 @@ class RestaurantProfile extends Component {
         );
     }
 
+    renderView () {
+        return(
+            <button className="btn btn-danger"> Delete</button>
+        )
+    }
+
     render() {
         const { showForm } = this.state;
         return (
@@ -199,19 +205,18 @@ class RestaurantProfile extends Component {
                     <div className="card-body">
                         <div className="panel-footer row ">
                             <div className="col-sm-6 text-left">
-                                <button className="btn btn-primary" onClick={this.onClick}>Create New Manager</button>
+                                <button id="create" className="btn btn-primary" onClick={this.onClick}>Create New Manager</button>
                             </div>
 
                             <div className="col-sm-6 text-right">
-                                <button className="btn btn-primary">View Manager</button>
+                                <button id="view" className="btn btn-primary" onClick={this.onClick}>View Manager</button>
                             </div>
 
                         </div>
                         <br />
-
-                        {showForm && this.renderForm()}
-
-
+                       
+                        {showForm && this.renderForm() }
+                            { showForm && this.renderView() }
                     </div>
                 </div>
 
