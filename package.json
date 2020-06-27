@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "crypto-js": "^4.0.0",
     "gapi-script": "^1.0.2",
     "html-react-parser": "^0.13.0",
     "jquery": "^3.5.1",
@@ -21,7 +22,8 @@
     "react-modal": "^3.11.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "reactjs-popup": "^1.5.0"
+    "reactjs-popup": "^1.5.0",
+    "serve": "^11.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

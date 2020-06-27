@@ -1,7 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
+import NavBarRightLoggedin from './NavBarRight-loggedin';
+import NavBarRightLoggedOut from './NavBarRight-loggedout';
+import authService from '../../Services/AuthService';
 const NavBar = () => {
+    const user = authService.getCurrentUser();
     return (
         // <nav className="navbar navbar-default navbar-fixed-top">
         //     <div className="topbar">
@@ -47,15 +50,9 @@ const NavBar = () => {
                         <a className="nav-link disabled" href="#">Disabled</a>
                     </li> */}
                 </ul>
-                <ul className="navbar-nav navbar-right">
-                    <li className="nav-item">
-                        {/* <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a> */}
-                        <NavLink to="/signup" className="nav-link">Sign up</NavLink> 
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to="/login" className="nav-link">Login</NavLink> 
-                    </li>
-                </ul>
+                
+                {user === null ? <NavBarRightLoggedOut /> : <NavBarRightLoggedin />}
+                
             </div>
         </nav>
     )

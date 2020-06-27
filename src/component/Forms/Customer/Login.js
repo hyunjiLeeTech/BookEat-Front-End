@@ -3,6 +3,14 @@ import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
 import "./SignUp.js";
 import Parser from "html-react-parser";
+import $ from "jquery";
+import FaceBook from "../../../Image/FACEBOOK.PNG";
+import Google from "../../../Image/google.PNG";
+import Axios from 'axios'
+import serverAddress from '../../../Services/ServerUrl';
+import authService from '../../../Services/AuthService';
+import authHeader from "../../../Services/DataService";
+import sha256 from 'crypto-js/sha256';
 //import FaceBook from "../../../Image/FACEBOOK.PNG";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
@@ -90,7 +98,28 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
+      $("#login-btn").attr("disabled", "true").text("Please Wait")
       console.log(this.state);
+      var hashedpw = sha256(this.state.password).toString(); //hashing password
+      authService.login(this.state.email, hashedpw).then(res => {
+        if (res.errcode === 0) {
+          console.log(authService.getCurrentUser());
+          console.log("Testing auth");
+          Axios.get(serverAddress + '/testauth', {
+            headers: authHeader() //set auth header
+          }).then(res => {
+            console.log(res);
+            window.location.href = "/" //redirect to home page after login, set location.href to refresh the page.
+
+          }).catch(err => console.log(err)); //TODO: err handling needs to be finished
+        } else { //TODO: Login operation failed on serverside
+          console.log(res.errmsg)
+          alert(res.errmsg);
+          $("#login-btn").removeAttr("disabled").text("Login");
+          $("#passowrd").text("");
+          this.state.password = "";
+        }
+      })
     } else {
       console.log("Form is invalid!");
     }
@@ -114,14 +143,22 @@ class Login extends Component {
   }
 
   handleLoginFailure(response) {
-    alert('Failed to log in')
+    console.log('Failed to log in')
   }
 
   handleLogoutFailure(response) {
-    alert('Failed to log out')
+    console.log('Failed to log out')
   }
 
   componentDidMount() {
+    if (authService.getCurrentUser() != null) {
+      console.log("Already logged in, redirecting to log out");
+      //url params can be modified.
+      window.location.href = "/logout?redirectUrl=/login&message=You already logged in"
+    }
+
+
+
     // Avoid spacing on the form
 
     var t2 = document.getElementById("email");
@@ -267,11 +304,11 @@ class Login extends Component {
 
               <div className="form-group  ">
                 <div className="text-center">
-                  <Link to="/">
-                    <button type="submit" className="btn btn-primary">
-                      Log in
+
+                  <button type="submit" id="login-btn" className="btn btn-primary">
+                    Log in
                     </button>
-                  </Link>
+
                   <p>
                     <br />
                     <br />
