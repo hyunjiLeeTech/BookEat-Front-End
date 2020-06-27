@@ -17,11 +17,20 @@ class AuthService {
                     console.log('login failed: ');
                     console.log(response.data)
                 }
-                return response.data;
+                return response;
             }).catch(err => console.log("AuthService Login: err: " + err));
     }
     logout() {
-        localStorage.removeItem("user");
+        return axios
+            .get(API_URL + "/logout")
+            .then(res=>{
+                if(res.errcode !== 0){
+                    console.log('logout error returned from server side')
+                    console.log(response.data)
+                }
+                localStorage.removeItem("user");
+                return res;
+            })
     }
 
     getCurrentUser() {
