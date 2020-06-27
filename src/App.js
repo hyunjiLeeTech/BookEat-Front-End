@@ -20,7 +20,13 @@ import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import Logout from './component/Forms/Logout';
 import Layout from './component/RestaurantLayout/Layout';
 
+import authHeader from './Services/authHeader'
+
 class App extends Component {
+  queryUserInfo(){
+    
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       console.log('Route change!');

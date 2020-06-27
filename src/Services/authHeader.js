@@ -5,7 +5,7 @@ export default function authHeader() {
         return {
             Authorization: 'Bearer ' + user.jwt,
             'x-access-token': user.jwt
-        };
+        }; 
     } else {
         console.log("DataService authHeader: err: local user does not exist or does not contain jwt");
         return {};

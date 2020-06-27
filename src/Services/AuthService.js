@@ -1,5 +1,6 @@
 import axios from "axios";
 import serverAddress from './ServerUrl'
+import authHeader from './authHeader'
 
 const API_URL = serverAddress;
 
@@ -21,15 +22,24 @@ class AuthService {
             }).catch(err => console.log("AuthService Login: err: " + err));
     }
     logout() {
+        console.log(authHeader());
         return axios
-            .get(API_URL + "/logout")
+            .get(API_URL + "/logout", {
+                headers: authHeader()
+            })
             .then(res=>{
                 if(res.errcode !== 0){
                     console.log('logout error returned from server side')
-                    console.log(response.data)
+                    console.log(res.data)
                 }
                 localStorage.removeItem("user");
                 return res;
+            }).catch(err =>{
+                console.log("logout error")
+                console.log(err);
+                localStorage.removeItem("user");
+                throw err;
+                //return err;
             })
     }
 

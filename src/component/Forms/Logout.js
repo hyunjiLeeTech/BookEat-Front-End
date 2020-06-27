@@ -13,9 +13,8 @@ class Logout extends Component {
         if(urlParams.has("message")){
             $("#LogoutMessage").text(urlParams.get("message"));
         }
-        authService.logout();
-        setTimeout(function(){
-            $("#LogoutMessage").text("You're logged out");
+        authService.logout().then(res=>{
+            $("#LogoutMessage").text(res.data.errmsg);
             $("#LogoutHint").text("We will redirect for you soon");
             setTimeout(function () {
                 if (urlParams.has("redirectUrl")) {
@@ -24,7 +23,21 @@ class Logout extends Component {
                     window.location.href = '/'
                 }
             }, 2000)
-        },1500)
+        }).catch(err => {
+            console.log(err);
+            $("#LogoutMessage").text("You are logged out");
+            $("#LogoutHint").text("We will redirect for you soon");
+            setTimeout(function () {
+                if (urlParams.has("redirectUrl")) {
+                    window.location.href = urlParams.get("redirectUrl");
+                }else{
+                    window.location.href = '/'
+                }
+            }, 2000)
+        })
+
+
+
     }
 
     render() {

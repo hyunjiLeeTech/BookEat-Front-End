@@ -9,7 +9,7 @@ import Google from "../../../Image/google.PNG";
 import Axios from 'axios'
 import serverAddress from '../../../Services/ServerUrl';
 import authService from '../../../Services/AuthService';
-import authHeader from "../../../Services/DataService";
+import authHeader from "../../../Services/authHeader";
 import sha256 from 'crypto-js/sha256';
 //import FaceBook from "../../../Image/FACEBOOK.PNG";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
@@ -109,8 +109,7 @@ class Login extends Component {
             headers: authHeader() //set auth header
           }).then(res => {
             console.log(res);
-            //window.location.href = "/" //redirect to home page after login, set location.href to refresh the page.
-
+            window.location.href = "/" //redirect to home page after login, set location.href to refresh the page.
           }).catch(err => console.log(err)); //TODO: err handling needs to be finished
         } else { //TODO: Login operation failed on serverside
           console.log(res.data.errmsg)
@@ -122,7 +121,6 @@ class Login extends Component {
       })
     } else {
       console.log("Form is invalid!");
-      
     }
   };
 
