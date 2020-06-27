@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
 import "./SignUp.js";
 import Parser from "html-react-parser";
-import $ from "jquery";
+import $, { data } from "jquery";
 import FaceBook from "../../../Image/FACEBOOK.PNG";
 import Google from "../../../Image/google.PNG";
 import Axios from 'axios'
@@ -14,7 +14,7 @@ import sha256 from 'crypto-js/sha256';
 //import FaceBook from "../../../Image/FACEBOOK.PNG";
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-
+import ds from '../../../Services/dataService';
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 
@@ -105,12 +105,12 @@ class Login extends Component {
         if (res.data.errcode === 0) {
           console.log(authService.getCurrentUser());
           console.log("Testing auth");
-          Axios.get(serverAddress + '/customers/getcustomerinfo', {
-            headers: authHeader() //set auth header
-          }).then(res => {
+          ds.getCustomerInformation().then(res=>{
             console.log(res);
             window.location.href = "/" //redirect to home page after login, set location.href to refresh the page.
-          }).catch(err => console.log(err)); //TODO: err handling needs to be finished
+          }).catch(err => {
+            console.log(err);
+          })
         } else { //TODO: Login operation failed on serverside
           console.log(res.data.errmsg)
           alert(res.data.errmsg);
