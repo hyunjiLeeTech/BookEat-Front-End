@@ -102,22 +102,23 @@ class Login extends Component {
       console.log(this.state);
       var hashedpw = sha256(this.state.password).toString(); //hashing password
       authService.login(this.state.email, hashedpw).then(res => {
-        if (res.errcode === 0) {
+        if (res.data.errcode === 0) {
           console.log(authService.getCurrentUser());
           console.log("Testing auth");
-          Axios.get(serverAddress + '/testauth', {
+          Axios.get(serverAddress + '/customers/getcustomerinfo', {
             headers: authHeader() //set auth header
           }).then(res => {
             console.log(res);
-            window.location.href = "/" //redirect to home page after login, set location.href to refresh the page.
+            //window.location.href = "/" //redirect to home page after login, set location.href to refresh the page.
 
           }).catch(err => console.log(err)); //TODO: err handling needs to be finished
         } else { //TODO: Login operation failed on serverside
-          console.log(res.errmsg)
+          console.log(res.data.errmsg)
         }
       })
     } else {
       console.log("Form is invalid!");
+      
     }
   };
 
