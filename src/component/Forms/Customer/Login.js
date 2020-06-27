@@ -114,6 +114,10 @@ class Login extends Component {
           }).catch(err => console.log(err)); //TODO: err handling needs to be finished
         } else { //TODO: Login operation failed on serverside
           console.log(res.data.errmsg)
+          alert(res.data.errmsg);
+          $("#login-btn").removeAttr("disabled").text("Login");
+          $("#passowrd").text("");
+          this.state.password = "";
         }
       })
     } else {
@@ -140,11 +144,11 @@ class Login extends Component {
   }
 
   handleLoginFailure(response) {
-    alert('Failed to log in')
+    console.log('Failed to log in')
   }
 
   handleLogoutFailure(response) {
-    alert('Failed to log out')
+    console.log('Failed to log out')
   }
 
   componentDidMount() {
