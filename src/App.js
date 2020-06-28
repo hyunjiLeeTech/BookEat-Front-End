@@ -30,10 +30,14 @@ import NotFound from "./RedirectPages/NotFound";
 import authService from "./Services/AuthService";
 
 class App extends Component {
-  queryUserInfo = async function () {
+  queryUserInfo = async function (userType) {
     let user = null;
     try {
-      user = await ds.getCustomerInformation();
+      if (userType == 1) {
+        user = await ds.getCustomerInformation();
+      } else if (userType == 2) {
+        user = await ds.getRestaurantInformation();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -42,18 +46,32 @@ class App extends Component {
 
   updateUserInfo = async function () {
     let u;
-    let user;
     try {
-      user = authService.getCurrentUser();
-      u = await this.queryUserInfo();
-      console.log(u);
-      if (u) {
-        console.log("this is customer");
-        $("#user-status-indicator").text(u.firstName + " " + u.lastName);
-        $("#firstname").val(u.firstName);
-        $("#lastname").val(u.lastName);
-        $("#phonenumber").val(u.phoneNumber);
-        $("#email").val(user.user.email);
+      const usr = authService.getCurrentUser();
+      if (usr) {
+        const userType = usr.user.userTypeId;
+        u = await this.queryUserInfo(userType);
+        if (u) {
+          if (userType == 1) {
+            console.log("this is customer");
+            $("#user-status-indicator").text(u.firstName + " " + u.lastName);
+            $("#firstname").val(u.firstName);
+            $("#lastname").val(u.lastName);
+            $("#phonenumber").val(u.phoneNumber);
+            $("#email").val(u.account.email);
+          } else if (userType == 2) {
+            console.log("this is restaurant owner");
+            $("#resname").val(u.resName);
+            $("#phonenumber").val(u.phoneNumber);
+            $("#email").val(usr.user.email);
+            $("#businessnumber").val(u.businessNum);
+            $("#postalcode").val(u.addressId.postalCode);
+            $("#streetname").val(u.addressId.streetName);
+            $("#streetnumber").val(u.addressId.streetNum);
+            $("#city").val(u.addressId.city);
+            $("#province").val(u.addressId.province);
+          }
+        }
       }
     } catch (err) {
       console.log(err);
