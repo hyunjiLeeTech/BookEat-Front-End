@@ -20,17 +20,46 @@ import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import Logout from './component/Forms/Logout';
 import Layout from './component/RestaurantLayout/Layout';
 
+import $ from 'jquery'
+
 import authHeader from './Services/authHeader'
+import ds from './Services/dataService'
 
 class App extends Component {
-  queryUserInfo(){
-    
+  queryUserInfo = async function(){
+    let user = null;
+    try{
+      user = await ds.getCustomerInformation();
+    }catch(err){
+      console.log(err);
+    }
+    return user;
+  }
+
+  updateUserInfo = async function() {
+    let u;
+    try{
+      u = await this.queryUserInfo();
+      console.log(u)
+      if(u){
+        $("#user-status-indicator").text(u.firstName + " " + u.lastName)
+      }
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  componentDidMount(){
+    $("#user-status-indicator").text("Updating");
+    this.updateUserInfo();
+
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       console.log('Route change!');
     }
+
   }
   render() {
 
