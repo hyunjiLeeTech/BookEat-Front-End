@@ -17,53 +17,56 @@ import ForgotPassword from "./component/Forms/Customer/ForgotPassword";
 import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
 import ReservationHistory from "./Profile/Customer/ReservationHistory";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
-import Logout from './component/Forms/Logout';
-import Layout from './component/RestaurantLayout/Layout';
+import Logout from "./component/Forms/Logout";
+import Layout from "./component/RestaurantLayout/Layout";
 
-import $ from 'jquery'
+import $ from "jquery";
 
-import authHeader from './Services/authHeader'
-import ds from './Services/dataService'
+import authHeader from "./Services/authHeader";
+import ds from "./Services/dataService";
 import ManagerProfile from "./Profile/Manager/ManagerProfile";
 import EmailConfirmation from "./RedirectPages/EmailConfirmation";
 import NotFound from "./RedirectPages/NotFound";
 
-
 class App extends Component {
-  queryUserInfo = async function(){
+  queryUserInfo = async function () {
     let user = null;
-    try{
+    try {
       user = await ds.getCustomerInformation();
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
     return user;
-  }
+  };
 
-  updateUserInfo = async function() {
+  updateUserInfo = async function () {
     let u;
-    try{
+    try {
       u = await this.queryUserInfo();
-      console.log(u)
-      if(u){
-        $("#user-status-indicator").text(u.firstName + " " + u.lastName)
+      console.log(u);
+      if (u) {
+        console.log(u.firstName);
+        console.log(u.lastName);
+        console.log(u.phoneNumber);
+        $("#user-status-indicator").text(u.firstName + " " + u.lastName);
+        $("#cusFirstname").val(u.firstName);
+        $("#cusLastname").val(u.lastName);
+        $("#cusPhonenumber").val(u.phoneNumber);
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  componentDidMount(){
+  componentDidMount() {
     $("#user-status-indicator").text("Updating");
     this.updateUserInfo();
-
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       console.log("Route change!");
     }
-
   }
   render() {
     return (
@@ -74,8 +77,8 @@ class App extends Component {
           <Route exact path="/SignUp" render={() => <SignUp />} />
           <Route exact path="/Login" render={() => <Login />} />
           <Route exact path="/ConfirmLogin" render={() => <ConfirmLogin />} />
-          <Route path='/logout' component={Logout} />
-          <Route path='/layout' component={Layout} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/layout" component={Layout} />
           <Route
             exact
             path="/ViewCustomerProfile"

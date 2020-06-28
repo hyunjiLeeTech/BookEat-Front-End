@@ -5,6 +5,12 @@ import Parser from "html-react-parser";
 import $ from "jquery";
 import "./ViewCustomerProfile.css";
 import { Tab } from "bootstrap";
+import authService from "../../Services/AuthService";
+import ds from "../../Services//dataService";
+
+const user = authService.getCurrentUser();
+
+console.log(user.user);
 
 const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
@@ -88,7 +94,6 @@ class ViewCustomerProfile extends Component {
 
   componentDidMount() {
     // Avoid spacing on the form
-
     var t3 = document.getElementById("password");
     t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
@@ -105,6 +110,7 @@ class ViewCustomerProfile extends Component {
 
   render() {
     const { isError } = this.state;
+    const { customer } = this.props;
 
     return (
       <MainContainer>
@@ -151,8 +157,8 @@ class ViewCustomerProfile extends Component {
                   <div className="col-sm-10">
                     <input
                       type="text"
-                      id="firstname"
-                      name="firstname"
+                      id="cusFirstname"
+                      name="cusFirstname"
                       class="form-control"
                     />
                   </div>
@@ -165,8 +171,8 @@ class ViewCustomerProfile extends Component {
                   <div className="col-md-10">
                     <input
                       type="text"
-                      id="lastname"
-                      name="lastname"
+                      id="cusLastname"
+                      name="cusLastname"
                       class="form-control"
                     />
                   </div>
@@ -182,23 +188,23 @@ class ViewCustomerProfile extends Component {
                   <div className="col-md-10">
                     <input
                       type="text"
-                      id="phonenumber"
-                      name="phonenumber"
+                      id="cusPhonenumber"
+                      name="cusPhonenumber"
                       class="form-control"
                     />
                   </div>
                 </div>
                 <div className="form-group row">
                   <label htmlFor="email" className="col-md-2 col-form-label">
-                    {" "}
                     Email
                   </label>
                   <div className="col-md-10">
                     <input
                       type="text"
-                      id="email"
-                      name="email"
+                      id="cusEmail"
+                      name="cusEmail"
                       class="form-control"
+                      value={user.user.email}
                     />
                   </div>
                 </div>
