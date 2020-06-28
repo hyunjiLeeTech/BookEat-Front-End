@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
-import { withRouter, Route, Switch } from 'react-router-dom'
-import SignUp from './component/Forms/Customer/SignUp'
-import Home from './Home/Home'
-import RestaurantSignUp from './component/Forms/Restaurant/RestaurantSignUp'
-import NavBar from './component/Style/NavBar'
-import Footer from './component/Style/Footer'
-import RestaurantProfile from './Profile/Restaurant/RestaurantProfile'
-import Manager from './Profile/Restaurant/Manager'
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
+import React, { Component } from "react";
+import { withRouter, Route, Switch } from "react-router-dom";
+import SignUp from "./component/Forms/Customer/SignUp";
+import Home from "./Home/Home";
+import RestaurantSignUp from "./component/Forms/Restaurant/RestaurantSignUp";
+import NavBar from "./component/Style/NavBar";
+import Footer from "./component/Style/Footer";
+import RestaurantProfile from "./Profile/Restaurant/RestaurantProfile";
+import Manager from "./Profile/Restaurant/Manager";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.js";
 
 import Login from "./component/Forms/Customer/Login";
 import ConfirmLogin from "./component/Forms/Customer/ConfirmLogin";
@@ -24,6 +24,10 @@ import $ from 'jquery'
 
 import authHeader from './Services/authHeader'
 import ds from './Services/dataService'
+import ManagerProfile from "./Profile/Manager/ManagerProfile";
+import EmailConfirmation from "./RedirectPages/EmailConfirmation";
+import NotFound from "./RedirectPages/NotFound";
+
 
 class App extends Component {
   queryUserInfo = async function(){
@@ -57,16 +61,15 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      console.log('Route change!');
+      console.log("Route change!");
     }
 
   }
   render() {
-
     return (
       <div>
         <NavBar />
-        <Switch >
+        <Switch>
           <Route exact path="/" render={() => <Home />} />
           <Route exact path="/SignUp" render={() => <SignUp />} />
           <Route exact path="/Login" render={() => <Login />} />
@@ -78,28 +81,43 @@ class App extends Component {
             path="/ViewCustomerProfile"
             render={() => <ViewCustomerProfile />}
           />
-          <Route exact path="/ForgotPassword"
+          <Route
+            exact
+            path="/ForgotPassword"
             render={() => <ForgotPassword />}
           />
-          <Route exact path="/ChangePassword"
+          <Route
+            exact
+            path="/ChangePassword"
             render={() => <ChangePassword />}
           />
           <Route
-            exact path="/ReservationHistory"
+            exact
+            path="/ReservationHistory"
             render={() => <ReservationHistory />}
           />
           <Route
-            exact path="/RestaurantSignUp"
+            exact
+            path="/RestaurantSignUp"
             render={() => <RestaurantSignUp />}
           />
           <Route
-            exact path="/RestaurantProfile"
+            exact
+            path="/RestaurantProfile"
             render={() => <RestaurantProfile />}
           />
+          <Route exact path="/Manager" render={() => <Manager />} />
           <Route
-            exact path="/Manager"
-            render={() => <Manager />}
+            exact
+            path="/ManagerProfile"
+            render={() => <ManagerProfile />}
           />
+          <Route
+            exact
+            path="/EmailConfirmation"
+            render={() => <EmailConfirmation />}
+          />
+          <Route exact path="/NotFound" render={() => <NotFound />} />
         </Switch>
         <div className="footer">
           <Footer />
@@ -109,4 +127,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(props => <App {...props} />);
+export default withRouter((props) => <App {...props} />);
