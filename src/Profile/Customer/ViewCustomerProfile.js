@@ -6,11 +6,9 @@ import $ from "jquery";
 import "./ViewCustomerProfile.css";
 import { Tab } from "bootstrap";
 import authService from "../../Services/AuthService";
+import serverAddress from "../../Services/ServerUrl";
 import ds from "../../Services//dataService";
-
-const user = authService.getCurrentUser();
-
-console.log(user.user);
+import Axios from "axios";
 
 const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
@@ -86,6 +84,25 @@ class ViewCustomerProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
+      Axios.post(serverAddress + "/updatecustomerinfo", this.state).then(
+        (res) => {
+          console.log(res);
+          if (res.data.errcode === 0) {
+            $("#updateResultText")
+              .text("Profile update is finished.")
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success")
+              .addClass("alert-success");
+          } else {
+            $("#updateResultText")
+              .text("Sorry, " + res.data.errmsg)
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success");
+          }
+        }
+      );
       console.log(this.state);
     } else {
       console.log("Form is invalid!");
@@ -157,8 +174,8 @@ class ViewCustomerProfile extends Component {
                   <div className="col-sm-10">
                     <input
                       type="text"
-                      id="cusFirstname"
-                      name="cusFirstname"
+                      id="firstname"
+                      name="firstname"
                       class="form-control"
                     />
                   </div>
@@ -171,8 +188,8 @@ class ViewCustomerProfile extends Component {
                   <div className="col-md-10">
                     <input
                       type="text"
-                      id="cusLastname"
-                      name="cusLastname"
+                      id="lastname"
+                      name="lastname"
                       class="form-control"
                     />
                   </div>
@@ -188,8 +205,8 @@ class ViewCustomerProfile extends Component {
                   <div className="col-md-10">
                     <input
                       type="text"
-                      id="cusPhonenumber"
-                      name="cusPhonenumber"
+                      id="phonenumber"
+                      name="phonenumber"
                       class="form-control"
                     />
                   </div>
@@ -201,10 +218,9 @@ class ViewCustomerProfile extends Component {
                   <div className="col-md-10">
                     <input
                       type="text"
-                      id="cusEmail"
-                      name="cusEmail"
+                      id="email"
+                      name="email"
                       class="form-control"
-                      value={user.user.email}
                     />
                   </div>
                 </div>
@@ -542,6 +558,47 @@ class ViewCustomerProfile extends Component {
                       </tr>
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="modal fade"
+            id="signResultModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="signResultModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="signResultModalLabel">
+                    Sign up
+                  </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p className="alert alert-warning" id="signResultText">
+                    Please Wait...
+                  </p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
             </div>

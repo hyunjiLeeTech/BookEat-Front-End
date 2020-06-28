@@ -27,6 +27,7 @@ import ds from "./Services/dataService";
 import ManagerProfile from "./Profile/Manager/ManagerProfile";
 import EmailConfirmation from "./RedirectPages/EmailConfirmation";
 import NotFound from "./RedirectPages/NotFound";
+import authService from "./Services/AuthService";
 
 class App extends Component {
   queryUserInfo = async function () {
@@ -41,17 +42,18 @@ class App extends Component {
 
   updateUserInfo = async function () {
     let u;
+    let user;
     try {
+      user = authService.getCurrentUser();
       u = await this.queryUserInfo();
       console.log(u);
       if (u) {
-        console.log(u.firstName);
-        console.log(u.lastName);
-        console.log(u.phoneNumber);
+        console.log("this is customer");
         $("#user-status-indicator").text(u.firstName + " " + u.lastName);
-        $("#cusFirstname").val(u.firstName);
-        $("#cusLastname").val(u.lastName);
-        $("#cusPhonenumber").val(u.phoneNumber);
+        $("#firstname").val(u.firstName);
+        $("#lastname").val(u.lastName);
+        $("#phonenumber").val(u.phoneNumber);
+        $("#email").val(user.user.email);
       }
     } catch (err) {
       console.log(err);
