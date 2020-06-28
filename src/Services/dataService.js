@@ -8,9 +8,9 @@ export default {
     getCustomerInformation() {
         return Axios.get(serverAddress + '/customers/getcustomerinfo', {
             headers: authHeader() //set auth header
-        }).then(res => {
+        }).then(function(res){
             //console.log(res);
-            return res;
+            return res.data;
         }).catch(err => { throw err }); //TODO: err handling needs to be finished
     },
 }
