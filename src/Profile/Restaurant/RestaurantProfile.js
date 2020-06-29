@@ -4,6 +4,11 @@ import MainContainer from "../../component/Style/MainContainer";
 import "./RestaurantProfile.css";
 import Parser from "html-react-parser";
 import $ from "jquery";
+import Axios from "axios";
+import sha256 from "crypto-js/sha256";
+import serverAddress from "../../Services/ServerUrl";
+import authService from "../../Services/AuthService";
+import ds from "../../Services/dataService";
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -210,7 +215,34 @@ class RestaurantProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
+      const usr = authService.getCurrentUser();
+
+      console.log(usr.user._id);
+      this.state.password = sha256(this.state.password).toString(); //hashing password
+      this.state.confirmpw = sha256(this.state.confirmpw).toString();
       console.log(this.state);
+      Axios.post(serverAddress + "/managersignup", this.state)
+        .then((res) => {
+          console.log(res);
+          if (res.data.errcode === 0) {
+            $("#signResultText")
+              .text("Manager account is created")
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success")
+              .addClass("alert-success");
+          } else {
+            $("#signResultText")
+              .text("Sorry, " + res.data.errmsg)
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success")
+              .addClass("alert-danger");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       console.log("Form is invalid!");
     }
@@ -267,7 +299,9 @@ class RestaurantProfile extends Component {
 
   onClick() {
     // On click we change our state – this will trigger our `render` method
-    this.setState({ showForm: true });
+    const usr = authService.getCurrentUser();
+    console.log(usr.user._id);
+    this.setState({ showForm: true, restaurantId: usr.user._id });
   }
 
   renderForm() {
@@ -371,7 +405,79 @@ class RestaurantProfile extends Component {
             <span className="invalid-feedback">{Parser(isError.email)}</span>
           </div>
         </div>
-        <button className="btn btn-danger">Submit</button>
+
+        <div className="form-group row">
+          <label htmlFor="password" className="col-sm-2 col-form-label">
+            {" "}
+            Password
+          </label>
+          <div className="col-md-10">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={this.state.password}
+              placeholder="Password"
+              className={
+                isError.email.length > 6
+                  ? "is-invalid form-control"
+                  : "form-control"
+              }
+              onChange={this.handleChange}
+              required
+            />
+            <span className="invalid-feedback">{Parser(isError.email)}</span>
+          </div>
+        </div>
+
+        <button
+          className="btn btn-danger"
+          data-toggle="modal"
+          data-target="#signResultModal"
+        >
+          Submit
+        </button>
+        {/* Sign up result Modal */}
+        <div
+          className="modal fade"
+          id="signResultModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="signResultModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="signResultModalLabel">
+                  Sign up
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p className="alert alert-warning" id="signResultText">
+                  Please Wait...
+                </p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     );
   }
