@@ -301,7 +301,7 @@ class RestaurantProfile extends Component {
     // On click we change our state – this will trigger our `render` method
     const usr = authService.getCurrentUser();
     console.log(usr.user._id);
-    this.setState({ showForm: true, restaurantId: usr.user._id });
+    this.setState({ showForm: true, accountId: usr.user._id });
   }
 
   renderForm() {
