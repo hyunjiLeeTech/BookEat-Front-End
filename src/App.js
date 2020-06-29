@@ -53,14 +53,13 @@ class App extends Component {
         u = await this.queryUserInfo(userType);
         if (u) {
           if (userType == 1) {
-            console.log("this is customer");
             $("#user-status-indicator").text(u.firstName + " " + u.lastName);
             $("#firstname").val(u.firstName);
             $("#lastname").val(u.lastName);
             $("#phonenumber").val(u.phoneNumber);
             $("#email").val(u.account.email);
           } else if (userType == 2) {
-            console.log("this is restaurant owner");
+            $("#user-status-indicator").text(u.resName);
             $("#resname").val(u.resName);
             $("#phonenumber").val(u.phoneNumber);
             $("#email").val(usr.user.email);
