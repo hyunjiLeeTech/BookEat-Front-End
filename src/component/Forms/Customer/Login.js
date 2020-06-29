@@ -124,6 +124,7 @@ class Login extends Component {
             });
           } else if (u.userTypeId === 3) {
             console.log("manager");
+            window.location.href = "/";
             // redirect to management page after login
           }
         } else {
