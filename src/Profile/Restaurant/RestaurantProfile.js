@@ -277,14 +277,9 @@ class RestaurantProfile extends Component {
       $("#mondisablebutton").click(function () {
         if ($("#monOpenTime").prop("disabled")) {
           $("#monOpenTime").attr("disabled", false);
-        } else {
-          $("#monOpenTime").attr("disabled", true);
-        }
-      });
-      $("#mondisablebutton").click(function () {
-        if ($("#monCloseTime").prop("disabled")) {
           $("#monCloseTime").attr("disabled", false);
         } else {
+          $("#monOpenTime").attr("disabled", true);
           $("#monCloseTime").attr("disabled", true);
         }
       });
@@ -925,7 +920,7 @@ class RestaurantProfile extends Component {
                       <select
                         className="custom-select col-md-3"
                         id="monOpenTime"
-                        name="monOpenTime"
+                        name="monday"
                         // value={this.state.monday}
                         onChange={this.handleChange}
                       >
@@ -963,7 +958,7 @@ class RestaurantProfile extends Component {
                       <select
                         className="custom-select col-md-3"
                         id="monCloseTime"
-                        name="monCloseTime"
+                        name="monday"
                         // value={this.state.monday}
                         onChange={this.handleChange}
                       >
