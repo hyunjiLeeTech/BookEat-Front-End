@@ -348,14 +348,11 @@ class RestaurantProfile extends Component {
       if ($("#resForm :input").prop("disabled", true)){
         $("#editButton").click(function (){
           $("#resForm :input").prop("disabled", false);
+          //Disable Email
+           $("#email").prop("disabled", true);
       });
-      }
-
-      //Email Disable
-      $("#email").prop("disabled", true);
-  
+      }  
     });
-
 
   }
 
