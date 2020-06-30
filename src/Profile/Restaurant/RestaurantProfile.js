@@ -920,7 +920,7 @@ class RestaurantProfile extends Component {
                       <select
                         className="custom-select col-md-3"
                         id="monOpenTime"
-                        name="monday"
+                        name="monOpenTime"
                         // value={this.state.monday}
                         onChange={this.handleChange}
                       >
@@ -958,7 +958,7 @@ class RestaurantProfile extends Component {
                       <select
                         className="custom-select col-md-3"
                         id="monCloseTime"
-                        name="monday"
+                        name="monCloseTime"
                         // value={this.state.monday}
                         onChange={this.handleChange}
                       >
