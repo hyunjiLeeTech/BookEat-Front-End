@@ -274,11 +274,18 @@ class RestaurantProfile extends Component {
 
     //Disable Button for Open
     $(document).ready(function () {
-      $("#disablebutton").click(function () {
-        if ($("#openTime").prop("disabled")) {
-          $("#openTime").prop("disabled", false);
+      $("#mondisablebutton").click(function () {
+        if ($("#monOpenTime").prop("disabled")) {
+          $("#monOpenTime").attr("disabled", false);
         } else {
-          $("#openTime").prop("disabled", true);
+          $("#monOpenTime").attr("disabled", true);
+        }
+      });
+      $("#mondisablebutton").click(function () {
+        if ($("#monCloseTime").prop("disabled")) {
+          $("#monCloseTime").attr("disabled", false);
+        } else {
+          $("#monCloseTime").attr("disabled", true);
         }
       });
     });
@@ -917,9 +924,9 @@ class RestaurantProfile extends Component {
                       </label>
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="monday"
-                        value={this.state.monday}
+                        id="monOpenTime"
+                        name="monOpenTime"
+                        // value={this.state.monday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Open Time</option>
@@ -955,9 +962,9 @@ class RestaurantProfile extends Component {
                       ~
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="monday"
-                        value={this.state.monday}
+                        id="monCloseTime"
+                        name="monCloseTime"
+                        // value={this.state.monday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Close Time</option>
@@ -1000,7 +1007,7 @@ class RestaurantProfile extends Component {
                       <button
                         type="button"
                         className="btn btn-outline-dark col-sm-2"
-                        id="disablebutton"
+                        id="mondisablebutton"
                       >
                         {" "}
                         Not Open{" "}
