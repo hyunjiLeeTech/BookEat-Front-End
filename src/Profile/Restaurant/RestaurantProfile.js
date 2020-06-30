@@ -276,77 +276,86 @@ class RestaurantProfile extends Component {
     $(document).ready(function () {
       $("#mondisablebutton").click(function () {
         if ($("#monOpenTime").prop("disabled")) {
-          $("#monOpenTime").attr("disabled", false);
-          $("#monCloseTime").attr("disabled", false);
+          $("#monOpenTime").prop("disabled", false);
+          $("#monCloseTime").prop("disabled", false);
         } else {
-          $("#monOpenTime").attr("disabled", true);
-          $("#monCloseTime").attr("disabled", true);
+          $("#monOpenTime").prop("disabled", true);
+          $("#monCloseTime").prop("disabled", true);
         }
       });
 
       $("#tuedisablebutton").click(function () {
         if ($("#tueOpenTime").prop("disabled")) {
-          $("#tueOpenTime").attr("disabled", false);
-          $("#tueCloseTime").attr("disabled", false);
+          $("#tueOpenTime").prop("disabled", false);
+          $("#tueCloseTime").prop("disabled", false);
         } else {
-          $("#tueOpenTime").attr("disabled", true);
-          $("#tueCloseTime").attr("disabled", true);
+          $("#tueOpenTime").prop("disabled", true);
+          $("#tueCloseTime").prop("disabled", true);
         }
       });
 
       $("#weddisablebutton").click(function () {
         if ($("#wedOpenTime").prop("disabled")) {
-          $("#wedOpenTime").attr("disabled", false);
-          $("#wedCloseTime").attr("disabled", false);
+          $("#wedOpenTime").prop("disabled", false);
+          $("#wedCloseTime").prop("disabled", false);
         } else {
-          $("#wedOpenTime").attr("disabled", true);
-          $("#wedCloseTime").attr("disabled", true);
+          $("#wedOpenTime").prop("disabled", true);
+          $("#wedCloseTime").prop("disabled", true);
         }
       });
 
       $("#thudisablebutton").click(function () {
         if ($("#thuOpenTime").prop("disabled")) {
-          $("#thuOpenTime").attr("disabled", false);
-          $("#thuCloseTime").attr("disabled", false);
+          $("#thuOpenTime").prop("disabled", false);
+          $("#thuCloseTime").prop("disabled", false);
         } else {
-          $("#thuOpenTime").attr("disabled", true);
-          $("#thuCloseTime").attr("disabled", true);
+          $("#thuOpenTime").prop("disabled", true);
+          $("#thuCloseTime").prop("disabled", true);
         }
       });
 
       $("#fridisablebutton").click(function () {
         if ($("#friOpenTime").prop("disabled")) {
-          $("#friOpenTime").attr("disabled", false);
-          $("#friCloseTime").attr("disabled", false);
+          $("#friOpenTime").prop("disabled", false);
+          $("#friCloseTime").prop("disabled", false);
         } else {
-          $("#friOpenTime").attr("disabled", true);
-          $("#friCloseTime").attr("disabled", true);
+          $("#friOpenTime").prop("disabled", true);
+          $("#friCloseTime").prop("disabled", true);
         }
       });
 
       $("#satdisablebutton").click(function () {
         if ($("#satOpenTime").prop("disabled")) {
-          $("#satOpenTime").attr("disabled", false);
-          $("#satCloseTime").attr("disabled", false);
+          $("#satOpenTime").prop("disabled", false);
+          $("#satCloseTime").prop("disabled", false);
         } else {
-          $("#satOpenTime").attr("disabled", true);
-          $("#satCloseTime").attr("disabled", true);
+          $("#satOpenTime").prop("disabled", true);
+          $("#satCloseTime").prop("disabled", true);
         }
       });
 
       $("#sundisablebutton").click(function () {
         if ($("#sunOpenTime").prop("disabled")) {
-          $("#sunOpenTime").attr("disabled", false);
-          $("#sunCloseTime").attr("disabled", false);
+          $("#sunOpenTime").prop("disabled", false);
+          $("#sunCloseTime").prop("disabled", false);
         } else {
-          $("#sunOpenTime").attr("disabled", true);
-          $("#sunCloseTime").attr("disabled", true);
+          $("#sunOpenTime").prop("disabled", true);
+          $("#sunCloseTime").prop("disabled", true);
         }
       });
 
+      //Form Disable
+      if ($("#resForm :input").prop("disabled", true)){
+        $("#editButton").click(function (){
+          $("#resForm :input").prop("disabled", false);
+      });
+      }
+
+      //Email Disable
+      $("#email").prop("disabled", true);
+  
     });
 
-    
 
   }
 
@@ -359,10 +368,12 @@ class RestaurantProfile extends Component {
     this.setState({ showForm: true, accountId: usr.user._id });
   }
 
+  // Manager Form 
+
   renderForm() {
     const { isError } = this.state;
     return (
-      <form onSubmit={this.handleSubmit} noValidate>
+      <form id="manForm" onSubmit={this.handleSubmit} noValidate>
         <div className="form-group row">
           <label htmlFor="streetnumber" className="col-sm-2 col-form-label">
             {" "}
@@ -550,7 +561,7 @@ class RestaurantProfile extends Component {
                                     <button className="nav-link active" data-toggle="tab">  My Profile</button>
                                 </Link> */}
                 <a
-                  class="nav-link active"
+                  className="nav-link active"
                   data-toggle="tab"
                   role="tab"
                   href="#restaurantProfile"
@@ -565,7 +576,7 @@ class RestaurantProfile extends Component {
                                     <button className="nav-link" data-toggle="tab">Menu</button>
                                 </Link> */}
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   data-toggle="tab"
                   role="tab"
                   href="#menu"
@@ -580,7 +591,7 @@ class RestaurantProfile extends Component {
                                     <button className="nav-link" data-toggle="tab">Manager</button>
                                 </Link> */}
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   data-toggle="tab"
                   role="tab"
                   href="#managerAccount"
@@ -595,7 +606,7 @@ class RestaurantProfile extends Component {
                                     <button className="nav-link" data-toggle="tab">Password</button>
                                 </Link> */}
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   data-toggle="tab"
                   role="tab"
                   href="#changePassword"
@@ -617,7 +628,7 @@ class RestaurantProfile extends Component {
                 role="tabpanel"
                 aria-labelledby="restaurantProfile"
               >
-                <form onSubmit={this.handleSubmit} noValidate>
+                <form id="resForm" onSubmit={this.handleSubmit} noValidate>
                   <div className="form-group row">
                     <label
                       htmlFor="resname"
@@ -1721,7 +1732,7 @@ class RestaurantProfile extends Component {
                   </div>
 
                   <div className="col-sm-6 text-right">
-                    <button className="btn btn-primary" id="btn_disable">
+                    <button type="button" className="btn btn-primary" id="editButton">
                       Edit
                     </button>
                   </div>
