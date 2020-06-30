@@ -272,7 +272,7 @@ class RestaurantProfile extends Component {
       if (e.keyCode === 32) return false;
     };
 
-    //Disable Button for Open
+    //Disable Button 
     $(document).ready(function () {
       $("#mondisablebutton").click(function () {
         if ($("#monOpenTime").prop("disabled")) {
@@ -283,18 +283,71 @@ class RestaurantProfile extends Component {
           $("#monCloseTime").attr("disabled", true);
         }
       });
-    });
 
-    //Edit Disable button
-    $(document).ready(function () {
-      $("#btn_disable").click(function () {
-        if ($("#resname").prop("disabled")) {
-          $("#resname").prop("disabled", true);
+      $("#tuedisablebutton").click(function () {
+        if ($("#tueOpenTime").prop("disabled")) {
+          $("#tueOpenTime").attr("disabled", false);
+          $("#tueCloseTime").attr("disabled", false);
         } else {
-          $("#resname").prop("disabled", false);
+          $("#tueOpenTime").attr("disabled", true);
+          $("#tueCloseTime").attr("disabled", true);
         }
       });
+
+      $("#weddisablebutton").click(function () {
+        if ($("#wedOpenTime").prop("disabled")) {
+          $("#wedOpenTime").attr("disabled", false);
+          $("#wedCloseTime").attr("disabled", false);
+        } else {
+          $("#wedOpenTime").attr("disabled", true);
+          $("#wedCloseTime").attr("disabled", true);
+        }
+      });
+
+      $("#thudisablebutton").click(function () {
+        if ($("#thuOpenTime").prop("disabled")) {
+          $("#thuOpenTime").attr("disabled", false);
+          $("#thuCloseTime").attr("disabled", false);
+        } else {
+          $("#thuOpenTime").attr("disabled", true);
+          $("#thuCloseTime").attr("disabled", true);
+        }
+      });
+
+      $("#fridisablebutton").click(function () {
+        if ($("#friOpenTime").prop("disabled")) {
+          $("#friOpenTime").attr("disabled", false);
+          $("#friCloseTime").attr("disabled", false);
+        } else {
+          $("#friOpenTime").attr("disabled", true);
+          $("#friCloseTime").attr("disabled", true);
+        }
+      });
+
+      $("#satdisablebutton").click(function () {
+        if ($("#satOpenTime").prop("disabled")) {
+          $("#satOpenTime").attr("disabled", false);
+          $("#satCloseTime").attr("disabled", false);
+        } else {
+          $("#satOpenTime").attr("disabled", true);
+          $("#satCloseTime").attr("disabled", true);
+        }
+      });
+
+      $("#sundisablebutton").click(function () {
+        if ($("#sunOpenTime").prop("disabled")) {
+          $("#sunOpenTime").attr("disabled", false);
+          $("#sunCloseTime").attr("disabled", false);
+        } else {
+          $("#sunOpenTime").attr("disabled", true);
+          $("#sunCloseTime").attr("disabled", true);
+        }
+      });
+
     });
+
+    
+
   }
 
   //Manager Create Button Form
@@ -1019,8 +1072,8 @@ class RestaurantProfile extends Component {
                       </label>
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="tuesday"
+                        id="tueOpenTime"
+                        name="tueOpenTime"
                         value={this.state.tuesday}
                         onChange={this.handleChange}
                       >
@@ -1057,8 +1110,8 @@ class RestaurantProfile extends Component {
                       ~
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="tuesday"
+                        id="tueCloseTime"
+                        name="tueCloseTime"
                         value={this.state.tuesday}
                         onChange={this.handleChange}
                       >
@@ -1102,7 +1155,7 @@ class RestaurantProfile extends Component {
                       <button
                         type="button"
                         className="btn btn-outline-dark col-sm-2"
-                        id="disablebutton"
+                        id="tuedisablebutton"
                       >
                         {" "}
                         Not Open{" "}
@@ -1119,9 +1172,9 @@ class RestaurantProfile extends Component {
                       </label>
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="wednesday"
-                        value={this.state.wednesday}
+                        id="wedOpenTime"
+                        name="wedOpenTime"
+                        //value={this.state.wednesday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Open Time</option>
@@ -1157,9 +1210,9 @@ class RestaurantProfile extends Component {
                       ~
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="wednesday"
-                        value={this.state.wednesday}
+                        id="wedCloseTime"
+                        name="wedCloseTime"
+                        //value={this.state.wednesday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Close Time</option>
@@ -1202,7 +1255,7 @@ class RestaurantProfile extends Component {
                       <button
                         type="button"
                         className="btn btn-outline-dark col-sm-2"
-                        id="disablebutton"
+                        id="weddisablebutton"
                       >
                         {" "}
                         Not Open{" "}
@@ -1219,9 +1272,9 @@ class RestaurantProfile extends Component {
                       </label>
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="thursday"
-                        value={this.state.thursday}
+                        id="thuOpenTime"
+                        name="thuOpenTime"
+                        //value={this.state.thursday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Open Time</option>
@@ -1257,9 +1310,9 @@ class RestaurantProfile extends Component {
                       ~
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="thursday"
-                        value={this.state.thursday}
+                        id="thuCloseTime"
+                        name="thuCloseTime"
+                        //value={this.state.thursday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Close Time</option>
@@ -1302,7 +1355,7 @@ class RestaurantProfile extends Component {
                       <button
                         type="button"
                         className="btn btn-outline-dark col-sm-2"
-                        id="disablebutton"
+                        id="thudisablebutton"
                       >
                         {" "}
                         Not Open{" "}
@@ -1319,9 +1372,9 @@ class RestaurantProfile extends Component {
                       </label>
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="friday"
-                        value={this.state.friday}
+                        id="friOpenTime"
+                        name="friOpenTime"
+                       // value={this.state.friday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Open Time</option>
@@ -1357,9 +1410,9 @@ class RestaurantProfile extends Component {
                       ~
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="friday"
-                        value={this.state.friday}
+                        id="friCloseTime"
+                        name="friCloseTime"
+                        //value={this.state.friday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Close Time</option>
@@ -1402,7 +1455,7 @@ class RestaurantProfile extends Component {
                       <button
                         type="button"
                         className="btn btn-outline-dark col-sm-2"
-                        id="disablebutton"
+                        id="fridisablebutton"
                       >
                         {" "}
                         Not Open{" "}
@@ -1419,9 +1472,9 @@ class RestaurantProfile extends Component {
                       </label>
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="saturday"
-                        value={this.state.saturday}
+                        id="satOpenTime"
+                        name="satOpenTime"
+                        //value={this.state.saturday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Open Time</option>
@@ -1457,9 +1510,9 @@ class RestaurantProfile extends Component {
                       ~
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="saturday"
-                        value={this.state.saturday}
+                        id="satCloseTime"
+                        name="satCloseTime"
+                        //value={this.state.saturday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Close Time</option>
@@ -1502,7 +1555,7 @@ class RestaurantProfile extends Component {
                       <button
                         type="button"
                         className="btn btn-outline-dark col-sm-2"
-                        id="disablebutton"
+                        id="satdisablebutton"
                       >
                         {" "}
                         Not Open{" "}
@@ -1519,9 +1572,9 @@ class RestaurantProfile extends Component {
                       </label>
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="sunday"
-                        value={this.state.sunday}
+                        id="sunOpenTime"
+                        name="sunOpenTime"
+                        //value={this.state.sunday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Open Time</option>
@@ -1557,9 +1610,9 @@ class RestaurantProfile extends Component {
                       ~
                       <select
                         className="custom-select col-md-3"
-                        id="openTime"
-                        name="sunday"
-                        value={this.state.sunday}
+                        id="sunCloseTime"
+                        name="sunCloseTime"
+                        //value={this.state.sunday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Close Time</option>
@@ -1602,7 +1655,7 @@ class RestaurantProfile extends Component {
                       <button
                         type="button"
                         className="btn btn-outline-dark col-sm-2"
-                        id="disablebutton"
+                        id="sundisablebutton"
                       >
                         {" "}
                         Not Open{" "}
