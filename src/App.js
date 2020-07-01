@@ -55,8 +55,11 @@ class App extends Component {
 
   componentDidMount(){
     $("#user-status-indicator").text("Updating");
-    this.updateUserInfo();
-
+    //this.updateUserInfo();
+    ds.getCustomerInformation().then(res=>{
+      console.log("The user information from the server")
+      console.log(res);
+    })
   }
 
   componentDidUpdate(prevProps) {
