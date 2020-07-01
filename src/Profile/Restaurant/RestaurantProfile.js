@@ -263,6 +263,20 @@ class RestaurantProfile extends Component {
     t2.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
+    var t3 = document.getElementById("password");
+    t3.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+    };
+
+    var t4 = document.getElementById("confirmPassword");
+    t4.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+    };
+
+    var t7 = document.getElementById("newPassword");
+    t7.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+    };
     var t5 = document.getElementById("businessnumber");
     t5.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
