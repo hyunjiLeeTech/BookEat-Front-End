@@ -240,35 +240,8 @@ class RestaurantProfile extends Component {
   handleSubmitResProfile = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      const usr = authService.getCurrentUser();
       console.log(this.state);
-
-      console.log(usr.user._id);
-      this.state.password = sha256(this.state.password).toString(); //hashing password
-      this.state.confirmpw = sha256(this.state.confirmpw).toString();
-      console.log(this.state);
-      Axios.post(serverAddress + "/restaurant/editresprofile", this.state)
-        .then((res) => {
-          console.log(res);
-          if (res.data.errcode === 0) {
-            $("#signResultText")
-              .text("Manager account is created")
-              .removeClass("alert-warning")
-              .removeClass("alert-danger")
-              .removeClass("alert-success")
-              .addClass("alert-success");
-          } else {
-            $("#signResultText")
-              .text("Sorry, " + res.data.errmsg)
-              .removeClass("alert-warning")
-              .removeClass("alert-danger")
-              .removeClass("alert-success")
-              .addClass("alert-danger");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      ds.editRestaurantProfile(this.state);
     } else {
       console.log("Form is invalid!");
     }
@@ -277,6 +250,9 @@ class RestaurantProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
+      this.state.password = sha256(this.state.password).toString(); //hashing password
+      this.state.confirmpw = sha256(this.state.confirmpw).toString();
+
       Axios.post(serverAddress + "/managersignup", this.state)
         .then((res) => {
           console.log(res);
@@ -1064,7 +1040,7 @@ class RestaurantProfile extends Component {
                           value={this.state.cuisineStyle}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Style</option>
+                          <option value="">Choose Style</option>
                           <option value="american">American</option>
                           <option value="italian">Italian</option>
                           <option value="steakhouse">Steak House</option>
@@ -1104,7 +1080,7 @@ class RestaurantProfile extends Component {
                           value={this.state.category}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Category</option>
+                          <option value="">Choose Category</option>
                           <option value="ethinic">Ethinic</option>
                           <option value="fastfood">Fast Food</option>
                           <option value="fastcasual">Fast Casual</option>
@@ -1131,7 +1107,7 @@ class RestaurantProfile extends Component {
                           value={this.state.priceRange}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Range</option>
+                          <option value="">Choose Range</option>
                           <option value="low">$0-$50</option>
                           <option value="medium">$50-$100</option>
                           <option value="high">$100+</option>
@@ -1160,7 +1136,7 @@ class RestaurantProfile extends Component {
                           value={this.state.monOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1198,7 +1174,7 @@ class RestaurantProfile extends Component {
                           value={this.state.monCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1260,7 +1236,7 @@ class RestaurantProfile extends Component {
                           value={this.state.tueOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1298,7 +1274,7 @@ class RestaurantProfile extends Component {
                           value={this.state.tueCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1360,7 +1336,7 @@ class RestaurantProfile extends Component {
                           value={this.state.wedOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1398,7 +1374,7 @@ class RestaurantProfile extends Component {
                           value={this.state.wedCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1460,7 +1436,7 @@ class RestaurantProfile extends Component {
                           value={this.state.thuOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1498,7 +1474,7 @@ class RestaurantProfile extends Component {
                           value={this.state.thuCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1560,7 +1536,7 @@ class RestaurantProfile extends Component {
                           value={this.state.friOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1598,7 +1574,7 @@ class RestaurantProfile extends Component {
                           value={this.state.friCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1660,7 +1636,7 @@ class RestaurantProfile extends Component {
                           value={this.state.satOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1698,7 +1674,7 @@ class RestaurantProfile extends Component {
                           value={this.state.satCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1760,7 +1736,7 @@ class RestaurantProfile extends Component {
                           value={this.state.sunOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1798,7 +1774,7 @@ class RestaurantProfile extends Component {
                           value={this.state.sunCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1900,7 +1876,13 @@ class RestaurantProfile extends Component {
                   </div>
                   <div className="panel-footer row ">
                     <div className="col-sm-6 text-left">
-                      <button className="btn btn-primary">Save</button>
+                      <button
+                        className="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#resProfileResultModal"
+                      >
+                        Save
+                      </button>
                     </div>
 
                     <div className="col-sm-6 text-right">
@@ -1912,6 +1894,55 @@ class RestaurantProfile extends Component {
                         Edit
                       </button>
                     </div>
+                    {/* Restaurant profile result Modal */}
+                    <div
+                      className="modal fade"
+                      id="resProfileResultModal"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="resProfileResultModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5
+                              className="modal-title"
+                              id="resProfileResultModalLabel"
+                            >
+                              Restaurant profile
+                            </h5>
+                            <button
+                              type="button"
+                              className="close"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div className="modal-body">
+                            <p
+                              className="alert alert-warning"
+                              id="resProfileResultText"
+                            >
+                              Please Wait...
+                            </p>
+                          </div>
+                          <div className="modal-footer">
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              data-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* */}
                   </div>
                 </form>
               </div>
