@@ -318,33 +318,109 @@ class RestaurantProfile extends Component {
     // this.state = { resName: restaurant.resName };
     this.setState((state, props) => {
       return {
-        resname: restaurant.resName,
-        phonenumber: restaurant.phoneNumber,
-        email: usr.user.email,
-        businessnumber: restaurant.businessNum,
-        postalcode: restaurant.addressId.postalCode,
-        streetname: restaurant.addressId.streetName,
-        streetnumber: restaurant.addressId.streetNum,
-        city: restaurant.addressId.city,
-        province: restaurant.addressId.province,
-        description: restaurant.restaurantDescription,
-        cuisineStyle: restaurant.cuisineStyleId.cuisineVal,
-        category: restaurant.categoryId.categoryVal,
-        priceRange: restaurant.priceRangeId.priceRangeName,
-        monOpenTime: restaurant.monOpenTimeId.storeTimeVal,
-        tueOpenTime: restaurant.tueOpenTimeId.storeTimeVal,
-        wedOpenTime: restaurant.wedOpenTimeId.storeTimeVal,
-        thuOpenTime: restaurant.thuOpenTimeId.storeTimeVal,
-        friOpenTime: restaurant.friOpenTimeId.storeTimeVal,
-        satOpenTime: restaurant.satOpenTimeId.storeTimeVal,
-        sunOpenTime: restaurant.sunOpenTimeId.storeTimeVal,
-        monCloseTime: restaurant.monCloseTimeId.storeTimeVal,
-        tueCloseTime: restaurant.tueCloseTimeId.storeTimeVal,
-        wedCloseTime: restaurant.wedCloseTimeId.storeTimeVal,
-        thuCloseTime: restaurant.thuCloseTimeId.storeTimeVal,
-        friCloseTime: restaurant.friCloseTimeId.storeTimeVal,
-        satCloseTime: restaurant.satCloseTimeId.storeTimeVal,
-        sunCloseTime: restaurant.sunCloseTimeId.storeTimeVal,
+        resname:
+          typeof restaurant.resName != "undefined" ? restaurant.resName : "",
+        phonenumber:
+          typeof restaurant.phoneNumber != "undefined"
+            ? restaurant.phoneNumber
+            : "",
+        email: typeof usr.user.email != "undefined" ? usr.user.email : "",
+        businessnumber:
+          typeof restaurant.businessNum != "undefined"
+            ? restaurant.businessNum
+            : "",
+        postalcode:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.postalCode
+            : "",
+        streetname:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.streetName
+            : "",
+        streetnumber:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.streetNum
+            : "",
+        city:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.city
+            : "",
+        province:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.province
+            : "",
+        description:
+          typeof restaurant.restaurantDescription != "undefined"
+            ? restaurant.restaurantDescription
+            : "",
+        cuisineStyle:
+          typeof restaurant.cuisineStyleId != "undefined"
+            ? restaurant.cuisineStyleId.cuisineVal
+            : "",
+        category:
+          typeof restaurant.categoryId != "undefined"
+            ? restaurant.categoryId.categoryVal
+            : "",
+        priceRange:
+          typeof restaurant.priceRangeId != "undefined"
+            ? restaurant.priceRangeId.priceRangeName
+            : "",
+        monOpenTime:
+          typeof restaurant.monOpenTimeId != "undefined"
+            ? restaurant.monOpenTimeId.storeTimeVal
+            : "",
+        tueOpenTime:
+          typeof restaurant.tueOpenTimeId != "undefined"
+            ? restaurant.tueOpenTimeId.storeTimeVal
+            : "",
+        wedOpenTime:
+          typeof restaurant.wedOpenTimeId != "undefined"
+            ? restaurant.wedOpenTimeId.storeTimeVal
+            : "",
+        thuOpenTime:
+          typeof restaurant.thuOpenTimeId != "undefined"
+            ? restaurant.thuOpenTimeId.storeTimeVal
+            : "",
+        friOpenTime:
+          typeof restaurant.friOpenTimeId != "undefined"
+            ? restaurant.friOpenTimeId.storeTimeVal
+            : "",
+        satOpenTime:
+          typeof restaurant.satOpenTimeId != "undefined"
+            ? restaurant.satOpenTimeId.storeTimeVal
+            : "",
+        sunOpenTime:
+          typeof restaurant.sunOpenTimeId != "undefined"
+            ? restaurant.sunOpenTimeId.storeTimeVal
+            : "",
+        monCloseTime:
+          typeof restaurant.monCloseTimeId != "undefined"
+            ? restaurant.monCloseTimeId.storeTimeVal
+            : "",
+        tueCloseTime:
+          typeof restaurant.tueCloseTimeId != "undefined"
+            ? restaurant.tueCloseTimeId.storeTimeVal
+            : "",
+        wedCloseTime:
+          typeof restaurant.wedCloseTimeId != "undefined"
+            ? restaurant.wedCloseTimeId.storeTimeVal
+            : "",
+        thuCloseTime:
+          typeof restaurant.thuCloseTimeId != "undefined"
+            ? restaurant.thuCloseTimeId.storeTimeVal
+            : "",
+        friCloseTime:
+          typeof restaurant.friCloseTimeId != "undefined"
+            ? restaurant.friCloseTimeId.storeTimeVal
+            : "",
+        satCloseTime:
+          typeof restaurant.satCloseTimeId != "undefined"
+            ? restaurant.satCloseTimeId.storeTimeVal
+            : "",
+        sunCloseTime:
+          typeof restaurant.sunCloseTimeId != "undefined"
+            ? restaurant.sunCloseTimeId.storeTimeVal
+            : "",
       };
     });
 
