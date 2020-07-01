@@ -109,7 +109,19 @@ class ViewCustomerProfile extends Component {
     }
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const customer = await ds.getCustomerInformation();
+
+    if (customer) {
+      this.setState((state, props) => {
+        return {
+          firstname: customer.firstName,
+          lastname: customer.lastName,
+          phonenumber: customer.phoneNumber,
+          email: customer.account.email,
+        };
+      });
+    }
     // Avoid spacing on the form
     var t3 = document.getElementById("password");
     t3.onkeypress = function (e) {
@@ -176,6 +188,7 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="firstname"
                       name="firstname"
+                      value={this.state.firstname}
                       class="form-control"
                     />
                   </div>
@@ -190,6 +203,7 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="lastname"
                       name="lastname"
+                      value={this.state.lastname}
                       class="form-control"
                     />
                   </div>
@@ -207,6 +221,7 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="phonenumber"
                       name="phonenumber"
+                      value={this.state.phonenumber}
                       class="form-control"
                     />
                   </div>
@@ -220,6 +235,7 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="email"
                       name="email"
+                      value={this.state.email}
                       class="form-control"
                     />
                   </div>
