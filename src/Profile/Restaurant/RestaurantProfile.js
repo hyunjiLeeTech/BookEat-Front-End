@@ -252,29 +252,7 @@ class RestaurantProfile extends Component {
     if (formValid(this.state)) {
       this.state.password = sha256(this.state.password).toString(); //hashing password
       this.state.confirmpw = sha256(this.state.confirmpw).toString();
-
-      Axios.post(serverAddress + "/managersignup", this.state)
-        .then((res) => {
-          console.log(res);
-          if (res.data.errcode === 0) {
-            $("#signResultText")
-              .text("Manager account is created")
-              .removeClass("alert-warning")
-              .removeClass("alert-danger")
-              .removeClass("alert-success")
-              .addClass("alert-success");
-          } else {
-            $("#signResultText")
-              .text("Sorry, " + res.data.errmsg)
-              .removeClass("alert-warning")
-              .removeClass("alert-danger")
-              .removeClass("alert-success")
-              .addClass("alert-danger");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      ds.createManagerAccount(this.state);
     } else {
       console.log("Form is invalid!");
     }

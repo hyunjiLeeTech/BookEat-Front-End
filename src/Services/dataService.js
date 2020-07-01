@@ -29,7 +29,7 @@ export default {
       });
   },
   editRestaurantProfile(state) {
-    return Axios.post(serverAddress + "/restaurant/editresprofile", state, {
+    Axios.post(serverAddress + "/restaurant/editresprofile", state, {
       headers: authHeader(),
     })
       .then((res) => {
@@ -43,6 +43,53 @@ export default {
             .addClass("alert-success");
         } else {
           $("#resProfileResultText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  updateCustomerInformation(state) {
+    Axios.post(serverAddress + "/updatecustomerinfo", state, {
+      headers: authHeader(),
+    }).then((res) => {
+      console.log(res);
+      if (res.data.errcode === 0) {
+        $("#updateResultText")
+          .text("Profile update is finished.")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#updateResultText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success");
+      }
+    });
+  },
+  createManagerAccount(state) {
+    Axios.post(serverAddress + "/managersignup", state, {
+      headers: authHeader(),
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.errcode === 0) {
+          $("#signResultText")
+            .text("Manager account is created")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#signResultText")
             .text("Sorry, " + res.data.errmsg)
             .removeClass("alert-warning")
             .removeClass("alert-danger")
