@@ -60,39 +60,33 @@ class App extends Component {
             $("#email").val(u.account.email);
           } else if (userType == 2) {
             $("#user-status-indicator").text(u.resName);
-            $("#resname").val(u.resName);
-            $("#phonenumber").val(u.phoneNumber);
-            $("#email").val(usr.user.email);
-            $("#businessnumber").val(u.businessNum);
-            $("#postalcode").val(u.addressId.postalCode);
-            $("#streetname").val(u.addressId.streetName);
-            $("#streetnumber").val(u.addressId.streetNum);
-            $("#city").val(u.addressId.city);
-            $("#province").val(u.addressId.province);
-            $("#description").val(u.restaurantDescription);
-            $("#cuisineStyle").val(u.cuisineStyleId.cuisineVal);
-            $("#category").val(u.categoryId.categoryVal);
-            $("#priceRange").val(u.priceRangeId.priceRangeName);
-            $("#monOpenTime").val(u.monOpenTimeId.storeTimeVal);
-            $("#tueOpenTime").val(u.tueOpenTimeId.storeTimeVal);
-            $("#wedOpenTime").val(u.wedOpenTimeId.storeTimeVal);
-            $("#thuOpenTime").val(u.thuOpenTimeId.storeTimeVal);
-            $("#friOpenTime").val(u.friOpenTimeId.storeTimeVal);
-            $("#satOpenTime").val(u.satOpenTimeId.storeTimeVal);
-            $("#sunOpenTime").val(u.sunOpenTimeId.storeTimeVal);
-            $("#monCloseTime").val(u.monCloseTimeId.storeTimeVal);
-            $("#tueCloseTime").val(u.tueCloseTimeId.storeTimeVal);
-            $("#wedCloseTime").val(u.wedCloseTimeId.storeTimeVal);
-            $("#thuCloseTime").val(u.thuCloseTimeId.storeTimeVal);
-            $("#friCloseTime").val(u.friCloseTimeId.storeTimeVal);
-            $("#satCloseTime").val(u.satCloseTimeId.storeTimeVal);
-            $("#sunCloseTime").val(u.sunCloseTimeId.storeTimeVal);
-
-            console.log(u.monCloseTimeId.storeTimeVal);
-            console.log(u);
-            console.log("reaname: " + u.resName);
-            console.log("desc: " + u.restaurantDescription);
-            console.log("cusine: " + u.cuisineStyleId.cuisineName);
+            // $("#resname").val(u.resName);
+            // $("#phonenumber").val(u.phoneNumber);
+            // $("#email").val(usr.user.email);
+            // $("#businessnumber").val(u.businessNum);
+            // $("#postalcode").val(u.addressId.postalCode);
+            // $("#streetname").val(u.addressId.streetName);
+            // $("#streetnumber").val(u.addressId.streetNum);
+            // $("#city").val(u.addressId.city);
+            // $("#province").val(u.addressId.province);
+            // $("#description").val(u.restaurantDescription);
+            // $("#cuisineStyle").val(u.cuisineStyleId.cuisineVal);
+            // $("#category").val(u.categoryId.categoryVal);
+            // $("#priceRange").val(u.priceRangeId.priceRangeName);
+            // $("#monOpenTime").val(u.monOpenTimeId.storeTimeVal);
+            // $("#tueOpenTime").val(u.tueOpenTimeId.storeTimeVal);
+            // $("#wedOpenTime").val(u.wedOpenTimeId.storeTimeVal);
+            // $("#thuOpenTime").val(u.thuOpenTimeId.storeTimeVal);
+            // $("#friOpenTime").val(u.friOpenTimeId.storeTimeVal);
+            // $("#satOpenTime").val(u.satOpenTimeId.storeTimeVal);
+            // $("#sunOpenTime").val(u.sunOpenTimeId.storeTimeVal);
+            // $("#monCloseTime").val(u.monCloseTimeId.storeTimeVal);
+            // $("#tueCloseTime").val(u.tueCloseTimeId.storeTimeVal);
+            // $("#wedCloseTime").val(u.wedCloseTimeId.storeTimeVal);
+            // $("#thuCloseTime").val(u.thuCloseTimeId.storeTimeVal);
+            // $("#friCloseTime").val(u.friCloseTimeId.storeTimeVal);
+            // $("#satCloseTime").val(u.satCloseTimeId.storeTimeVal);
+            // $("#sunCloseTime").val(u.sunCloseTimeId.storeTimeVal);
           }
         }
       }
