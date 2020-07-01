@@ -345,13 +345,13 @@ class RestaurantProfile extends Component {
       });
 
       //Form Disable
-      if ($("#resForm :input").prop("disabled", true)){
-        $("#editButton").click(function (){
+      if ($("#resForm :input").prop("disabled", true)) {
+        $("#editButton").click(function () {
           $("#resForm :input").prop("disabled", false);
           //Disable Email
-           $("#email").prop("disabled", true);
-      });
-      }  
+          $("#email").prop("disabled", true);
+        });
+      }
     });
 
   }
@@ -625,7 +625,8 @@ class RestaurantProfile extends Component {
                 role="tabpanel"
                 aria-labelledby="restaurantProfile"
               >
-                <form id="resForm" onSubmit={this.handleSubmit} noValidate>
+                <form onSubmit={this.handleSubmit} noValidate>
+                  <div id="resForm">
                   <div className="form-group row">
                     <label
                       htmlFor="resname"
@@ -1382,7 +1383,7 @@ class RestaurantProfile extends Component {
                         className="custom-select col-md-3"
                         id="friOpenTime"
                         name="friOpenTime"
-                       // value={this.state.friday}
+                        // value={this.state.friday}
                         onChange={this.handleChange}
                       >
                         <option>Choose Open Time</option>
@@ -1722,18 +1723,21 @@ class RestaurantProfile extends Component {
                       </span>
                     </div>
                   </div>
-                </form>
-                <div className="panel-footer row ">
-                  <div className="col-sm-6 text-left">
-                    <button className="btn btn-primary">Save</button>
-                  </div>
 
-                  <div className="col-sm-6 text-right">
-                    <button type="button" className="btn btn-primary" id="editButton">
-                      Edit
-                    </button>
                   </div>
-                </div>
+                  <div className="panel-footer row ">
+                    <div className="col-sm-6 text-left">
+                      <button className="btn btn-primary">Save</button>
+                    </div>
+
+                    <div className="col-sm-6 text-right">
+                      <button type="button" className="btn btn-primary" id="editButton">
+                        Edit
+                    </button>
+                    </div>
+                  </div>
+                </form>
+
               </div>
 
               {/* End of Restaurant Profile */}
