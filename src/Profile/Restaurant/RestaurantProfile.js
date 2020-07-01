@@ -352,6 +352,8 @@ class RestaurantProfile extends Component {
           $("#email").prop("disabled", true);
         });
       }
+
+
     });
 
   }
@@ -363,6 +365,7 @@ class RestaurantProfile extends Component {
     const usr = authService.getCurrentUser();
     console.log(usr.user._id);
     this.setState({ showForm: true, accountId: usr.user._id });
+
   }
 
   // Manager Form 
@@ -482,14 +485,14 @@ class RestaurantProfile extends Component {
               value={this.state.password}
               placeholder="Password"
               className={
-                isError.email.length > 6
+                isError.password.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.email)}</span>
+            <span className="invalid-feedback">{Parser(isError.password)}</span>
           </div>
         </div>
 
@@ -542,7 +545,19 @@ class RestaurantProfile extends Component {
           </div>
         </div>
       </form>
+
     );
+  }
+
+  // Manager View
+  renderView () {
+    return (
+      <button 
+        type="button"
+        className= "btn btn-primary">
+        Delete
+      </button>
+    )
   }
 
   render() {
@@ -1752,18 +1767,18 @@ class RestaurantProfile extends Component {
               >
                 <div className="panel-footer row ">
                   <div className="col-sm-6 text-left">
-                    <button className="btn btn-primary" onClick={this.onClick}>
+                    <button id="create" className="btn btn-primary" onClick={this.onClick}>
                       Create New Manager
                     </button>
                   </div>
 
                   <div className="col-sm-6 text-right">
-                    <button className="btn btn-primary">View Manager</button>
+                    <button id="view" className="btn btn-primary" onClick={this.onClick}>View Manager</button>
                   </div>
                 </div>
                 <br />
-
                 {showForm && this.renderForm()}
+                {showForm && this.renderView()}
               </div>
 
               {/* End of Manager Account */}
