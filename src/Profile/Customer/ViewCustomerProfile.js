@@ -115,10 +115,18 @@ class ViewCustomerProfile extends Component {
     if (customer) {
       this.setState((state, props) => {
         return {
-          firstname: customer.firstName,
-          lastname: customer.lastName,
-          phonenumber: customer.phoneNumber,
-          email: customer.account.email,
+          firstname:
+            typeof customer.firstName != "undefined" ? customer.firstName : "",
+          lastname:
+            typeof customer.lastName != "undefined" ? customer.lastName : "",
+          phonenumber:
+            typeof customer.phoneNumber != "undefined"
+              ? customer.phoneNumber
+              : "",
+          email:
+            typeof customer.account != "undefined"
+              ? customer.account.email
+              : "",
         };
       });
     }
