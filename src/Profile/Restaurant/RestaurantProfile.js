@@ -247,7 +247,7 @@ class RestaurantProfile extends Component {
       this.state.password = sha256(this.state.password).toString(); //hashing password
       this.state.confirmpw = sha256(this.state.confirmpw).toString();
       console.log(this.state);
-      Axios.post(serverAddress + "/managersignup", this.state)
+      Axios.post(serverAddress + "/restaurant/editresprofile", this.state)
         .then((res) => {
           console.log(res);
           if (res.data.errcode === 0) {
@@ -277,13 +277,6 @@ class RestaurantProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      const usr = authService.getCurrentUser();
-      console.log(this.state);
-
-      console.log(usr.user._id);
-      this.state.password = sha256(this.state.password).toString(); //hashing password
-      this.state.confirmpw = sha256(this.state.confirmpw).toString();
-      console.log(this.state);
       Axios.post(serverAddress + "/managersignup", this.state)
         .then((res) => {
           console.log(res);
@@ -727,7 +720,7 @@ class RestaurantProfile extends Component {
                 role="tabpanel"
                 aria-labelledby="restaurantProfile"
               >
-                <form onSubmit={this.handleSubmit} noValidate>
+                <form onSubmit={this.handleSubmitResProfile} noValidate>
                   <div id="resForm">
                     <div className="form-group row">
                       <label
@@ -1288,7 +1281,7 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="wedOpenTime"
                           name="wedOpenTime"
-                          //value={this.state.wednesday}
+                          value={this.state.wedOpenTime}
                           onChange={this.handleChange}
                         >
                           <option>Choose Open Time</option>
@@ -1326,7 +1319,7 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="wedCloseTime"
                           name="wedCloseTime"
-                          //value={this.state.wednesday}
+                          value={this.state.wedCloseTime}
                           onChange={this.handleChange}
                         >
                           <option>Choose Close Time</option>
