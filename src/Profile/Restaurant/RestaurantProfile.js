@@ -387,6 +387,20 @@ class RestaurantProfile extends Component {
     t2.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
+    var t3 = document.getElementById("password");
+    t3.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+    };
+
+    var t4 = document.getElementById("confirmPassword");
+    t4.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+    };
+
+    var t7 = document.getElementById("newPassword");
+    t7.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+    };
     var t5 = document.getElementById("businessnumber");
     t5.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
@@ -478,6 +492,8 @@ class RestaurantProfile extends Component {
           console.log("test");
         });
       }
+
+
     });
   }
 
@@ -488,6 +504,7 @@ class RestaurantProfile extends Component {
     const usr = authService.getCurrentUser();
     console.log(usr.user._id);
     this.setState({ showForm: true, accountId: usr.user._id });
+
   }
 
   // Manager Form
@@ -607,14 +624,14 @@ class RestaurantProfile extends Component {
               value={this.state.password}
               placeholder="Password"
               className={
-                isError.email.length > 6
+                isError.password.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.email)}</span>
+            <span className="invalid-feedback">{Parser(isError.password)}</span>
           </div>
         </div>
 
@@ -667,7 +684,19 @@ class RestaurantProfile extends Component {
           </div>
         </div>
       </form>
+
     );
+  }
+
+  // Manager View
+  renderView () {
+    return (
+      <button 
+        type="button"
+        className= "btn btn-primary">
+        Delete
+      </button>
+    )
   }
 
   render() {
@@ -1937,18 +1966,18 @@ class RestaurantProfile extends Component {
               >
                 <div className="panel-footer row ">
                   <div className="col-sm-6 text-left">
-                    <button className="btn btn-primary" onClick={this.onClick}>
+                    <button id="create" className="btn btn-primary" onClick={this.onClick}>
                       Create New Manager
                     </button>
                   </div>
 
                   <div className="col-sm-6 text-right">
-                    <button className="btn btn-primary">View Manager</button>
+                    <button id="view" className="btn btn-primary" onClick={this.onClick}>View Manager</button>
                   </div>
                 </div>
                 <br />
-
                 {showForm && this.renderForm()}
+                {showForm && this.renderView()}
               </div>
 
               {/* End of Manager Account */}

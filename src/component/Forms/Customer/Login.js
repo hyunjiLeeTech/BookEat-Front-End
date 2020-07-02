@@ -129,7 +129,7 @@ class Login extends Component {
             });
           } else if (u.userTypeId === 3) {
             console.log("manager");
-            window.location.href = "/";
+            window.location.href = "/managerprofile";
             // redirect to management page after login
           }
         } else {

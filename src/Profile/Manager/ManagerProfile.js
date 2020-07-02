@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import MainContainer from '../../component/Style/MainContainer'
 import Parser from 'html-react-parser'
+import $ from "jquery";
 
 //Validation 
 const regExpEmail = RegExp(
@@ -126,6 +127,47 @@ class ManagerProfile extends Component {
         }
 
     }
+
+    componentDidMount() {
+        //Avoid spacing on the form 
+        var t3 = document.getElementById("password");
+        t3.onkeypress = function (e) {
+            if (e.keyCode === 32) return false;
+        };
+
+        var t4 = document.getElementById("confirmPassword");
+        t4.onkeypress = function (e) {
+            if (e.keyCode === 32) return false;
+        };
+
+        var t1 = document.getElementById("newPassword");
+        t1.onkeypress = function (e) {
+            if (e.keyCode === 32) return false;
+        };
+
+        var t2 = document.getElementById("email");
+        t2.onkeypress = function (e) {
+            if (e.keyCode === 32) return false;
+        };
+
+        var t6 = document.getElementById("phonenumber");
+        t6.onkeypress = function (e) {
+            if (e.keyCode === 32) return false;
+        };
+
+        //Disable Button
+        $(document).ready(function () {
+            //Form Disable
+            if ($("#manForm :input").prop("disabled", true)) {
+                $("#editButton").click(function () {
+                    $("#manForm :input").prop("disabled", false);
+                    //Disable Email
+                    $("#email").prop("disabled", true);
+                });
+            }
+        });
+
+    }
     render() {
         const { isError } = this.state;
         return (
@@ -177,39 +219,40 @@ class ManagerProfile extends Component {
                             {/* Start Manager profile */}
                             <div id="managerProfile" className="tab-pane fade show active" role="tabpanel" aria-labelledby="managerProfile">
                                 <form onSubmit={this.handleSubmit} noValidate>
+                                    <div id="manForm">
+                                        <div className="form-group row">
+                                            <label htmlFor="streetnumber" className="col-sm-2 col-form-label"> First Name</label>
+                                            <div className="col-sm-4">
+                                                <input type="text" id="firstName" name="firstName" value={this.state.firstName} placeholder="First Name"
+                                                    className={isError.firstName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                                <span className="invalid-feedback">{Parser(isError.firstName)}</span>
+                                            </div>
 
-                                    <div className="form-group row">
-                                        <label htmlFor="streetnumber" className="col-sm-2 col-form-label"> First Name</label>
-                                        <div className="col-sm-4">
-                                            <input type="text" id="firstName" name="firstName" value={this.state.firstName} placeholder="First Name"
-                                                className={isError.firstName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                            <span className="invalid-feedback">{Parser(isError.firstName)}</span>
+                                            <label htmlFor="streetname" className="col-sm-2 col-form-label"> Last Name</label>
+                                            <div className="col-sm-4">
+                                                <input type="text" id="lastName" name="lastName" value={this.state.lastName} placeholder="Last Name"
+                                                    className={isError.lastName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                                <span className="invalid-feedback">{Parser(isError.lastName)}</span>
+                                            </div>
                                         </div>
 
-                                        <label htmlFor="streetname" className="col-sm-2 col-form-label"> Last Name</label>
-                                        <div className="col-sm-4">
-                                            <input type="text" id="lastName" name="lastName" value={this.state.lastName} placeholder="Last Name"
-                                                className={isError.lastName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                            <span className="invalid-feedback">{Parser(isError.lastName)}</span>
+                                        <div className="form-group row">
+
+                                            <label htmlFor="phonenumber" className="col-sm-2 col-form-label"> Phone Number</label>
+                                            <div className="col-md-4">
+                                                <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber} placeholder="Phone Number"
+                                                    className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                                <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div className="form-group row">
-
-                                        <label htmlFor="phonenumber" className="col-sm-2 col-form-label"> Phone Number</label>
-                                        <div className="col-md-4">
-                                            <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber} placeholder="Phone Number"
-                                                className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                            <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group row">
-                                        <label htmlFor="email" className="col-sm-2 col-form-label"> Email</label>
-                                        <div className="col-md-10">
-                                            <input type="email" id="email" name="email" value={this.state.email} placeholder="Email"
-                                                className={isError.email.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                            <span className="invalid-feedback">{Parser(isError.email)}</span>
+                                        <div className="form-group row">
+                                            <label htmlFor="email" className="col-sm-2 col-form-label"> Email</label>
+                                            <div className="col-md-10">
+                                                <input type="email" id="email" name="email" value={this.state.email} placeholder="Email"
+                                                    className={isError.email.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                                <span className="invalid-feedback">{Parser(isError.email)}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="panel-footer row ">
@@ -218,9 +261,10 @@ class ManagerProfile extends Component {
                                         </div>
 
                                         <div className="col-sm-6 text-right">
-                                            <button className="btn btn-primary" id="btn_disable">Edit</button>
+                                            <button className="btn btn-primary" id="editButton">Edit</button>
                                         </div>
                                     </div>
+
                                 </form>
                             </div>
                             {/* End Manager Profile */}
