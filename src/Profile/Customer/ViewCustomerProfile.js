@@ -5,6 +5,10 @@ import Parser from "html-react-parser";
 import $ from "jquery";
 import "./ViewCustomerProfile.css";
 import { Tab } from "bootstrap";
+import authService from "../../Services/AuthService";
+import serverAddress from "../../Services/ServerUrl";
+import ds from "../../Services//dataService";
+import Axios from "axios";
 
 const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
@@ -80,15 +84,53 @@ class ViewCustomerProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
+      Axios.post(serverAddress + "/updatecustomerinfo", this.state).then(
+        (res) => {
+          console.log(res);
+          if (res.data.errcode === 0) {
+            $("#updateResultText")
+              .text("Profile update is finished.")
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success")
+              .addClass("alert-success");
+          } else {
+            $("#updateResultText")
+              .text("Sorry, " + res.data.errmsg)
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success");
+          }
+        }
+      );
       console.log(this.state);
     } else {
       console.log("Form is invalid!");
     }
   };
 
-  componentDidMount() {
-    // Avoid spacing on the form
+  async componentDidMount() {
+    const customer = await ds.getCustomerInformation();
 
+    if (customer) {
+      this.setState((state, props) => {
+        return {
+          firstname:
+            typeof customer.firstName != "undefined" ? customer.firstName : "",
+          lastname:
+            typeof customer.lastName != "undefined" ? customer.lastName : "",
+          phonenumber:
+            typeof customer.phoneNumber != "undefined"
+              ? customer.phoneNumber
+              : "",
+          email:
+            typeof customer.account != "undefined"
+              ? customer.account.email
+              : "",
+        };
+      });
+    }
+    // Avoid spacing on the form
     var t3 = document.getElementById("password");
     t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
@@ -105,6 +147,7 @@ class ViewCustomerProfile extends Component {
 
   render() {
     const { isError } = this.state;
+    const { customer } = this.props;
 
     return (
       <MainContainer>
@@ -153,6 +196,7 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="firstname"
                       name="firstname"
+                      value={this.state.firstname}
                       class="form-control"
                     />
                   </div>
@@ -167,6 +211,7 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="lastname"
                       name="lastname"
+                      value={this.state.lastname}
                       class="form-control"
                     />
                   </div>
@@ -184,13 +229,13 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="phonenumber"
                       name="phonenumber"
+                      value={this.state.phonenumber}
                       class="form-control"
                     />
                   </div>
                 </div>
                 <div className="form-group row">
                   <label htmlFor="email" className="col-md-2 col-form-label">
-                    {" "}
                     Email
                   </label>
                   <div className="col-md-10">
@@ -198,6 +243,7 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="email"
                       name="email"
+                      value={this.state.email}
                       class="form-control"
                     />
                   </div>
@@ -536,6 +582,47 @@ class ViewCustomerProfile extends Component {
                       </tr>
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="modal fade"
+            id="signResultModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="signResultModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="signResultModalLabel">
+                    Sign up
+                  </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p className="alert alert-warning" id="signResultText">
+                    Please Wait...
+                  </p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
             </div>

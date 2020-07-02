@@ -6,15 +6,15 @@ import Parser from "html-react-parser";
 import $, { data } from "jquery";
 import FaceBook from "../../../Image/FACEBOOK.PNG";
 import Google from "../../../Image/google.PNG";
-import Axios from 'axios'
-import serverAddress from '../../../Services/ServerUrl';
-import authService from '../../../Services/AuthService';
+import Axios from "axios";
+import serverAddress from "../../../Services/ServerUrl";
+import authService from "../../../Services/AuthService";
 import authHeader from "../../../Services/authHeader";
-import sha256 from 'crypto-js/sha256';
+import sha256 from "crypto-js/sha256";
 //import FaceBook from "../../../Image/FACEBOOK.PNG";
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
-import ds from '../../../Services/dataService';
+import { GoogleLogin, GoogleLogout } from "react-google-login";
+import FacebookLogin from "react-facebook-login";
+import ds from "../../../Services/dataService";
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 
@@ -23,8 +23,8 @@ const regExpPassword = RegExp(
 );
 
 //Google ID
-const CLIENT_ID = '377822834291-u5q8t038me7rn1k5gieq1b6qrohgqedf.apps.googleusercontent.com';
-
+const CLIENT_ID =
+  "377822834291-u5q8t038me7rn1k5gieq1b6qrohgqedf.apps.googleusercontent.com";
 
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
@@ -55,7 +55,7 @@ class Login extends Component {
       email: "",
       password: "",
       isLogined: false,
-      accessToken: '',
+      accessToken: "",
       isError: {
         email: "&#160;",
         password: "&#160;",
@@ -98,10 +98,10 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      $("#login-btn").attr("disabled", "true").text("Please Wait")
+      $("#login-btn").attr("disabled", "true").text("Please Wait");
       console.log(this.state);
       var hashedpw = sha256(this.state.password).toString(); //hashing password
-      authService.login(this.state.email, hashedpw).then(res => {
+      authService.login(this.state.email, hashedpw).then((res) => {
         if (res.data.errcode === 0) {
           console.log(authService.getCurrentUser());
           var u = authService.getCurrentUser().user;
@@ -110,20 +110,37 @@ class Login extends Component {
             window.location.href = "/profile"
           }
           console.log("Testing auth");
-          ds.getCustomerInformation().then(res=>{
-            console.log(res);
-            //window.location.href = "/" //redirect to home page after login, set location.href to refresh the page.
-          }).catch(err => {
-            console.log(err);
-          })
-        } else { //TODO: Login operation failed on serverside
-          console.log(res.data.errmsg)
+          var u = authService.getCurrentUser().user;
+          if (u.userTypeId === 1) {
+            console.log("cus");
+            ds.getCustomerInformation()
+              .then((res) => {
+                console.log(res);
+                window.location.href = "/"; //redirect to home page after login, set location.href to refresh the page.
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else if (u.userTypeId === 2) {
+            console.log("res owner");
+            ds.getRestaurantInformation().then((res) => {
+              console.log(res);
+              window.location.href = "/restaurantprofile"; // redirect to restaurant profile page after login
+            });
+          } else if (u.userTypeId === 3) {
+            console.log("manager");
+            window.location.href = "/";
+            // redirect to management page after login
+          }
+        } else {
+          //TODO: Login operation failed on serverside
+          console.log(res.data.errmsg);
           alert(res.data.errmsg);
           $("#login-btn").removeAttr("disabled").text("Login");
           $("#passowrd").text("");
           this.state.password = "";
         }
-      })
+      });
     } else {
       console.log("Form is invalid!");
     }
@@ -132,36 +149,35 @@ class Login extends Component {
   //Google Log In
   login(response) {
     if (response.Zi.access_token) {
-      this.setState(state => ({
+      this.setState((state) => ({
         isLogined: true,
-        accessToken: response.Zi.access_token
+        accessToken: response.Zi.access_token,
       }));
     }
   }
 
   logout(response) {
-    this.setState(state => ({
+    this.setState((state) => ({
       isLogined: false,
-      accessToken: ''
+      accessToken: "",
     }));
   }
 
   handleLoginFailure(response) {
-    console.log('Failed to log in')
+    console.log("Failed to log in");
   }
 
   handleLogoutFailure(response) {
-    console.log('Failed to log out')
+    console.log("Failed to log out");
   }
 
   componentDidMount() {
     if (authService.getCurrentUser() != null) {
       console.log("Already logged in, redirecting to log out");
       //url params can be modified.
-      window.location.href = "/logout?redirectUrl=/login&message=You already logged in"
+      window.location.href =
+        "/logout?redirectUrl=/login&message=You already logged in";
     }
-
-
 
     // Avoid spacing on the form
 
@@ -177,30 +193,31 @@ class Login extends Component {
     //Facebook LogIn
     window.fbAsyncInit = function () {
       window.FB.init({
-        appId: '186311976091336',
+        appId: "186311976091336",
         cookie: true,
         xfbml: true,
-        version: 'v7.0'
+        version: "v7.0",
       });
 
       window.FB.AppEvents.logPageView();
-
     };
 
     (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
+    })(document, "script", "facebook-jssdk");
   }
 
   // Facebook
   responseFacebook(response) {
-    console.log(response)
+    console.log(response);
   }
 
   render() {
@@ -214,39 +231,40 @@ class Login extends Component {
               <h3>Log in</h3>
             </div>
             <div className="form-group text-center">
+              <div>
+                <FacebookLogin
+                  appId="186311976091336"
+                  autoLoad={true}
+                  fields="name,email,picture"
+                  callback={this.responseFacebook}
+                />
+              </div>
 
               <div>
-                 <FacebookLogin
-                appId="186311976091336"
-                autoLoad={true}
-                fields="name,email,picture"
-                callback={this.responseFacebook}
-              />
-              </div>
-            
-              <div>
-                {this.state.isLogined ?
+                {this.state.isLogined ? (
                   <GoogleLogout
                     clientId={CLIENT_ID}
-                    buttonText='Logout'
+                    buttonText="Logout"
                     onLogoutSuccess={this.logout}
                     onFailure={this.handleLogoutFailure}
-                  >
-                  </GoogleLogout> : <GoogleLogin
+                  ></GoogleLogout>
+                ) : (
+                  <GoogleLogin
                     clientId={CLIENT_ID}
-                    buttonText='Login'
+                    buttonText="Login"
                     onSuccess={this.login}
                     onFailure={this.handleLoginFailure}
-                    cookiePolicy={'single_host_origin'}
-                    responseType='code,token'
+                    cookiePolicy={"single_host_origin"}
+                    responseType="code,token"
                   />
-                }
-                {this.state.accessToken ? <h5>Your Access Token: <br /><br /> {this.state.accessToken}</h5> : null}
-
+                )}
+                {this.state.accessToken ? (
+                  <h5>
+                    Your Access Token: <br />
+                    <br /> {this.state.accessToken}
+                  </h5>
+                ) : null}
               </div>
-
-
-
             </div>
 
             <form onSubmit={this.handleSubmit} noValidate>
@@ -270,11 +288,10 @@ class Login extends Component {
                     onChange={this.handleChange}
                     required
                   />
-                  
-                    <span className="invalid-feedback">
-                      {Parser(isError.email)}
-                    </span>
-                 
+
+                  <span className="invalid-feedback">
+                    {Parser(isError.email)}
+                  </span>
                 </div>
               </div>
 
@@ -298,20 +315,22 @@ class Login extends Component {
                     onChange={this.handleChange}
                     required
                   />
-                 
-                    <span className="invalid-feedback">
-                      {Parser(isError.password)}
-                    </span>
-              
+
+                  <span className="invalid-feedback">
+                    {Parser(isError.password)}
+                  </span>
                 </div>
               </div>
 
               <div className="form-group  ">
                 <div className="text-center">
-
-                  <button type="submit" id="login-btn" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    id="login-btn"
+                    className="btn btn-primary"
+                  >
                     Log in
-                    </button>
+                  </button>
 
                   <p>
                     <br />
