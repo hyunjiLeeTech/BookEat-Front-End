@@ -61,9 +61,9 @@ class ViewCustomerProfile extends Component {
     switch (name) {
       case "password":
         isError.password = regExpPassword.test(value)
-        ? "&#160;"
-        : "At least 6 characters required";
-       // this.state.password = value;
+          ? "&#160;"
+          : "At least 6 characters required";
+        // this.state.password = value;
         break;
       case "newPassword":
         isError.newPassword = regExpPassword.test(value)
@@ -75,7 +75,7 @@ class ViewCustomerProfile extends Component {
         this.state.confirmpw = value;
         isError.confirmpw =
           this.state.confirmpw === this.state.newPassword
-           ? "&#160;" : "Password not matching"
+            ? "&#160;" : "Password not matching"
         break;
       default:
         break;
@@ -89,14 +89,14 @@ class ViewCustomerProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-    console.log(this.state);
+      console.log(this.state);
     } else {
-    console.log("Form is invalid!");
+      console.log("Form is invalid!");
     }
   };
 
   componentDidMount() {
-   
+
     // Avoid spacing on the form
 
     var t3 = document.getElementById("password");
@@ -118,20 +118,20 @@ class ViewCustomerProfile extends Component {
   }
 
   // Edit profile - disable
-handleClick(){
-    this.setState({disabled: !this.state.disabled})
+  handleClick() {
+    this.setState({ disabled: !this.state.disabled })
 
     this.changeText();
-}
+  }
 
-//Edit profile - button
-changeText(){
+  //Edit profile - button
+  changeText() {
     this.setState(state => {
-        return {
-            edit: !state.edit
-        };
+      return {
+        edit: !state.edit
+      };
     });
-}
+  }
 
   render() {
     const { isError } = this.state;
@@ -164,14 +164,14 @@ changeText(){
             </ul>
           </div>
 
-{/* Start Profile */}
+          {/* Start Profile */}
           <div class="tab-content">
             <div id="myProfile" class="container tab-pane active card">
-            <div className="card-body">
+              <div  form id="profile" className="card-body">
                 <br />
                 <h3>My profile</h3>
                 <br />
-                <div form id="profile" className="form-group row">
+                <div className="form-group row">
                   <label htmlFor="firstname" className="col-md-2 col-form-label">
                     {" "}
                   First Name
@@ -182,11 +182,11 @@ changeText(){
                       id="firstname"
                       name="firstname"
                       class="form-control"
-                      disabled ={(this.state.disabled)}
+                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
-                <div className="form-group row">
+                <div  className="form-group row">
                   <label htmlFor="lastname" className="col-md-2 col-form-label">
                     {" "}
                     Last Name
@@ -197,7 +197,7 @@ changeText(){
                       id="lastname"
                       name="lastname"
                       class="form-control"
-                      disabled ={(this.state.disabled)}
+                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
@@ -215,7 +215,7 @@ changeText(){
                       id="phonenumber"
                       name="phonenumber"
                       class="form-control"
-                      disabled ={(this.state.disabled)}
+                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
@@ -230,25 +230,25 @@ changeText(){
                       id="email"
                       name="email"
                       class="form-control"
-                      disabled = {true}
+                      disabled={true}
                     />
                   </div>
                 </div>
 
                 <div className="form-inline">
                   <div className="form-group text-center ">
-                      <button onClick={this.handleClick.bind(this)}  type="button" class="btn btn-primary mr-sm-4 ">
-                          {this.state.edit? "Save Change" : "Edit"}
-                          
-                      </button>
+                    <button onClick={this.handleClick.bind(this)} type="button" class="btn btn-primary mr-sm-4 ">
+                      {this.state.edit ? "Save Change" : "Edit"}
+
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             {/* End Profile */}
 
-{/* Start Password */}
-            <div id="password" class="container tab-pane card">
+            {/* Start Password */}
+            <div  form id="password" class="container tab-pane card">
               <div className="card-body">
                 <br />
                 <h3>Change password</h3>
@@ -264,12 +264,12 @@ changeText(){
                         Old Password{" "}
                       </label>
                       <div className="col-sm-6">
-                      <input name="password" type="password" id="password" 
-                      className={isError.password.length > 6 
-                        ? "is-invalid form-control" : "form-control"} 
-                        value={this.state.password} placeholder="Password"
-                      onChange={this.handleChange} required />
-                    <span className="invalid-feedback">{Parser(isError.password)}</span>
+                        <input name="password" type="password" id="password"
+                          className={isError.password.length > 6
+                            ? "is-invalid form-control" : "form-control"}
+                          value={this.state.password} placeholder="Password"
+                          onChange={this.handleChange} required />
+                        <span className="invalid-feedback">{Parser(isError.password)}</span>
                       </div>
                     </div>
                   </div>
@@ -283,10 +283,10 @@ changeText(){
                         New Password{" "}
                       </label>
                       <div className="col-sm-6">
-                      <input name="newPassword" type="password" id="newPassword" className={isError.newPassword.length > 6
-                      ? "is-invalid form-control" : "form-control"} value={this.state.newPassword} placeholder="Password"
-                      onChange={this.handleChange} required />
-                    <span className="invalid-feedback">{Parser(isError.newPassword)}</span>
+                        <input name="newPassword" type="password" id="newPassword" className={isError.newPassword.length > 6
+                          ? "is-invalid form-control" : "form-control"} value={this.state.newPassword} placeholder="Password"
+                          onChange={this.handleChange} required />
+                        <span className="invalid-feedback">{Parser(isError.newPassword)}</span>
                       </div>
                     </div>
                   </div>
@@ -300,16 +300,16 @@ changeText(){
                         Password confirmation{" "}
                       </label>
                       <div className="col-sm-6">
-                      <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
-                      onChange={this.handleChange} required />
-                    <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
+                        <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
+                          onChange={this.handleChange} required />
+                        <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
                       </div>
                     </div>
 
                     <div className="form-group ">
                       <div className="text-center">
-                          <button type="submit" className="btn btn-primary">
-                            Change password
+                        <button type="submit" className="btn btn-primary">
+                          Change password
                           </button>
                       </div>
                     </div>
@@ -317,10 +317,10 @@ changeText(){
                 </form>
               </div>
             </div>
-{/* End Password */}
+            {/* End Password */}
 
-{/* Start Reservation */}
-            <div
+            {/* Start Reservation */}
+            <div form
               id="myReservation"
               class="container tab-pane fade card card-body"
             >
@@ -347,8 +347,8 @@ changeText(){
               </div>
               <div form id="changeReservation" className="form-inline">
                 <div className="form-group">
-                  <Link to="/">  
-                  {/* TODO- link to reservation page */}
+                  <Link to="/">
+                    {/* TODO- link to reservation page */}
                     <button
                       type="button"
                       class="btn btn-primary btn-sm mr-sm-2"
@@ -408,10 +408,10 @@ changeText(){
                 </table>
               </div>
             </div>
-{/* End Reservation */}
+            {/* End Reservation */}
 
-{/* Start Review */}
-            <div id="myReview" class="container tab-pane fade">
+            {/* Start Review */}
+            <div form id="myReview" class="container tab-pane fade">
               <div className="form-group">
                 <br />
                 <br />
