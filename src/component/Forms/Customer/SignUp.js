@@ -7,7 +7,7 @@ import Parser from 'html-react-parser'
 import $ from 'jquery'
 import Axios from 'axios'
 import sha256 from 'crypto-js/sha256';
-import serverAddress from '../../../Services/authHeader';
+import serverAddress from '../../../Services/ServerUrl';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import Facebook from '../../../Image/FaceSign.jpg'
 

@@ -5,6 +5,14 @@ import Axios from "axios";
 import $ from "jquery";
 
 export default {
+  getRestaurantReservations(){
+    
+  },
+  getCustomerReservations(){
+
+  },
+
+
   getCustomerInformation() {
     return Axios.get(serverAddress + "/customers/getcustomerinfo", {
       headers: authHeader(), //set auth header
