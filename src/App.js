@@ -12,13 +12,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 
 import Login from "./component/Forms/Customer/Login";
-import ConfirmLogin from "./component/Forms/Customer/ConfirmLogin";
 import ForgotPassword from "./component/Forms/Customer/ForgotPassword";
 import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
-import ReservationHistory from "./Profile/Customer/ReservationHistory";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import Logout from './component/Forms/Logout';
 import Layout from './component/RestaurantLayout/Layout';
+
+//test
+import Test from './component/Forms/Customer/Test';
 
 import $ from 'jquery'
 
@@ -70,10 +71,12 @@ class App extends Component {
       <div>
         <NavBar />
         <Switch>
+          //test
+          <Route exact path="/Test" render={() => <Test />} />
+
           <Route exact path="/" render={() => <Home />} />
           <Route exact path="/SignUp" render={() => <SignUp />} />
           <Route exact path="/Login" render={() => <Login />} />
-          <Route exact path="/ConfirmLogin" render={() => <ConfirmLogin />} />
           <Route path='/logout' component={Logout} />
           <Route path='/layout' component={Layout} />
           <Route
@@ -90,11 +93,6 @@ class App extends Component {
             exact
             path="/ChangePassword"
             render={() => <ChangePassword />}
-          />
-          <Route
-            exact
-            path="/ReservationHistory"
-            render={() => <ReservationHistory />}
           />
           <Route
             exact

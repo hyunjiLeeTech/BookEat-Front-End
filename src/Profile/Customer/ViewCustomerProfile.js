@@ -14,7 +14,7 @@ const formValid = ({ isError, ...rest }) => {
   let isValid = false;
 
   Object.values(isError).forEach((val) => {
-    if (val.length < 0) {
+    if (val.length > 0) {
       isValid = false;
     } else {
       isValid = true;
@@ -86,7 +86,6 @@ class ViewCustomerProfile extends Component {
     });
   };
 
-  // TODO:check point -- 1.
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
@@ -165,13 +164,14 @@ changeText(){
             </ul>
           </div>
 
+{/* Start Profile */}
           <div class="tab-content">
             <div id="myProfile" class="container tab-pane active card">
             <div className="card-body">
                 <br />
                 <h3>My profile</h3>
                 <br />
-                <div className="form-group row">
+                <div form id="profile" className="form-group row">
                   <label htmlFor="firstname" className="col-md-2 col-form-label">
                     {" "}
                   First Name
@@ -245,7 +245,9 @@ changeText(){
                 </div>
               </div>
             </div>
+            {/* End Profile */}
 
+{/* Start Password */}
             <div id="password" class="container tab-pane card">
               <div className="card-body">
                 <br />
@@ -315,7 +317,9 @@ changeText(){
                 </form>
               </div>
             </div>
+{/* End Password */}
 
+{/* Start Reservation */}
             <div
               id="myReservation"
               class="container tab-pane fade card card-body"
@@ -341,9 +345,10 @@ changeText(){
                   </tbody>
                 </table>
               </div>
-              <div className="form-inline">
+              <div form id="changeReservation" className="form-inline">
                 <div className="form-group">
-                  <Link to="/">
+                  <Link to="/">  
+                  {/* TODO- link to reservation page */}
                     <button
                       type="button"
                       class="btn btn-primary btn-sm mr-sm-2"
@@ -352,7 +357,7 @@ changeText(){
                     </button>
                   </Link>
                 </div>
-                <div className="form-group">
+                <div form id="cancelReservation" className="form-group">
                   <Link to="/">
                     <button
                       type="button"
@@ -368,7 +373,7 @@ changeText(){
                 <br />
                 <h3> Reservation History</h3>
                 <p>
-                  Thank you for loving BookEat <br />
+                  Thank you for loving BookEat. <br />
                   Here is your BookEat history.{" "}
                 </p>
                 <table class="table table-striped">
@@ -403,13 +408,15 @@ changeText(){
                 </table>
               </div>
             </div>
+{/* End Reservation */}
 
+{/* Start Review */}
             <div id="myReview" class="container tab-pane fade">
               <div className="form-group">
                 <br />
                 <br />
                 <h3> My Rievew List</h3>
-                <div>
+                <div form id="review">
                   <table class="table table-striped ">
                     <thead>
                       <tr class>
