@@ -25,24 +25,24 @@ class RestaurantReservation extends Component {
         var rows = [];
         for (var ro of this.state.upcoming) {
             rows.push(
-                <tr>
-                    <td>
+                <tr key={rows}>
+                    <td >
                         {ro.customer.firstName + " " + ro.customer.lastName}
                     </td>
 
-                    <td>
+                    <td > 
                         {ro.table.rid}
                     </td>
 
-                    <td>
+                    <td >
                         {ro.dateTime}
                     </td>
 
-                    <td>
+                    <td >
                         {ro.numOfPeople}
                     </td>
 
-                    <td>
+                    <td >
                         {ro.comments}
                     </td>
 
@@ -65,24 +65,24 @@ class RestaurantReservation extends Component {
         var row = [];
         for (var r of this.state.past) {
             row.push(
-                <tr>
-                    <td>
+                <tr key={row}>
+                    <td > 
                         {r.customer.firstName + " " + r.customer.lastName}
                     </td>
 
-                    <td>
+                    <td >  
                         {r.table.rid}
                     </td>
 
-                    <td>
+                    <td >
                         {r.dateTime}
                     </td>
 
-                    <td>
+                    <td >
                         {r.numOfPeople}
                     </td>
 
-                    <td>
+                    <td >
                         {r.comments}
                     </td>
 
