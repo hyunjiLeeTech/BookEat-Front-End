@@ -3,16 +3,60 @@ import { Link } from 'react-router-dom'
 import MainContainer from '../component/Style/MainContainer'
 import Parser from 'html-react-parser'
 import $ from "jquery";
+import dataService from '../Services/dataService';
 
 class RestaurantReservation extends Component {
 
     constructor(props) {
         super(props);
-
+        this.state = {
+            upcoming: [],
+            past: [],
+        }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.querypast = this.querypast.bind(this);
+        this.renderPast = this.renderPast.bind(this);
     }
 
+    renderPast() {
+        var rows = [];
+        for (var r of this.state.past) {
+            rows.push(
+                <tr><td>
+                    {r.customer.firstName + " " + r.customer.lastName}
+                </td>
+
+                    <td>
+                    {r.table. rid}
+                    </td>
+
+                    <td>
+                        {r.dateTime}
+                    </td>
+
+                    <td>    
+                        {r.numOfPeople}
+                    </td>
+
+                    <td>
+                        {r.comments}
+                    </td>
+
+                </tr>
+            )
+        }
+        return rows;
+    }
+
+    querypast() {
+        dataService.getRestaurantPastReservation().then(res => {
+            console.log(res.reservations);
+            this.setState({
+                past: res.reservations,
+            })
+        })
+    }
 
     handleChange(e) {
         e.preventDefault();
@@ -20,12 +64,15 @@ class RestaurantReservation extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
     }
 
+    componentDidMount() {
+        this.querypast();
+    }
 
     render() {
         const { isError } = this.state;
+        //this.querypast();
         return (
             <MainContainer>
                 <div className="card">
@@ -63,9 +110,9 @@ class RestaurantReservation extends Component {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                          
+
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -84,10 +131,10 @@ class RestaurantReservation extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                           
-                                        </tr>
-                                       
+
+                                        {this.renderPast()}
+
+
                                     </tbody>
                                 </table>
                             </div>

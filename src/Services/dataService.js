@@ -39,7 +39,7 @@ export default {
     });
   },
   getRestaurantPastReservation(){
-    return Axios.get(serverAddress + "/reservationsofpast14days", {
+    return Axios.get(serverAddress + "/restaurant/reservationsofpast14days", {
       headers: authHeader(),
     })
     .then (function (res){
