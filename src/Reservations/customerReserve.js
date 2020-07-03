@@ -74,7 +74,7 @@ class Reserve extends Component {
         })
     }
     renderForm() {
-        return (<form onSubmit={this.handleSubmit} className="col-xs-12 col-md-12 needs-validation" noValidate>
+        return (<form onSubmit={this.handleSubmit} className="col-xs-8 col-md-8 needs-validation" noValidate>
             <div className="page-header text-left" style={{ marginTop: '10%' }}>
                 <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
                     <h3>Please provide your information to reserve</h3>
@@ -140,12 +140,12 @@ class Reserve extends Component {
             if (res.errcode === 0) {
                 console.log(res)
                 this.setState({
-                    tableIsVisible:false,
+                    tableIsVisible: false,
                     tablestatus: false,
                 })
 
 
-                
+
                 setTimeout(() => {
                     this.setState({
                         resultIsVisible: true,
@@ -164,43 +164,53 @@ class Reserve extends Component {
             //partial code from https://tobiasahlin.com/spinkit/, modified.
             <MainContainer>
                 <div className="row">
-                    {this.state.formIsVisible ? 
-                        <Animated animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.formIsVisible}>{this.renderForm()}</Animated>
-                    : null
+                    {this.state.formIsVisible ?
+                        <Animated className="row" animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.formIsVisible}>{
+                            this.renderForm()
+                        }
+                        <div className='col-md-4'>
+                        <img src="https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?cs=srgb&dl=table-in-vintage-restaurant-6267.jpg&fm=jpg" style={{marginTop: '5%'}} className="col-md-12" />
+                        
+                        <h4 style={{marginLeft: '5%'}}>Test Restaurant</h4>
+                        <p style={{marginLeft: '10%'}}>Restaurant Decription goes here</p>
+                        </div>
+                        </Animated>
+                        : null
                     }
-                    <div className="col-xs-8 col-md-8">
-                        {this.state.tableIsVisible ? <Animated animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.tableIsVisible}>
-                            <div className="page-header text-left" style={{ marginTop: '5%' }}>
-                                <h3>Please Select a table</h3>
-                            </div>
-                            <Layout tables={this.state.tables} setTableId={this.setTableId} />
-                            <div className="row">
-                                <div className="col-md-3">
-                                    <button className="btn btn-warning" onClick={this.back}>Back</button>
+                    {this.state.tableIsVisible ?
+                        <div className="col-xs-8 col-md-8">
+                            <Animated animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.tableIsVisible}>
+                                <div className="page-header text-left" style={{ marginTop: '5%' }}>
+                                    <h3>Please Select a table</h3>
                                 </div>
-                                <div className="col-md-6">
+                                <Layout tables={this.state.tables} setTableId={this.setTableId} />
+                                <div className="row">
+                                    <div className="col-md-3">
+                                        <button className="btn btn-warning" onClick={this.back}>Back</button>
+                                    </div>
+                                    <div className="col-md-6">
 
+                                    </div>
+                                    <div className="col-md-2">
+                                        <button className="btn btn-primary" onClick={this.book}>Book</button>
+                                    </div>
                                 </div>
-                                <div className="col-md-2">
-                                    <button className="btn btn-primary" onClick={this.book}>Book</button>
-                                </div>
+                            </Animated>
+                        </div> : null}
+                    {this.state.resultIsVisible ?
+                        <Animated animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.resultIsVisible}>
+                            <div className="page-header text-left" style={{ marginTop: '5%' }}>
+                                <h3>Thanks for reserving</h3>
+                                <h4>This is your reservation:</h4>
+                                <p>Customer Name: {this.state.result.customer.firstName + "" + this.state.result.customer.lastName}</p>
+                                <p>Time: {new Date(this.state.result.dateTime).toString()}</p>
+                                <p>Restaurant: {this.state.result.restaurant.resName}</p>
+                                <p>Number of People: {this.state.result.numOfPeople}</p>
+                                <p>Restaurant Phone Number: {this.state.result.restaurant.businessNum}</p>
                             </div>
                         </Animated> : null}
-                    </div>
-                    {this.state.resultIsVisible ?
-                    <Animated animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.resultIsVisible}>
-                        <div className="page-header text-left" style={{ marginTop: '5%' }}>
-                            <h3>Thanks for reserving</h3>
-                            <h4>This is your reservation:</h4>
-                            <p>Customer Name: {this.state.result.customer.firstName + "" + this.state.result.customer.lastName}</p>
-                            <p>Time: {new Date(this.state.result.dateTime).toString()}</p>
-                            <p>Restaurant: {this.state.result.restaurant.resName}</p>
-                            <p>Number of People: {this.state.result.numOfPeople}</p>
-                            <p>Restaurant Phone Number: {this.state.result.restaurant.businessNum}</p>
-                        </div>
-                    </Animated> : null}
-                
-                
+
+
                 </div>
             </MainContainer>
         )
