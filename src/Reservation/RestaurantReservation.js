@@ -17,25 +17,68 @@ class RestaurantReservation extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.querypast = this.querypast.bind(this);
         this.renderPast = this.renderPast.bind(this);
+        this.queryPresent = this.queryPresent.bind(this);
+        this.renderPresent = this.renderPresent.bind(this);
+    }
+
+    renderPresent() {
+        var rows = [];
+        for (var ro of this.state.upcoming) {
+            rows.push(
+                <tr>
+                    <td>
+                        {ro.customer.firstName + " " + ro.customer.lastName}
+                    </td>
+
+                    <td>
+                        {ro.table.rid}
+                    </td>
+
+                    <td>
+                        {ro.dateTime}
+                    </td>
+
+                    <td>
+                        {ro.numOfPeople}
+                    </td>
+
+                    <td>
+                        {ro.comments}
+                    </td>
+
+                </tr>
+            )
+        }
+        return rows;
+    }
+
+    queryPresent() {
+        dataService.getRestaurantUpcomingReservation().then(res => {
+            console.log(res.reservations);
+            this.setState({
+                upcoming: res.reservations,
+            })
+        })
     }
 
     renderPast() {
-        var rows = [];
+        var row = [];
         for (var r of this.state.past) {
-            rows.push(
-                <tr><td>
-                    {r.customer.firstName + " " + r.customer.lastName}
-                </td>
+            row.push(
+                <tr>
+                    <td>
+                        {r.customer.firstName + " " + r.customer.lastName}
+                    </td>
 
                     <td>
-                    {r.table. rid}
+                        {r.table.rid}
                     </td>
 
                     <td>
                         {r.dateTime}
                     </td>
 
-                    <td>    
+                    <td>
                         {r.numOfPeople}
                     </td>
 
@@ -46,7 +89,7 @@ class RestaurantReservation extends Component {
                 </tr>
             )
         }
-        return rows;
+        return row;
     }
 
     querypast() {
@@ -68,24 +111,23 @@ class RestaurantReservation extends Component {
 
     componentDidMount() {
         this.querypast();
+        this.queryPresent();
     }
 
     render() {
-        const { isError } = this.state;
-        //this.querypast();
         return (
             <MainContainer>
                 <div className="card">
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
                             <li className="nav-item">
-                                <a class="nav-link active" data-toggle="tab" role="tab" href="#upcomingRes" aria-controls="upcomingRes" aria-selected="true">
+                                <a className="nav-link active" data-toggle="tab" role="tab" href="#upcomingRes" aria-controls="upcomingRes" aria-selected="true">
                                     Upcoming Reservation
                                 </a>
 
                             </li>
                             <li className="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#pastRes" aria-controls="pastRes" aria-selected="false">
+                                <a className="nav-link" data-toggle="tab" role="tab" href="#pastRes" aria-controls="pastRes" aria-selected="false">
                                     Past Reservation
                                 </a>
 
@@ -109,9 +151,7 @@ class RestaurantReservation extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-
-                                        </tr>
+                                        {this.renderPresent()}
 
                                     </tbody>
                                 </table>

@@ -28,7 +28,7 @@ export default {
       });
   },
   getRestaurantUpcomingReservation(){
-    return Axios.get(serverAddress + "/upcomingreservations", {
+    return Axios.get(serverAddress + "/restaurant/upcomingreservations", {
       headers: authHeader(),
     })
     .then (function (res){
