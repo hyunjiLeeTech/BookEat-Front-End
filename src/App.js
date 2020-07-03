@@ -28,6 +28,7 @@ import ManagerProfile from "./Profile/Manager/ManagerProfile";
 import EmailConfirmation from "./RedirectPages/EmailConfirmation";
 import NotFound from "./RedirectPages/NotFound";
 import authService from "./Services/AuthService";
+import RestaurantReservation from "./Reservation/RestaurantReservation";
 
 class App extends Component {
   queryUserInfo = async function (userType) {
@@ -101,6 +102,19 @@ class App extends Component {
     }
   };
 
+  queryReservation = async function (userType){
+    let user = null;
+    try{
+      if(userType === 2){
+        user = await ds.getRestaurantUpcomingReservation();
+        user = await ds.getRestaurantPastReservation()();
+      }
+
+    }catch (err){
+      console.log(err);
+    }
+  };
+
   componentDidMount() {
     $("#user-status-indicator").text("Updating");
     this.updateUserInfo();
@@ -164,6 +178,7 @@ class App extends Component {
             render={() => <EmailConfirmation />}
           />
           <Route exact path="/NotFound" render={() => <NotFound />} />
+          <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
         </Switch>
         <div className="footer">
           <Footer />

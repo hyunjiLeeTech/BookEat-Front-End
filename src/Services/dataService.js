@@ -27,4 +27,26 @@ export default {
         throw err;
       });
   },
+  getRestaurantUpcomingReservation(){
+    return Axios.get(serverAddress + "/upcomingreservations", {
+      headers: authHeader(),
+    })
+    .then (function (res){
+      return res.data;
+    })
+    .catch((err) => {
+      throw err;
+    });
+  },
+  getRestaurantPastReservation(){
+    return Axios.get(serverAddress + "/reservationsofpast14days", {
+      headers: authHeader(),
+    })
+    .then (function (res){
+      return res.data;
+    })
+    .catch((err) => {
+      throw err;
+    });
+  },
 };
