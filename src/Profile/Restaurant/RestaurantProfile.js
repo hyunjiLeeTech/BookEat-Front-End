@@ -74,8 +74,6 @@ class RestaurantProfile extends Component {
       saturday: '',
       description: '',
       picture: '',
-      firstName: '',
-      lastName: '',
       password: "",
       newPassword: "",
       confirmPassword: "",
@@ -83,6 +81,12 @@ class RestaurantProfile extends Component {
       Menupicture: "",
       image: null,
       //MenuEnd
+      //Manager Form
+      firstNameMan: '',
+      lastNameMan: '',
+      passwordMan: "",
+      emailMan: '',
+      phonenumberMan: '',
       isError: {
         //MenuStart
         Menupicture: '&#160;',
@@ -112,7 +116,12 @@ class RestaurantProfile extends Component {
         lastName: '&#160;',
         password: "&#160;",
         newPassword: "&#160;",
-        confirmPassword: "&#160;"
+        confirmPassword: "&#160;",
+        firstNameMan: '&#160;',
+        lastNameMan: '&#160;',
+        passwordMan: "&#160;",
+        emailMan: '&#160;',
+        phonenumberMan: '&#160;',
       }
     };
 
@@ -184,14 +193,29 @@ class RestaurantProfile extends Component {
         isError.description = value.length >= 1 && value.length <= 255
           ? "&#160;" : "Atleast write something"
         break;
-      case "firstName":
-        isError.firstName =
+      case "firstNameMan":
+        isError.firstNameMan =
           value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
 
         break;
-      case "lastName":
-        isError.lastName =
+      case "lastNameMan":
+        isError.lastNameMan =
           value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
+        break;
+        case "passwordMan":
+        isError.passwordMan = regExpPassword.test(value)
+          ? "&#160;"
+          : "At least 6 characters required";
+        this.state.passwordMan = value;
+        break;
+        case "emailMan":
+        isError.emailMan = regExpEmail.test(value)
+          ? "&#160;"
+          : "Invalid email address";
+        break;
+        case "phonenumberMan":
+        isError.phonenumberMan = regExpPhone.test(value)
+          ? "&#160;" : "Phone Number is invalid";
         break;
       case "password":
         isError.password = regExpPassword.test(value)
@@ -292,6 +316,15 @@ class RestaurantProfile extends Component {
     var t6 = document.getElementById("phonenumber");
     t6.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
+
+      var t8 = document.getElementById("emailMan");
+      t8.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+      };
+      var t9 = document.getElementById("passwordMan");
+      t9.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+      };
     };
 
     //Disable Button 
@@ -367,27 +400,47 @@ class RestaurantProfile extends Component {
       });
 
       //Form Disable
-      if ($("#resForm :input").prop("disabled", true)) {
-        $("#editButton").click(function () {
-          $("#resForm :input").prop("disabled", false);
-          //Disable Email
-          $("#email").prop("disabled", true);
-        });
-      }
+      // if ($("#resForm :input").prop("disabled", true)) {
+      //   $("#editButton").click(function () {
+      //     $("#resForm :input").prop("disabled", false);
+      //     //Disable Email
+      //     $("#email").prop("disabled", true);
+      //   });
+      // }
 
 
     });
 
   }
 
-  //Manager Create Button Form
+  //Manager Create Button Form 
 
   onClick() {
-    // On click we change our state – this will trigger our `render` method
     const usr = authService.getCurrentUser();
     console.log(usr.user._id);
-    this.setState({ showForm: true, accountId: usr.user._id });
+    this.setState({
+      showForm: true,
+      accountId: usr.user._id
+    });
 
+
+  }
+
+  //  Edit profile disable button
+  handleEdit() {
+    this.setState({
+      disabled: !this.state.disabled
+    });
+    this.changeText();
+  }
+
+  //Edit profile - button
+  changeText() {
+    this.setState(state => {
+      return {
+        edit: !state.edit
+      };
+    });
   }
 
   // Manager Form 
@@ -404,12 +457,12 @@ class RestaurantProfile extends Component {
           <div className="col-sm-4">
             <input
               type="text"
-              id="firstName"
-              name="firstName"
-              value={this.state.firstName}
+              id="firstNameMan"
+              name="firstNameMan"
+              value={this.state.firstNameMan}
               placeholder="First Name"
               className={
-                isError.firstName.length > 6
+                isError.firstNameMan.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
@@ -417,7 +470,7 @@ class RestaurantProfile extends Component {
               required
             />
             <span className="invalid-feedback">
-              {Parser(isError.firstName)}
+              {Parser(isError.firstNameMan)}
             </span>
           </div>
 
@@ -428,19 +481,19 @@ class RestaurantProfile extends Component {
           <div className="col-sm-4">
             <input
               type="text"
-              id="lastName"
-              name="lastName"
-              value={this.state.lastName}
+              id="lastNameMan"
+              name="lastNameMan"
+              value={this.state.lastNameMan}
               placeholder="Last Name"
               className={
-                isError.lastName.length > 6
+                isError.lastNameMan.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.lastName)}</span>
+            <span className="invalid-feedback">{Parser(isError.lastNameMan)}</span>
           </div>
         </div>
 
@@ -452,12 +505,12 @@ class RestaurantProfile extends Component {
           <div className="col-md-4">
             <input
               type="text"
-              id="phonenumber"
-              name="phonenumber"
-              value={this.state.phonenumber}
+              id="phonenumberMan"
+              name="phonenumberMan"
+              value={this.state.phonenumberMan}
               placeholder="Phone Number"
               className={
-                isError.phonenumber.length > 6
+                isError.phonenumberMan.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
@@ -465,7 +518,7 @@ class RestaurantProfile extends Component {
               required
             />
             <span className="invalid-feedback">
-              {Parser(isError.phonenumber)}
+              {Parser(isError.phonenumberMan)}
             </span>
           </div>
         </div>
@@ -478,19 +531,19 @@ class RestaurantProfile extends Component {
           <div className="col-md-10">
             <input
               type="email"
-              id="email"
-              name="email"
-              value={this.state.email}
+              id="emailMan"
+              name="emailMan"
+              value={this.state.emailMan}
               placeholder="Email"
               className={
-                isError.email.length > 6
+                isError.emailMan.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.email)}</span>
+            <span className="invalid-feedback">{Parser(isError.emailMan)}</span>
           </div>
         </div>
 
@@ -502,19 +555,19 @@ class RestaurantProfile extends Component {
           <div className="col-md-10">
             <input
               type="password"
-              id="password"
-              name="password"
-              value={this.state.password}
+              id="passwordMan"
+              name="passwordMan"
+              value={this.state.passwordMan}
               placeholder="Password"
               className={
-                isError.password.length > 6
+                isError.passwordMan.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.password)}</span>
+            <span className="invalid-feedback">{Parser(isError.passwordMan)}</span>
           </div>
         </div>
 
@@ -574,11 +627,29 @@ class RestaurantProfile extends Component {
   // Manager View
   renderView() {
     return (
-      <button
-        type="button"
-        className="btn btn-primary">
-        Delete
-      </button>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Phone Number</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td><button
+              type="button"
+              className="btn btn-danger">
+              Delete
+      </button> </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+
     )
   }
 
@@ -685,6 +756,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                           required
                         />
                         <span className="invalid-feedback">
@@ -714,6 +786,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                           required
                         />
                         <span className="invalid-feedback">
@@ -741,6 +814,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                           required
                         />
                         <span className="invalid-feedback">
@@ -767,6 +841,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                           required
                         />
                         <span className="invalid-feedback">
@@ -794,6 +869,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                           required
                         />
                         <span className="invalid-feedback">
@@ -823,6 +899,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                           required
                         />
                         <span className="invalid-feedback">
@@ -849,6 +926,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                           required
                         />
                         <span className="invalid-feedback">
@@ -875,6 +953,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={true}
                           required
                         />
                         <span className="invalid-feedback">
@@ -904,6 +983,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                           required
                         />
                         <span className="invalid-feedback">
@@ -926,8 +1006,9 @@ class RestaurantProfile extends Component {
                           name="cuisineStyle"
                           value={this.state.cuisineStyle}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Style</option>
+                          <option value="style">Choose Style</option>
                           <option value="american">American</option>
                           <option value="italian">Italian</option>
                           <option value="steakhouse">Steak House</option>
@@ -966,8 +1047,9 @@ class RestaurantProfile extends Component {
                           name="category"
                           value={this.state.category}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Category</option>
+                          <option value="category">Choose Category</option>
                           <option value="ethinic">Ethinic</option>
                           <option value="fastfood">Fast Food</option>
                           <option value="fastcasual">Fast Casual</option>
@@ -993,8 +1075,9 @@ class RestaurantProfile extends Component {
                           name="priceRange"
                           value={this.state.priceRange}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Range</option>
+                          <option value="range">Choose Range</option>
                           <option value="low">$0-$50</option>
                           <option value="medium">$50-$100</option>
                           <option value="high">$100+</option>
@@ -1020,10 +1103,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="monOpenTime"
                           name="monOpenTime"
-                          // value={this.state.monday}
+                          value={this.state.monOpenTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="time">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1058,10 +1142,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="monCloseTime"
                           name="monCloseTime"
-                          // value={this.state.monday}
+                          value={this.state.monCloseTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="time">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1120,10 +1205,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="tueOpenTime"
                           name="tueOpenTime"
-                          value={this.state.tuesday}
+                          value={this.state.tuesOpenTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="time">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1158,10 +1244,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="tueCloseTime"
                           name="tueCloseTime"
-                          value={this.state.tuesday}
+                          value={this.state.tueCloseTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="time">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1220,10 +1307,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="wedOpenTime"
                           name="wedOpenTime"
-                          //value={this.state.wednesday}
+                          value={this.state.wedOpenTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="time">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1258,10 +1346,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="wedCloseTime"
                           name="wedCloseTime"
-                          //value={this.state.wednesday}
+                          value={this.state.wedCloseTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="time">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1320,10 +1409,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="thuOpenTime"
                           name="thuOpenTime"
-                          //value={this.state.thursday}
+                          value={this.state.thuOpenTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="time">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1358,10 +1448,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="thuCloseTime"
                           name="thuCloseTime"
-                          //value={this.state.thursday}
+                          value={this.state.thuCloseTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="time">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1420,10 +1511,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="friOpenTime"
                           name="friOpenTime"
-                          // value={this.state.friday}
+                          value={this.state.friOpenTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="time">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1458,10 +1550,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="friCloseTime"
                           name="friCloseTime"
-                          //value={this.state.friday}
+                          value={this.state.friCloseTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="time">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1520,10 +1613,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="satOpenTime"
                           name="satOpenTime"
-                          //value={this.state.saturday}
+                          value={this.state.satOpenTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="time">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1558,10 +1652,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="satCloseTime"
                           name="satCloseTime"
-                          //value={this.state.saturday}
+                          value={this.state.satCloseTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="time">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1620,10 +1715,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="sunOpenTime"
                           name="sunOpenTime"
-                          //value={this.state.sunday}
+                          value={this.state.sunOpenTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="time">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1658,10 +1754,11 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="sunCloseTime"
                           name="sunCloseTime"
-                          //value={this.state.sunday}
+                          value={this.state.sunCloseTime}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="time">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1725,6 +1822,7 @@ class RestaurantProfile extends Component {
                           name="picture"
                           value={this.state.picture}
                           onChange={this.handleMultiplePictures}
+                          disabled={(!this.state.disabled)}
                         />
                         <label
                           className="custom-file-label form-group"
@@ -1754,6 +1852,7 @@ class RestaurantProfile extends Component {
                           name="description"
                           value={this.state.description}
                           onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
                         ></textarea>
                         <span className="invalid-feedback">
                           {Parser(isError.description)}
@@ -1762,8 +1861,8 @@ class RestaurantProfile extends Component {
                     </div>
 
                   </div>
-                  <div className="panel-footer row ">
-                    <div className="col-sm-6 text-left">
+                  {/* <div className="panel-footer row "> */}
+                  {/* <div className="col-sm-6 text-left">
                       <button className="btn btn-primary">Save</button>
                     </div>
 
@@ -1771,14 +1870,17 @@ class RestaurantProfile extends Component {
                       <button type="button" className="btn btn-primary" id="editButton">
                         Edit
                     </button>
-                    </div>
+                    </div> */}
 
-                  
-                  
-                  
-                  
-                  
+                  <div className="form-inline">
+                    <div className="form-group text-center ">
+                      <button onClick={this.handleEdit.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
+                        {this.state.edit ? "Save Change" : "Edit"}
+
+                      </button>
+                    </div>
                   </div>
+                  {/* </div> */}
                 </form>
 
               </div>
@@ -1805,8 +1907,12 @@ class RestaurantProfile extends Component {
                   </div>
                 </div>
                 <br />
-                {showForm && this.renderForm()}
-                {showForm && this.renderView()}
+                {
+                  $('#create').click ? showForm && this.renderForm() : showForm && this.renderView()
+
+                }
+
+
               </div>
 
               {/* End of Manager Account */}
