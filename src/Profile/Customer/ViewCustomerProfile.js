@@ -46,10 +46,13 @@ class ViewCustomerProfile extends Component {
       phonenumber: "",
       password: "",
       newPassword: "",
+      confirmpw: "",
       isError: {
         password: "&#160;",
         newPassword: "&#160;",
+        confirmpw: "&#160;",
       },
+      disabled: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -64,13 +67,19 @@ class ViewCustomerProfile extends Component {
         isError.password = regExpPassword.test(value)
           ? "&#160;"
           : "At least 6 characters required";
-        this.state.password = value;
+        //this.state.password = value;
         break;
       case "newPassword":
         isError.newPassword = regExpPassword.test(value)
           ? "&#160;"
           : "At least 6 characters required";
         this.state.newPassword = value;
+        break;
+      case "confirmpw":
+        this.state.confirmpw = value;
+        isError.confirmpw =
+          this.state.confirmpw === this.state.newPassword
+            ? "&#160;" : "Password not matching"
         break;
       default:
         break;
@@ -136,12 +145,30 @@ class ViewCustomerProfile extends Component {
       if (e.keyCode === 32) return false;
     };
     var t2 = document.getElementById("newPassword");
-    t3.onkeypress = function (e) {
+    t2.onkeypress = function (e) {
+      if (e.keyCode === 32) return false;
+    };
+    var t1 = document.getElementById("confirmpw");
+    t1.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
     // Accept term and condition click link
     $("#conditionbtn").on("click", () => {
       $("#accept-terms").removeAttr("disabled");
+    });
+  }
+  handleClick() {
+    this.setState({ disabled: !this.state.disabled })
+
+    this.changeText();
+  }
+
+  //Edit profile - button
+  changeText() {
+    this.setState(state => {
+      return {
+        edit: !state.edit
+      };
     });
   }
 
@@ -179,7 +206,7 @@ class ViewCustomerProfile extends Component {
 
           <div class="tab-content">
             <div id="myProfile" class="container tab-pane active card">
-              <div className="card-body">
+              <div form id="profile" className="card-body">
                 <br />
                 <h3>My profile</h3>
                 <br />
@@ -198,6 +225,7 @@ class ViewCustomerProfile extends Component {
                       name="firstname"
                       value={this.state.firstname}
                       class="form-control"
+                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
@@ -213,6 +241,7 @@ class ViewCustomerProfile extends Component {
                       name="lastname"
                       value={this.state.lastname}
                       class="form-control"
+                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
@@ -231,11 +260,13 @@ class ViewCustomerProfile extends Component {
                       name="phonenumber"
                       value={this.state.phonenumber}
                       class="form-control"
+                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
                 <div className="form-group row">
                   <label htmlFor="email" className="col-md-2 col-form-label">
+                    {" "}
                     Email
                   </label>
                   <div className="col-md-10">
@@ -245,30 +276,23 @@ class ViewCustomerProfile extends Component {
                       name="email"
                       value={this.state.email}
                       class="form-control"
+                      disabled={true}
                     />
                   </div>
                 </div>
 
                 <div className="form-inline">
                   <div className="form-group text-center ">
-                    <Link to="/">
-                      <button type="button" class="btn btn-primary mr-sm-4 ">
-                        Edit
-                      </button>
-                    </Link>
-                  </div>
-                  <div className="form-group text-center">
-                    <Link to="/">
-                      <button type="submit" class="btn btn-primary mr-sm-4">
-                        Save change
-                      </button>
-                    </Link>
+                    <button onClick={this.handleClick.bind(this)} type="button" class="btn btn-primary mr-sm-4 ">
+                      {this.state.edit ? "Save Change" : "Edit"}
+
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div id="password" class="container tab-pane card">
+            <div id="password" form class="container tab-pane card">
               <div className="card-body">
                 <br />
                 <h3>Change password</h3>
@@ -348,41 +372,23 @@ class ViewCustomerProfile extends Component {
                   <div className="col-xs-12 col-md-8 ">
                     <div className="form-group row">
                       <label
-                        htmlFor="newPassword"
+                        htmlFor="confirmpw"
                         className="col-sm-3 col-form-label"
                       >
                         Password confirmation{" "}
                       </label>
                       <div className="col-sm-6">
-                        <input
-                          name="confirmPassword"
-                          type="password"
-                          id="confirmPassword"
-                          className={
-                            isError.newPassword.length > 0
-                              ? "is-invalid form-control"
-                              : "form-control"
-                          }
-                          value={this.state.newPassword}
-                          placeholder="Password confirmation"
-                          onChange={this.handleChange}
-                          required
-                        />
-                        {isError.newPassword.length > 0 && (
-                          <span className="invalid-feedback">
-                            {Parser(isError.newPassword)}
-                          </span>
-                        )}
+                        <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
+                          onChange={this.handleChange} required />
+                        <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
                       </div>
                     </div>
 
                     <div className="form-group ">
                       <div className="text-center">
-                        <Link to="/">
-                          <button type="submit" className="btn btn-primary">
-                            Change password
+                        <button type="submit" className="btn btn-primary">
+                          Change password
                           </button>
-                        </Link>
                       </div>
                     </div>
                   </div>
@@ -390,12 +396,12 @@ class ViewCustomerProfile extends Component {
               </div>
             </div>
 
-            <div
+            <div form
               id="myReservation"
               class="container tab-pane fade card card-body"
             >
               <div className="form-group">
-                <h3> Up comming reservation</h3>
+                <h3> Upcomming reservation</h3>
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -415,9 +421,10 @@ class ViewCustomerProfile extends Component {
                   </tbody>
                 </table>
               </div>
-              <div className="form-inline">
+              <div form id="changeReservation" className="form-inline">
                 <div className="form-group">
                   <Link to="/">
+                    {/* TODO- link to reservation page */}
                     <button
                       type="button"
                       class="btn btn-primary btn-sm mr-sm-2"
@@ -426,7 +433,7 @@ class ViewCustomerProfile extends Component {
                     </button>
                   </Link>
                 </div>
-                <div className="form-group">
+                <div form id="cancelReservation" className="form-group">
                   <Link to="/">
                     <button
                       type="button"
@@ -442,7 +449,7 @@ class ViewCustomerProfile extends Component {
                 <br />
                 <h3> Reservation History</h3>
                 <p>
-                  Thank you for loving BookEat <br />
+                Thank you for loving BookEat. <br />
                   Here is your BookEat history.{" "}
                 </p>
                 <table class="table table-striped">
@@ -478,12 +485,12 @@ class ViewCustomerProfile extends Component {
               </div>
             </div>
 
-            <div id="myReview" class="container tab-pane fade">
+            <div form id="myReview" class="container tab-pane fade">
               <div className="form-group">
                 <br />
                 <br />
                 <h3> My Rievew List</h3>
-                <div>
+                <div form id="review">
                   <table class="table table-striped ">
                     <thead>
                       <tr class>

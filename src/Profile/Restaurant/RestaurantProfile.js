@@ -27,16 +27,16 @@ const regExpPassword = RegExp(
 
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
-
   Object.values(isError).forEach((val) => {
-    if (val.length > 0) {
+    if (val !== '&#160;') {
       isValid = false;
     } else {
       isValid = true;
     }
   });
-
+  
   Object.values(rest).forEach((val) => {
+    console.log(rest);
     if (val === null) {
       isValid = false;
     } else {
@@ -101,7 +101,7 @@ class RestaurantProfile extends Component {
       newPassword: "",
       confirmPassword: "",
       Menupicture: "",
-      image: null,
+      image: '',
       isError: {
         Menupicture: '&#160;',
         resname: "&#160;",
@@ -250,6 +250,7 @@ class RestaurantProfile extends Component {
 
   handleSubmitResProfile = (e) => {
     e.preventDefault();
+    console.log("submit res profile")
     if (formValid(this.state)) {
       console.log(this.state);
       ds.editRestaurantProfile(this.state);
