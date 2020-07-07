@@ -104,11 +104,6 @@ class Login extends Component {
       authService.login(this.state.email, hashedpw).then((res) => {
         if (res.data.errcode === 0) {
           console.log(authService.getCurrentUser());
-          var u = authService.getCurrentUser().user;
-          if(u.userTypeId === 2){
-            console.log("res owner");
-            window.location.href = "/profile"
-          }
           console.log("Testing auth");
           var u = authService.getCurrentUser().user;
           if (u.userTypeId === 1) {

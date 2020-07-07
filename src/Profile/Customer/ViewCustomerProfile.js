@@ -109,27 +109,7 @@ class ViewCustomerProfile extends Component {
     }
   };
 
-  async componentDidMount() {
-    const customer = await ds.getCustomerInformation();
-
-    if (customer) {
-      this.setState((state, props) => {
-        return {
-          firstname:
-            typeof customer.firstName != "undefined" ? customer.firstName : "",
-          lastname:
-            typeof customer.lastName != "undefined" ? customer.lastName : "",
-          phonenumber:
-            typeof customer.phoneNumber != "undefined"
-              ? customer.phoneNumber
-              : "",
-          email:
-            typeof customer.account != "undefined"
-              ? customer.account.email
-              : "",
-        };
-      });
-    }
+  componentDidMount() {
     // Avoid spacing on the form
     var t3 = document.getElementById("password");
     t3.onkeypress = function (e) {
@@ -196,7 +176,6 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="firstname"
                       name="firstname"
-                      value={this.state.firstname}
                       class="form-control"
                     />
                   </div>
@@ -211,7 +190,6 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="lastname"
                       name="lastname"
-                      value={this.state.lastname}
                       class="form-control"
                     />
                   </div>
@@ -229,7 +207,6 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="phonenumber"
                       name="phonenumber"
-                      value={this.state.phonenumber}
                       class="form-control"
                     />
                   </div>
@@ -243,7 +220,6 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="email"
                       name="email"
-                      value={this.state.email}
                       class="form-control"
                     />
                   </div>
