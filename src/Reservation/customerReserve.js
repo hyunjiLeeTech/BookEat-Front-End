@@ -202,7 +202,7 @@ class Reserve extends Component {
                             <div className="page-header text-left" style={{ marginTop: '5%' }}>
                                 <h3>Thanks for reserving</h3>
                                 <h4>This is your reservation:</h4>
-                                <p>Customer Name: {this.state.result.customer.firstName + "" + this.state.result.customer.lastName}</p>
+                                <p>Customer Name: {this.state.result.customer.firstName + " " + this.state.result.customer.lastName}</p>
                                 <p>Time: {new Date(this.state.result.dateTime).toString()}</p>
                                 <p>Restaurant: {this.state.result.restaurant.resName}</p>
                                 <p>Number of People: {this.state.result.numOfPeople}</p>

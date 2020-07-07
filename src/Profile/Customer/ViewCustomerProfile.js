@@ -46,13 +46,10 @@ class ViewCustomerProfile extends Component {
       phonenumber: "",
       password: "",
       newPassword: "",
-      confirmpw: "",
       isError: {
         password: "&#160;",
         newPassword: "&#160;",
-        confirmpw: "&#160;",
       },
-      disabled: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -67,19 +64,13 @@ class ViewCustomerProfile extends Component {
         isError.password = regExpPassword.test(value)
           ? "&#160;"
           : "At least 6 characters required";
-        // this.state.password = value;
+        this.state.password = value;
         break;
       case "newPassword":
         isError.newPassword = regExpPassword.test(value)
           ? "&#160;"
           : "At least 6 characters required";
         this.state.newPassword = value;
-        break;
-      case "confirmpw":
-        this.state.confirmpw = value;
-        isError.confirmpw =
-          this.state.confirmpw === this.state.newPassword
-            ? "&#160;" : "Password not matching"
         break;
       default:
         break;
@@ -118,40 +109,39 @@ class ViewCustomerProfile extends Component {
     }
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const customer = await ds.getCustomerInformation();
 
+    if (customer) {
+      this.setState((state, props) => {
+        return {
+          firstname:
+            typeof customer.firstName != "undefined" ? customer.firstName : "",
+          lastname:
+            typeof customer.lastName != "undefined" ? customer.lastName : "",
+          phonenumber:
+            typeof customer.phoneNumber != "undefined"
+              ? customer.phoneNumber
+              : "",
+          email:
+            typeof customer.account != "undefined"
+              ? customer.account.email
+              : "",
+        };
+      });
+    }
     // Avoid spacing on the form
     var t3 = document.getElementById("password");
     t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
     var t2 = document.getElementById("newPassword");
-    t2.onkeypress = function (e) {
-      if (e.keyCode === 32) return false;
-    };
-    var t1 = document.getElementById("confirmpw");
-    t1.onkeypress = function (e) {
+    t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
     // Accept term and condition click link
     $("#conditionbtn").on("click", () => {
       $("#accept-terms").removeAttr("disabled");
-    });
-  }
-
-  // Edit profile - disable
-  handleClick() {
-    this.setState({ disabled: !this.state.disabled })
-
-    this.changeText();
-  }
-
-  //Edit profile - button
-  changeText() {
-    this.setState(state => {
-      return {
-        edit: !state.edit
-      };
     });
   }
 
@@ -187,29 +177,31 @@ class ViewCustomerProfile extends Component {
             </ul>
           </div>
 
-          {/* Start Profile */}
           <div class="tab-content">
             <div id="myProfile" class="container tab-pane active card">
-              <div  form id="profile" className="card-body">
+              <div className="card-body">
                 <br />
                 <h3>My profile</h3>
                 <br />
                 <div className="form-group row">
-                  <label htmlFor="firstname" className="col-md-2 col-form-label">
+                  <label
+                    htmlFor="firstname"
+                    className="col-sm-2 col-form-label"
+                  >
                     {" "}
-                  First Name
+                    First Name
                   </label>
-                  <div className="col-md-10">
+                  <div className="col-sm-10">
                     <input
                       type="text"
                       id="firstname"
                       name="firstname"
+                      value={this.state.firstname}
                       class="form-control"
-                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
-                <div  className="form-group row">
+                <div className="form-group row">
                   <label htmlFor="lastname" className="col-md-2 col-form-label">
                     {" "}
                     Last Name
@@ -219,8 +211,8 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="lastname"
                       name="lastname"
+                      value={this.state.lastname}
                       class="form-control"
-                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
@@ -237,8 +229,8 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="phonenumber"
                       name="phonenumber"
+                      value={this.state.phonenumber}
                       class="form-control"
-                      disabled={(this.state.disabled)}
                     />
                   </div>
                 </div>
@@ -251,30 +243,42 @@ class ViewCustomerProfile extends Component {
                       type="text"
                       id="email"
                       name="email"
+                      value={this.state.email}
                       class="form-control"
-                      disabled={true}
                     />
                   </div>
                 </div>
 
                 <div className="form-inline">
                   <div className="form-group text-center ">
-                    <button onClick={this.handleClick.bind(this)} type="button" class="btn btn-primary mr-sm-4 ">
-                      {this.state.edit ? "Save Change" : "Edit"}
-
-                    </button>
+                    <Link to="/">
+                      <button type="button" class="btn btn-primary mr-sm-4 ">
+                        Edit
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="form-group text-center">
+                    <Link to="/">
+                      <button type="submit" class="btn btn-primary mr-sm-4">
+                        Save change
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
-            {/* End Profile */}
 
-            {/* Start Password */}
-            <div  form id="password" class="container tab-pane card">
+            <div id="password" class="container tab-pane card">
               <div className="card-body">
                 <br />
                 <h3>Change password</h3>
                 <br />
+                <div className="container">
+                  <div className="page-header text-center">
+                    <p>{this.state.password}</p>
+                    <p>{this.state.confirmpw}</p>
+                  </div>
+                </div>
 
                 <form onSubmit={this.handleSubmit} noValidate>
                   <div className="col-xs-12 col-md-8 ">
@@ -286,12 +290,25 @@ class ViewCustomerProfile extends Component {
                         Old Password{" "}
                       </label>
                       <div className="col-sm-6">
-                        <input name="password" type="password" id="password"
-                          className={isError.password.length > 6
-                            ? "is-invalid form-control" : "form-control"}
-                          value={this.state.password} placeholder="Password"
-                          onChange={this.handleChange} required />
-                        <span className="invalid-feedback">{Parser(isError.password)}</span>
+                        <input
+                          name="password"
+                          type="password"
+                          id="password"
+                          className={
+                            isError.password.length > 0
+                              ? "is-invalid form-control"
+                              : "form-control"
+                          }
+                          value={this.state.password}
+                          placeholder="Password"
+                          onChange={this.handleChange}
+                          required
+                        />
+                        {isError.password.length > 0 && (
+                          <span className="invalid-feedback">
+                            {Parser(isError.password)}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -305,10 +322,25 @@ class ViewCustomerProfile extends Component {
                         New Password{" "}
                       </label>
                       <div className="col-sm-6">
-                        <input name="newPassword" type="password" id="newPassword" className={isError.newPassword.length > 6
-                          ? "is-invalid form-control" : "form-control"} value={this.state.newPassword} placeholder="Password"
-                          onChange={this.handleChange} required />
-                        <span className="invalid-feedback">{Parser(isError.newPassword)}</span>
+                        <input
+                          name="newPassword"
+                          type="password"
+                          id="newPassword"
+                          className={
+                            isError.newPassword.length > 0
+                              ? "is-invalid form-control"
+                              : "form-control"
+                          }
+                          value={this.state.newPassword}
+                          placeholder="newPassword"
+                          onChange={this.handleChange}
+                          required
+                        />
+                        {isError.newPassword.length > 0 && (
+                          <span className="invalid-feedback">
+                            {Parser(isError.newPassword)}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -316,38 +348,54 @@ class ViewCustomerProfile extends Component {
                   <div className="col-xs-12 col-md-8 ">
                     <div className="form-group row">
                       <label
-                        htmlFor="confirmpw"
+                        htmlFor="newPassword"
                         className="col-sm-3 col-form-label"
                       >
                         Password confirmation{" "}
                       </label>
                       <div className="col-sm-6">
-                        <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
-                          onChange={this.handleChange} required />
-                        <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
+                        <input
+                          name="confirmPassword"
+                          type="password"
+                          id="confirmPassword"
+                          className={
+                            isError.newPassword.length > 0
+                              ? "is-invalid form-control"
+                              : "form-control"
+                          }
+                          value={this.state.newPassword}
+                          placeholder="Password confirmation"
+                          onChange={this.handleChange}
+                          required
+                        />
+                        {isError.newPassword.length > 0 && (
+                          <span className="invalid-feedback">
+                            {Parser(isError.newPassword)}
+                          </span>
+                        )}
                       </div>
                     </div>
 
                     <div className="form-group ">
                       <div className="text-center">
-                        <button type="submit" className="btn btn-primary">
-                          Change password
+                        <Link to="/">
+                          <button type="submit" className="btn btn-primary">
+                            Change password
                           </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
                 </form>
               </div>
             </div>
-            {/* End Password */}
 
-            {/* Start Reservation */}
-            <div form
+            <div
               id="myReservation"
               class="container tab-pane fade card card-body"
             >
               <div className="form-group">
-                <h3> Upcomming reservation</h3>
+                <h3> Up comming reservation</h3>
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -367,10 +415,9 @@ class ViewCustomerProfile extends Component {
                   </tbody>
                 </table>
               </div>
-              <div form id="changeReservation" className="form-inline">
+              <div className="form-inline">
                 <div className="form-group">
                   <Link to="/">
-                    {/* TODO- link to reservation page */}
                     <button
                       type="button"
                       class="btn btn-primary btn-sm mr-sm-2"
@@ -379,7 +426,7 @@ class ViewCustomerProfile extends Component {
                     </button>
                   </Link>
                 </div>
-                <div form id="cancelReservation" className="form-group">
+                <div className="form-group">
                   <Link to="/">
                     <button
                       type="button"
@@ -395,7 +442,7 @@ class ViewCustomerProfile extends Component {
                 <br />
                 <h3> Reservation History</h3>
                 <p>
-                  Thank you for loving BookEat. <br />
+                  Thank you for loving BookEat <br />
                   Here is your BookEat history.{" "}
                 </p>
                 <table class="table table-striped">
@@ -430,15 +477,13 @@ class ViewCustomerProfile extends Component {
                 </table>
               </div>
             </div>
-            {/* End Reservation */}
 
-            {/* Start Review */}
-            <div form id="myReview" class="container tab-pane fade">
+            <div id="myReview" class="container tab-pane fade">
               <div className="form-group">
                 <br />
                 <br />
                 <h3> My Rievew List</h3>
-                <div form id="review">
+                <div>
                   <table class="table table-striped ">
                     <thead>
                       <tr class>

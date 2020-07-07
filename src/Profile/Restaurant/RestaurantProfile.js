@@ -47,84 +47,99 @@ const formValid = ({ isError, ...rest }) => {
   return isValid;
 };
 
-
 class RestaurantProfile extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      resname: '',
-      streetnumber: '',
-      streetname: '',
-      province: '',
-      city: '',
-      postalcode: '',
-      phonenumber: '',
-      email: '',
-      businessnumber: '',
-      cuisineStyle: '',
-      category: '',
-      priceRange: '',
-      monday: '',
-      tuesday: '',
-      wednesday: '',
-      thursday: '',
-      friday: '',
-      sunday: '',
-      saturday: '',
-      description: '',
-      picture: '',
-      firstName: '',
-      lastName: '',
+      //user
+      email: "",
+      phonenumber: "",
+      businessnumber: "",
+
+      resname: "",
+
+      //address
+      streetnumber: "",
+      streetname: "",
+      province: "",
+      city: "",
+      postalcode: "",
+
+      //cuisine style
+      cuisineStyle: "",
+
+      //category
+      category: "",
+
+      //price range
+      priceRange: "",
+
+      // open and close time
+      monOpenTime: "",
+      monCloseTime: "",
+      tueOpenTime: "",
+      tueCloseTime: "",
+      wedOpenTime: "",
+      wedCloseTime: "",
+      thuOpenTime: "",
+      thuCloseTime: "",
+      friOpenTime: "",
+      friCloseTime: "",
+      satOpenTime: "",
+      satCloseTime: "",
+      sunOpenTime: "",
+      sunCloseTime: "",
+      description: "",
+      picture: "",
+
+      //manager sign up
+      firstName: "",
+      lastName: "",
       password: "",
+
+      //change password
       newPassword: "",
       confirmPassword: "",
-      //MenuStart
       Menupicture: "",
       image: null,
-      //MenuEnd
       isError: {
-        //MenuStart
         Menupicture: '&#160;',
-        //MenuEnd
-        resname: '&#160;',
-        streetnumber: '&#160;',
-        streetname: '&#160;',
-        province: '&#160;',
-        city: '&#160;',
-        postalcode: '&#160;',
-        phonenumber: '&#160;',
-        email: '&#160;',
-        businessnumber: '&#160;',
-        cuisineStyle: '&#160;',
-        category: '&#160;',
-        priceRange: '&#160;',
-        monday: '&#160;',
-        tuesday: '&#160;',
-        wednesday: '&#160;',
-        thursday: '&#160;',
-        friday: '&#160;',
-        sunday: '&#160;',
-        saturday: '&#160;',
-        description: '&#160;',
-        picture: '&#160;',
-        firstName: '&#160;',
-        lastName: '&#160;',
+        resname: "&#160;",
+        streetnumber: "&#160;",
+        streetname: "&#160;",
+        province: "&#160;",
+        city: "&#160;",
+        postalcode: "&#160;",
+        phonenumber: "&#160;",
+        email: "&#160;",
+        businessnumber: "&#160;",
+        cuisineStyle: "&#160;",
+        category: "&#160;",
+        priceRange: "&#160;",
+        monday: "&#160;",
+        tuesday: "&#160;",
+        wednesday: "&#160;",
+        thursday: "&#160;",
+        friday: "&#160;",
+        sunday: "&#160;",
+        saturday: "&#160;",
+        description: "&#160;",
+        picture: "&#160;",
+        firstName: "&#160;",
+        lastName: "&#160;",
         password: "&#160;",
         newPassword: "&#160;",
-        confirmPassword: "&#160;"
-      }
+        confirmPassword: "&#160;",
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmitResProfile = this.handleSubmitResProfile.bind(this);
     this.onClick = this.onClick.bind(this);
-    //MenuStart
     this.onImageChange = this.onImageChange.bind(this);
-    //MenuEnd
-  }
 
-  //MenuStart
+  }
   onImageChange = event => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -133,8 +148,6 @@ class RestaurantProfile extends Component {
       });
     }
   };
-  //MenuEnd
-
   handleChange(e) {
     e.preventDefault();
     const { name, value } = e.target;
@@ -142,7 +155,9 @@ class RestaurantProfile extends Component {
     switch (name) {
       case "resname":
         isError.resname =
-          value.length >= 3 && value.length <= 50 ? "&#160;" : "Atleast 3 character required";
+          value.length >= 3 && value.length <= 50
+            ? "&#160;"
+            : "Atleast 3 character required";
         break;
       case "streetnumber":
         isError.streetnumber = regExpNumbers.test(value)
@@ -151,15 +166,21 @@ class RestaurantProfile extends Component {
         break;
       case "streetname":
         isError.streetname =
-          value.length >= 4 && value.length <= 255 ? "&#160;" : "Atleast 4 character required";
+          value.length >= 4 && value.length <= 255
+            ? "&#160;"
+            : "Atleast 4 character required";
         break;
       case "city":
         isError.city =
-          value.length >= 2 && value.length <= 50 ? "&#160;" : "Atleast 2 character required";
+          value.length >= 2 && value.length <= 50
+            ? "&#160;"
+            : "Atleast 2 character required";
         break;
       case "province":
         isError.province =
-          value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
+          value.length >= 2 && value.length <= 32
+            ? "&#160;"
+            : "Atleast 2 character required";
         break;
       case "postalcode":
         isError.postalcode = regExpPostal.test(value)
@@ -173,7 +194,8 @@ class RestaurantProfile extends Component {
         break;
       case "phonenumber":
         isError.phonenumber = regExpPhone.test(value)
-          ? "&#160;" : "Phone Number is invalid";
+          ? "&#160;"
+          : "Phone Number is invalid";
         break;
       case "businessnumber":
         isError.businessnumber = regExpNumbers.test(value)
@@ -181,17 +203,23 @@ class RestaurantProfile extends Component {
           : "Invalid business number";
         break;
       case "description":
-        isError.description = value.length >= 1 && value.length <= 255
-          ? "&#160;" : "Atleast write something"
+        isError.description =
+          value.length >= 1 && value.length <= 255
+            ? "&#160;"
+            : "Atleast write something";
         break;
       case "firstName":
         isError.firstName =
-          value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
+          value.length >= 2 && value.length <= 32
+            ? "&#160;"
+            : "Atleast 2 character required";
 
         break;
       case "lastName":
         isError.lastName =
-          value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
+          value.length >= 2 && value.length <= 32
+            ? "&#160;"
+            : "Atleast 2 character required";
         break;
       case "password":
         isError.password = regExpPassword.test(value)
@@ -209,48 +237,33 @@ class RestaurantProfile extends Component {
         this.state.confirmPassword = value;
         isError.confirmPassword =
           this.state.confirmPassword === this.state.newPassword
-            ? "&#160;" : "Password not matching"
+            ? "&#160;"
+            : "Password not matching";
         break;
       default:
         break;
     }
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
   }
 
+  handleSubmitResProfile = (e) => {
+    e.preventDefault();
+    if (formValid(this.state)) {
+      console.log(this.state);
+      ds.editRestaurantProfile(this.state);
+    } else {
+      console.log("Form is invalid!");
+    }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      const usr = authService.getCurrentUser();
-
-      console.log(usr.user._id);
       this.state.password = sha256(this.state.password).toString(); //hashing password
       this.state.confirmpw = sha256(this.state.confirmpw).toString();
-      console.log(this.state);
-      Axios.post(serverAddress + "/managersignup", this.state)
-        .then((res) => {
-          console.log(res);
-          if (res.data.errcode === 0) {
-            $("#signResultText")
-              .text("Manager account is created")
-              .removeClass("alert-warning")
-              .removeClass("alert-danger")
-              .removeClass("alert-success")
-              .addClass("alert-success");
-          } else {
-            $("#signResultText")
-              .text("Sorry, " + res.data.errmsg)
-              .removeClass("alert-warning")
-              .removeClass("alert-danger")
-              .removeClass("alert-success")
-              .addClass("alert-danger");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      ds.createManagerAccount(this.state);
     } else {
       console.log("Form is invalid!");
     }
@@ -261,7 +274,121 @@ class RestaurantProfile extends Component {
       picture: [...this.state.picture, ...e.target.pictures],
     });
   };
-  componentDidMount() {
+  async componentDidMount() {
+    const usr = authService.getCurrentUser();
+    const restaurant = await ds.getRestaurantInformation();
+    console.log(restaurant);
+    console.log(restaurant.resName);
+
+    // this.state = { resName: restaurant.resName };
+    this.setState((state, props) => {
+      return {
+        resname:
+          typeof restaurant.resName != "undefined" ? restaurant.resName : "",
+        phonenumber:
+          typeof restaurant.phoneNumber != "undefined"
+            ? restaurant.phoneNumber
+            : "",
+        email: typeof usr.user.email != "undefined" ? usr.user.email : "",
+        businessnumber:
+          typeof restaurant.businessNum != "undefined"
+            ? restaurant.businessNum
+            : "",
+        postalcode:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.postalCode
+            : "",
+        streetname:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.streetName
+            : "",
+        streetnumber:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.streetNum
+            : "",
+        city:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.city
+            : "",
+        province:
+          typeof restaurant.addressId != "undefined"
+            ? restaurant.addressId.province
+            : "",
+        description:
+          typeof restaurant.restaurantDescription != "undefined"
+            ? restaurant.restaurantDescription
+            : "",
+        cuisineStyle:
+          typeof restaurant.cuisineStyleId != "undefined"
+            ? restaurant.cuisineStyleId.cuisineVal
+            : "",
+        category:
+          typeof restaurant.categoryId != "undefined"
+            ? restaurant.categoryId.categoryVal
+            : "",
+        priceRange:
+          typeof restaurant.priceRangeId != "undefined"
+            ? restaurant.priceRangeId.priceRangeName
+            : "",
+        monOpenTime:
+          typeof restaurant.monOpenTimeId != "undefined"
+            ? restaurant.monOpenTimeId.storeTimeVal
+            : "",
+        tueOpenTime:
+          typeof restaurant.tueOpenTimeId != "undefined"
+            ? restaurant.tueOpenTimeId.storeTimeVal
+            : "",
+        wedOpenTime:
+          typeof restaurant.wedOpenTimeId != "undefined"
+            ? restaurant.wedOpenTimeId.storeTimeVal
+            : "",
+        thuOpenTime:
+          typeof restaurant.thuOpenTimeId != "undefined"
+            ? restaurant.thuOpenTimeId.storeTimeVal
+            : "",
+        friOpenTime:
+          typeof restaurant.friOpenTimeId != "undefined"
+            ? restaurant.friOpenTimeId.storeTimeVal
+            : "",
+        satOpenTime:
+          typeof restaurant.satOpenTimeId != "undefined"
+            ? restaurant.satOpenTimeId.storeTimeVal
+            : "",
+        sunOpenTime:
+          typeof restaurant.sunOpenTimeId != "undefined"
+            ? restaurant.sunOpenTimeId.storeTimeVal
+            : "",
+        monCloseTime:
+          typeof restaurant.monCloseTimeId != "undefined"
+            ? restaurant.monCloseTimeId.storeTimeVal
+            : "",
+        tueCloseTime:
+          typeof restaurant.tueCloseTimeId != "undefined"
+            ? restaurant.tueCloseTimeId.storeTimeVal
+            : "",
+        wedCloseTime:
+          typeof restaurant.wedCloseTimeId != "undefined"
+            ? restaurant.wedCloseTimeId.storeTimeVal
+            : "",
+        thuCloseTime:
+          typeof restaurant.thuCloseTimeId != "undefined"
+            ? restaurant.thuCloseTimeId.storeTimeVal
+            : "",
+        friCloseTime:
+          typeof restaurant.friCloseTimeId != "undefined"
+            ? restaurant.friCloseTimeId.storeTimeVal
+            : "",
+        satCloseTime:
+          typeof restaurant.satCloseTimeId != "undefined"
+            ? restaurant.satCloseTimeId.storeTimeVal
+            : "",
+        sunCloseTime:
+          typeof restaurant.sunCloseTimeId != "undefined"
+            ? restaurant.sunCloseTimeId.storeTimeVal
+            : "",
+      };
+    });
+
     // Avoid spacing on the form
     var t1 = document.getElementById("streetnumber");
     t1.onkeypress = function (event) {
@@ -269,20 +396,6 @@ class RestaurantProfile extends Component {
     };
     var t2 = document.getElementById("email");
     t2.onkeypress = function (e) {
-      if (e.keyCode === 32) return false;
-    };
-    var t3 = document.getElementById("password");
-    t3.onkeypress = function (e) {
-      if (e.keyCode === 32) return false;
-    };
-
-    var t4 = document.getElementById("confirmPassword");
-    t4.onkeypress = function (e) {
-      if (e.keyCode === 32) return false;
-    };
-
-    var t7 = document.getElementById("newPassword");
-    t7.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
     var t5 = document.getElementById("businessnumber");
@@ -294,7 +407,7 @@ class RestaurantProfile extends Component {
       if (e.keyCode === 32) return false;
     };
 
-    //Disable Button 
+    //Disable Button
     $(document).ready(function () {
       $("#mondisablebutton").click(function () {
         if ($("#monOpenTime").prop("disabled")) {
@@ -372,12 +485,11 @@ class RestaurantProfile extends Component {
           $("#resForm :input").prop("disabled", false);
           //Disable Email
           $("#email").prop("disabled", true);
+
+          console.log("test");
         });
       }
-
-
     });
-
   }
 
   //Manager Create Button Form
@@ -387,10 +499,9 @@ class RestaurantProfile extends Component {
     const usr = authService.getCurrentUser();
     console.log(usr.user._id);
     this.setState({ showForm: true, accountId: usr.user._id });
-
   }
 
-  // Manager Form 
+  // Manager Form
 
   renderForm() {
     const { isError } = this.state;
@@ -507,14 +618,14 @@ class RestaurantProfile extends Component {
               value={this.state.password}
               placeholder="Password"
               className={
-                isError.password.length > 6
+                isError.email.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.password)}</span>
+            <span className="invalid-feedback">{Parser(isError.email)}</span>
           </div>
         </div>
 
@@ -567,19 +678,7 @@ class RestaurantProfile extends Component {
           </div>
         </div>
       </form>
-
     );
-  }
-
-  // Manager View
-  renderView() {
-    return (
-      <button
-        type="button"
-        className="btn btn-primary">
-        Delete
-      </button>
-    )
   }
 
   render() {
@@ -662,7 +761,7 @@ class RestaurantProfile extends Component {
                 role="tabpanel"
                 aria-labelledby="restaurantProfile"
               >
-                <form onSubmit={this.handleSubmit} noValidate>
+                <form onSubmit={this.handleSubmitResProfile} noValidate>
                   <div id="resForm">
                     <div className="form-group row">
                       <label
@@ -670,8 +769,8 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         {" "}
-                      Restaurant Name
-                    </label>
+                        Restaurant Name
+                      </label>
                       <div className="col-sm-10">
                         <input
                           type="text"
@@ -699,8 +798,8 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         {" "}
-                      Street Number
-                    </label>
+                        Street Number
+                      </label>
                       <div className="col-sm-3">
                         <input
                           type="text"
@@ -726,8 +825,8 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         {" "}
-                      Street Name
-                    </label>
+                        Street Name
+                      </label>
                       <div className="col-sm-5">
                         <input
                           type="text"
@@ -752,8 +851,8 @@ class RestaurantProfile extends Component {
                     <div className="form-group row">
                       <label htmlFor="city" className="col-sm-2 col-form-label">
                         {" "}
-                      City
-                    </label>
+                        City
+                      </label>
                       <div className="col-md-3">
                         <input
                           type="text"
@@ -779,8 +878,8 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         {" "}
-                      Province
-                    </label>
+                        Province
+                      </label>
                       <div className="col-md-5">
                         <input
                           type="text"
@@ -808,8 +907,8 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         {" "}
-                      Postal Code
-                    </label>
+                        Postal Code
+                      </label>
                       <div className="col-md-3">
                         <input
                           type="text"
@@ -834,8 +933,8 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         {" "}
-                      Phone Number
-                    </label>
+                        Phone Number
+                      </label>
                       <div className="col-md-5">
                         <input
                           type="text"
@@ -858,10 +957,13 @@ class RestaurantProfile extends Component {
                     </div>
 
                     <div className="form-group row">
-                      <label htmlFor="email" className="col-sm-2 col-form-label">
+                      <label
+                        htmlFor="email"
+                        className="col-sm-2 col-form-label"
+                      >
                         {" "}
-                      Email
-                    </label>
+                        Email
+                      </label>
                       <div className="col-md-10">
                         <input
                           type="email"
@@ -889,8 +991,8 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         {" "}
-                      Business Number
-                    </label>
+                        Business Number
+                      </label>
                       <div className="col-md-10">
                         <input
                           type="text"
@@ -918,7 +1020,7 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         Cuisine Style
-                    </label>
+                      </label>
                       <div className="col-md-10">
                         <select
                           className="custom-select "
@@ -927,7 +1029,7 @@ class RestaurantProfile extends Component {
                           value={this.state.cuisineStyle}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Style</option>
+                          <option value="">Choose Style</option>
                           <option value="american">American</option>
                           <option value="italian">Italian</option>
                           <option value="steakhouse">Steak House</option>
@@ -958,7 +1060,7 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         Category
-                    </label>
+                      </label>
                       <div className="col-md-10">
                         <select
                           className="custom-select "
@@ -967,7 +1069,7 @@ class RestaurantProfile extends Component {
                           value={this.state.category}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Category</option>
+                          <option value="">Choose Category</option>
                           <option value="ethinic">Ethinic</option>
                           <option value="fastfood">Fast Food</option>
                           <option value="fastcasual">Fast Casual</option>
@@ -985,7 +1087,7 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         Price Range
-                    </label>
+                      </label>
                       <div className="col-md-10">
                         <select
                           className="custom-select "
@@ -994,7 +1096,7 @@ class RestaurantProfile extends Component {
                           value={this.state.priceRange}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Range</option>
+                          <option value="">Choose Range</option>
                           <option value="low">$0-$50</option>
                           <option value="medium">$50-$100</option>
                           <option value="high">$100+</option>
@@ -1008,22 +1110,22 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         Open Hours
-                    </label>
+                      </label>
                       <div className="col-md-10">
                         <label
                           htmlFor="monday"
                           className="col-sm-2 col-form-label"
                         >
                           Monday
-                      </label>
+                        </label>
                         <select
                           className="custom-select col-md-3"
                           id="monOpenTime"
                           name="monOpenTime"
-                          // value={this.state.monday}
+                          value={this.state.monOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1053,15 +1155,15 @@ class RestaurantProfile extends Component {
                           <option value="8pm">8:00 PM</option>
                           <option value="830pm">8:30 PM</option>
                         </select>
-                      ~
-                      <select
+                        ~
+                        <select
                           className="custom-select col-md-3"
                           id="monCloseTime"
                           name="monCloseTime"
-                          // value={this.state.monday}
+                          value={this.state.monCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1104,7 +1206,7 @@ class RestaurantProfile extends Component {
                           id="mondisablebutton"
                         >
                           {" "}
-                        Not Open{" "}
+                          Not Open{" "}
                         </button>
                       </div>
 
@@ -1115,15 +1217,15 @@ class RestaurantProfile extends Component {
                           className="col-sm-2 col-form-label"
                         >
                           Tuesday
-                      </label>
+                        </label>
                         <select
                           className="custom-select col-md-3"
                           id="tueOpenTime"
                           name="tueOpenTime"
-                          value={this.state.tuesday}
+                          value={this.state.tueOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1153,15 +1255,15 @@ class RestaurantProfile extends Component {
                           <option value="8pm">8:00 PM</option>
                           <option value="830pm">8:30 PM</option>
                         </select>
-                      ~
-                      <select
+                        ~
+                        <select
                           className="custom-select col-md-3"
                           id="tueCloseTime"
                           name="tueCloseTime"
-                          value={this.state.tuesday}
+                          value={this.state.tueCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1204,7 +1306,7 @@ class RestaurantProfile extends Component {
                           id="tuedisablebutton"
                         >
                           {" "}
-                        Not Open{" "}
+                          Not Open{" "}
                         </button>
                       </div>
 
@@ -1215,15 +1317,15 @@ class RestaurantProfile extends Component {
                           className="col-sm-2 col-form-label"
                         >
                           Wednesday
-                      </label>
+                        </label>
                         <select
                           className="custom-select col-md-3"
                           id="wedOpenTime"
                           name="wedOpenTime"
-                          //value={this.state.wednesday}
+                          value={this.state.wedOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1253,15 +1355,15 @@ class RestaurantProfile extends Component {
                           <option value="8pm">8:00 PM</option>
                           <option value="830pm">8:30 PM</option>
                         </select>
-                      ~
-                      <select
+                        ~
+                        <select
                           className="custom-select col-md-3"
                           id="wedCloseTime"
                           name="wedCloseTime"
-                          //value={this.state.wednesday}
+                          value={this.state.wedCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1304,7 +1406,7 @@ class RestaurantProfile extends Component {
                           id="weddisablebutton"
                         >
                           {" "}
-                        Not Open{" "}
+                          Not Open{" "}
                         </button>
                       </div>
 
@@ -1315,15 +1417,15 @@ class RestaurantProfile extends Component {
                           className="col-sm-2 col-form-label"
                         >
                           Thursday
-                      </label>
+                        </label>
                         <select
                           className="custom-select col-md-3"
                           id="thuOpenTime"
                           name="thuOpenTime"
-                          //value={this.state.thursday}
+                          value={this.state.thuOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1353,15 +1455,15 @@ class RestaurantProfile extends Component {
                           <option value="8pm">8:00 PM</option>
                           <option value="830pm">8:30 PM</option>
                         </select>
-                      ~
-                      <select
+                        ~
+                        <select
                           className="custom-select col-md-3"
                           id="thuCloseTime"
                           name="thuCloseTime"
-                          //value={this.state.thursday}
+                          value={this.state.thuCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1404,7 +1506,7 @@ class RestaurantProfile extends Component {
                           id="thudisablebutton"
                         >
                           {" "}
-                        Not Open{" "}
+                          Not Open{" "}
                         </button>
                       </div>
 
@@ -1415,15 +1517,15 @@ class RestaurantProfile extends Component {
                           className="col-sm-2 col-form-label"
                         >
                           Friday
-                      </label>
+                        </label>
                         <select
                           className="custom-select col-md-3"
                           id="friOpenTime"
                           name="friOpenTime"
-                          // value={this.state.friday}
+                          value={this.state.friOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1453,15 +1555,15 @@ class RestaurantProfile extends Component {
                           <option value="8pm">8:00 PM</option>
                           <option value="830pm">8:30 PM</option>
                         </select>
-                      ~
-                      <select
+                        ~
+                        <select
                           className="custom-select col-md-3"
                           id="friCloseTime"
                           name="friCloseTime"
-                          //value={this.state.friday}
+                          value={this.state.friCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1504,7 +1606,7 @@ class RestaurantProfile extends Component {
                           id="fridisablebutton"
                         >
                           {" "}
-                        Not Open{" "}
+                          Not Open{" "}
                         </button>
                       </div>
 
@@ -1515,15 +1617,15 @@ class RestaurantProfile extends Component {
                           className="col-sm-2 col-form-label"
                         >
                           Saturday
-                      </label>
+                        </label>
                         <select
                           className="custom-select col-md-3"
                           id="satOpenTime"
                           name="satOpenTime"
-                          //value={this.state.saturday}
+                          value={this.state.satOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1553,15 +1655,15 @@ class RestaurantProfile extends Component {
                           <option value="8pm">8:00 PM</option>
                           <option value="830pm">8:30 PM</option>
                         </select>
-                      ~
-                      <select
+                        ~
+                        <select
                           className="custom-select col-md-3"
                           id="satCloseTime"
                           name="satCloseTime"
-                          //value={this.state.saturday}
+                          value={this.state.satCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1604,7 +1706,7 @@ class RestaurantProfile extends Component {
                           id="satdisablebutton"
                         >
                           {" "}
-                        Not Open{" "}
+                          Not Open{" "}
                         </button>
                       </div>
 
@@ -1615,15 +1717,15 @@ class RestaurantProfile extends Component {
                           className="col-sm-2 col-form-label"
                         >
                           Sunday
-                      </label>
+                        </label>
                         <select
                           className="custom-select col-md-3"
                           id="sunOpenTime"
                           name="sunOpenTime"
-                          //value={this.state.sunday}
+                          value={this.state.sunOpenTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Open Time</option>
+                          <option value="">Choose Open Time</option>
                           <option value="7am">7:00 AM</option>
                           <option value="730am">7:30 AM</option>
                           <option value="8am">8:00 AM</option>
@@ -1653,15 +1755,15 @@ class RestaurantProfile extends Component {
                           <option value="8pm">8:00 PM</option>
                           <option value="830pm">8:30 PM</option>
                         </select>
-                      ~
-                      <select
+                        ~
+                        <select
                           className="custom-select col-md-3"
                           id="sunCloseTime"
                           name="sunCloseTime"
-                          //value={this.state.sunday}
+                          value={this.state.sunCloseTime}
                           onChange={this.handleChange}
                         >
-                          <option>Choose Close Time</option>
+                          <option value="">Choose Close Time</option>
                           <option value="9am">9:00 AM</option>
                           <option value="930am">9:30 AM</option>
                           <option value="10am">10:00 AM</option>
@@ -1704,7 +1806,7 @@ class RestaurantProfile extends Component {
                           id="sundisablebutton"
                         >
                           {" "}
-                        Not Open{" "}
+                          Not Open{" "}
                         </button>
                       </div>
                     </div>
@@ -1715,7 +1817,7 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         Restaurant Picture
-                    </label>
+                      </label>
                       <div className="custom-file col-md-10">
                         <input
                           type="file"
@@ -1731,7 +1833,7 @@ class RestaurantProfile extends Component {
                           htmlFor="picture"
                         >
                           Upload Picture
-                      </label>
+                        </label>
                       </div>
                     </div>
 
@@ -1741,7 +1843,7 @@ class RestaurantProfile extends Component {
                         className="col-sm-2 col-form-label"
                       >
                         Restaurant Description
-                    </label>
+                      </label>
                       <div className="col-md-10">
                         <textarea
                           className={
@@ -1760,967 +1862,78 @@ class RestaurantProfile extends Component {
                         </span>
                       </div>
                     </div>
-
                   </div>
                   <div className="panel-footer row ">
                     <div className="col-sm-6 text-left">
-                      <button className="btn btn-primary">Save</button>
+                      <button
+                        className="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#resProfileResultModal"
+                      >
+                        Save
+                      </button>
                     </div>
 
                     <div className="col-sm-6 text-right">
-                      <button type="button" className="btn btn-primary" id="editButton">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        id="editButton"
+                      >
                         Edit
-                    </button>
+                      </button>
                     </div>
-                    <div className="card-body">
-
-                      {/* Start of Restaurant Profile */}
-                      <div className="tab-content">
-                        <div id="restaurantProfile" className="tab-pane fade show active" role="tabpanel" aria-labelledby="restaurantProfile">
-                          <form onSubmit={this.handleSubmit} noValidate>
-                            <div className="form-group row">
-                              <label htmlFor="resname" className="col-sm-2 col-form-label"> Restaurant Name</label>
-                              <div className="col-sm-10">
-                                <input type="text" id="resname" name="resname" value={this.state.resname} placeholder="Restaurant Name"
-                                  className={isError.resname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.resname)}</span>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="streetnumber" className="col-sm-2 col-form-label"> Street Number</label>
-                              <div className="col-sm-3">
-                                <input type="text" id="streetnumber" name="streetnumber" value={this.state.streetnumber} placeholder="Street Number"
-                                  className={isError.streetnumber.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.streetnumber)}</span>
-                              </div>
-
-                              <label htmlFor="streetname" className="col-sm-2 col-form-label"> Street Name</label>
-                              <div className="col-sm-5">
-                                <input type="text" id="streetname" name="streetname" value={this.state.streetname} placeholder="Street Name"
-                                  className={isError.streetname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.streetname)}</span>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="city" className="col-sm-2 col-form-label"> City</label>
-                              <div className="col-md-3">
-                                <input type="text" id="city" name="city" value={this.state.city} placeholder="City"
-                                  className={isError.city.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.city)}</span>
-                              </div>
-
-                              <label htmlFor="province" className="col-sm-2 col-form-label"> Province</label>
-                              <div className="col-md-5">
-                                <input type="text" id="province" name="province" value={this.state.province} placeholder="Province"
-                                  className={isError.province.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.province)}</span>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="postalcode" className="col-sm-2 col-form-label"> Postal Code</label>
-                              <div className="col-md-3">
-                                <input type="text" id="postalcode" name="postalcode" value={this.state.postalcode} placeholder="Postal Code"
-                                  className={isError.postalcode.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.postalcode)}</span>
-                              </div>
-                              <label htmlFor="phonenumber" className="col-sm-2 col-form-label"> Phone Number</label>
-                              <div className="col-md-5">
-                                <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber} placeholder="Phone Number"
-                                  className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="email" className="col-sm-2 col-form-label"> Email</label>
-                              <div className="col-md-10">
-                                <input type="email" id="email" name="email" value={this.state.email} placeholder="Email"
-                                  className={isError.email.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.email)}</span>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="businessnumber" className="col-sm-2 col-form-label"> Business Number</label>
-                              <div className="col-md-10">
-                                <input type="text" id="businessnumber" name="businessnumber" value={this.state.businessnumber} placeholder="Business Number"
-                                  className={isError.businessnumber.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                <span className="invalid-feedback">{Parser(isError.businessnumber)}</span>
-
-                              </div>
-
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="cuisineStyle" className="col-sm-2 col-form-label">Cuisine Style</label>
-                              <div className="col-md-10">
-                                <select className="custom-select " id="cuisineStyle" name="cuisineStyle" value={this.state.cuisineStyle} onChange={this.handleChange}>
-                                  <option>Choose Style</option>
-                                  <option value="american">American</option>
-                                  <option value="italian">Italian</option>
-                                  <option value="steakhouse">Steak House</option>
-                                  <option value="seafood">Seafood</option>
-                                  <option value="french">French</option>
-                                  <option value="indian">Indian</option>
-                                  <option value="japanese">Japanese</option>
-                                  <option value="british">British</option>
-                                  <option value="barbecue">Barbecue</option>
-                                  <option value="tapas">Tapas</option>
-                                  <option value="grill">Grill</option>
-                                  <option value="conformfood">Conform Food</option>
-                                  <option value="afternoontea">Afternoon Tea</option>
-                                  <option value="burgers">Burgers</option>
-                                  <option value="canadian">Canadian</option>
-                                  <option value="vegan">Vegan</option>
-                                  <option value="vegiterian">Vegetarian</option>
-                                  <option value="asian">Asian</option>
-                                  <option value="european">European</option>
-                                  <option value="continental">Continental</option>
-                                </select>
-                              </div>
-                            </div>
-
-
-                            <div className="form-group row">
-                              <label htmlFor="category" className="col-sm-2 col-form-label">Category</label>
-                              <div className="col-md-10">
-                                <select className="custom-select " id="category" name="category" value={this.state.category} onChange={this.handleChange}>
-                                  <option >Choose Category</option>
-                                  <option value="ethinic">Ethinic</option>
-                                  <option value="fastfood">Fast Food</option>
-                                  <option value="fastcasual">Fast Casual</option>
-                                  <option value="casualdining">Casual Dining</option>
-                                  <option value="premiumdining">Premium Dining</option>
-                                  <option value="familydining">Family Dining</option>
-                                  <option value="finedining">Fine Dining</option>
-                                </select>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="priceRange" className="col-sm-2 col-form-label">Price Range</label>
-                              <div className="col-md-10">
-                                <select className="custom-select " id="priceRange" name="priceRange" value={this.state.priceRange} onChange={this.handleChange}>
-                                  <option >Choose Range</option>
-                                  <option value="low">$0-$50</option>
-                                  <option value="medium">$50-$100</option>
-                                  <option value="high">$100+</option>
-                                </select>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="openHours" className="col-sm-2 col-form-label">Open Hours</label>
-                              <div className="col-md-10">
-                                <label htmlFor="monday" className="col-sm-2 col-form-label">Monday</label>
-                                <select className="custom-select col-md-3" id="openTime" name="monday" value={this.state.monday} onChange={this.handleChange}>
-                                  <option >Choose Open Time</option>
-                                  <option value="7am">7:00 AM</option>
-                                  <option value="730am">7:30 AM</option>
-                                  <option value="8am">8:00 AM</option>
-                                  <option value="830am">8:30 AM</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                </select>
-                                        ~
-                                    <select className="custom-select col-md-3" id="openTime" name="monday" value={this.state.monday} onChange={this.handleChange}>
-                                  <option >Choose Close Time</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                  <option value="9pm">9:00 PM</option>
-                                  <option value="930pm">9:30 PM</option>
-                                  <option value="10pm">10:00 PM</option>
-                                  <option value="1030pm">10:30 PM</option>
-                                  <option value="11pm">11:00 PM</option>
-                                  <option value="1130pm">11:30 PM</option>
-                                  <option value="12am">12:00 AM</option>
-                                  <option value="1230am">12:30 AM</option>
-                                  <option value="1am">1:00 AM</option>
-                                  <option value="130am">1:30 AM</option>
-                                </select>
-                                <label className="col-sm-1 col-form-label"></label>
-                                <button type="button" className="btn btn-outline-dark col-sm-2" id="disablebutton"> Not Open </button>
-                              </div>
-
-                              <label className="col-sm-2 col-form-label"></label>
-                              <div className="col-md-10">
-                                <label htmlFor="tuesday" className="col-sm-2 col-form-label">Tuesday</label>
-                                <select className="custom-select col-md-3" id="openTime" name="tuesday" value={this.state.tuesday} onChange={this.handleChange}>
-                                  <option >Choose Open Time</option>
-                                  <option value="7am">7:00 AM</option>
-                                  <option value="730am">7:30 AM</option>
-                                  <option value="8am">8:00 AM</option>
-                                  <option value="830am">8:30 AM</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                </select>
-                                    ~
-                                    <select className="custom-select col-md-3" id="openTime" name="tuesday" value={this.state.tuesday} onChange={this.handleChange}>
-                                  <option >Choose Close Time</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                  <option value="9pm">9:00 PM</option>
-                                  <option value="930pm">9:30 PM</option>
-                                  <option value="10pm">10:00 PM</option>
-                                  <option value="1030pm">10:30 PM</option>
-                                  <option value="11pm">11:00 PM</option>
-                                  <option value="1130pm">11:30 PM</option>
-                                  <option value="12am">12:00 AM</option>
-                                  <option value="1230am">12:30 AM</option>
-                                  <option value="1am">1:00 AM</option>
-                                  <option value="130am">1:30 AM</option>
-                                </select>
-                                <label className="col-sm-1 col-form-label"></label>
-                                <button type="button" className="btn btn-outline-dark col-sm-2" id="disablebutton"> Not Open </button>
-                              </div>
-
-                              <label className="col-sm-2 col-form-label"></label>
-                              <div className="col-md-10">
-                                <label htmlFor="wednesday" className="col-sm-2 col-form-label">Wednesday</label>
-                                <select className="custom-select col-md-3" id="openTime" name="wednesday" value={this.state.wednesday} onChange={this.handleChange}>
-                                  <option >Choose Open Time</option>
-                                  <option value="7am">7:00 AM</option>
-                                  <option value="730am">7:30 AM</option>
-                                  <option value="8am">8:00 AM</option>
-                                  <option value="830am">8:30 AM</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                </select>
-                                    ~
-                                    <select className="custom-select col-md-3" id="openTime" name="wednesday" value={this.state.wednesday} onChange={this.handleChange}>
-                                  <option >Choose Close Time</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                  <option value="9pm">9:00 PM</option>
-                                  <option value="930pm">9:30 PM</option>
-                                  <option value="10pm">10:00 PM</option>
-                                  <option value="1030pm">10:30 PM</option>
-                                  <option value="11pm">11:00 PM</option>
-                                  <option value="1130pm">11:30 PM</option>
-                                  <option value="12am">12:00 AM</option>
-                                  <option value="1230am">12:30 AM</option>
-                                  <option value="1am">1:00 AM</option>
-                                  <option value="130am">1:30 AM</option>
-                                </select>
-                                <label className="col-sm-1 col-form-label"></label>
-                                <button type="button" className="btn btn-outline-dark col-sm-2" id="disablebutton"> Not Open </button>
-                              </div>
-
-                              <label className="col-sm-2 col-form-label"></label>
-                              <div className="col-md-10">
-                                <label htmlFor="thursday" className="col-sm-2 col-form-label">Thursday</label>
-                                <select className="custom-select col-md-3" id="openTime" name="thursday" value={this.state.thursday} onChange={this.handleChange}>
-                                  <option >Choose Open Time</option>
-                                  <option value="7am">7:00 AM</option>
-                                  <option value="730am">7:30 AM</option>
-                                  <option value="8am">8:00 AM</option>
-                                  <option value="830am">8:30 AM</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                </select>
-                                    ~
-                                    <select className="custom-select col-md-3" id="openTime" name="thursday" value={this.state.thursday} onChange={this.handleChange}>
-                                  <option >Choose Close Time</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                  <option value="9pm">9:00 PM</option>
-                                  <option value="930pm">9:30 PM</option>
-                                  <option value="10pm">10:00 PM</option>
-                                  <option value="1030pm">10:30 PM</option>
-                                  <option value="11pm">11:00 PM</option>
-                                  <option value="1130pm">11:30 PM</option>
-                                  <option value="12am">12:00 AM</option>
-                                  <option value="1230am">12:30 AM</option>
-                                  <option value="1am">1:00 AM</option>
-                                  <option value="130am">1:30 AM</option>
-                                </select>
-                                <label className="col-sm-1 col-form-label"></label>
-                                <button type="button" className="btn btn-outline-dark col-sm-2" id="disablebutton"> Not Open </button>
-                              </div>
-
-                              <label className="col-sm-2 col-form-label"></label>
-                              <div className="col-md-10">
-                                <label htmlFor="friday" className="col-sm-2 col-form-label">Friday</label>
-                                <select className="custom-select col-md-3" id="openTime" name="friday" value={this.state.friday} onChange={this.handleChange}>
-                                  <option >Choose Open Time</option>
-                                  <option value="7am">7:00 AM</option>
-                                  <option value="730am">7:30 AM</option>
-                                  <option value="8am">8:00 AM</option>
-                                  <option value="830am">8:30 AM</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                </select>
-                                    ~
-                                    <select className="custom-select col-md-3" id="openTime" name="friday" value={this.state.friday} onChange={this.handleChange}>
-                                  <option >Choose Close Time</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                  <option value="9pm">9:00 PM</option>
-                                  <option value="930pm">9:30 PM</option>
-                                  <option value="10pm">10:00 PM</option>
-                                  <option value="1030pm">10:30 PM</option>
-                                  <option value="11pm">11:00 PM</option>
-                                  <option value="1130pm">11:30 PM</option>
-                                  <option value="12am">12:00 AM</option>
-                                  <option value="1230am">12:30 AM</option>
-                                  <option value="1am">1:00 AM</option>
-                                  <option value="130am">1:30 AM</option>
-                                </select>
-                                <label className="col-sm-1 col-form-label"></label>
-                                <button type="button" className="btn btn-outline-dark col-sm-2" id="disablebutton"> Not Open </button>
-                              </div>
-
-                              <label className="col-sm-2 col-form-label"></label>
-                              <div className="col-md-10">
-                                <label htmlFor="saturday" className="col-sm-2 col-form-label">Saturday</label>
-                                <select className="custom-select col-md-3" id="openTime" name="saturday" value={this.state.saturday} onChange={this.handleChange}>
-                                  <option >Choose Open Time</option>
-                                  <option value="7am">7:00 AM</option>
-                                  <option value="730am">7:30 AM</option>
-                                  <option value="8am">8:00 AM</option>
-                                  <option value="830am">8:30 AM</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                </select>
-                                    ~
-                                    <select className="custom-select col-md-3" id="openTime" name="saturday" value={this.state.saturday} onChange={this.handleChange}>
-                                  <option >Choose Close Time</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                  <option value="9pm">9:00 PM</option>
-                                  <option value="930pm">9:30 PM</option>
-                                  <option value="10pm">10:00 PM</option>
-                                  <option value="1030pm">10:30 PM</option>
-                                  <option value="11pm">11:00 PM</option>
-                                  <option value="1130pm">11:30 PM</option>
-                                  <option value="12am">12:00 AM</option>
-                                  <option value="1230am">12:30 AM</option>
-                                  <option value="1am">1:00 AM</option>
-                                  <option value="130am">1:30 AM</option>
-                                </select>
-                                <label className="col-sm-1 col-form-label"></label>
-                                <button type="button" className="btn btn-outline-dark col-sm-2" id="disablebutton"> Not Open </button>
-                              </div>
-
-
-                              <label className="col-sm-2 col-form-label"></label>
-                              <div className="col-md-10">
-                                <label htmlFor="sunday" className="col-sm-2 col-form-label">Sunday</label>
-                                <select className="custom-select col-md-3" id="openTime" name="sunday" value={this.state.sunday} onChange={this.handleChange}>
-                                  <option >Choose Open Time</option>
-                                  <option value="7am">7:00 AM</option>
-                                  <option value="730am">7:30 AM</option>
-                                  <option value="8am">8:00 AM</option>
-                                  <option value="830am">8:30 AM</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                </select>
-                                    ~
-                                    <select className="custom-select col-md-3" id="openTime" name="sunday" value={this.state.sunday} onChange={this.handleChange}>
-                                  <option >Choose Close Time</option>
-                                  <option value="9am">9:00 AM</option>
-                                  <option value="930am">9:30 AM</option>
-                                  <option value="10am">10:00 AM</option>
-                                  <option value="1030am">10:30 AM</option>
-                                  <option value="11am">11:00 AM</option>
-                                  <option value="1130am">11:30 AM</option>
-                                  <option value="12pm">12:00 PM</option>
-                                  <option value="1230pm">12:30 PM</option>
-                                  <option value="1pm">1:00 PM</option>
-                                  <option value="130pm">1:30 PM</option>
-                                  <option value="2pm">2:00 PM</option>
-                                  <option value="230pm">2:30 PM</option>
-                                  <option value="3pm">3:00 PM</option>
-                                  <option value="330pm">3:30 PM</option>
-                                  <option value="4pm">4:00 PM</option>
-                                  <option value="430pm">4:30 PM</option>
-                                  <option value="5pm">5:00 PM</option>
-                                  <option value="530pm">5:30 PM</option>
-                                  <option value="6pm">6:00 PM</option>
-                                  <option value="630pm">6:30 PM</option>
-                                  <option value="7pm">7:00 PM</option>
-                                  <option value="730pm">7:30 PM</option>
-                                  <option value="8pm">8:00 PM</option>
-                                  <option value="830pm">8:30 PM</option>
-                                  <option value="9pm">9:00 PM</option>
-                                  <option value="930pm">9:30 PM</option>
-                                  <option value="10pm">10:00 PM</option>
-                                  <option value="1030pm">10:30 PM</option>
-                                  <option value="11pm">11:00 PM</option>
-                                  <option value="1130pm">11:30 PM</option>
-                                  <option value="12am">12:00 AM</option>
-                                  <option value="1230am">12:30 AM</option>
-                                  <option value="1am">1:00 AM</option>
-                                  <option value="130am">1:30 AM</option>
-                                </select>
-                                <label className="col-sm-1 col-form-label"></label>
-                                <button type="button" className="btn btn-outline-dark col-sm-2" id="disablebutton"> Not Open </button>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="picture" className="col-sm-2 col-form-label">Restaurant Picture</label>
-                              <div className="custom-file col-md-10">
-                                <input type="file" multiple className="custom-file-input col-md-10" id="picture" name="picture" value={this.state.picture} onChange={this.handleMultiplePictures} />
-                                <label className="custom-file-label form-group" htmlFor="picture">Upload Picture</label>
-                              </div>
-                            </div>
-
-                            <div className="form-group row">
-                              <label htmlFor="description" className="col-sm-2 col-form-label">Restaurant Description</label>
-                              <div className="col-md-10">
-                                <textarea className={isError.description.length > 6 ? "is-invalid form-control" : "form-control"} rows="5" id="description" name="description"
-                                  value={this.state.description} onChange={this.handleChange}></textarea>
-                                <span className="invalid-feedback">{Parser(isError.description)}</span>
-                              </div>
-                            </div>
-
-                          </form>
-                          <div className="panel-footer row ">
-                            <div className="col-sm-6 text-left">
-                              <button className="btn btn-primary">Save</button>
-                            </div>
-
-                            <div className="col-sm-6 text-right">
-                              <button className="btn btn-primary" id="btn_disable">Edit</button>
-                            </div>
+                    {/* Restaurant profile result Modal */}
+                    <div
+                      className="modal fade"
+                      id="resProfileResultModal"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-labelledby="resProfileResultModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                          <div className="modal-header">
+                            <h5
+                              className="modal-title"
+                              id="resProfileResultModalLabel"
+                            >
+                              Restaurant profile
+                            </h5>
+                            <button
+                              type="button"
+                              className="close"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div className="modal-body">
+                            <p
+                              className="alert alert-warning"
+                              id="resProfileResultText"
+                            >
+                              Please Wait...
+                            </p>
+                          </div>
+                          <div className="modal-footer">
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              data-dismiss="modal"
+                            >
+                              Close
+                            </button>
                           </div>
                         </div>
-
-                        {/* End of Restaurant Profile */}
-
-                        {/* Start of Manager Account*/}
-
-                        <div id="managerAccount" className="tab-pane fade" role="tabpanel" aria-labelledby="managerAccount">
-                          <div className="panel-footer row ">
-                            <div className="col-sm-6 text-left">
-                              <button className="btn btn-primary" onClick={this.onClick}>Create New Manager</button>
-                            </div>
-
-                            <div className="col-sm-6 text-right">
-                              <button className="btn btn-primary">View Manager</button>
-                            </div>
-
-                          </div>
-                          <br />
-
-                          {showForm && this.renderForm()}
-
-                        </div>
-
-                        {/* End of Manager Account */}
-
-                        {/* Start Password */}
-                        <div id="changePassword" className="tab-pane fade" role="tabpanel" aria-labelledby="changePassword">
-                          <div className="container">
-                            <div className="page-header text-center">
-                              <h1>Change Password</h1>
-                              <br />
-                            </div>
-                          </div>
-
-                          <form onSubmit={this.handleSubmit} noValidate>
-                            <div className="col-xs-12 col-md-8 ">
-                              <div className="form-group row">
-                                <label htmlFor="password" className="col-sm-2 col-form-label">
-                                  Old Password
-                                            </label>
-                                <div className="col-sm-6">
-                                  <input
-                                    name="password"
-                                    type="password"
-                                    id="password"
-                                    className={
-                                      isError.password.length > 6
-                                        ? "is-invalid form-control"
-                                        : "form-control"
-                                    }
-                                    value={this.state.password}
-                                    placeholder="Old Password"
-                                    onChange={this.handleChange}
-                                    required
-                                  />
-
-                                  <span className="invalid-feedback">
-                                    {Parser(isError.password)}
-                                  </span>
-
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xs-12 col-md-8 ">
-                              <div className="form-group row">
-                                <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                                  New Password
-                                             </label>
-                                <div className="col-sm-6">
-                                  <input
-                                    name="newPassword"
-                                    type="password"
-                                    id="newPassword"
-                                    className={
-                                      isError.newPassword.length > 6
-                                        ? "is-invalid form-control"
-                                        : "form-control"
-                                    }
-                                    value={this.state.newPassword}
-                                    placeholder="New Password"
-                                    onChange={this.handleChange}
-                                    required
-                                  />
-
-                                  <span className="invalid-feedback">
-                                    {Parser(isError.newPassword)}
-                                  </span>
-
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xs-12 col-md-8 ">
-                              <div className="form-group row">
-                                <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                                  Confirm New Password
-                                             </label>
-                                <div className="col-sm-6">
-                                  <input
-                                    name="confirmPassword"
-                                    type="password"
-                                    id="confirmPassword"
-                                    className={
-                                      isError.confirmPassword.length > 6
-                                        ? "is-invalid form-control"
-                                        : "form-control"
-                                    }
-                                    value={this.state.confirmPassword}
-                                    placeholder="Password confirmation"
-                                    onChange={this.handleChange}
-                                    required
-                                  />
-
-                                  <span className="invalid-feedback">
-                                    {Parser(isError.confirmPassword)}
-                                  </span>
-
-                                </div>
-                              </div>
-
-                              <div className="form-group ">
-                                <div className="text-center">
-                                  <Link to="/">
-                                    <button type="submit" className="btn btn-primary">
-                                      Change password
-                                                    </button>
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                        {/* End Password */}
-
-                        {/* Start Menu */}
-                        <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
-
-                          <div form id="addMenu">
-                            <div className="form-inline form-group mt-sm-4">
-                              <h3> Add Menu </h3>
-
-                              <button type="submit" className="btn btn-primary ml-sm-5"> Save </button>
-                            </div>
-
-                            {/* add menu */}
-                            <div form id="menu">
-                              <div className="row">
-                                <div className="col-sm-3 border">
-                                  <container>
-                                    <row>
-                                      <input type="file" name="menuPicture" onChange={this.onImageChange} />
-                                      {/* <col xs={10} md={10} /> */}
-                                      <img src={this.state.image} />
-                                      {/* <Cropper 
-                                                ref='cropper'
-                                                src={PATH_TO_IMAGE_SOURCE}
-                                                aspectRatio={16 / 9} 
-                                            />  
-                                            https://www.kurzor.net/blog/uploading-and-resizing-images-part1*/}
-                                    </row>
-                                  </container>
-                                </div>
-                                <div className="col-sm-9 border">
-                                  <div className="col container-fluid">
-                                    <div className=" form-inline">
-                                      <label htmlFor="menuName" className="col-sm-2 border-0">Name </label>
-                                      <input type="text" id="menuName" name="menuName" className="form-control col-sm-10 mt-sm-2" />
-                                    </div>
-                                    <div className=" form-inline">
-                                      <label htmlFor="menuPrice" className="col-sm-2 border-0">Price</label>
-                                      <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" />
-                                    </div>
-                                    <div className="form-inline">
-                                      <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
-                                      <input required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-
-                          {/* Menu List */}
-                          <form>
-                            <h3> <br /><br /> Menu List</h3>
-                            <table class="table table-striped">
-                              <thead>
-                                <tr>
-                                  <th>Image</th>
-                                  <th>Menu Detail</th>
-                                  <th></th>
-                                  <th></th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td rowSpan="3" >
-                                    <img src="../../../Image/CAFE.jpg" className="rounded" alt="Menu Image" />
-                                  </td>
-                                  {/* sample - data came from DB */}
-                                  {/* <td>
-                                <tr></tr>
-                                <tr></tr>
-                                <tr></tr>
-                            </td> */}
-                                  <td>
-                                    <tr> Beef</tr>
-                                    <tr> $30</tr>
-                                    <tr> Google News is a news aggregator app developed by Google. It presents a continuous
-                                    flow of articles organized from thousands of publishers and magazines.</tr>
-                                  </td>
-                                  <td rowSpan="3" >
-                                    <div className="form-group row">
-
-                                      <button
-                                        type="button"
-                                        class="btn btn-primary btn-sm mr-sm-2"
-                                      >
-                                        Edit
-                                </button>
-                                    </div>
-                                  </td>
-                                  <td rowSpan="3">
-                                    <div className="form-group row">
-                                      <button
-                                        type="button"
-                                        class="btn btn-primary btn-sm mr-sm-2"
-                                      >
-                                        Delete
-                                </button>
-                                    </div>
-                                  </td>
-                                </tr>
-
-                              </tbody>
-                            </table>
-                          </form>
-
-                        </div>
-                        {/* End Menu */}
                       </div>
                     </div>
+
+                    {/* */}
                   </div>
                 </form>
-
               </div>
 
               {/* End of Restaurant Profile */}
@@ -2735,18 +1948,18 @@ class RestaurantProfile extends Component {
               >
                 <div className="panel-footer row ">
                   <div className="col-sm-6 text-left">
-                    <button id="create" className="btn btn-primary" onClick={this.onClick}>
+                    <button className="btn btn-primary" onClick={this.onClick}>
                       Create New Manager
                     </button>
                   </div>
 
                   <div className="col-sm-6 text-right">
-                    <button id="view" className="btn btn-primary" onClick={this.onClick}>View Manager</button>
+                    <button className="btn btn-primary">View Manager</button>
                   </div>
                 </div>
                 <br />
+
                 {showForm && this.renderForm()}
-                {showForm && this.renderView()}
               </div>
 
               {/* End of Manager Account */}
@@ -2873,13 +2086,110 @@ class RestaurantProfile extends Component {
               {/* End Password */}
 
               {/* Start Menu */}
-              <div
-                id="menu"
-                className="tab-pane fade"
-                role="tabpanel"
-                aria-labelledby="menu"
-              >
-                <p> add menu here</p>
+              <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
+
+                <div form id="addMenu">
+                  <div className="form-inline form-group mt-sm-4">
+                    <h3> Add Menu </h3>
+
+                    <button type="submit" className="btn btn-primary ml-sm-5"> Save </button>
+                  </div>
+
+                  {/* add menu */}
+                  <div form id="menu">
+                    <div className="row">
+                      <div className="col-sm-3 border">
+                        <container>
+                          <row>
+                            <input type="file" name="menuPicture" onChange={this.onImageChange} />
+                            {/* <col xs={10} md={10} /> */}
+                            <img src={this.state.image} />
+                            {/* <Cropper 
+                ref='cropper'
+                src={PATH_TO_IMAGE_SOURCE}
+                aspectRatio={16 / 9} 
+            />  
+            https://www.kurzor.net/blog/uploading-and-resizing-images-part1*/}
+                          </row>
+                        </container>
+                      </div>
+                      <div className="col-sm-9 border">
+                        <div className="col container-fluid">
+                          <div className=" form-inline">
+                            <label htmlFor="menuName" className="col-sm-2 border-0">Name </label>
+                            <input type="text" id="menuName" name="menuName" className="form-control col-sm-10 mt-sm-2" />
+                          </div>
+                          <div className=" form-inline">
+                            <label htmlFor="menuPrice" className="col-sm-2 border-0">Price</label>
+                            <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" />
+                          </div>
+                          <div className="form-inline">
+                            <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
+                            <input required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                {/* Menu List */}
+                <form>
+                  <h3> <br /><br /> Menu List</h3>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Image</th>
+                        <th>Menu Detail</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td rowSpan="3" >
+                          <img src="../../../Image/CAFE.jpg" className="rounded" alt="Menu Image" />
+                        </td>
+                        {/* sample - data came from DB */}
+                        {/* <td>
+                        <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
+                        </td> */}
+                        <td>
+                          <tr> Beef</tr>
+                          <tr> $30</tr>
+                          <tr> Google News is a news aggregator app developed by Google. It presents a continuous
+    flow of articles organized from thousands of publishers and magazines.</tr>
+                        </td>
+                        <td rowSpan="3" >
+                          <div className="form-group row">
+
+                            <button
+                              type="button"
+                              class="btn btn-primary btn-sm mr-sm-2"
+                            >
+                              Edit
+</button>
+                          </div>
+                        </td>
+                        <td rowSpan="3">
+                          <div className="form-group row">
+                            <button
+                              type="button"
+                              class="btn btn-primary btn-sm mr-sm-2"
+                            >
+                              Delete
+</button>
+                          </div>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </form>
+
               </div>
               {/* End Menu */}
             </div>
