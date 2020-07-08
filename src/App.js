@@ -17,6 +17,7 @@ import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import Logout from './component/Forms/Logout';
 import Layout from './component/RestaurantLayout/Layout';
+import CustomerReservation from './Reservation/Customer/CustomerReservation';
 
 //test
 import Test from './component/Forms/Customer/Test';
@@ -114,6 +115,11 @@ class App extends Component {
             exact
             path="/EmailConfirmation"
             render={() => <EmailConfirmation />}
+          />
+          <Route
+            exact
+            path="/CustomerReservation"
+            render={() => <CustomerReservation />}
           />
           <Route exact path="/NotFound" render={() => <NotFound />} />
         </Switch>
