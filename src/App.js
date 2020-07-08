@@ -15,57 +15,85 @@ import Login from "./component/Forms/Customer/Login";
 import ForgotPassword from "./component/Forms/Customer/ForgotPassword";
 import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
+<<<<<<< HEAD
 import Logout from './component/Forms/Logout';
 import Layout from './component/RestaurantLayout/Layout';
 import CustomerReservation from './Reservation/Customer/CustomerReservation';
+=======
+import Logout from "./component/Forms/Logout";
+import Layout from "./component/RestaurantLayout/Layout";
+>>>>>>> master
 
 //test
 import Test from './component/Forms/Customer/Test';
 
 import $ from 'jquery'
 
-import authHeader from './Services/authHeader'
-import ds from './Services/dataService'
+import authHeader from "./Services/authHeader";
+import ds from "./Services/dataService";
 import ManagerProfile from "./Profile/Manager/ManagerProfile";
 import EmailConfirmation from "./RedirectPages/EmailConfirmation";
 import NotFound from "./RedirectPages/NotFound";
-
+import authService from "./Services/AuthService";
+import RestaurantReservation from "./Reservation/RestaurantReservation";
 
 class App extends Component {
-  queryUserInfo = async function(){
+  queryUserInfo = async function (userType) {
     let user = null;
-    try{
-      user = await ds.getCustomerInformation();
-    }catch(err){
+    try {
+      if (userType == 1) {
+        user = await ds.getCustomerInformation();
+      } else if (userType == 2) {
+        user = await ds.getRestaurantInformation();
+      }
+    } catch (err) {
       console.log(err);
     }
     return user;
-  }
+  };
 
-  updateUserInfo = async function() {
+  updateUserInfo = async function () {
     let u;
-    try{
-      u = await this.queryUserInfo();
-      console.log(u)
-      if(u){
-        $("#user-status-indicator").text(u.firstName + " " + u.lastName)
+    try {
+      const usr = authService.getCurrentUser();
+      if (usr) {
+        const userType = usr.user.userTypeId;
+        u = await this.queryUserInfo(userType);
+        if (u) {
+          if (userType == 1) {
+            $("#user-status-indicator").text(u.firstName + " " + u.lastName);
+          } else if (userType == 2) {
+            $("#user-status-indicator").text(u.resName);
+          }
+        }
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  componentDidMount(){
+  queryReservation = async function (userType){
+    let user = null;
+    try{
+      if(userType === 2){
+        user = await ds.getRestaurantUpcomingReservation();
+        user = await ds.getRestaurantPastReservation()();
+      }
+
+    }catch (err){
+      console.log(err);
+    }
+  };
+
+  componentDidMount() {
     $("#user-status-indicator").text("Updating");
     this.updateUserInfo();
-
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       console.log("Route change!");
     }
-
   }
   render() {
     return (
@@ -122,6 +150,7 @@ class App extends Component {
             render={() => <CustomerReservation />}
           />
           <Route exact path="/NotFound" render={() => <NotFound />} />
+          <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
         </Switch>
         <div className="footer">
           <Footer />

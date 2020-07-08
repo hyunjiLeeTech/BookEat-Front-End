@@ -7,6 +7,12 @@ import $ from 'jquery';
 
 
 class Layout extends Component {
+    constructor(props){
+        super(props);
+        if(props.tables){
+            this.tables = props.tables;
+        }
+    }
 
     componentWillMount() {
         //fetch tables data from serverside
@@ -28,7 +34,11 @@ class Layout extends Component {
             //{ id: 115, rtid: 9, restaurantId: 1, isOpen: false, capacity: 9, prefers: "" },
             { id: 119, rtid: 10, restaurantId: 1, isOpen: false, capacity: 9, prefers: "kitchen" },
         ]
-        this.tables = tables;
+        if(!this.tables)
+            this.tables = tables;
+        else{
+            tables = this.tables;
+        }
 
         var rowshtmls = [];
         var tableCount = tables.length > 9 ? 9 : tables.length;
@@ -70,7 +80,8 @@ class Layout extends Component {
             $('.r-table').css("background-color", "")
             var id = parseInt($(this).attr("id"));
             $(this).css("background-color", "red")
-            alert('Clicked table: ' + JSON.stringify(reactThis.tables[id]));
+            //alert('Clicked table: ' + JSON.stringify(reactThis.tables[id]));
+            reactThis.props.setTableId(reactThis.tables[id]._id);
             this.selectedTable = reactThis.tables[id];
         })
 

@@ -350,7 +350,7 @@ class SignUp extends Component {
               <br></br>
               <FacebookLogin
                 appId="186311976091336"
-                autoLoad={true}
+                //autoLoad={true}
                 callback={responseFacebook}
                 render={renderProps => (
                   <button onClick={renderProps.onClick}><img src={Facebook} alt= ""/></button>
