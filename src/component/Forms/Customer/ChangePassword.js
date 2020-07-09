@@ -114,7 +114,7 @@ class ChangePassword extends Component {
       <MainContainer>
 
 
-
+     
         <div className="container">
           <div className="page-header text-center">
             <br />
@@ -214,9 +214,6 @@ class ChangePassword extends Component {
           </div>
         </form>
             
-  
-
-
 
       </MainContainer >
     );
