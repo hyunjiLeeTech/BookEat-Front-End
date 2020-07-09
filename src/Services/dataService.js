@@ -5,6 +5,28 @@ import Axios from "axios";
 import $ from 'jquery';
 
 export default {
+  customersReserve(info){
+    return Axios.post(serverAddress + "/restaurant/reserve", info, {
+      headers: authHeader(),
+    }).then(function (req){
+      return req.data;
+    }).catch((err) => {
+      //TODO: errhandling
+    })
+  },
+
+  getTableStatus(info){
+    return Axios.post(serverAddress + "/restaurant/tableinfo",info, {
+      headers: authHeader(), //set auth header
+    })
+      .then(function (res) {
+        //console.log(res);
+        return res.data;
+      })
+      .catch((err) => {
+        throw err;
+      }); //TODO: err handling needs to be finished
+  },
   getCustomerInformation() {
     return Axios.get(serverAddress + "/customers/getcustomerinfo", {
       headers: authHeader(), //set auth header

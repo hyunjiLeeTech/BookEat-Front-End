@@ -30,6 +30,7 @@ import EmailConfirmation from "./RedirectPages/EmailConfirmation";
 import NotFound from "./RedirectPages/NotFound";
 import authService from "./Services/AuthService";
 import RestaurantReservation from "./Reservation/RestaurantReservation";
+import CustomerReserve from './Reservation/customerReserve';
 
 class App extends Component {
   queryUserInfo = async function (userType) {
@@ -102,6 +103,8 @@ class App extends Component {
           <Route exact path="/Login" render={() => <Login />} />
           <Route path='/logout' component={Logout} />
           <Route path='/layout' component={Layout} />
+          <Route path='/customerreserve' component={CustomerReserve} />
+
           <Route
             exact
             path="/ViewCustomerProfile"
