@@ -303,9 +303,6 @@ class RestaurantProfile extends Component {
                 }
 
 
-
-                {showForm && this.renderForm()}
-
             </MainContainer>
         )
     }
