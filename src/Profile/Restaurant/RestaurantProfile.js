@@ -33,7 +33,7 @@ const formValid = ({ isError, ...rest }) => {
       isValid = true;
     }
   });
-  
+
   Object.values(rest).forEach((val) => {
     console.log(rest);
     if (val === null) {
@@ -111,7 +111,7 @@ class RestaurantProfile extends Component {
         description: "&#160;",
         picture: "&#160;"
       }
-      
+
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -129,6 +129,7 @@ class RestaurantProfile extends Component {
       });
     }
   };
+
   handleChange(e) {
     e.preventDefault();
     const { name, value } = e.target;
@@ -428,15 +429,27 @@ class RestaurantProfile extends Component {
         }
       });
 
-     // Form Disable
-      // if ($("#resForm :input").prop("disabled", true)) {
-      //   $("#editButton").click(function () {
-      //     $("#resForm :input").prop("disabled", false);
-      //     //Disable Email
-      //     $("#email").prop("disabled", true);
-      //   });
-      // }
-
+      //Restaurant Image Upload
+      $('#upload').on('click', function () {
+        var file_data = $('#upload').prop('upload')[0];
+        var form_data = new FormData();
+        form_data.append('upload', file_data);
+        $.ajax({
+            url: 'http://localhost:3000/Image', // point to server-side controller method
+            dataType: 'text', // what to expect back from the server
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function (response) {
+                $('#msg').html(response); // display success response from the server
+            },
+            error: function (response) {
+                $('#msg').html(response); // display error response from the server
+            }
+        });
+    });
 
     });
   }
@@ -467,15 +480,14 @@ class RestaurantProfile extends Component {
       return {
         edit: !state.edit
       };
-    }, ()=>{
-      if(this.state.edit){
+    }, () => {
+      if (this.state.edit) {
         $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#resProfileResultModal').attr('type', 'button')
-      }else{
+      } else {
         $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
       }
     });
   }
-
 
   render() {
     const { isError } = this.state;
@@ -1013,6 +1025,7 @@ class RestaurantProfile extends Component {
                           type="button"
                           className="btn btn-outline-dark col-sm-2"
                           id="mondisablebutton"
+                          disabled={(!this.state.disabled)}
                         >
                           {" "}
                           Not Open{" "}
@@ -1115,6 +1128,7 @@ class RestaurantProfile extends Component {
                           type="button"
                           className="btn btn-outline-dark col-sm-2"
                           id="tuedisablebutton"
+                          disabled={(!this.state.disabled)}
                         >
                           {" "}
                           Not Open{" "}
@@ -1217,6 +1231,7 @@ class RestaurantProfile extends Component {
                           type="button"
                           className="btn btn-outline-dark col-sm-2"
                           id="weddisablebutton"
+                          disabled={(!this.state.disabled)}
                         >
                           {" "}
                           Not Open{" "}
@@ -1319,6 +1334,7 @@ class RestaurantProfile extends Component {
                           type="button"
                           className="btn btn-outline-dark col-sm-2"
                           id="thudisablebutton"
+                          disabled={(!this.state.disabled)}
                         >
                           {" "}
                           Not Open{" "}
@@ -1421,6 +1437,7 @@ class RestaurantProfile extends Component {
                           type="button"
                           className="btn btn-outline-dark col-sm-2"
                           id="fridisablebutton"
+                          disabled={(!this.state.disabled)}
                         >
                           {" "}
                           Not Open{" "}
@@ -1523,6 +1540,7 @@ class RestaurantProfile extends Component {
                           type="button"
                           className="btn btn-outline-dark col-sm-2"
                           id="satdisablebutton"
+                          disabled={(!this.state.disabled)}
                         >
                           {" "}
                           Not Open{" "}
@@ -1625,6 +1643,7 @@ class RestaurantProfile extends Component {
                           type="button"
                           className="btn btn-outline-dark col-sm-2"
                           id="sundisablebutton"
+                          disabled={(!this.state.disabled)}
                         >
                           {" "}
                           Not Open{" "}
@@ -1639,15 +1658,16 @@ class RestaurantProfile extends Component {
                       >
                         Restaurant Picture
                       </label>
-                      <div className="custom-file col-md-10">
+
+                      <div className="custom-file col-md-9">
                         <input
                           type="file"
                           multiple
-                          className="custom-file-input col-md-10"
+                          className="custom-file-input col-md-8"
                           id="picture"
                           name="picture"
                           value={this.state.picture}
-                          onChange={this.handleMultiplePictures}
+                          onChange={this.onImageChange}
                           disabled={(!this.state.disabled)}
                         />
                         <label
@@ -1657,6 +1677,11 @@ class RestaurantProfile extends Component {
                           Upload Picture
                         </label>
                       </div>
+                      <div className="input-group-append">
+                        <button className="btn btn-outline-secondary" type="button" id="upload">Upload</button>
+                      </div>
+                      <p id="msg"></p>
+
                     </div>
 
                     <div className="form-group row">
@@ -1717,54 +1742,54 @@ class RestaurantProfile extends Component {
 
                       </button>
                     </div>
-                    </div>
-                    {/* Restaurant profile result Modal */}
-                    <div
-                      className="modal fade"
-                      id="resProfileResultModal"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="resProfileResultModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5
-                              className="modal-title"
-                              id="resProfileResultModalLabel"
-                            >
-                              Restaurant profile
+                  </div>
+                  {/* Restaurant profile result Modal */}
+                  <div
+                    className="modal fade"
+                    id="resProfileResultModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="resProfileResultModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div className="modal-dialog" role="document">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5
+                            className="modal-title"
+                            id="resProfileResultModalLabel"
+                          >
+                            Restaurant profile
                             </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div className="modal-body">
-                            <p
-                              className="alert alert-warning"
-                              id="resProfileResultText"
-                            >
-                              Please Wait...
+                          <button
+                            type="button"
+                            className="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body">
+                          <p
+                            className="alert alert-warning"
+                            id="resProfileResultText"
+                          >
+                            Please Wait...
                             </p>
-                          </div>
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="btn btn-primary"
-                              data-dismiss="modal"
-                            >
-                              Close
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            type="button"
+                            className="btn btn-primary"
+                            data-dismiss="modal"
+                          >
+                            Close
                             </button>
-                          </div>
                         </div>
                       </div>
                     </div>
+                  </div>
 
                   {/* </div> */}
                   {/* </div> */}
@@ -1781,7 +1806,7 @@ class RestaurantProfile extends Component {
                 role="tabpanel"
                 aria-labelledby="managerAccount"
               >
-                <Manager/>
+                <Manager />
               </div>
 
               {/* End of Manager Account */}
@@ -1793,7 +1818,7 @@ class RestaurantProfile extends Component {
                 role="tabpanel"
                 aria-labelledby="changePassword"
               >
-                <ChangePassword/>
+                <ChangePassword />
               </div>
               {/* End Password */}
 
