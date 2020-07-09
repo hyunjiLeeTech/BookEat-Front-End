@@ -467,6 +467,12 @@ class RestaurantProfile extends Component {
       return {
         edit: !state.edit
       };
+    }, ()=>{
+      if(this.state.edit){
+        $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#resProfileResultModal').attr('type', 'button')
+      }else{
+        $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+      }
     });
   }
 
@@ -550,7 +556,7 @@ class RestaurantProfile extends Component {
                 role="tabpanel"
                 aria-labelledby="restaurantProfile"
               >
-                <form onSubmit={this.handleSubmitResProfile} noValidate>
+                <form id="resFormTag" onSubmit={this.handleSubmitResProfile} noValidate>
                   <div id="resForm">
                     <div className="form-group row">
                       <label
@@ -1706,7 +1712,7 @@ class RestaurantProfile extends Component {
 
                   <div className="form-inline">
                     <div className="form-group text-center ">
-                      <button onClick={this.handleEdit.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
+                      <button id='save_edit_btn' onClick={this.handleEdit.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
                         {this.state.edit ? "Save Change" : "Edit"}
 
                       </button>

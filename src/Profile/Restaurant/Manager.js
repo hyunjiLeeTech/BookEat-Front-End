@@ -297,7 +297,6 @@ class RestaurantProfile extends Component {
     }
 
     renderManager(){
-        console.log("called")
         if(this.state.createManager){
             return this.renderForm();
         }else if(this.state.viewManager){
