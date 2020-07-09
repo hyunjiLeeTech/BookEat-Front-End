@@ -144,6 +144,7 @@ class RestaurantProfile extends Component {
         // t9.onkeypress = function (e) {
         //     if (e.keyCode === 32) return false;
         // };
+        
         $("#createManagerBtn").on('click', ()=>{
             this.setState({
                 createManager: true,
