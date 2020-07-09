@@ -63,12 +63,15 @@ class RestaurantProfile extends Component {
                 lastName: '&#160;',
                 password: '&#160;'
 
-            }
+            },
+            createManager: false,
+            viewManager: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.renderManager = this.renderManager.bind(this);
     }
 
     handleChange(e) {
@@ -141,7 +144,19 @@ class RestaurantProfile extends Component {
         // t9.onkeypress = function (e) {
         //     if (e.keyCode === 32) return false;
         // };
+        $("#createManagerBtn").on('click', ()=>{
+            this.setState({
+                createManager: true,
+                viewManager: false,
+            })
+        })
 
+        $("#viewManagerBtn").on('click', ()=>{
+            this.setState({
+                createManager: false,
+                viewManager: true,
+            })
+        })
     }
 
     renderForm() {
@@ -272,7 +287,7 @@ class RestaurantProfile extends Component {
                             type="button"
                             className="btn btn-danger">
                             Delete
-      </button> </td>
+        </button> </td>
                     </tr>
                 </tbody>
 
@@ -281,26 +296,41 @@ class RestaurantProfile extends Component {
         )
     }
 
+    renderManager(){
+        console.log("called")
+        if(this.state.createManager){
+            return this.renderForm();
+        }else if(this.state.viewManager){
+            return this.renderView();
+        }else{
+            return(null);
+        }
+    }
+
+
+
     render() {
         const { showForm } = this.state;
         return (
             <MainContainer>
                 <div className="panel-footer row ">
                     <div className="col-sm-6 text-left">
-                        <button className="btn btn-primary" onClick={this.onClick}>
+                        <button className="btn btn-primary" id="createManagerBtn">
                             Create New Manager
                     </button>
                     </div>
 
                     <div className="col-sm-6 text-right">
-                        <button className="btn btn-primary">View Manager</button>
+                        <button className="btn btn-primary" id="viewManagerBtn">View Manager</button>
                     </div>
                 </div>
                 <br />
-                {
+                {this.renderManager()}
+                
+                {/* {
                     $('#create').click ? showForm && this.renderForm() : showForm && this.renderView()
+                } */}
 
-                }
 
 
             </MainContainer>
