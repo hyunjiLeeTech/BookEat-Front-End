@@ -24,7 +24,9 @@ class RestaurantReservation extends Component {
     renderPresent() {
         var rows = [];
         for (var ro of this.state.upcoming) {
-            rows.push(
+            console.log("RO")
+            console.log(ro)
+            rows.push(   
                 <tr key={rows}>
                     <td >
                         {ro.customer.firstName + " " + ro.customer.lastName}
@@ -109,7 +111,7 @@ class RestaurantReservation extends Component {
         e.preventDefault();
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.querypast();
         this.queryPresent();
     }

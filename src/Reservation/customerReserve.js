@@ -5,6 +5,8 @@ import MainContainer from '../component/Style/MainContainer';
 import $ from 'jquery';
 import Layout from '../component/RestaurantLayout/Layout'
 import { Animated } from 'react-animated-css';
+import Axios from 'axios';
+import authHeader from '../Services/authHeader';
 
 class Reserve extends Component {
     constructor(props) {
@@ -12,7 +14,7 @@ class Reserve extends Component {
         this.state = {
             numofpeople: 0,
             dateTime: new Date(),
-            resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
+            resId: '5efa939fdd9918ba08ac9ae4', //FIXME FOR DEBUG
             tablestatus: false,
             tables: [],
             formIsVisible: true,
@@ -20,11 +22,16 @@ class Reserve extends Component {
             resultIsVisible: false,
             selectedtableId: '',
             result: {},
+            rorminfo: {
+                OwnerAccount:"",
+                Managers: ""
+            },
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.back = this.back.bind(this);
         this.book = this.book.bind(this);
         this.setTableId = this.setTableId.bind(this);
+        this.getRoRmInfo = this.getRoRmInfo.bind(this);
     }
 
     setTableId(id) {
@@ -32,8 +39,21 @@ class Reserve extends Component {
             selectedtableId: id
         })
     }
-    componentDidMount() {
 
+    getRoRmInfo(){//TODO: only for testing, should be deleted in production envinroment.
+        Axios.post("http://localhost:5000/Restaurant/getRestaurantOwnerAndManagerViaRestaurantId",{restaurantId: this.state.resId}, {headers: authHeader()}).then(res=>{
+            console.log(res)
+            this.setState({
+                rorminfo: {
+                    OwnerAccount: res.data.Owner.account,
+                    Managers: res.data.Managers
+                }
+            })
+        })
+    }
+
+    componentDidMount() {
+        this.getRoRmInfo();
     }
 
     handleSubmit(e) {
@@ -43,7 +63,7 @@ class Reserve extends Component {
         var numofpeople = $('#numofpeople').val();
         var date = $('#date').val();
         var time = $('#time').val();
-        var resId = '5efa8fc9dd9918ba08ac9ade';
+        var resId = this.state.resId;
         var dateTime = new Date(Date.parse(date + ' ' + time));
         console.log(numofpeople)
         console.log(date)
@@ -108,6 +128,14 @@ class Reserve extends Component {
                     </div>
                 </div>
                 <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#signResultModal" >Next</button>
+                {/* TODO: for testing */}
+                <div> 
+                    RestaurantID: {this.state.resId}
+                <br/><br/>
+                    OwnerAccountInfo: {JSON.stringify(this.state.rorminfo.OwnerAccount)}<br/><br/>
+                    ManagersInfo: {JSON.stringify(this.state.rorminfo.Managers)}
+                </div>
+
             </div>
         </form>
         )
