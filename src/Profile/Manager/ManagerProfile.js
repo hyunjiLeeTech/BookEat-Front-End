@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import MainContainer from '../../component/Style/MainContainer'
 import Parser from 'html-react-parser'
 import $ from "jquery";
+import ChangePassword from '../../component/Forms/Customer/ChangePassword';
 
 //Validation 
 const regExpEmail = RegExp(
@@ -49,17 +50,11 @@ class ManagerProfile extends Component {
             email: '',
             firstName: '',
             lastName: '',
-            password: "",
-            newPassword: "",
-            confirmPassword: "",
             isError: {
                 phonenumber: '&#160;',
                 email: '&#160;',
                 firstName: '&#160;',
-                lastName: '&#160;',
-                password: "&#160;",
-                newPassword: "&#160;",
-                confirmPassword: "&#160;"
+                lastName: '&#160;'
 
             }
         };
@@ -92,24 +87,6 @@ class ManagerProfile extends Component {
                 isError.lastName =
                     value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
                 break;
-            case "password":
-                isError.password = regExpPassword.test(value)
-                    ? "&#160;"
-                    : "At least 6 characters required";
-                this.state.password = value;
-                break;
-            case "newPassword":
-                isError.newPassword = regExpPassword.test(value)
-                    ? "&#160;"
-                    : "At least 6 characters required";
-                this.state.newPassword = value;
-                break;
-            case "confirmPassword":
-                this.state.confirmPassword = value;
-                isError.confirmPassword =
-                    this.state.confirmPassword === this.state.newPassword
-                        ? "&#160;" : "Password not matching"
-                break;
             default:
                 break;
         }
@@ -130,20 +107,6 @@ class ManagerProfile extends Component {
 
     componentDidMount() {
         //Avoid spacing on the form 
-        var t3 = document.getElementById("password");
-        t3.onkeypress = function (e) {
-            if (e.keyCode === 32) return false;
-        };
-
-        var t4 = document.getElementById("confirmPassword");
-        t4.onkeypress = function (e) {
-            if (e.keyCode === 32) return false;
-        };
-
-        var t1 = document.getElementById("newPassword");
-        t1.onkeypress = function (e) {
-            if (e.keyCode === 32) return false;
-        };
 
         var t2 = document.getElementById("email");
         t2.onkeypress = function (e) {
@@ -255,15 +218,7 @@ class ManagerProfile extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="panel-footer row ">
-                                        <div className="col-sm-6 text-left">
-                                            <button className="btn btn-primary">Save</button>
-                                        </div>
 
-                                        <div className="col-sm-6 text-right">
-                                            <button className="btn btn-primary" id="editButton">Edit</button>
-                                        </div>
-                                    </div>
 
                                 </form>
                             </div>
@@ -271,114 +226,24 @@ class ManagerProfile extends Component {
 
                             {/* Start Password */}
                             <div id="changePassword" className="tab-pane fade" role="tabpanel" aria-labelledby="changePassword">
-                                <div className="container">
-                                    <div className="page-header text-center">
-                                        <h1>Change Password</h1>
-                                        <br />
-                                    </div>
-                                </div>
 
-                                <form onSubmit={this.handleSubmit} noValidate>
-                                    <div className="col-xs-12 col-md-8 ">
-                                        <div className="form-group row">
-                                            <label htmlFor="password" className="col-sm-2 col-form-label">
-                                                Old Password
-                                            </label>
-                                            <div className="col-sm-6">
-                                                <input
-                                                    name="password"
-                                                    type="password"
-                                                    id="password"
-                                                    className={
-                                                        isError.password.length > 6
-                                                            ? "is-invalid form-control"
-                                                            : "form-control"
-                                                    }
-                                                    value={this.state.password}
-                                                    placeholder="Old Password"
-                                                    onChange={this.handleChange}
-                                                    required
-                                                />
-
-                                                <span className="invalid-feedback">
-                                                    {Parser(isError.password)}
-                                                </span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-xs-12 col-md-8 ">
-                                        <div className="form-group row">
-                                            <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                                                New Password
-                                             </label>
-                                            <div className="col-sm-6">
-                                                <input
-                                                    name="newPassword"
-                                                    type="password"
-                                                    id="newPassword"
-                                                    className={
-                                                        isError.newPassword.length > 6
-                                                            ? "is-invalid form-control"
-                                                            : "form-control"
-                                                    }
-                                                    value={this.state.newPassword}
-                                                    placeholder="New Password"
-                                                    onChange={this.handleChange}
-                                                    required
-                                                />
-
-                                                <span className="invalid-feedback">
-                                                    {Parser(isError.newPassword)}
-                                                </span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-xs-12 col-md-8 ">
-                                        <div className="form-group row">
-                                            <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                                                Confirm New Password
-                                             </label>
-                                            <div className="col-sm-6">
-                                                <input
-                                                    name="confirmPassword"
-                                                    type="password"
-                                                    id="confirmPassword"
-                                                    className={
-                                                        isError.confirmPassword.length > 6
-                                                            ? "is-invalid form-control"
-                                                            : "form-control"
-                                                    }
-                                                    value={this.state.confirmPassword}
-                                                    placeholder="Password confirmation"
-                                                    onChange={this.handleChange}
-                                                    required
-                                                />
-
-                                                <span className="invalid-feedback">
-                                                    {Parser(isError.confirmPassword)}
-                                                </span>
-
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group ">
-                                            <div className="text-center">
-                                                <Link to="/">
-                                                    <button type="submit" className="btn btn-primary">
-                                                        Change password
-                                                    </button>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                <ChangePassword />
                             </div>
                             {/* End Password */}
 
+                            {/* Start Reservation */}
+                            <div id="reservation" className="tab-pane fade" role="tabpanel" aria-labelledby="reservation">
+
+                                add reservation
+                            </div>
+                            {/* End Reservation */}
+
+                            {/* Start menu */}
+                            <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
+
+                               add menu
+                            </div>
+                            {/* End mENU */}
 
                         </div>
                     </div>
