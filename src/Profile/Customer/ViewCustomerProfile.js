@@ -14,6 +14,10 @@ const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
 );
 
+const regExpPhone = RegExp(
+  /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+);
+
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
 
@@ -48,6 +52,9 @@ class ViewCustomerProfile extends Component {
       newPassword: "",
       confirmpw: "",
       isError: {
+        firstname: "&#160;",
+        lastname: "&#160;",
+        phonenumber: "&#160;",
         password: "&#160;",
         newPassword: "&#160;",
         confirmpw: "&#160;",
@@ -63,6 +70,20 @@ class ViewCustomerProfile extends Component {
     const { name, value } = e.target;
     let isError = { ...this.state.isError };
     switch (name) {
+      case "firstname":
+        isError.firstname =
+          value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
+
+        break;
+      case "lastname":
+        isError.lastname =
+          value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
+        break;
+      case "phonenumber":
+        isError.phonenumber = regExpPhone.test(value)
+          ? "&#160;"
+          : "Phone Number is invalid";
+        break;
       case "password":
         isError.password = regExpPassword.test(value)
           ? "&#160;"
@@ -140,6 +161,16 @@ class ViewCustomerProfile extends Component {
       });
     }
     // Avoid spacing on the form
+    var t4 = document.getElementById("firstname");
+    t4.onkeypress = function (event) {
+      if (event.keyCode === 32) return false;
+    };
+
+    var t5 = document.getElementById("lastname");
+    t5.onkeypress = function (event) {
+      if (event.keyCode === 32) return false;
+    };
+
     var t3 = document.getElementById("password");
     t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
@@ -179,35 +210,35 @@ class ViewCustomerProfile extends Component {
 
     return (
       <MainContainer>
-        <div class="container mt-3">
-          <div class="card">
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#myProfile">
+        <div className="container mt-3">
+          <div className="card">
+            <ul className="nav nav-tabs">
+              <li className="nav-item">
+                <a className="nav-link active" data-toggle="tab" href="#myProfile">
                   My profile
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#password">
+              <li className="nav-item">
+                <a className="nav-link" data-toggle="tab" href="#password">
                   Password
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#myReservation">
+              <li className="nav-item">
+                <a className="nav-link" data-toggle="tab" href="#myReservation">
                   My reservation
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#myReview">
+              <li className="nav-item">
+                <a className="nav-link" data-toggle="tab" href="#myReview">
                   My review
                 </a>
               </li>
             </ul>
           </div>
 
-          <div class="tab-content">
-            <div id="myProfile" class="container tab-pane active card">
-              <div form id="profile" className="card-body">
+          <div className="tab-content">
+            <div id="myProfile" className="container tab-pane active card">
+              <div form onSubmit={this.handleSubmit}  id="profile" className="card-body" noValidate >
                 <br />
                 <h3>My profile</h3>
                 <br />
@@ -225,9 +256,11 @@ class ViewCustomerProfile extends Component {
                       id="firstname"
                       name="firstname"
                       value={this.state.firstname}
-                      class="form-control"
+                      className="form-control"
                       disabled={(this.state.disabled)}
+                      className={isError.firstname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required 
                     />
+                    <span className="invalid-feedback">{Parser(isError.firstname)}</span>
                   </div>
                 </div>
                 <div className="form-group row">
@@ -241,9 +274,11 @@ class ViewCustomerProfile extends Component {
                       id="lastname"
                       name="lastname"
                       value={this.state.lastname}
-                      class="form-control"
+                      className="form-control"
                       disabled={(this.state.disabled)}
+                      className={isError.lastname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required 
                     />
+                    <span className="invalid-feedback">{Parser(isError.firstname)}</span>
                   </div>
                 </div>
                 <div className="form-group row">
@@ -260,9 +295,12 @@ class ViewCustomerProfile extends Component {
                       id="phonenumber"
                       name="phonenumber"
                       value={this.state.phonenumber}
-                      class="form-control"
+                      className="form-control"
                       disabled={(this.state.disabled)}
+                      className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.phonenumber} placeholder="Phone Number"
+                      onChange={this.handleChange} required 
                     />
+                    <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
                   </div>
                 </div>
                 <div className="form-group row">
@@ -276,7 +314,7 @@ class ViewCustomerProfile extends Component {
                       id="email"
                       name="email"
                       value={this.state.email}
-                      class="form-control"
+                      className="form-control"
                       disabled={true}
                     />
                   </div>
@@ -284,7 +322,7 @@ class ViewCustomerProfile extends Component {
 
                 <div className="form-inline">
                   <div className="form-group text-center ">
-                    <button onClick={this.handleClick.bind(this)} type="button" class="btn btn-primary mr-sm-4 ">
+                    <button onClick={this.handleClick.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
                       {this.state.edit ? "Save Change" : "Edit"}
 
                     </button>
@@ -293,7 +331,7 @@ class ViewCustomerProfile extends Component {
               </div>
             </div>
 
-            <div id="password" form class="container tab-pane card">
+            <div  id="password" className="container tab-pane card">
               <div className="card-body">
                 <br />
                 <h3>Change password</h3>
@@ -397,13 +435,13 @@ class ViewCustomerProfile extends Component {
               </div>
             </div>
 
-            <div form
+            <div form onSubmit={this.handleSubmit} noValidate
               id="myReservation"
-              class="container tab-pane fade card card-body"
+              className="container tab-pane fade card card-body"
             >
               <div className="form-group">
                 <h3> Upcomming reservation</h3>
-                <table class="table table-striped">
+                <table className="table table-striped">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -428,24 +466,24 @@ class ViewCustomerProfile extends Component {
                     {/* TODO- link to reservation page */}
                     <button
                       type="button"
-                      class="btn btn-primary btn-sm mr-sm-2"
+                      className="btn btn-primary btn-sm mr-sm-2"
                     >
                       Change reservation
                     </button>
                   </Link>
                 </div>
-                <div form id="cancelReservation" className="form-group">
+                <div id="cancelReservation" className="form-group">
                   <Link to="/">
                     <button
                       type="button"
-                      class="btn btn-primary btn-sm mr-sm-2"
+                      className="btn btn-primary btn-sm mr-sm-2"
                     >
                       Cancel reservation
                     </button>
                   </Link>
                 </div>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <br />
                 <br />
                 <h3> Reservation History</h3>
@@ -453,7 +491,7 @@ class ViewCustomerProfile extends Component {
                 Thank you for loving BookEat. <br />
                   Here is your BookEat history.{" "}
                 </p>
-                <table class="table table-striped">
+                <table className="table table-striped">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -486,15 +524,15 @@ class ViewCustomerProfile extends Component {
               </div>
             </div>
 
-            <div form id="myReview" class="container tab-pane fade">
+            <div form onSubmit={this.handleSubmit} noValidateid="myReview" className="container tab-pane fade">
               <div className="form-group">
                 <br />
                 <br />
                 <h3> My Rievew List</h3>
                 <div form id="review">
-                  <table class="table table-striped ">
+                  <table className="table table-striped ">
                     <thead>
-                      <tr class>
+                      <tr className>
                         <th>Date</th>
                         <th>Review</th>
                         <th></th>
@@ -502,16 +540,16 @@ class ViewCustomerProfile extends Component {
                     </thead>
                     <tbody>
                       <tr>
-                        <td class>2020-06-01</td>
-                        <td class>stake</td>
-                        <td class>
+                        <td className>2020-06-01</td>
+                        <td className>stake</td>
+                        <td className>
                           {" "}
                           <div className="form-inline">
                             <div className="form-group">
                               <Link to="/">
                                 <button
                                   type="button"
-                                  class="btn btn-primary btn-sm mr-sm-2"
+                                  className="btn btn-primary btn-sm mr-sm-2"
                                 >
                                   Edit
                                 </button>
@@ -521,7 +559,7 @@ class ViewCustomerProfile extends Component {
                               <Link to="/">
                                 <button
                                   type="button"
-                                  class="btn btn-primary btn-sm mr-sm-2"
+                                  className="btn btn-primary btn-sm mr-sm-2"
                                 >
                                   Delete
                                 </button>
@@ -540,7 +578,7 @@ class ViewCustomerProfile extends Component {
                               <Link to="/">
                                 <button
                                   type="button"
-                                  class="btn btn-primary btn-sm mr-sm-2"
+                                  className="btn btn-primary btn-sm mr-sm-2"
                                 >
                                   Edit
                                 </button>
@@ -550,7 +588,7 @@ class ViewCustomerProfile extends Component {
                               <Link to="/">
                                 <button
                                   type="button"
-                                  class="btn btn-primary btn-sm mr-sm-2"
+                                  className="btn btn-primary btn-sm mr-sm-2"
                                 >
                                   Delete
                                 </button>
@@ -569,7 +607,7 @@ class ViewCustomerProfile extends Component {
                               <Link to="/">
                                 <button
                                   type="button"
-                                  class="btn btn-primary btn-sm mr-sm-2"
+                                  className="btn btn-primary btn-sm mr-sm-2"
                                 >
                                   Edit
                                 </button>
@@ -579,7 +617,7 @@ class ViewCustomerProfile extends Component {
                               <Link to="/">
                                 <button
                                   type="button"
-                                  class="btn btn-primary btn-sm mr-sm-2"
+                                  className="btn btn-primary btn-sm mr-sm-2"
                                 >
                                   Delete
                                 </button>
