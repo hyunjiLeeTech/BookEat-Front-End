@@ -218,11 +218,11 @@ class RestaurantProfile extends Component {
     }
   };
 
-  handleMultiplePictures = (e) => {
-    this.setState({
-      picture: [...this.state.picture, ...e.target.pictures],
-    });
-  };
+  // handleMultiplePictures = (e) => {
+  //   this.setState({
+  //     picture: [...this.state.picture, ...e.target.pictures],
+  //   });
+  // };
 
   async componentDidMount() {
     const usr = authService.getCurrentUser();
