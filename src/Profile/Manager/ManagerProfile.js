@@ -5,6 +5,7 @@ import Parser from 'html-react-parser'
 import $ from "jquery";
 import ChangePassword from '../../component/Forms/Customer/ChangePassword';
 import RestaurantReservation from '../../Reservation/RestaurantReservation';
+import Menu from '../../Menu/Menu';
 //Validation 
 const regExpEmail = RegExp(
     /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
@@ -326,7 +327,7 @@ class ManagerProfile extends Component {
                             {/* Start menu */}
                             <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
 
-                                add menu
+                                <Menu/>
                             </div>
                             {/* End mENU */}
 
