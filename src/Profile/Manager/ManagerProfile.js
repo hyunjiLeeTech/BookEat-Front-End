@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import MainContainer from '../../component/Style/MainContainer'
 import Parser from 'html-react-parser'
-
+import $ from "jquery";
+import ChangePassword from '../../component/Forms/Customer/ChangePassword';
+import RestaurantReservation from '../../Reservation/RestaurantReservation';
+import Menu from '../../Menu/Menu';
 //Validation 
 const regExpEmail = RegExp(
     /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
@@ -21,7 +24,7 @@ const formValid = ({ isError, ...rest }) => {
     let isValid = false;
 
     Object.values(isError).forEach(val => {
-        if (val.length > 0) {
+        if (val.length !== '&#160;') {
             isValid = false
         } else {
             isValid = true
@@ -48,17 +51,11 @@ class ManagerProfile extends Component {
             email: '',
             firstName: '',
             lastName: '',
-            password: "",
-            newPassword: "",
-            confirmPassword: "",
             isError: {
                 phonenumber: '&#160;',
                 email: '&#160;',
                 firstName: '&#160;',
-                lastName: '&#160;',
-                password: "&#160;",
-                newPassword: "&#160;",
-                confirmPassword: "&#160;"
+                lastName: '&#160;'
 
             }
         };
@@ -91,24 +88,6 @@ class ManagerProfile extends Component {
                 isError.lastName =
                     value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
                 break;
-            case "password":
-                isError.password = regExpPassword.test(value)
-                    ? "&#160;"
-                    : "At least 6 characters required";
-                this.state.password = value;
-                break;
-            case "newPassword":
-                isError.newPassword = regExpPassword.test(value)
-                    ? "&#160;"
-                    : "At least 6 characters required";
-                this.state.newPassword = value;
-                break;
-            case "confirmPassword":
-                this.state.confirmPassword = value;
-                isError.confirmPassword =
-                    this.state.confirmPassword === this.state.newPassword
-                        ? "&#160;" : "Password not matching"
-                break;
             default:
                 break;
         }
@@ -126,6 +105,63 @@ class ManagerProfile extends Component {
         }
 
     }
+
+
+    componentDidMount() {
+        //Avoid spacing on the form 
+
+        var t2 = document.getElementById("email");
+        t2.onkeypress = function (e) {
+            if (e.keyCode === 32) return false;
+        };
+
+        var t6 = document.getElementById("phonenumber");
+        t6.onkeypress = function (e) {
+            if (e.keyCode === 32) return false;
+        };
+
+        var t1 = document.getElementById("firstName");
+        t1.onkeypress = function (e) {
+            if (e.keyCode === 32) return false;
+        };
+
+        //Disable Button
+        $(document).ready(function () {
+            //Form Disable
+            if ($("#manForm :input").prop("disabled", true)) {
+                $("#editButton").click(function () {
+                    $("#manForm :input").prop("disabled", false);
+                    //Disable Email
+                    $("#email").prop("disabled", true);
+                });
+            }
+        });
+
+    }
+
+    //  Edit profile disable button
+    handleEdit() {
+        this.setState({
+            disabled: !this.state.disabled
+        });
+        this.changeText();
+    }
+
+    //Edit profile - button
+    changeText() {
+        this.setState(state => {
+            return {
+                edit: !state.edit
+            };
+        }, () => {
+            if (this.state.edit) {
+                $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#resProfileResultModal').attr('type', 'button')
+            } else {
+                $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+            }
+        });
+    }
+
     render() {
         const { isError } = this.state;
         return (
@@ -177,48 +213,96 @@ class ManagerProfile extends Component {
                             {/* Start Manager profile */}
                             <div id="managerProfile" className="tab-pane fade show active" role="tabpanel" aria-labelledby="managerProfile">
                                 <form onSubmit={this.handleSubmit} noValidate>
+                                    <div id="manForm">
+                                        <div className="form-group row">
+                                            <label htmlFor="streetnumber" className="col-sm-2 col-form-label"> First Name</label>
+                                            <div className="col-sm-4">
+                                                <input type="text" id="firstName" name="firstName" value={this.state.firstName} placeholder="First Name"
+                                                    className={isError.firstName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} disabled={(!this.state.disabled)} required />
+                                                <span className="invalid-feedback">{Parser(isError.firstName)}</span>
+                                            </div>
 
-                                    <div className="form-group row">
-                                        <label htmlFor="streetnumber" className="col-sm-2 col-form-label"> First Name</label>
-                                        <div className="col-sm-4">
-                                            <input type="text" id="firstName" name="firstName" value={this.state.firstName} placeholder="First Name"
-                                                className={isError.firstName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                            <span className="invalid-feedback">{Parser(isError.firstName)}</span>
+                                            <label htmlFor="streetname" className="col-sm-2 col-form-label"> Last Name</label>
+                                            <div className="col-sm-4">
+                                                <input type="text" id="lastName" name="lastName" value={this.state.lastName} placeholder="Last Name"
+                                                    className={isError.lastName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} disabled={(!this.state.disabled)} required />
+                                                <span className="invalid-feedback">{Parser(isError.lastName)}</span>
+                                            </div>
                                         </div>
 
-                                        <label htmlFor="streetname" className="col-sm-2 col-form-label"> Last Name</label>
-                                        <div className="col-sm-4">
-                                            <input type="text" id="lastName" name="lastName" value={this.state.lastName} placeholder="Last Name"
-                                                className={isError.lastName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                            <span className="invalid-feedback">{Parser(isError.lastName)}</span>
+                                        <div className="form-group row">
+
+                                            <label htmlFor="phonenumber" className="col-sm-2 col-form-label"> Phone Number</label>
+                                            <div className="col-md-4">
+                                                <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber} placeholder="Phone Number"
+                                                    className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} disabled={(!this.state.disabled)} required />
+                                                <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group row">
+                                            <label htmlFor="email" className="col-sm-2 col-form-label"> Email</label>
+                                            <div className="col-md-10">
+                                                <input type="email" id="email" name="email" value={this.state.email} placeholder="Email"
+                                                    className={isError.email.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} disabled={true} required />
+                                                <span className="invalid-feedback">{Parser(isError.email)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-inline">
+                                        <div className="form-group text-center ">
+                                            <button id='save_edit_btn' onClick={this.handleEdit.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
+                                                {this.state.edit ? "Save Change" : "Edit"}
+
+                                            </button>
                                         </div>
                                     </div>
 
-                                    <div className="form-group row">
-
-                                        <label htmlFor="phonenumber" className="col-sm-2 col-form-label"> Phone Number</label>
-                                        <div className="col-md-4">
-                                            <input type="text" id="phonenumber" name="phonenumber" value={this.state.phonenumber} placeholder="Phone Number"
-                                                className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                            <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group row">
-                                        <label htmlFor="email" className="col-sm-2 col-form-label"> Email</label>
-                                        <div className="col-md-10">
-                                            <input type="email" id="email" name="email" value={this.state.email} placeholder="Email"
-                                                className={isError.email.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                            <span className="invalid-feedback">{Parser(isError.email)}</span>
-                                        </div>
-                                    </div>
-                                    <div className="panel-footer row ">
-                                        <div className="col-sm-6 text-left">
-                                            <button className="btn btn-primary">Save</button>
-                                        </div>
-
-                                        <div className="col-sm-6 text-right">
-                                            <button className="btn btn-primary" id="btn_disable">Edit</button>
+                                    {/* Restaurant profile result Modal */}
+                                    <div
+                                        className="modal fade"
+                                        id="resProfileResultModal"
+                                        tabindex="-1"
+                                        role="dialog"
+                                        aria-labelledby="resProfileResultModalLabel"
+                                        aria-hidden="true"
+                                    >
+                                        <div className="modal-dialog" role="document">
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h5
+                                                        className="modal-title"
+                                                        id="resProfileResultModalLabel"
+                                                    >
+                                                        Manager Profile
+                            </h5>
+                                                    <button
+                                                        type="button"
+                                                        className="close"
+                                                        data-dismiss="modal"
+                                                        aria-label="Close"
+                                                    >
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div className="modal-body">
+                                                    <p
+                                                        className="alert alert-warning"
+                                                        id="resProfileResultText"
+                                                    >
+                                                        Please Wait...
+                            </p>
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-primary"
+                                                        data-dismiss="modal"
+                                                    >
+                                                        Close
+                            </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -227,114 +311,25 @@ class ManagerProfile extends Component {
 
                             {/* Start Password */}
                             <div id="changePassword" className="tab-pane fade" role="tabpanel" aria-labelledby="changePassword">
-                                <div className="container">
-                                    <div className="page-header text-center">
-                                        <h1>Change Password</h1>
-                                        <br />
-                                    </div>
-                                </div>
 
-                                <form onSubmit={this.handleSubmit} noValidate>
-                                    <div className="col-xs-12 col-md-8 ">
-                                        <div className="form-group row">
-                                            <label htmlFor="password" className="col-sm-2 col-form-label">
-                                                Old Password
-                                            </label>
-                                            <div className="col-sm-6">
-                                                <input
-                                                    name="password"
-                                                    type="password"
-                                                    id="password"
-                                                    className={
-                                                        isError.password.length > 6
-                                                            ? "is-invalid form-control"
-                                                            : "form-control"
-                                                    }
-                                                    value={this.state.password}
-                                                    placeholder="Old Password"
-                                                    onChange={this.handleChange}
-                                                    required
-                                                />
-
-                                                <span className="invalid-feedback">
-                                                    {Parser(isError.password)}
-                                                </span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-xs-12 col-md-8 ">
-                                        <div className="form-group row">
-                                            <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                                                New Password
-                                             </label>
-                                            <div className="col-sm-6">
-                                                <input
-                                                    name="newPassword"
-                                                    type="password"
-                                                    id="newPassword"
-                                                    className={
-                                                        isError.newPassword.length > 6
-                                                            ? "is-invalid form-control"
-                                                            : "form-control"
-                                                    }
-                                                    value={this.state.newPassword}
-                                                    placeholder="New Password"
-                                                    onChange={this.handleChange}
-                                                    required
-                                                />
-
-                                                <span className="invalid-feedback">
-                                                    {Parser(isError.newPassword)}
-                                                </span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-xs-12 col-md-8 ">
-                                        <div className="form-group row">
-                                            <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                                                Confirm New Password
-                                             </label>
-                                            <div className="col-sm-6">
-                                                <input
-                                                    name="confirmPassword"
-                                                    type="password"
-                                                    id="confirmPassword"
-                                                    className={
-                                                        isError.confirmPassword.length > 6
-                                                            ? "is-invalid form-control"
-                                                            : "form-control"
-                                                    }
-                                                    value={this.state.confirmPassword}
-                                                    placeholder="Password confirmation"
-                                                    onChange={this.handleChange}
-                                                    required
-                                                />
-
-                                                <span className="invalid-feedback">
-                                                    {Parser(isError.confirmPassword)}
-                                                </span>
-
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group ">
-                                            <div className="text-center">
-                                                <Link to="/">
-                                                    <button type="submit" className="btn btn-primary">
-                                                        Change password
-                                                    </button>
-                                                </Link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                <ChangePassword />
                             </div>
                             {/* End Password */}
 
+                            {/* Start Reservation */}
+                            <div id="reservation" className="tab-pane fade" role="tabpanel" aria-labelledby="reservation">
+
+                                <RestaurantReservation/>
+
+                            </div>
+                            {/* End Reservation */}
+
+                            {/* Start menu */}
+                            <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
+
+                                <Menu/>
+                            </div>
+                            {/* End mENU */}
 
                         </div>
                     </div>

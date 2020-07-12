@@ -12,15 +12,20 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 
 import Login from "./component/Forms/Customer/Login";
-import ConfirmLogin from "./component/Forms/Customer/ConfirmLogin";
 import ForgotPassword from "./component/Forms/Customer/ForgotPassword";
 import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
-import ReservationHistory from "./Profile/Customer/ReservationHistory";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
-import Logout from "./component/Forms/Logout";
-import Layout from "./component/RestaurantLayout/Layout";
+import Logout from './component/Forms/Logout';
+import Layout from './component/RestaurantLayout/Layout';
+import CustomerReservation from './Reservation/Customer/CustomerReservation';
+import CustomerReservationHistory from './Reservation/Customer/CustomerReservationHistory'
+import CustomerReviewHistory from './Review/Customer/CustomerReviewHistory'
+import Menu from './Menu/Menu'
 
-import $ from "jquery";
+//test
+import Test from './component/Forms/Customer/Test';
+
+import $ from 'jquery'
 
 import authHeader from "./Services/authHeader";
 import ds from "./Services/dataService";
@@ -28,6 +33,11 @@ import ManagerProfile from "./Profile/Manager/ManagerProfile";
 import EmailConfirmation from "./RedirectPages/EmailConfirmation";
 import NotFound from "./RedirectPages/NotFound";
 import authService from "./Services/AuthService";
+import RestaurantReservation from "./Reservation/RestaurantReservation";
+import CustomerReserve from './Reservation/customerReserve';
+
+import Restaurant from './Restaurant/restaurant'
+import SearchResult from "./Home/SearchResult";
 
 class App extends Component {
   queryUserInfo = async function (userType) {
@@ -54,25 +64,25 @@ class App extends Component {
         if (u) {
           if (userType == 1) {
             $("#user-status-indicator").text(u.firstName + " " + u.lastName);
-            $("#firstname").val(u.firstName);
-            $("#lastname").val(u.lastName);
-            $("#phonenumber").val(u.phoneNumber);
-            $("#email").val(u.account.email);
           } else if (userType == 2) {
             $("#user-status-indicator").text(u.resName);
-            $("#resname").val(u.resName);
-            $("#phonenumber").val(u.phoneNumber);
-            $("#email").val(usr.user.email);
-            $("#businessnumber").val(u.businessNum);
-            $("#postalcode").val(u.addressId.postalCode);
-            $("#streetname").val(u.addressId.streetName);
-            $("#streetnumber").val(u.addressId.streetNum);
-            $("#city").val(u.addressId.city);
-            $("#province").val(u.addressId.province);
           }
         }
       }
     } catch (err) {
+      console.log(err);
+    }
+  };
+
+  queryReservation = async function (userType){
+    let user = null;
+    try{
+      if(userType === 2){
+        user = await ds.getRestaurantUpcomingReservation();
+        user = await ds.getRestaurantPastReservation()();
+      }
+
+    }catch (err){
       console.log(err);
     }
   };
@@ -92,12 +102,17 @@ class App extends Component {
       <div>
         <NavBar />
         <Switch>
+          //test
+          <Route exact path="/Test" render={() => <Test />} />
+
           <Route exact path="/" render={() => <Home />} />
           <Route exact path="/SignUp" render={() => <SignUp />} />
           <Route exact path="/Login" render={() => <Login />} />
-          <Route exact path="/ConfirmLogin" render={() => <ConfirmLogin />} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/layout" component={Layout} />
+          <Route path='/logout' component={Logout} />
+          <Route path='/layout' component={Layout} />
+          <Route path='/customerreserve/:id' component={CustomerReserve} />
+          <Route path='/restaurant/:id' component={Restaurant} />
+
           <Route
             exact
             path="/ViewCustomerProfile"
@@ -112,11 +127,6 @@ class App extends Component {
             exact
             path="/ChangePassword"
             render={() => <ChangePassword />}
-          />
-          <Route
-            exact
-            path="/ReservationHistory"
-            render={() => <ReservationHistory />}
           />
           <Route
             exact
@@ -139,7 +149,31 @@ class App extends Component {
             path="/EmailConfirmation"
             render={() => <EmailConfirmation />}
           />
+          <Route
+            exact
+            path="/CustomerReservation"
+            render={() => <CustomerReservation />}
+          />
+
+          <Route
+            exact
+            path="/CustomerReservationHistory"
+            render={() => <CustomerReservationHistory />}
+          />
+          <Route
+            exact
+            path="/CustomerReviewHistory"
+            render={() => <CustomerReviewHistory />}
+          />
+
+          <Route
+            exact
+            path="/Menu"
+            render={() => <Menu />}
+          />
           <Route exact path="/NotFound" render={() => <NotFound />} />
+          <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
+          <Route exact path="/SearchResult" render={() => <SearchResult />} />
         </Switch>
         <div className="footer">
           <Footer />

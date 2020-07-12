@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
 import Parser from "html-react-parser";
+import sha256 from "crypto-js/sha256";
 
 //Validation
 const regExpPassword = RegExp(
@@ -36,11 +37,11 @@ class ChangePassword extends Component {
     this.state = {
       password: "",
       newPassword: "",
-      confirmPassword: "",
+      confirmpw: "",
       isError: {
         password: "&#160;",
         newPassword: "&#160;",
-        confirmPassword: "&#160;"
+        confirmpw: "&#160;"
       },
     };
 
@@ -65,10 +66,10 @@ class ChangePassword extends Component {
           : "At least 6 characters required";
         this.state.newPassword = value;
         break;
-      case "confirmPassword":
-        this.state.confirmPassword = value;
-        isError.confirmPassword =
-          this.state.confirmPassword === this.state.newPassword
+      case "confirmpw":
+        this.state.confirmpw = value;
+        isError.confirmpw =
+          this.state.confirmpw === this.state.newPassword
             ? "&#160;" : "Password not matching"
         break;
       default:
@@ -83,7 +84,8 @@ class ChangePassword extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      console.log(this.state);
+      this.state.password = sha256(this.state.password).toString(); //hashing password
+      this.state.confirmpw = sha256(this.state.confirmpw).toString();
     } else {
       console.log("Form is invalid!");
     }
@@ -99,7 +101,7 @@ class ChangePassword extends Component {
     t2.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
-    var t1 = document.getElementById("confirmPassword");
+    var t1 = document.getElementById("confirmpw");
     t1.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
@@ -112,149 +114,210 @@ class ChangePassword extends Component {
       <MainContainer>
 
 
-        <div className="card">
-          <div className="card-header">
-            <ul className="nav nav-tabs card-header-tabs">
-              <li className="nav-item">
-                <Link to='/RestaurantProfile'>
-                  <button className="nav-link"> My Profile</button>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to='/'>
-                  <button className="nav-link" >Menu</button>
-                </Link>
-
-              </li>
-              <li className="nav-item">
-                <Link to='/Manager'>
-                  <button className="nav-link" >Manager</button>
-                </Link>
-
-              </li>
-              <li className="nav-item">
-                <Link to='/ChangePassword'>
-                  <button className="nav-link active">Password</button>
-                </Link>
-
-              </li>
-            </ul>
-          </div>
-          <div className="card-body">
-            <div className="container">
-              <div className="page-header text-center">
-                <h1>Change Password</h1>
-                <br />
-              </div>
-            </div>
-
-            <form onSubmit={this.handleSubmit} noValidate>
-              <div className="col-xs-12 col-md-8 ">
-                <div className="form-group row">
-                  <label htmlFor="password" className="col-sm-2 col-form-label">
-                    Old Password
-              </label>
-                  <div className="col-sm-6">
-                    <input
-                      name="password"
-                      type="password"
-                      id="password"
-                      className={
-                        isError.password.length > 6
-                          ? "is-invalid form-control"
-                          : "form-control"
-                      }
-                      value={this.state.password}
-                      placeholder="Old Password"
-                      onChange={this.handleChange}
-                      required
-                    />
-
-                    <span className="invalid-feedback">
-                      {Parser(isError.password)}
-                    </span>
-
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-xs-12 col-md-8 ">
-                <div className="form-group row">
-                  <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                    New Password
-              </label>
-                  <div className="col-sm-6">
-                    <input
-                      name="newPassword"
-                      type="password"
-                      id="newPassword"
-                      className={
-                        isError.newPassword.length > 6
-                          ? "is-invalid form-control"
-                          : "form-control"
-                      }
-                      value={this.state.newPassword}
-                      placeholder="New Password"
-                      onChange={this.handleChange}
-                      required
-                    />
-
-                    <span className="invalid-feedback">
-                      {Parser(isError.newPassword)}
-                    </span>
-
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-xs-12 col-md-8 ">
-                <div className="form-group row">
-                  <label htmlFor="newPassword" className="col-sm-2 col-form-label">
-                    Confirm New Password
-              </label>
-                  <div className="col-sm-6">
-                    <input
-                      name="confirmPassword"
-                      type="password"
-                      id="confirmPassword"
-                      className={
-                        isError.confirmPassword.length > 6
-                          ? "is-invalid form-control"
-                          : "form-control"
-                      }
-                      value={this.state.confirmPassword}
-                      placeholder="Password confirmation"
-                      onChange={this.handleChange}
-                      required
-                    />
-
-                    <span className="invalid-feedback">
-                      {Parser(isError.confirmPassword)}
-                    </span>
-
-                  </div>
-                </div>
-
-                <div className="form-group ">
-                  <div className="text-center">
-                    <Link to="/">
-                      <button type="submit" className="btn btn-primary">
-                        Change password
-                  </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </form>
-
-
+     
+        {/* <div className="container">
+          <div className="page-header text-center">
+            <br />
+            <h3>Change password</h3>
+            <br />
 
           </div>
         </div>
 
+        <form onSubmit={this.handleSubmit} noValidate>
+          <div className="col-xs-12 col-md-8 ">
+            <div className="form-group row">
+              <label
+                htmlFor="password"
+                className="col-sm-3 col-form-label"
+              >
+                Old Password{" "}
+              </label>
+              <div className="col-sm-6">
+                <input
+                  name="password"
+                  type="password"
+                  id="password"
+                  className={
+                    isError.password.length > 6
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
+                  value={this.state.password}
+                  placeholder="Password"
+                  onChange={this.handleChange}
+                  required
+                />
+                {isError.password.length > 6 && (
+                  <span className="invalid-feedback">
+                    {Parser(isError.password)}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
 
+          <div className="col-xs-12 col-md-8 ">
+            <div className="form-group row">
+              <label
+                htmlFor="newPassword"
+                className="col-sm-3 col-form-label"
+              >
+                New Password{" "}
+              </label>
+              <div className="col-sm-6">
+                <input
+                  name="newPassword"
+                  type="password"
+                  id="newPassword"
+                  className={
+                    isError.newPassword.length > 6
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
+                  value={this.state.newPassword}
+                  placeholder="newPassword"
+                  onChange={this.handleChange}
+                  required
+                />
+                {isError.newPassword.length > 0 && (
+                  <span className="invalid-feedback">
+                    {Parser(isError.newPassword)}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
 
-      </MainContainer>
+          <div className="col-xs-12 col-md-8 ">
+            <div className="form-group row">
+              <label
+                htmlFor="confirmpw"
+                className="col-sm-3 col-form-label"
+              >
+                Password confirmation{" "}
+              </label>
+              <div className="col-sm-6">
+                <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
+                  onChange={this.handleChange} required />
+                <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
+              </div>
+            </div>
+
+            <div className="form-group ">
+              <div className="text-center">
+                <button type="submit" className="btn btn-primary">
+                  Change password
+                          </button>
+              </div>
+            </div>
+          </div>
+        </form> */}
+
+<div className="card-body">
+                <br />
+                <h3>Change password</h3>
+                <br />
+                <div className="container">
+                  <div className="page-header text-center">
+                    <p>{this.state.password}</p>
+                    <p>{this.state.confirmpw}</p>
+                  </div>
+                </div>
+
+                <form onSubmit={this.handleSubmit} noValidate>
+                  <div className="col-xs-12 col-md-8 ">
+                    <div className="form-group row">
+                      <label
+                        htmlFor="password"
+                        className="col-sm-3 col-form-label"
+                      >
+                        Old Password{" "}
+                      </label>
+                      <div className="col-sm-6">
+                        <input
+                          name="password"
+                          type="password"
+                          id="password"
+                          className={
+                            isError.password.length > 0
+                              ? "is-invalid form-control"
+                              : "form-control"
+                          }
+                          value={this.state.password}
+                          placeholder="Password"
+                          onChange={this.handleChange}
+                          required
+                        />
+                        {isError.password.length > 0 && (
+                          <span className="invalid-feedback">
+                            {Parser(isError.password)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-xs-12 col-md-8 ">
+                    <div className="form-group row">
+                      <label
+                        htmlFor="newPassword"
+                        className="col-sm-3 col-form-label"
+                      >
+                        New Password{" "}
+                      </label>
+                      <div className="col-sm-6">
+                        <input
+                          name="newPassword"
+                          type="password"
+                          id="newPassword"
+                          className={
+                            isError.newPassword.length > 0
+                              ? "is-invalid form-control"
+                              : "form-control"
+                          }
+                          value={this.state.newPassword}
+                          placeholder="newPassword"
+                          onChange={this.handleChange}
+                          required
+                        />
+                        {isError.newPassword.length > 0 && (
+                          <span className="invalid-feedback">
+                            {Parser(isError.newPassword)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-xs-12 col-md-8 ">
+                    <div className="form-group row">
+                      <label
+                        htmlFor="confirmpw"
+                        className="col-sm-3 col-form-label"
+                      >
+                        Password confirmation{" "}
+                      </label>
+                      <div className="col-sm-6">
+                        <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
+                          onChange={this.handleChange} required />
+                        <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
+                      </div>
+                    </div>
+
+                    <div className="form-group ">
+                      <div className="text-center">
+                        <button type="submit" className="btn btn-primary">
+                          Change password
+                          </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div> 
+            
+
+      </MainContainer >
     );
   }
 }
