@@ -2,21 +2,23 @@ import authHeader from "./authHeader";
 import authService from "./AuthService";
 import serverAddress from "./ServerUrl";
 import Axios from "axios";
-import $ from 'jquery';
+import $ from "jquery";
 
 export default {
-  customersReserve(info){
+  customersReserve(info) {
     return Axios.post(serverAddress + "/restaurant/reserve", info, {
       headers: authHeader(),
-    }).then(function (req){
-      return req.data;
-    }).catch((err) => {
-      //TODO: errhandling
     })
+      .then(function (req) {
+        return req.data;
+      })
+      .catch((err) => {
+        //TODO: errhandling
+      });
   },
 
-  getTableStatus(info){
-    return Axios.post(serverAddress + "/restaurant/tableinfo",info, {
+  getTableStatus(info) {
+    return Axios.post(serverAddress + "/restaurant/tableinfo", info, {
       headers: authHeader(), //set auth header
     })
       .then(function (res) {
@@ -50,27 +52,38 @@ export default {
         throw err;
       });
   },
-  getRestaurantUpcomingReservation(){
+  getManagerInformation() {
+    return Axios.get(serverAddress + "/manager/getmanagerinfo", {
+      headers: authHeader(),
+    })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+  getRestaurantUpcomingReservation() {
     return Axios.get(serverAddress + "/restaurant/upcomingreservations", {
       headers: authHeader(),
     })
-    .then (function (res){
-      return res.data;
-    })
-    .catch((err) => {
-      throw err;
-    });
+      .then(function (res) {
+        return res.data;
+      })
+      .catch((err) => {
+        throw err;
+      });
   },
-  getRestaurantPastReservation(){
+  getRestaurantPastReservation() {
     return Axios.get(serverAddress + "/restaurant/reservationsofpast14days", {
       headers: authHeader(),
     })
-    .then (function (res){
-      return res.data;
-    })
-    .catch((err) => {
-      throw err;
-    });
+      .then(function (res) {
+        return res.data;
+      })
+      .catch((err) => {
+        throw err;
+      });
   },
   editRestaurantProfile(state) {
     Axios.post(serverAddress + "/restaurant/editresprofile", state, {
