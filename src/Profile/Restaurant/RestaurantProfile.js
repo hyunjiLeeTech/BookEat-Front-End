@@ -12,6 +12,7 @@ import ds from "../../Services/dataService";
 import Manager from "./Manager";
 import ChangePassword from "../../component/Forms/Customer/ChangePassword";
 import Menu from "../../Menu/Menu"
+import RestaurantReservation from "../../Reservation/RestaurantReservation";
 
 
 //Validation
@@ -93,7 +94,7 @@ class RestaurantProfile extends Component {
       description: "",
       picture: "",
 
-      
+
       image: '',
       isError: {
         resname: "&#160;",
@@ -435,21 +436,21 @@ class RestaurantProfile extends Component {
         var form_data = new FormData();
         form_data.append('upload', file_data);
         $.ajax({
-            url: 'http://localhost:3000/Image', // point to server-side controller method
-            dataType: 'text', // what to expect back from the server
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,
-            type: 'post',
-            success: function (response) {
-                $('#msg').html(response); // display success response from the server
-            },
-            error: function (response) {
-                $('#msg').html(response); // display error response from the server
-            }
+          url: 'http://localhost:3000/Image', // point to server-side controller method
+          dataType: 'text', // what to expect back from the server
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          type: 'post',
+          success: function (response) {
+            $('#msg').html(response); // display success response from the server
+          },
+          error: function (response) {
+            $('#msg').html(response); // display error response from the server
+          }
         });
-    });
+      });
 
     });
   }
@@ -549,6 +550,21 @@ class RestaurantProfile extends Component {
                   className="nav-link"
                   data-toggle="tab"
                   role="tab"
+                  href="#reservation"
+                  aria-controls="reservation"
+                  aria-selected="false"
+                >
+                  Reservations
+                </a>
+              </li>
+              <li className="nav-item">
+                {/* <Link to='/ChangePassword'>
+                                    <button className="nav-link" data-toggle="tab">Password</button>
+                                </Link> */}
+                <a
+                  className="nav-link"
+                  data-toggle="tab"
+                  role="tab"
                   href="#changePassword"
                   aria-controls="changePassword"
                   aria-selected="false"
@@ -556,6 +572,7 @@ class RestaurantProfile extends Component {
                   Password
                 </a>
               </li>
+           
             </ul>
           </div>
 
@@ -1742,7 +1759,16 @@ class RestaurantProfile extends Component {
 
                       </button>
                     </div>
+                    <div className="form-group text-center ">
+                      <Link to="/">
+                        <button type="button" className="btn btn-primary mr-sm-4 ">
+                          {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
+                      Delete
+                    </button>
+                      </Link>
+                    </div>
                   </div>
+
                   {/* Restaurant profile result Modal */}
                   <div
                     className="modal fade"
@@ -1827,6 +1853,13 @@ class RestaurantProfile extends Component {
                 <Menu />
               </div>
               {/* End Menu */}
+
+              {/* Start Reservation */}
+              <div id="reservation" className="tab-pane fade" role="tabpanel" aria-labelledby="reservation">
+                    <RestaurantReservation/>
+              </div>
+              {/* End Reservation */}
+
             </div>
           </div>
         </div>
