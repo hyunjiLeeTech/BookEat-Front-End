@@ -48,6 +48,10 @@ class RestaurantReservation extends Component {
                         {ro.comments}
                     </td>
 
+                    <td>
+                    <button type="button" className="btn btn-primary mr-sm-4 "> Cancel Reservation </button>
+                    </td>
+
                 </tr>
             )
         }
@@ -150,6 +154,7 @@ class RestaurantReservation extends Component {
                                             <th scope="col">Date</th>
                                             <th scope="col"># of People</th>
                                             <th scope="col">Comments</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
