@@ -99,7 +99,7 @@ class ManagerProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      console.log(this.state);
+      ds.editManagerProfile(this.state);
     } else {
       console.log("Form is invalid!");
     }
