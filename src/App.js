@@ -32,6 +32,8 @@ import authService from "./Services/AuthService";
 import RestaurantReservation from "./Reservation/RestaurantReservation";
 import CustomerReserve from './Reservation/customerReserve';
 
+import Restaurant from './Restaurant/restaurant'
+
 class App extends Component {
   queryUserInfo = async function (userType) {
     let user = null;
@@ -103,7 +105,8 @@ class App extends Component {
           <Route exact path="/Login" render={() => <Login />} />
           <Route path='/logout' component={Logout} />
           <Route path='/layout' component={Layout} />
-          <Route path='/customerreserve' component={CustomerReserve} />
+          <Route path='/customerreserve/:id' component={CustomerReserve} />
+          <Route path='/restaurant/:id' component={Restaurant} />
 
           <Route
             exact
