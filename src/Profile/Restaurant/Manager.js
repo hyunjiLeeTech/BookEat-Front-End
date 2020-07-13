@@ -286,7 +286,13 @@ class RestaurantProfile extends Component {
           </div>
         </div>
 
-        <button className="btn btn-danger">Submit</button>
+        <button
+          className="btn btn-danger"
+          data-toggle="modal"
+          data-target="#signResultModal"
+        >
+          Submit
+        </button>
         {/* Sign up result Modal */}
         <div
           className="modal fade"

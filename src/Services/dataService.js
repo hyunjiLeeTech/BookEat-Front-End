@@ -118,14 +118,14 @@ export default {
       .then((res) => {
         console.log(res);
         if (res.data.errcode === 0) {
-          $("#resProfileResultText")
+          $("#signResultText")
             .text("Profiled is edited")
             .removeClass("alert-warning")
             .removeClass("alert-danger")
             .removeClass("alert-success")
             .addClass("alert-success");
         } else {
-          $("#resProfileResultText")
+          $("#signResultText")
             .text("Sorry, " + res.data.errmsg)
             .removeClass("alert-warning")
             .removeClass("alert-danger")
