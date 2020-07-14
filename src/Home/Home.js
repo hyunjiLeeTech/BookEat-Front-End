@@ -68,20 +68,20 @@ class Home extends Component {
                                         value={this.state.numberOfPeople}
                                     >
                                         <option value=""># Of People</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>       
+                                        <option value="1">1 People</option>
+                                        <option value="2">2 People</option>
+                                        <option value="3">3 People</option>
+                                        <option value="4">4 People</option>
+                                        <option value="5">5 People</option>
+                                        <option value="6">6 People</option>
+                                        <option value="7">7 People</option>
+                                        <option value="8">8 People</option>
+                                        <option value="9">9 People</option>
+                                        <option value="10">10 People</option>
+                                        <option value="11">11 People</option>
+                                        <option value="12">12 People</option>
+                                        <option value="13">13 People</option>
+                                        <option value="14">14 People</option>       
                                     </select>
 
                                 </div>
