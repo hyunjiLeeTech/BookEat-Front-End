@@ -18,7 +18,7 @@ const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
 );
 
-const formValid = ({ isError, ...rest }) => {
+const formValid = ({ isError, ...customer }) => {
   let isValid = false;
 
   Object.values(isError).forEach((val) => {
@@ -29,8 +29,9 @@ const formValid = ({ isError, ...rest }) => {
     }
   });
 
-  Object.values(rest).forEach((val) => {
-    if (val === null) {
+  Object.values(customer).forEach((val) => {
+    console.log(customer);
+      if (val === null) {
       isValid = false;
     } else {
       isValid = true;
@@ -57,6 +58,9 @@ class ViewCustomerProfile extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    
+    this.handleSubmitCustomerProfile = this.handleSubmitCustomerProfile.bind(this);
+    // this.onClick = this.onClick.bind(this);
   }
 
   handleChange = (e) => {
@@ -87,13 +91,24 @@ class ViewCustomerProfile extends Component {
     });
   };
 
+  handleSubmitCustomerProfile = (e) => {
+    e.preventDefault();
+    console.log("submit customer profile")
+    if (formValid(this.state)) {
+      console.log(this.state);
+    } else {
+      console.log("Form is invalid!");
+    }
+  };
+
+
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
       Axios.post(serverAddress + "/updatecustomerinfo", this.state).then(
-        (res) => {
-          console.log(res);
-          if (res.data.errcode === 0) {
+        (customer) => {
+          console.log(customer);
+          if (customer.data.errcode === 0) {
             $("#updateResultText")
               .text("Profile update is finished.")
               .removeClass("alert-warning")
@@ -102,7 +117,7 @@ class ViewCustomerProfile extends Component {
               .addClass("alert-success");
           } else {
             $("#updateResultText")
-              .text("Sorry, " + res.data.errmsg)
+              .text("Sorry, " + customer.data.errmsg)
               .removeClass("alert-warning")
               .removeClass("alert-danger")
               .removeClass("alert-success");
@@ -202,7 +217,7 @@ class ViewCustomerProfile extends Component {
 
           <div className="tab-content">
             <div id="myProfile" className="container tab-pane active card">
-              <div form onSubmit={this.handleSubmit}  id="profile" className="card-body" noValidate >
+              <form onSubmit={this.handleSubmitCustomerProfile}  id="profile" className="card-body" noValidate >
                 <br />
                 <h3>My profile</h3>
                 <br />
@@ -300,7 +315,7 @@ class ViewCustomerProfile extends Component {
                     </Link>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
 
             <div  id="password" className=" tab-pane card-body">

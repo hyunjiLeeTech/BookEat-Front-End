@@ -1,44 +1,67 @@
 import React, { Component } from 'react'
 import MainContainer from "../../Style/MainContainer";
-import CAFE from "../../../Image/CAFE.jpg"
+import { Link } from 'react-router-dom'
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
-  );
+);
 
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
-  
+
     Object.values(isError).forEach((val) => {
-      if (val.length > 0) {
-        isValid = false;
-      } else {
-        isValid = true;
-      }
+        if (val.length > 0) {
+            isValid = false;
+        } else {
+            isValid = true;
+        }
     });
-  
+
     Object.values(rest).forEach((val) => {
-      if (val === null) {
-        isValid = false;
-      } else {
-        isValid = true;
-      }
+        if (val === null) {
+            isValid = false;
+        } else {
+            isValid = true;
+        }
     });
-  
+
     return isValid;
-  };
+};
 
 class Test extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Menupicture: "",
-            menuName: "",
-            menuPrice: "",
-            menuDescript: "",
-            image: null,
+            // Oringin
+            // menus: [{
+            //     id: 1, MenuPicture: "picture",
+            //     menuName: "Noodle",
+            //     menuPrice: "25.50",
+            //     menuDescript: "gooooooood!!!!!",
+            // }
+
+            // For testing - after connecting with DB, delete
+            menus: [{
+                id: 1, MenuPicture: "picture",
+                menuName: "Noodle",
+                menuPrice: "25.50",
+                menuDescript: "gooooooood!!!!!",
+            },
+            {
+                id: 2, MenuPicture: "picture",
+                menuName: "Noodle",
+                menuPrice: "25.50",
+                menuDescript: "gooooooood!!!!!",
+            },
+            {
+                id: 3, MenuPicture: "picture",
+                menuName: "Noodle",
+                menuPrice: "25.50",
+                menuDescript: "gooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooood!!!!!",
+            }],
+            // image: null,
             isError: {
-                Menupicture: '&#160;',
+                MenuPicture: '&#160;',
                 menuName: '&#160;',
                 menuPrice: '&#160;',
                 menuDescript: '&#160;'
@@ -47,6 +70,7 @@ class Test extends Component {
         this.onImageChange = this.onImageChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.renderTableData = this.renderTableData.bind(this);
 
     }
 
@@ -64,30 +88,94 @@ class Test extends Component {
         const { name, value } = e.target;
         let isError = { ...this.state.isError };
         switch (name) {
-          case "menuName":
-            isError.menuName =
-              value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";    
-            break;
-          case "menuPrice":
-            isError.menuPrice =
-            regExpPrice.test(value) ? "&#160;" : "Atleast 1 character required";
-            break;
+            case "menuName":
+                isError.menuName =
+                    value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
+                break;
+            case "menuPrice":
+                isError.menuPrice =
+                    regExpPrice.test(value) ? "&#160;" : "Atleast 1 character required";
+                break;
             case "menuDescript":
                 isError.menuDescript =
-                  value.length >= 5 && value.length <= 100 ? "&#160;" : "Atleast 5 character required";
+                    value.length >= 5 && value.length <= 100 ? "&#160;" : "Atleast 5 character required";
                 break;
-          default:
-            break;
+            default:
+                break;
         }
         this.setState({
-          isError,
-          [e.target.id]: e.target.value,
+            isError,
+            [e.target.id]: e.target.value,
         });
-      };
+    };
 
-      handleSubmit = (e) => {
-        e.preventDefault();        
-      };
+    handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("saved")
+        if (formValid(this.state)) {
+            console.log(this.state)
+        } else {
+            console.log("Form is invalid!");
+        }
+    };
+
+
+
+    renderTableData() {
+        return this.state.menus.map((menu, index) => {
+            const { id, MenuPicture, menuName, menuPrice, menuDescript } = menu
+            return (
+                <tr key={id}>
+                    <td  >
+                        {MenuPicture}
+                    </td>
+
+                    <tr>{menuName}</tr>
+                    <tr>{menuPrice}</tr>
+                    <tr>{menuDescript}</tr>
+
+                    <td >
+                        <div className="form-group row">
+                            {/* <Link to="/EditMenu"> */}
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-sm mr-sm-2"
+                                >
+                                    Edit
+                    </button>
+                            {/* </Link> */}
+                        </div>
+                    </td>
+                    <td >
+                        <div className="form-group row">
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-sm mr-sm-2"
+                            >
+                                Delete
+                    </button>
+                        </div>
+                    </td>
+                </tr>
+            )
+        })
+    }
+
+    changeText() {
+        this.setState(state => {
+          return {
+            edit: !state.edit
+          };
+        });
+      }
+
+      changeHeader() {
+        this.setState(state => {
+          return {
+            edit: !state.edit
+          };
+        });
+      }
 
     render() {
         const { isError } = this.state;
@@ -95,13 +183,20 @@ class Test extends Component {
             <MainContainer>
                 <div form onSubmit={this.handleSubmit} id="addMenu">
                     <div className="form-inline form-group mt-sm-4">
-                        <h3> Add Menu </h3>
-                        <button type="submit" className="btn btn-primary ml-sm-5"> Save </button>
+                        <h3 onClick={this.changeHeader.bind(this)}> 
+                        {this.state.edit ? "Edit Menu" : "Add Menu"}
+                         </h3>
+                        <button 
+                        onClick={this.changeText.bind(this)}
+                        type="submit" className="btn btn-primary ml-sm-5"
+                        > 
+                        {this.state.edit ? "Save" : "Edit"}
+                        </button>
                     </div>
 
                     {/* add menu */}
-                    <div  id="menu">
-                        <div className="row">
+                    <div id="menu">
+                        <div className="Row">
                             <div className="col-sm-3 border">
                                 <container>
                                     <row>
@@ -122,18 +217,18 @@ class Test extends Component {
                                     <div className="form-inline">
                                         <label htmlFor="menuName" className="col-sm-2 border-0">Name </label>
                                         <input type="text" id="menuName" name="menuName" className="form-control col-smd-10 mt-sm-2"
-                                         className={isError.menuName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required 
-                                         />
+                                            className={isError.menuName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
+                                        />
                                     </div>
                                     <div className=" form-inline">
                                         <label htmlFor="menuPrice" className="col-sm-2 border-0">Price</label>
-                                        <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" placeholder ="price format: 12.30"
-                                         className={isError.menuPrice.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                        <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" placeholder="price format: 12.30"
+                                            className={isError.menuPrice.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
                                     </div>
                                     <div className="form-inline">
                                         <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
                                         <input required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2"
-                                         className={isError.menuDescript.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required 
+                                            className={isError.menuDescript.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                                         />
                                     </div>
                                 </div>
@@ -146,55 +241,17 @@ class Test extends Component {
                 {/* Menu List */}
                 <h3><br />
                     <br />Menu List</h3>
-                <table class="table table-striped">
+                <table id='menus' className="table table-striped">
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th>Menu Detail</th>
-                            <th></th>
-                            <th></th>
+                            <th scope="col.sm.3">Image</th>
+                            <th scope="col">Menu Detail</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td rowSpan="3" >
-                                <img src="../../../Image/CAFE.jpg" className="rounded" alt="Menu Image" />
-                            </td>
-                            {/* sample - data came from DB */} 
-                            {/* <td>
-                                <tr></tr>
-                                <tr></tr>
-                                <tr></tr>
-                            </td> */}
-                            <td>
-                                <tr> Beef</tr>
-                                <tr> $30</tr>
-                                <tr> Google News is a news aggregator app developed by Google. It presents a continuous
-                                    flow of articles organized from thousands of publishers and magazines.</tr>
-                            </td>
-                            <td rowSpan="3" >
-                                <div className="form-group row">
-
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary btn-sm mr-sm-2"
-                                    >
-                                        Edit
-                                </button>
-                                </div>
-                            </td>
-                            <td rowSpan="3">
-                                <div className="form-group row">
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary btn-sm mr-sm-2"
-                                    >
-                                        Delete
-                                </button>
-                                </div>
-                            </td>
-                        </tr>
-
+                        {this.renderTableData()}
                     </tbody>
                 </table>
             </MainContainer>

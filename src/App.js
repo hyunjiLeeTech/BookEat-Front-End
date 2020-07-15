@@ -21,6 +21,7 @@ import CustomerReservation from './Reservation/Customer/CustomerReservation';
 import CustomerReservationHistory from './Reservation/Customer/CustomerReservationHistory'
 import CustomerReviewHistory from './Review/Customer/CustomerReviewHistory'
 import Menu from './Menu/Menu'
+import EditMenu from './Menu/EditMenu'
 
 //test
 import Test from './component/Forms/Customer/Test';
@@ -164,6 +165,12 @@ class App extends Component {
             path="/Menu"
             render={() => <Menu />}
           />
+
+          <Route
+            exact
+            path="/EditMenu"
+            render={() => <EditMenu />}
+          />  
           <Route exact path="/NotFound" render={() => <NotFound />} />
           <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
         </Switch>
