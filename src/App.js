@@ -38,6 +38,7 @@ import CustomerReserve from './Reservation/customerReserve';
 
 import Restaurant from './Restaurant/restaurant'
 import SearchResult from "./Home/SearchResult";
+import RestaurantDetails from "./Restaurant/RestaurantDetails";
 
 class App extends Component {
   queryUserInfo = async function (userType) {
@@ -174,6 +175,7 @@ class App extends Component {
           <Route exact path="/NotFound" render={() => <NotFound />} />
           <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
           <Route exact path="/SearchResult" render={() => <SearchResult />} />
+          <Route exact path="/RestaurantDetails" render={() => <RestaurantDetails />} />
         </Switch>
         <div className="footer">
           <Footer />
