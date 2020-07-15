@@ -114,11 +114,11 @@ class Menu extends Component {
                     <td rowSpan="3" >
                         {MenuPicture}
                     </td>
-                    <td>
-                        <tr>{menuName}</tr>
-                        <tr>{menuPrice}</tr>
-                        <tr>{menuDescript}</tr>
-                    </td>
+                    
+                        <td>{menuName}</td>
+                        <td>{menuPrice}</td>
+                        <td>{menuDescript}</td>
+                    
                     <td rowSpan="3" >
                         <div className="form-group row">
                             <button
