@@ -51,13 +51,13 @@ class RestaurantProfile extends Component {
       email: "",
       firstName: "",
       lastName: "",
-      password: "",
+      passwordMan: "",
       isError: {
         phonenumber: "&#160;",
         email: "&#160;",
         firstName: "&#160;",
         lastName: "&#160;",
-        password: "&#160;",
+        passwordMan: "&#160;",
       },
       createManager: false,
       viewManager: false,
@@ -117,7 +117,7 @@ class RestaurantProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      this.state.password = sha256(this.state.password).toString(); //hashing password
+      this.state.passwordMan = sha256(this.state.passwordMan).toString(); //hashing password
       ds.createManagerAccount(this.state);
     } else {
       console.log("Form is invalid!");
@@ -285,19 +285,19 @@ class RestaurantProfile extends Component {
           <div className="col-md-10">
             <input
               type="password"
-              id="password"
-              name="password"
-              value={this.state.password}
+              id="passwordMan"
+              name="passwordMan"
+              value={this.state.passwordMan}
               placeholder="Password"
               className={
-                isError.password.length > 6
+                isError.passwordMan.length > 6
                   ? "is-invalid form-control"
                   : "form-control"
               }
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.password)}</span>
+            <span className="invalid-feedback">{Parser(isError.passwordMan)}</span>
           </div>
         </div>
 
@@ -321,7 +321,7 @@ class RestaurantProfile extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="signResultModalLabel">
-                  Sign up
+                  Create Manager
                 </h5>
                 <button
                   type="button"
@@ -349,6 +349,7 @@ class RestaurantProfile extends Component {
             </div>
           </div>
         </div>
+
       </form>
     );
   }
@@ -365,7 +366,9 @@ class RestaurantProfile extends Component {
             {manager.phonenumber}
           </td>
           <td>
-            <button type="button" className="btn btn-danger">
+            <button type="button" className="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteManagerModal">
               Delete
               </button>{" "}
           </td>
@@ -388,6 +391,47 @@ class RestaurantProfile extends Component {
         </thead>
         <tbody>
           {this.renderManagerInfo()}
+          {/* Delete Modal */}
+          <div
+            className="modal fade"
+            id="deleteManagerModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="deleteManagerLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="deleteManagerModalLabel">
+                    Delete Manager
+                </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p className="alert alert-warning" id="signResultText">
+                    Please Wait...
+                </p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </tbody>
       </table>
     );

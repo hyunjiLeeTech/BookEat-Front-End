@@ -7,7 +7,7 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            numofpeople: 0,
+            numberOfPeople: '',
             dateTime: new Date(),
             resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
         }
@@ -43,33 +43,62 @@ class Home extends Component {
                     <header className="jumbotron my-4">
                         <h1 className="display-3">Welcome to BookEat!</h1>
                         <p>Find the best restaurants here</p>
-                        <div className="form-group row">
-                        <div className="row justify-content-start">
-                            <div className="col-sm-3">
-                                <input type="date" id="date" name="date" placeholder="date"
-                                    className='form-control' required />
+                        <div className="container">
+
+                            <div className="row justify-content-start">
+                                <div className=" row col-sm-2">
+                                    <input type="date" id="date" name="date" placeholder="Date"
+                                        className='form-control' required />
+
+                                </div>
+
+                                <div className="row col-sm-2">
+                                    <input type="text" id="time" name="time" placeholder="Time"
+                                        className='form-control' required />
+                                </div>
+
+                                <div className="row col-md-2">
+                                    {/* <span className="fa fa-search form-control-feedback"></span>
+                                    <input type="text" id="numofpeople" name="numofpeople" placeholder="Number of People"
+                                        className='form-control' required /> */}
+                                    <select
+                                        className="custom-select"
+                                        id="numberOfPeople"
+                                        name="numberOfPeople"
+                                        value={this.state.numberOfPeople}
+                                    >
+                                        <option value=""># Of People</option>
+                                        <option value="1">1 People</option>
+                                        <option value="2">2 People</option>
+                                        <option value="3">3 People</option>
+                                        <option value="4">4 People</option>
+                                        <option value="5">5 People</option>
+                                        <option value="6">6 People</option>
+                                        <option value="7">7 People</option>
+                                        <option value="8">8 People</option>
+                                        <option value="9">9 People</option>
+                                        <option value="10">10 People</option>
+                                        <option value="11">11 People</option>
+                                        <option value="12">12 People</option>
+                                        <option value="13">13 People</option>
+                                        <option value="14">14 People</option>       
+                                    </select>
+
+                                </div>
+
+                                <div className="col-sm-5 form-group has-search">
+                                    <span className="fa fa-search form-control-feedback"></span>
+                                    <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
+
+                                </div>
+                                <div className="col-sm-2">
+                                    <button type="button" className="btn btn-primary mr-sm-4"> Find</button>
+                                </div>
+
+
                             </div>
 
-                            <div className="col-sm-3">
-                                <input type="text" id="time" name="time" placeholder="time"
-                                    className='form-control' required />
-                            </div>
-
-                            <div className="col-sm-3">
-                                <input type="number" id="numofpeople" name="numofpeople" placeholder="Number of People"
-                                    className='form-control' required />
-                            </div>
-                            
-                            </div>
-                            
-                            <div className="col-sm-6">
-                                <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
-                            </div>
-                            
                         </div>
-
-
-
 
                     </header>
                     <div className="card" >
