@@ -31,7 +31,7 @@ const formValid = ({ isError, ...customer }) => {
 
   Object.values(customer).forEach((val) => {
     console.log(customer);
-      if (val === null) {
+    if (val === null) {
       isValid = false;
     } else {
       isValid = true;
@@ -58,7 +58,7 @@ class ViewCustomerProfile extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    
+
     this.handleSubmitCustomerProfile = this.handleSubmitCustomerProfile.bind(this);
     // this.onClick = this.onClick.bind(this);
   }
@@ -167,7 +167,7 @@ class ViewCustomerProfile extends Component {
       $("#accept-terms").removeAttr("disabled");
     });
   }
-    // Edit profile - disable
+  // Edit profile - disable
   handleClick() {
     this.setState({ disabled: !this.state.disabled })
 
@@ -180,6 +180,12 @@ class ViewCustomerProfile extends Component {
       return {
         edit: !state.edit
       };
+      },  () => {
+        if (this.state.edit) {
+          $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
+        } else {
+          $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+        }
     });
   }
 
@@ -217,7 +223,7 @@ class ViewCustomerProfile extends Component {
 
           <div className="tab-content">
             <div id="myProfile" className="container tab-pane active card">
-              <form onSubmit={this.handleSubmitCustomerProfile}  id="profile" className="card-body" noValidate >
+              <form onSubmit={this.handleSubmitCustomerProfile} id="profile" className="card-body" noValidate >
                 <br />
                 <h3>My profile</h3>
                 <br />
@@ -237,7 +243,7 @@ class ViewCustomerProfile extends Component {
                       value={this.state.firstname}
                       className="form-control"
                       disabled={(this.state.disabled)}
-                      className={isError.firstname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required 
+                      className={isError.firstname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                     />
                     <span className="invalid-feedback">{Parser(isError.firstname)}</span>
                   </div>
@@ -255,7 +261,7 @@ class ViewCustomerProfile extends Component {
                       value={this.state.lastname}
                       className="form-control"
                       disabled={(this.state.disabled)}
-                      className={isError.lastname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required 
+                      className={isError.lastname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                     />
                     <span className="invalid-feedback">{Parser(isError.firstname)}</span>
                   </div>
@@ -277,7 +283,7 @@ class ViewCustomerProfile extends Component {
                       className="form-control"
                       disabled={(this.state.disabled)}
                       className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.phonenumber} placeholder="Phone Number"
-                      onChange={this.handleChange} required 
+                      onChange={this.handleChange} required
                     />
                     <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
                   </div>
@@ -301,15 +307,15 @@ class ViewCustomerProfile extends Component {
 
                 <div className="form-inline">
                   <div className="form-group text-center ">
-                    <button onClick={this.handleClick.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
+                    <button id='save_edit_btn' onClick={this.handleClick.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
                       {this.state.edit ? "Save Change" : "Edit"}
 
                     </button>
                   </div>
                   <div className="form-group text-center ">
                     <Link to="/">
-                    <button  type="button" className="btn btn-primary mr-sm-4 ">
-                      {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
+                      <button  type="button" className="btn btn-primary mr-sm-4 ">
+                        {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
                     </Link>
@@ -318,24 +324,24 @@ class ViewCustomerProfile extends Component {
               </form>
             </div>
 
-            <div  id="password" className=" tab-pane card-body">
-           
-              
+            <div id="password" className=" tab-pane card-body">
+
+
               < ChangePassword />
             </div>
 
-            <div form onSubmit={this.handleSubmit} noValidate
+            <form onSubmit={this.handleSubmit} noValidate
               id="myReservation"
               className="container tab-pane fade "
             >
-              
+
               <CustomerReservationHistory />
-            </div>
-           
-            <div form onSubmit={this.handleSubmit} noValidate id="myReview" className="container tab-pane fade">
-              
+            </form>
+
+            <form onSubmit={this.handleSubmit} noValidate id="myReview" className="container tab-pane fade">
+
               <CustomerReviewHistory />
-            </div>            
+            </form>
           </div>
 
           <div
