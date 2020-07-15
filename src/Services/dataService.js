@@ -202,12 +202,27 @@ export default {
       {
         headers: authHeader(),
       }
-    )
-      .then(function (res) {
-        return res.data;
+    ) // TODO: move jquery
+      .then((res) => {
+        console.log(res);
+        if (res.data.errcode === 0) {
+          $("#deleteResultText")
+            .text("Manager account is deleted")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#deleteResultText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
       })
       .catch((err) => {
-        throw err;
+        console.log(err);
       });
   },
 };
