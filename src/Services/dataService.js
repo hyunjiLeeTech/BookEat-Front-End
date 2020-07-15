@@ -161,18 +161,18 @@ export default {
   createManagerAccount(state) {
     Axios.post(serverAddress + "/managersignup", state, {
       headers: authHeader(),
-    })
+    }) // TODO: need to move jquery
       .then((res) => {
         console.log(res);
         if (res.data.errcode === 0) {
-          $("#signResultText")
+          $("#manSignResultText")
             .text("Manager account is created")
             .removeClass("alert-warning")
             .removeClass("alert-danger")
             .removeClass("alert-success")
             .addClass("alert-success");
         } else {
-          $("#signResultText")
+          $("#manSignResultText")
             .text("Sorry, " + res.data.errmsg)
             .removeClass("alert-warning")
             .removeClass("alert-danger")

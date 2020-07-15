@@ -333,7 +333,7 @@ class RestaurantProfile extends Component {
                 </button>
               </div>
               <div className="modal-body">
-                <p className="alert alert-warning" id="signResultText">
+                <p className="alert alert-warning" id="manSignResultText">
                   Please Wait...
                 </p>
               </div>
@@ -416,7 +416,7 @@ class RestaurantProfile extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p className="alert alert-warning" id="signResultText">
+                  <p className="alert alert-warning" id="deleteResultText">
                     Please Wait...
                 </p>
                 </div>
