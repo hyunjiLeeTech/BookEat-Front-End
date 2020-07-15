@@ -95,7 +95,7 @@ class ViewCustomerProfile extends Component {
     e.preventDefault();
     console.log("submit customer profile")
     if (formValid(this.state)) {
-      console.log(this.state);
+      ds.editCustomerProfile(this.state);
     } else {
       console.log("Form is invalid!");
     }
@@ -180,12 +180,12 @@ class ViewCustomerProfile extends Component {
       return {
         edit: !state.edit
       };
-      },  () => {
-        if (this.state.edit) {
-          $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
-        } else {
-          $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-        }
+    }, () => {
+      if (this.state.edit) {
+        $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
+      } else {
+        $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+      }
     });
   }
 
@@ -314,7 +314,7 @@ class ViewCustomerProfile extends Component {
                   </div>
                   <div className="form-group text-center ">
                     <Link to="/">
-                      <button  type="button" className="btn btn-primary mr-sm-4 ">
+                      <button type="button" className="btn btn-primary mr-sm-4 ">
                         {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
@@ -356,7 +356,7 @@ class ViewCustomerProfile extends Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="signResultModalLabel">
-                    Sign up
+                    Edit Customer Profile
                   </h5>
                   <button
                     type="button"
@@ -368,7 +368,7 @@ class ViewCustomerProfile extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p className="alert alert-warning" id="signResultText">
+                  <p className="alert alert-warning" id="customerProfileResultText">
                     Please Wait...
                   </p>
                 </div>

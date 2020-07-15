@@ -225,4 +225,30 @@ export default {
         console.log(err);
       });
   },
+  editCustomerProfile(state) {
+    return Axios.post(serverAddress + "/customers/editcustomerprofile", state, {
+      headers: authHeader(),
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.errcode === 0) {
+          $("#customerProfileResultText")
+            .text("Customer profile is edited")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#customerProfileResultText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
