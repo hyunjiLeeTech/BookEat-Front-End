@@ -184,4 +184,13 @@ export default {
         console.log(err);
       });
   },
+  getManagerAccounts() {
+    return Axios.get(serverAddress + "/restaurantOwners/getmanagers", {
+      headers: authHeader(),
+    }).then(function (res) {
+      return res.data;
+    }).catch((err) => {
+      throw err;
+    })
+  }
 };

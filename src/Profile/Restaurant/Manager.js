@@ -46,6 +46,7 @@ class RestaurantProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      managers: [],
       phonenumber: "",
       email: "",
       firstName: "",
@@ -62,6 +63,8 @@ class RestaurantProfile extends Component {
       viewManager: false,
     };
 
+    this.queryManagers = this.queryManagers.bind(this);
+    this.renderManagerInfo = this.renderManagerInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -158,6 +161,18 @@ class RestaurantProfile extends Component {
         viewManager: true,
       });
     });
+  }
+
+  componentWillMount() {
+    this.queryManagers()
+  }
+
+  queryManagers() {
+    ds.getManagerAccounts().then(res => {
+      this.setState({
+        managers: res.managers,
+      })
+    })
   }
 
   renderForm() {
@@ -338,6 +353,29 @@ class RestaurantProfile extends Component {
     );
   }
 
+  renderManagerInfo() {
+    var rows = [];
+    for (var manager of this.state.managers) {
+      rows.push(
+        <tr key={rows}>
+          <td>
+            {manager.firstname + " " + manager.lastname}
+          </td>
+          <td>
+            {manager.phonenumber}
+          </td>
+          <td>
+            <button type="button" className="btn btn-danger">
+              Delete
+              </button>{" "}
+          </td>
+        </tr>
+      )
+    }
+
+    return rows
+  }
+
   renderView() {
     return (
       <table className="table table-striped">
@@ -349,15 +387,7 @@ class RestaurantProfile extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>
-              <button type="button" className="btn btn-danger">
-                Delete
-              </button>{" "}
-            </td>
-          </tr>
+          {this.renderManagerInfo()}
         </tbody>
       </table>
     );
