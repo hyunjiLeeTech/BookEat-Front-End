@@ -52,6 +52,7 @@ class RestaurantProfile extends Component {
       firstName: "",
       lastName: "",
       passwordMan: "",
+      deleteManId: "",
       isError: {
         phonenumber: "&#160;",
         email: "&#160;",
@@ -67,6 +68,7 @@ class RestaurantProfile extends Component {
     this.renderManagerInfo = this.renderManagerInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDeleteManager = this.handleDeleteManager.bind(this);
     this.onClick = this.onClick.bind(this);
     this.renderManager = this.renderManager.bind(this);
   }
@@ -124,6 +126,11 @@ class RestaurantProfile extends Component {
     }
   };
 
+  handleDeleteManager = (manId) => {
+    this.state.deleteManId = manId;
+    ds.deleteManagerAccount(this.state);
+  };
+
   onClick() {
     const usr = authService.getCurrentUser();
     console.log(usr.user._id);
@@ -164,15 +171,15 @@ class RestaurantProfile extends Component {
   }
 
   componentWillMount() {
-    this.queryManagers()
+    this.queryManagers();
   }
 
   queryManagers() {
-    ds.getManagerAccounts().then(res => {
+    ds.getManagerAccounts().then((res) => {
       this.setState({
         managers: res.managers,
-      })
-    })
+      });
+    });
   }
 
   renderForm() {
@@ -297,7 +304,9 @@ class RestaurantProfile extends Component {
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.passwordMan)}</span>
+            <span className="invalid-feedback">
+              {Parser(isError.passwordMan)}
+            </span>
           </div>
         </div>
 
@@ -349,7 +358,6 @@ class RestaurantProfile extends Component {
             </div>
           </div>
         </div>
-
       </form>
     );
   }
@@ -359,24 +367,24 @@ class RestaurantProfile extends Component {
     for (var manager of this.state.managers) {
       rows.push(
         <tr key={rows}>
+          <td>{manager.firstname + " " + manager.lastname}</td>
+          <td>{manager.phonenumber}</td>
           <td>
-            {manager.firstname + " " + manager.lastname}
-          </td>
-          <td>
-            {manager.phonenumber}
-          </td>
-          <td>
-            <button type="button" className="btn btn-danger"
+            <button
+              onClick={() => this.handleDeleteManager(manager._id)}
+              type="button"
+              className="btn btn-danger"
               data-toggle="modal"
-              data-target="#deleteManagerModal">
+              data-target="#deleteManagerModal"
+            >
               Delete
-              </button>{" "}
+            </button>{" "}
           </td>
         </tr>
-      )
+      );
     }
 
-    return rows
+    return rows;
   }
 
   renderView() {
@@ -405,7 +413,7 @@ class RestaurantProfile extends Component {
                 <div className="modal-header">
                   <h5 className="modal-title" id="deleteManagerModalLabel">
                     Delete Manager
-                </h5>
+                  </h5>
                   <button
                     type="button"
                     className="close"
@@ -418,7 +426,7 @@ class RestaurantProfile extends Component {
                 <div className="modal-body">
                   <p className="alert alert-warning" id="deleteResultText">
                     Please Wait...
-                </p>
+                  </p>
                 </div>
                 <div className="modal-footer">
                   <button
@@ -427,7 +435,7 @@ class RestaurantProfile extends Component {
                     data-dismiss="modal"
                   >
                     Close
-                </button>
+                  </button>
                 </div>
               </div>
             </div>

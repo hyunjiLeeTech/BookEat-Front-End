@@ -187,10 +187,27 @@ export default {
   getManagerAccounts() {
     return Axios.get(serverAddress + "/restaurantOwners/getmanagers", {
       headers: authHeader(),
-    }).then(function (res) {
-      return res.data;
-    }).catch((err) => {
-      throw err;
     })
-  }
+      .then(function (res) {
+        return res.data;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+  deleteManagerAccount(managerId) {
+    return Axios.post(
+      serverAddress + "/restaurantOwners/deletemanager",
+      managerId,
+      {
+        headers: authHeader(),
+      }
+    )
+      .then(function (res) {
+        return res.data;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
 };
