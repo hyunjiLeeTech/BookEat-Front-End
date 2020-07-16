@@ -44,7 +44,6 @@ const formValid = ({ isError, ...rest }) => {
       isValid = true;
     }
   });
-
   return isValid;
 };
 
