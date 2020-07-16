@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import MainContainer from "../component/Style/MainContainer";
+import "./EditMenu.js"
+import { Link } from 'react-router-dom'
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
@@ -31,6 +33,15 @@ class Menu extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            // Oringin
+            // menus: [{
+            //     id: 1, MenuPicture: "picture",
+            //     menuName: "Noodle",
+            //     menuPrice: "25.50",
+            //     menuDescript: "gooooooood!!!!!",
+            // }
+
+            // For testing - after connecting with DB, delete
             menus: [{
                 id: 1, MenuPicture: "picture",
                 menuName: "Noodle",
@@ -47,7 +58,7 @@ class Menu extends Component {
                 id: 3, MenuPicture: "picture",
                 menuName: "Noodle",
                 menuPrice: "25.50",
-                menuDescript: "gooooooood!!!!!",
+                menuDescript: "goooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooood!!!!!",
             }],
             // image: null,
             isError: {
@@ -102,6 +113,11 @@ class Menu extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("saved")
+        if (formValid(this.state)) {
+            console.log(this.state)
+        } else {
+            console.log("Form is invalid!");
+        }
     };
 
 
@@ -111,29 +127,31 @@ class Menu extends Component {
             const { id, MenuPicture, menuName, menuPrice, menuDescript } = menu
             return (
                 <tr key={id}>
-                    <td rowSpan="3" >
+                    <td  >
                         {MenuPicture}
                     </td>
-                    <td>
-                        <tr>{menuName}</tr>
-                        <tr>{menuPrice}</tr>
-                        <tr>{menuDescript}</tr>
-                    </td>
-                    <td rowSpan="3" >
+
+                    <tr>{menuName}</tr>
+                    <tr>{menuPrice}</tr>
+                    <tr>{menuDescript}</tr>
+
+                    <td >
                         <div className="form-group row">
-                            <button
-                                type="button"
-                                class="btn btn-primary btn-sm mr-sm-2"
-                            >
-                                Edit
+                            <Link to="/EditMenu">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-sm mr-sm-2"
+                                >
+                                    Edit
                     </button>
+                            </Link>
                         </div>
                     </td>
-                    <td rowSpan="3">
+                    <td >
                         <div className="form-group row">
                             <button
                                 type="button"
-                                class="btn btn-primary btn-sm mr-sm-2"
+                                className="btn btn-primary btn-sm mr-sm-2"
                             >
                                 Delete
                     </button>
@@ -201,7 +219,7 @@ class Menu extends Component {
                 {/* Menu List */}
                 <h3><br />
                     <br />Menu List</h3>
-                <table id='menus' class="table table-striped">
+                <table id='menus' className="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col.sm.3">Image</th>
