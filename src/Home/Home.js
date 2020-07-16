@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import MainContainer from '../component/Style/MainContainer'
 import $ from "jquery";
+import Daily from './Daily';
+import Feature from './Feature';
+import Favorite from './Favorite';
 
 class Home extends Component {
 
@@ -103,22 +106,19 @@ class Home extends Component {
                     </header>
                     <div className="card" >
                         <div className="card-body">
-                            <h5 className="card-title">Daily Pick Up</h5>
-                            <p className="card-text">Some Restaurants</p>
+                            <Daily/>
                         </div>
                     </div>
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
-                            <h5 className="card-title">Feature Restaurants</h5>
-                            <p className="card-text">Some Restaurants</p>
+                           <Feature/>
                         </div>
                     </div>
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
-                            <h5 className="card-title">Favorite Restaurant</h5>
-                            <p className="card-text">Some Restaurants</p>
+                            <Favorite/>
                         </div>
                     </div>
                 </div>
