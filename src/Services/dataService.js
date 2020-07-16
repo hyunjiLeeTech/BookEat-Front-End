@@ -161,18 +161,85 @@ export default {
   createManagerAccount(state) {
     Axios.post(serverAddress + "/managersignup", state, {
       headers: authHeader(),
-    })
+    }) // TODO: need to move jquery
       .then((res) => {
         console.log(res);
         if (res.data.errcode === 0) {
-          $("#signResultText")
+          $("#manSignResultText")
             .text("Manager account is created")
             .removeClass("alert-warning")
             .removeClass("alert-danger")
             .removeClass("alert-success")
             .addClass("alert-success");
         } else {
-          $("#signResultText")
+          $("#manSignResultText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  getManagerAccounts() {
+    return Axios.get(serverAddress + "/restaurantOwners/getmanagers", {
+      headers: authHeader(),
+    })
+      .then(function (res) {
+        return res.data;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
+  deleteManagerAccount(managerId) {
+    return Axios.post(
+      serverAddress + "/restaurantOwners/deletemanager",
+      managerId,
+      {
+        headers: authHeader(),
+      }
+    ) // TODO: move jquery
+      .then((res) => {
+        console.log(res);
+        if (res.data.errcode === 0) {
+          $("#deleteResultText")
+            .text("Manager account is deleted")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#deleteResultText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  editCustomerProfile(state) {
+    return Axios.post(serverAddress + "/customers/editcustomerprofile", state, {
+      headers: authHeader(),
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.data.errcode === 0) {
+          $("#customerProfileResultText")
+            .text("Customer profile is edited")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#customerProfileResultText")
             .text("Sorry, " + res.data.errmsg)
             .removeClass("alert-warning")
             .removeClass("alert-danger")

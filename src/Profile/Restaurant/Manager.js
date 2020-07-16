@@ -46,11 +46,13 @@ class RestaurantProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      managers: [],
       phonenumber: "",
       email: "",
       firstName: "",
       lastName: "",
       passwordMan: "",
+      deleteManId: "",
       isError: {
         phonenumber: "&#160;",
         email: "&#160;",
@@ -62,8 +64,11 @@ class RestaurantProfile extends Component {
       viewManager: false,
     };
 
+    this.queryManagers = this.queryManagers.bind(this);
+    this.renderManagerInfo = this.renderManagerInfo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDeleteManager = this.handleDeleteManager.bind(this);
     this.onClick = this.onClick.bind(this);
     this.renderManager = this.renderManager.bind(this);
   }
@@ -121,6 +126,11 @@ class RestaurantProfile extends Component {
     }
   };
 
+  handleDeleteManager = (manId) => {
+    this.state.deleteManId = manId;
+    ds.deleteManagerAccount(this.state);
+  };
+
   onClick() {
     const usr = authService.getCurrentUser();
     console.log(usr.user._id);
@@ -156,6 +166,18 @@ class RestaurantProfile extends Component {
       this.setState({
         createManager: false,
         viewManager: true,
+      });
+    });
+  }
+
+  componentWillMount() {
+    this.queryManagers();
+  }
+
+  queryManagers() {
+    ds.getManagerAccounts().then((res) => {
+      this.setState({
+        managers: res.managers,
       });
     });
   }
@@ -282,7 +304,9 @@ class RestaurantProfile extends Component {
               onChange={this.handleChange}
               required
             />
-            <span className="invalid-feedback">{Parser(isError.passwordMan)}</span>
+            <span className="invalid-feedback">
+              {Parser(isError.passwordMan)}
+            </span>
           </div>
         </div>
 
@@ -318,7 +342,7 @@ class RestaurantProfile extends Component {
                 </button>
               </div>
               <div className="modal-body">
-                <p className="alert alert-warning" id="signResultText">
+                <p className="alert alert-warning" id="manSignResultText">
                   Please Wait...
                 </p>
               </div>
@@ -334,9 +358,33 @@ class RestaurantProfile extends Component {
             </div>
           </div>
         </div>
-
       </form>
     );
+  }
+
+  renderManagerInfo() {
+    var rows = [];
+    for (var manager of this.state.managers) {
+      rows.push(
+        <tr key={rows}>
+          <td>{manager.firstname + " " + manager.lastname}</td>
+          <td>{manager.phonenumber}</td>
+          <td>
+            <button
+              onClick={() => this.handleDeleteManager(manager._id)}
+              type="button"
+              className="btn btn-danger"
+              data-toggle="modal"
+              data-target="#deleteManagerModal"
+            >
+              Delete
+            </button>{" "}
+          </td>
+        </tr>
+      );
+    }
+
+    return rows;
   }
 
   renderView() {
@@ -350,58 +398,48 @@ class RestaurantProfile extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>
-              <button type="button" className="btn btn-danger"
-               data-toggle="modal"
-               data-target="#deleteManagerModal">
-                Delete
-              </button>{" "}
-              {/* Delete Modal */}
-              <div
-                className="modal fade"
-                id="deleteManagerModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="deleteManagerLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="deleteManagerModalLabel">
-                        Delete Manager
-                </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      <p className="alert alert-warning" id="signResultText">
-                        Please Wait...
-                </p>
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        data-dismiss="modal"
-                      >
-                        Close
-                </button>
-                    </div>
-                  </div>
+          {this.renderManagerInfo()}
+          {/* Delete Modal */}
+          <div
+            className="modal fade"
+            id="deleteManagerModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="deleteManagerLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="deleteManagerModalLabel">
+                    Delete Manager
+                  </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p className="alert alert-warning" id="deleteResultText">
+                    Please Wait...
+                  </p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
                 </div>
               </div>
-            </td>
-          </tr>
+            </div>
+          </div>
         </tbody>
       </table>
     );
