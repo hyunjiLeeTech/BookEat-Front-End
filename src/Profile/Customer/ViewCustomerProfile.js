@@ -180,12 +180,12 @@ class ViewCustomerProfile extends Component {
       return {
         edit: !state.edit
       };
-      },  () => {
-        if (this.state.edit) {
-          $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
-        } else {
-          $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-        }
+    }, () => {
+      if (this.state.edit) {
+        $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
+      } else {
+        $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+      }
     });
   }
 
@@ -314,7 +314,7 @@ class ViewCustomerProfile extends Component {
                   </div>
                   <div className="form-group text-center ">
                     <Link to="/">
-                      <button  type="button" className="btn btn-primary mr-sm-4 ">
+                      <button type="button" className="btn btn-primary mr-sm-4 ">
                         {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
@@ -325,23 +325,23 @@ class ViewCustomerProfile extends Component {
             </div>
 
             <div id="password" className=" tab-pane card-body">
-
-
-              < ChangePassword />
+              <form onSubmit={this.handleSubmit} noValidate>
+                < ChangePassword />
+              </form>
             </div>
 
-            <form onSubmit={this.handleSubmit} noValidate
-              id="myReservation"
-              className="container tab-pane fade "
-            >
+            <div id="myReservation"
+              className="container tab-pane fade ">
+              <form onSubmit={this.handleSubmit} noValidate>
+                <CustomerReservationHistory />
+              </form>
+            </div>
 
-              <CustomerReservationHistory />
-            </form>
-
-            <form onSubmit={this.handleSubmit} noValidate id="myReview" className="container tab-pane fade">
-
+            <div  id="myReview" className="container tab-pane fade">
+            <form onSubmit={this.handleSubmit} noValidate>
               <CustomerReviewHistory />
             </form>
+            </div>
           </div>
 
           <div
