@@ -49,6 +49,7 @@ class Test extends Component {
         menuName: "Noodle",
         menuPrice: "25.50",
         menuDescript: "gooooooood!!!!!",
+        contenteditable: false,
       },
 
       // For testing - after connecting with DB, delete
@@ -58,12 +59,14 @@ class Test extends Component {
         menuName: "Noodle",
         menuPrice: "25.50",
         menuDescript: "gooooooood!!!!!",
+        contenteditable: false,
       },
       {
         id: 3, MenuPicture: "picture",
         menuName: "Noodle",
         menuPrice: "25.50",
         menuDescript: "goooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooood!!!!!",
+        contenteditable: false,
       }],
       disabled: true,
       contenteditable: false,
@@ -79,15 +82,25 @@ class Test extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderTableData = this.renderTableData.bind(this);
+    this.menuItemEditButton = this.menuItemEditButton.bind(this);
 
   }
 
-  onImageChange = event => {
+  onImageChange = (event, index) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      this.setState({
-        image: URL.createObjectURL(img)
-      });
+      // this.setState({
+      //   image: URL.createObjectURL(img)
+      // });
+      if(index !== undefined){//in menu item  TRY YOUR BEST REWRITE THIS CODE 
+        this.state.menus[index].MenuPicture = URL.createObjectURL(img)
+        this.forceUpdate();
+      }else{
+        this.setState({
+          image: URL.createObjectURL(img),
+        })
+      }
+
     }
   };
 
@@ -128,18 +141,21 @@ class Test extends Component {
   };
 
 
+  menuItemEditButton(index){
+    this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
+    this.forceUpdate();
+    this.setState({});
+  }
 
   renderTableData() {
     return this.state.menus.map((menu, index) => {
       const { id, MenuPicture, menuName, menuPrice, menuDescript } = menu
       return (
-        <tr key={id}>
+        <tr key={id} id={'menurow'+index}>
           {/* <td>{MenuPicture}</td> */}
           <td contenteditable={(this.state.contenteditable)} >
             <div>
-              <input type="text" id="MenuPicture" name="MenuPicture" defaultValue={MenuPicture}
-                className="border-none" disabled={(this.state.disabled)}>
-              </input>
+
             </div>
             <div>
               {/* <row> 
@@ -149,9 +165,17 @@ class Test extends Component {
                </row>   */}
                <container>
                   <row>
-                    <input type="file" name="menuPicture" disabled={(this.state.disabled)}
-                    onChange={this.onImageChange} />
-                    <img src={this.state.image} />
+                    <input type="file" name="menuPicture"
+                    onChange={(e)=>this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
+                    
+                    
+                    {
+                      !this.state.menus[index].contenteditable ?        <img   style={{maxHeight: '100%', maxWidth: '100%'}} src={this.state.menus[index].MenuPicture} />
+                       : null
+                    }
+                  
+                  
+                  
                   </row>
                 </container>
             </div>
@@ -161,17 +185,17 @@ class Test extends Component {
                   <tr>{menuPrice}</tr>
                   <tr>{menuDescript}</tr> */}
                   <td>
-          <tr contenteditable={(this.state.contenteditable)} >
+          <tr contenteditable={(this.state.menus[index].contenteditable)} >
             <input type="text" id="menuName" name="menuName" defaultValue={menuName}
-              className="border-none" disabled={(this.state.disabled)} /></tr>
+              className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
 
-          <tr contenteditable={(this.state.contenteditable)}>
+          <tr contenteditable={(this.state.menus[index].contenteditable)}>
             <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice}
-              className="border-none" disabled={(this.state.disabled)} /></tr>
+              className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
 
-          <tr contenteditable={(this.state.contenteditable)}>
+          <tr contenteditable={(this.state.menus[index].contenteditable)}>
             <input type="text" id="menuDescript" name="menuDescript" defaultValue={menuDescript}
-              className="border-none" disabled={(this.state.disabled)} /></tr>
+              className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
               </td>
           <td >
             <div className="form-group row">
@@ -179,9 +203,9 @@ class Test extends Component {
               <button
                 type="button"
                 className="btn btn-primary btn-sm mr-sm-2"
-                onClick={this.handleClick.bind(this)}
+                onClick={()=>this.menuItemEditButton(index)}
               >
-                {this.state.edit ? "Save Change" : "Edit"}
+                {this.state.menus[index].contenteditable ? "Save Change" : "Edit"}
               </button>
               {/* </Link> */}
             </div>
@@ -233,7 +257,7 @@ class Test extends Component {
                 <container>
                   <row>
                     <input type="file" name="menuPicture" onChange={this.onImageChange} />
-                    <img src={this.state.image} />
+                    <img src={this.state.image}  style={{maxHeight: '100%', maxWidth: '100%'}}/>
                   </row>
                 </container>
               </div>
