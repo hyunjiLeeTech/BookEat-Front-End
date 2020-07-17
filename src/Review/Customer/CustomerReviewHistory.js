@@ -27,23 +27,23 @@ class CustomerReviewHistory extends Component {
         <td >{date}</td>
         {/* <td contenteditable="true"> {comment}</td> */}
         <td contenteditable={(this.state.contenteditable)}>
-        <input type="text" id="comment" name="comment" defaultValue ={comment} class="border-none"  disabled={(this.state.disabled)}/></td>
+        <input type="text" id="comment" name="comment" defaultValue ={comment} className="border-none"  disabled={(this.state.disabled)}/></td>
         
         {/* <td >{foodRate}</td> */}
         <td contenteditable={(this.state.contenteditable)}>
-        <input type="text" id="foodRate" name="foodRate" defaultValue ={foodRate} class="border-none"  disabled={(this.state.disabled)}/></td>       
+        <input type="text" id="foodRate" name="foodRate" defaultValue ={foodRate} className="border-none"  disabled={(this.state.disabled)}/></td>       
        
         {/* <td> {serviceRate} </td> */}
         <td contenteditable={(this.state.contenteditable)}>
-        <input type="text" id="serviceRate" name="serviceRate" defaultValue ={serviceRate} class="border-none"  disabled={(this.state.disabled)}/></td>       
+        <input type="text" id="serviceRate" name="serviceRate" defaultValue ={serviceRate} className="border-none"  disabled={(this.state.disabled)}/></td>       
        
         {/* <td contenteditable="true">{satisfactionRate}</td> */}
         <td contenteditable={(this.state.contenteditable)}>
-        <input type="text" id="satisfactionRate" name="satisfactionRate" defaultValue ={serviceRate} class="border-none"  disabled={(this.state.disabled)}/></td>       
+        <input type="text" id="satisfactionRate" name="satisfactionRate" defaultValue ={serviceRate} className="border-none"  disabled={(this.state.disabled)}/></td>       
        
         {/* <td contenteditable="true">{environmentRate}</td> */}
         <td contenteditable={(this.state.contenteditable)}>
-        <input type="text" id="environmentRate" name="environmentRate" defaultValue ={serviceRate} class="border-none"  disabled={(this.state.disabled)}/></td>       
+        <input type="text" id="environmentRate" name="environmentRate" defaultValue ={serviceRate} className="border-none"  disabled={(this.state.disabled)}/></td>       
        
 
         <td >

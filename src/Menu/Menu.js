@@ -137,14 +137,16 @@ class Menu extends Component {
 
                     <td >
                         <div className="form-group row">
-                            <Link to="/EditMenu">
+                            {/* <Link to="/EditMenu"> */}
                                 <button
                                     type="button"
                                     className="btn btn-primary btn-sm mr-sm-2"
+                                    data-toggle="modal"
+                                    href="#EditMenu"
                                 >
                                     Edit
                     </button>
-                            </Link>
+                            {/* </Link> */}
                         </div>
                     </td>
                     <td >
