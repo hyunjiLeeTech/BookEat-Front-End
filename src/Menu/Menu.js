@@ -40,6 +40,9 @@ class Menu extends Component {
             //     menuPrice: "25.50",
             //     menuDescript: "gooooooood!!!!!",
             // }
+            menuName: "",
+            menuPrice: "",
+            menuDescript: "",
 
             // For testing - after connecting with DB, delete
             menus: [{
@@ -138,13 +141,13 @@ class Menu extends Component {
                     <td >
                         <div className="form-group row">
                             {/* <Link to="/EditMenu"> */}
-                                <button
-                                    type="button"
-                                    className="btn btn-primary btn-sm mr-sm-2"
-                                    data-toggle="modal"
-                                    href="#EditMenu"
-                                >
-                                    Edit
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-sm mr-sm-2"
+                                data-toggle="modal"
+                                href="#EditMenu"
+                            >
+                                Edit
                     </button>
                             {/* </Link> */}
                         </div>
@@ -168,54 +171,56 @@ class Menu extends Component {
         const { isError } = this.state;
         return (
             <MainContainer>
-                <div form onSubmit={this.handleSubmit} id="addMenu">
-                    <div className="form-inline form-group mt-sm-4">
-                        <h3> Add Menu </h3>
-                        <button type="submit" className="btn btn-primary ml-sm-5"> Save </button>
-                    </div>
+                <form onSubmit={this.handleSubmit} id="addMenu">
+                    <div>
+                        <div className="form-inline form-group mt-sm-4">
+                            <h3> Add Menu </h3>
+                            <button type="submit" className="btn btn-primary ml-sm-5"> Save </button>
+                        </div>
 
-                    {/* add menu */}
-                    <div id="menu">
-                        <div className="row">
-                            <div className="col-sm-3 border">
-                                <container>
-                                    <row>
-                                        <input type="file" name="menuPicture" onChange={this.onImageChange} />
-                                        {/* <col xs={10} md={10} /> */}
-                                        <img src={this.state.image} />
-                                        {/* <Cropper 
+                        {/* add menu */}
+                        <div id="menu">
+                            <div className="row">
+                                <div className="col-sm-3 border">
+                                    <container>
+                                        <row>
+                                            <input type="file" name="menuPicture" onChange={this.onImageChange} />
+                                            {/* <col xs={10} md={10} /> */}
+                                            <img src={this.state.image} />
+                                            {/* <Cropper 
                                                 ref='cropper'
                                                 src={PATH_TO_IMAGE_SOURCE}
                                                 aspectRatio={16 / 9} 
                                             />  
                                             https://www.kurzor.net/blog/uploading-and-resizing-images-part1*/}
-                                    </row>
-                                </container>
-                            </div>
-                            <div className="col-sm-9 border">
-                                <div className="col container-fluid">
-                                    <div className="form-inline">
-                                        <label htmlFor="menuName" className="col-sm-2 border-0">Name </label>
-                                        <input type="text" id="menuName" name="menuName" className="form-control col-smd-10 mt-sm-2"
-                                            className={isError.menuName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
-                                        />
-                                    </div>
-                                    <div className=" form-inline">
-                                        <label htmlFor="menuPrice" className="col-sm-2 border-0">Price</label>
-                                        <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" placeholder="price format: 12.30"
-                                            className={isError.menuPrice.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
-                                    </div>
-                                    <div className="form-inline">
-                                        <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
-                                        <input required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2"
-                                            className={isError.menuDescript.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
-                                        />
+                                        </row>
+                                    </container>
+                                </div>
+                                <div className="col-sm-9 border">
+                                    <div className="col container-fluid">
+                                        <div className="form-inline">
+                                            <label htmlFor="menuName" className="col-sm-2 border-0">Name </label>
+                                            <input type="text" id="menuName" name="menuName" className="form-control col-smd-10 mt-sm-2" value={this.state.menuName}
+                                                className={isError.menuName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
+                                            />
+                                        </div>
+                                        <div className=" form-inline">
+                                            <label htmlFor="menuPrice" className="col-sm-2 border-0">Price</label>
+                                            <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" placeholder="price format: 12.30" value={this.state.menuPrice}
+                                                className={isError.menuPrice.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                        </div>
+                                        <div className="form-inline">
+                                            <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
+                                            <input required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2" value={this.state.menuDescript}
+                                                className={isError.menuDescript.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
 
                 {/* Menu List */}
