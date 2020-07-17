@@ -45,10 +45,10 @@ class Test extends Component {
     super(props)
     this.state = {
       menus: [{
-        id: 1, MenuPicture: "picture",
-        menuName: "Noodle",
-        menuPrice: "25.50",
-        menuDescript: "gooooooood!!!!!",
+        id: 1, MenuPicture: "",
+        menuName: "",
+        menuPrice: "",
+        menuDescript: "",
         contenteditable: false,
       },
 
@@ -59,13 +59,6 @@ class Test extends Component {
         menuName: "Noodle",
         menuPrice: "25.50",
         menuDescript: "gooooooood!!!!!",
-        contenteditable: false,
-      },
-      {
-        id: 3, MenuPicture: "picture",
-        menuName: "Noodle",
-        menuPrice: "25.50",
-        menuDescript: "goooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooood!!!!!",
         contenteditable: false,
       }],
       disabled: true,
@@ -92,10 +85,10 @@ class Test extends Component {
       // this.setState({
       //   image: URL.createObjectURL(img)
       // });
-      if(index !== undefined){//in menu item  TRY YOUR BEST REWRITE THIS CODE 
+      if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
         this.state.menus[index].MenuPicture = URL.createObjectURL(img)
         this.forceUpdate();
-      }else{
+      } else {
         this.setState({
           image: URL.createObjectURL(img),
         })
@@ -141,17 +134,21 @@ class Test extends Component {
   };
 
 
-  menuItemEditButton(index){
+  menuItemEditButton(index) {
     this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
     this.forceUpdate();
     this.setState({});
+
+    this.dataPass()
   }
+
+
 
   renderTableData() {
     return this.state.menus.map((menu, index) => {
       const { id, MenuPicture, menuName, menuPrice, menuDescript } = menu
       return (
-        <tr key={id} id={'menurow'+index}>
+        <tr key={id} id={'menurow' + index}>
           {/* <td>{MenuPicture}</td> */}
           <td contenteditable={(this.state.contenteditable)} >
             <div>
@@ -163,47 +160,52 @@ class Test extends Component {
                 onChange={this.onImageChange} />
               <img src={this.state.image} />
                </row>   */}
-               <container>
-                  <row>
-                    <input type="file" name="menuPicture"
-                    onChange={(e)=>this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
-                    
-                    
-                    {
-                      !this.state.menus[index].contenteditable ?        <img   style={{maxHeight: '100%', maxWidth: '100%'}} src={this.state.menus[index].MenuPicture} />
-                       : null
-                    }
-                  
-                  
-                  
-                  </row>
-                </container>
+              <container>
+                <row>
+                  <input type="file" name="menuPicture"
+                    onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
+
+
+                  {
+                    !this.state.menus[index].contenteditable ? <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                      : null
+                  }
+
+
+
+                </row>
+              </container>
             </div>
           </td>
-
           {/* <tr>{menuName}</tr>
                   <tr>{menuPrice}</tr>
                   <tr>{menuDescript}</tr> */}
-                  <td>
-          <tr contenteditable={(this.state.menus[index].contenteditable)} >
-            <input type="text" id="menuName" name="menuName" defaultValue={menuName}
-              className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
+          <td>
+            <tr contenteditable={(this.state.menus[index].contenteditable)} >
+              <input type="text" id="menuName" name="menuName" defaultValue={menuName}
+                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
+            </tr>
 
-          <tr contenteditable={(this.state.menus[index].contenteditable)}>
-            <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice}
-              className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
+            <tr contenteditable={(this.state.menus[index].contenteditable)}>
+              <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice}
+                className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
 
-          <tr contenteditable={(this.state.menus[index].contenteditable)}>
-            <input type="text" id="menuDescript" name="menuDescript" defaultValue={menuDescript}
-              className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
-              </td>
+            <div className="form-group" >
+              <tr contenteditable={(this.state.menus[index].contenteditable)}>
+                <textarea  row="3" id="menuDescript" name="menuDescript" defaultValue={menuDescript}
+                  className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />            
+            </tr>
+            </div>
+
+          </td>
           <td >
             <div className="form-group row">
               {/* <Link to="/EditMenu"> */}
               <button
+                button id='save_edit_btn'
                 type="button"
                 className="btn btn-primary btn-sm mr-sm-2"
-                onClick={()=>this.menuItemEditButton(index)}
+                onClick={() => this.menuItemEditButton(index)}
               >
                 {this.state.menus[index].contenteditable ? "Save Change" : "Edit"}
               </button>
@@ -230,15 +232,25 @@ class Test extends Component {
     this.setState({ contenteditable: !this.state.contenteditable })
     this.changeText();
   }
-
+  //this.state.menus[index]
   //Edit profile - button
-  changeText() {
+  dataPass() {
     this.setState(state => {
-      return {
-        edit: !state.edit
-      };
-    });
+      this.setState(state => {
+        return {
+          // edit: !state.edit
+        };
+      }, () => {
+        if (this.state.edit) {
+          // change #signResultModal with your code id
+          $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
+        } else {
+          $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+        }
+      });
+    })
   }
+
 
   render() {
     const { isError } = this.state;
@@ -257,7 +269,7 @@ class Test extends Component {
                 <container>
                   <row>
                     <input type="file" name="menuPicture" onChange={this.onImageChange} />
-                    <img src={this.state.image}  style={{maxHeight: '100%', maxWidth: '100%'}}/>
+                    <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} />
                   </row>
                 </container>
               </div>
@@ -276,7 +288,7 @@ class Test extends Component {
                   </div>
                   <div className="form-inline">
                     <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
-                    <input required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2"
+                    <textarea row="3" required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2"
                       className={isError.menuDescript.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                     />
                   </div>
@@ -290,7 +302,7 @@ class Test extends Component {
         {/* Menu List */}
         <h3><br />
           <br />Menu List</h3>
-          {/* <div className="col-md-12"> */}
+        {/* <div className="col-md-12"> */}
         <table id='menus' className="table table-striped col-md-12">
           <thead>
             <tr>
