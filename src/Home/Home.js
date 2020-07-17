@@ -56,19 +56,66 @@ class Home extends Component {
                                 </div>
 
                                 <div className="row col-sm-2">
-                                    <input type="text" id="time" name="time" placeholder="Time"
-                                        className='form-control' required />
+
+                                    <select
+                                        className="custom-select"
+                                        id="time"
+                                        name="time"
+                                        value={this.state.time}
+                                        required
+                                    >
+                                        <option value="">Time</option>
+                                        <option value="7am">7:00 AM</option>
+                                        <option value="730am">7:30 AM</option>
+                                        <option value="8am">8:00 AM</option>
+                                        <option value="830am">8:30 AM</option>
+                                        <option value="9am">9:00 AM</option>
+                                        <option value="930am">9:30 AM</option>
+                                        <option value="10am">10:00 AM</option>
+                                        <option value="1030am">10:30 AM</option>
+                                        <option value="11am">11:00 AM</option>
+                                        <option value="1130am">11:30 AM</option>
+                                        <option value="12pm">12:00 PM</option>
+                                        <option value="1230pm">12:30 PM</option>
+                                        <option value="1pm">1:00 PM</option>
+                                        <option value="130pm">1:30 PM</option>
+                                        <option value="2pm">2:00 PM</option>
+                                        <option value="230pm">2:30 PM</option>
+                                        <option value="3pm">3:00 PM</option>
+                                        <option value="330pm">3:30 PM</option>
+                                        <option value="4pm">4:00 PM</option>
+                                        <option value="430pm">4:30 PM</option>
+                                        <option value="5pm">5:00 PM</option>
+                                        <option value="530pm">5:30 PM</option>
+                                        <option value="6pm">6:00 PM</option>
+                                        <option value="630pm">6:30 PM</option>
+                                        <option value="7pm">7:00 PM</option>
+                                        <option value="730pm">7:30 PM</option>
+                                        <option value="8pm">8:00 PM</option>
+                                        <option value="830pm">8:30 PM</option>
+                                        <option value="9pm">9:00 PM</option>
+                                        <option value="930pm">9:30 PM</option>
+                                        <option value="10pm">10:00 PM</option>
+                                        <option value="1030pm">10:30 PM</option>
+                                        <option value="11pm">11:00 PM</option>
+                                        <option value="1130pm">11:30 PM</option>
+                                        <option value="12am">12:00 AM</option>
+                                        <option value="1230am">12:30 AM</option>
+                                        <option value="1am">1:00 AM</option>
+                                        <option value="130am">1:30 AM</option>
+                                    </select>
+
+
                                 </div>
 
                                 <div className="row col-md-2">
-                                    {/* <span className="fa fa-search form-control-feedback"></span>
-                                    <input type="text" id="numofpeople" name="numofpeople" placeholder="Number of People"
-                                        className='form-control' required /> */}
+
                                     <select
                                         className="custom-select"
                                         id="numberOfPeople"
                                         name="numberOfPeople"
                                         value={this.state.numberOfPeople}
+                                        required
                                     >
                                         <option value=""># Of People</option>
                                         <option value="1">1 People</option>
@@ -84,7 +131,7 @@ class Home extends Component {
                                         <option value="11">11 People</option>
                                         <option value="12">12 People</option>
                                         <option value="13">13 People</option>
-                                        <option value="14">14 People</option>       
+                                        <option value="14">14 People</option>
                                     </select>
 
                                 </div>
@@ -106,19 +153,19 @@ class Home extends Component {
                     </header>
                     <div className="card" >
                         <div className="card-body">
-                            <Daily/>
+                            <Daily />
                         </div>
                     </div>
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
-                           <Feature/>
+                            <Feature />
                         </div>
                     </div>
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
-                            <Favorite/>
+                            <Favorite />
                         </div>
                     </div>
                 </div>
