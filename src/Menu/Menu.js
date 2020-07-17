@@ -318,7 +318,7 @@ class Menu extends Component {
         const { isError } = this.state;
         return (
             <MainContainer>
-                <div form onSubmit={this.handleSubmit} id="addMenu">
+                <form onSubmit={this.handleSubmit} id="addMenu">
                     <div className="form-inline form-group mt-sm-4">
                         <h3> Add Menu </h3>
                         <button type="submit" className="btn btn-primary ml-sm-5"> Save </button>
@@ -358,7 +358,7 @@ class Menu extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
 
                 {/* Menu List */}
