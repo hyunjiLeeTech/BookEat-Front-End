@@ -34,20 +34,10 @@ const regExpPrice = RegExp(
       super(props)
       this.state = {
         menus: [{
-          id: 1, MenuPicture: "",
+          id: "", MenuPicture: "",
           menuName: "",
           menuPrice: "",
           menuDescript: "",
-          contenteditable: false,
-        },
-  
-        // For testing - after connecting with DB, delete
-  
-        {
-          id: 2, MenuPicture: "picture",
-          menuName: "Noodle",
-          menuPrice: "25.50",
-          menuDescript: "gooooooood!!!!!",
           contenteditable: false,
         }],
         disabled: true,
