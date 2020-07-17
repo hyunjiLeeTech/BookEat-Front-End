@@ -5,6 +5,9 @@ import MainContainer from '../component/Style/MainContainer';
 import $ from 'jquery';
 import Layout from '../component/RestaurantLayout/Layout'
 import { Animated } from 'react-animated-css';
+import Axios from 'axios';
+import authHeader from '../Services/authHeader';
+import { withRouter } from "react-router";
 
 class Reserve extends Component {
     constructor(props) {
@@ -12,7 +15,7 @@ class Reserve extends Component {
         this.state = {
             numofpeople: 0,
             dateTime: new Date(),
-            resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
+            resId: this.props.match.params.id, //FIXME FOR DEBUG
             tablestatus: false,
             tables: [],
             formIsVisible: true,
@@ -20,11 +23,16 @@ class Reserve extends Component {
             resultIsVisible: false,
             selectedtableId: '',
             result: {},
+            rorminfo: {
+                OwnerAccount: "",
+                Managers: ""
+            },
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.back = this.back.bind(this);
         this.book = this.book.bind(this);
         this.setTableId = this.setTableId.bind(this);
+        this.getRoRmInfo = this.getRoRmInfo.bind(this);
     }
 
     setTableId(id) {
@@ -32,8 +40,21 @@ class Reserve extends Component {
             selectedtableId: id
         })
     }
-    componentDidMount() {
 
+    getRoRmInfo() {//TODO: only for testing, should be deleted in production envinroment.
+        Axios.post("http://localhost:5000/Restaurant/getRestaurantOwnerAndManagerViaRestaurantId", { restaurantId: this.state.resId }, { headers: authHeader() }).then(res => {
+            console.log(res)
+            this.setState({
+                rorminfo: {
+                    OwnerAccount: res.data.Owner.account,
+                    Managers: res.data.Managers
+                }
+            })
+        })
+    }
+
+    componentDidMount() {
+        this.getRoRmInfo();
     }
 
     handleSubmit(e) {
@@ -43,7 +64,7 @@ class Reserve extends Component {
         var numofpeople = $('#numofpeople').val();
         var date = $('#date').val();
         var time = $('#time').val();
-        var resId = '5efa8fc9dd9918ba08ac9ade';
+        var resId = this.state.resId;
         var dateTime = new Date(Date.parse(date + ' ' + time));
         console.log(numofpeople)
         console.log(date)
@@ -74,42 +95,51 @@ class Reserve extends Component {
         })
     }
     renderForm() {
-        return (<form onSubmit={this.handleSubmit} className="col-xs-8 col-md-8 needs-validation" noValidate>
-            <div className="page-header text-left" style={{ marginTop: '10%' }}>
-                <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
-                    <h3>Please provide your information to reserve</h3>
-                </Animated>
-            </div>
-            <div className="col-xs-12 col-md-12 ">
+        return (
+            <form onSubmit={this.handleSubmit} className="needs-validation" noValidate>
+                <div className="page-header text-left" style={{ marginTop: '10%' }}>
+                    <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
+                        <h3>Please provide your information to reserve</h3>
+                    </Animated>
+                </div>
+                <div className="col-xs-12 col-md-12 ">
 
-                <div className="form-group row">
-                    <label htmlFor="numofpeople" className="col-sm-2 col-form-label" > Number of people </label>
-                    <div className="col-sm-6">
-                        <input type="number" id="numofpeople" name="numofpeople" placeholder="Number of People"
-                            className='form-control' required />
-                        {/* <span className="valid-feedback"></span> */}
+                    <div className="form-group row">
+                        <label htmlFor="numofpeople" className="col-sm-2 col-form-label" > Number of people </label>
+                        <div className="col-sm-6">
+                            <input type="number" id="numofpeople" name="numofpeople" placeholder="Number of People"
+                                className='form-control' required />
+                            {/* <span className="valid-feedback"></span> */}
+                        </div>
                     </div>
-                </div>
-                <div className="form-group row">
-                    <label htmlFor="date" className="col-sm-2 col-form-label" > Date </label>
-                    <div className="col-sm-6">
-                        <input type="date" id="date" name="date" placeholder="date"
-                            className='form-control' required />
-                        {/* <span className="valid-feedback"></span> */}
+                    <div className="form-group row">
+                        <label htmlFor="date" className="col-sm-2 col-form-label" > Date </label>
+                        <div className="col-sm-6">
+                            <input type="date" id="date" name="date" placeholder="date"
+                                className='form-control' required />
+                            {/* <span className="valid-feedback"></span> */}
+                        </div>
                     </div>
-                </div>
 
-                <div className="form-group row">
-                    <label htmlFor="time" className="col-sm-2 col-form-label" > Time </label>
-                    <div className="col-sm-6">
-                        <input type="text" id="time" name="time" placeholder="time"
-                            className='form-control' required />
-                        {/* <span className="valid-feedback"></span> */}
+                    <div className="form-group row">
+                        <label htmlFor="time" className="col-sm-2 col-form-label" > Time </label>
+                        <div className="col-sm-6">
+                            <input type="text" id="time" name="time" placeholder="time"
+                                className='form-control' required />
+                            {/* <span className="valid-feedback"></span> */}
+                        </div>
                     </div>
+                    <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#signResultModal" >Next</button>
+                    {/* TODO: for testing */}
+                    <div style={{wordWrap: 'break-all', whiteSpace: 'pre-wrap'}}>
+                        <p>RestaurantID: {this.state.resId}</p>
+                        <br /><br />
+                        <p>OwnerAccountInfo: <code>{JSON.stringify(this.state.rorminfo.OwnerAccount)}</code></p><br /><br />
+                        <p>ManagersInfo: <code>{JSON.stringify(this.state.rorminfo.Managers)}</code></p>
+                    </div>
+
                 </div>
-                <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#signResultModal" >Next</button>
-            </div>
-        </form>
+            </form>
         )
     }
 
@@ -165,21 +195,21 @@ class Reserve extends Component {
             <MainContainer>
                 <div className="row">
                     {this.state.formIsVisible ?
-                        <Animated className="row" animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.formIsVisible}>{
-                            this.renderForm()
-                        }
-                        <div className='col-md-4'>
-                        <img src="https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?cs=srgb&dl=table-in-vintage-restaurant-6267.jpg&fm=jpg" style={{marginTop: '5%'}} className="col-md-12" />
-                        
-                        <h4 style={{marginLeft: '5%'}}>Test Restaurant</h4>
-                        <p style={{marginLeft: '10%'}}>Restaurant Decription goes here</p>
+
+                        <div className="row">
+                            <div className='col-md-8'>
+                            {this.renderForm()}
+                            </div>
+                            <div className='col-md-4'>
+                                <img src="https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?cs=srgb&dl=table-in-vintage-restaurant-6267.jpg&fm=jpg" style={{ marginTop: '5%' }} className="col-md-12" />
+                                <h4 style={{ marginLeft: '5%' }}>Test Restaurant</h4>
+                                <p style={{ marginLeft: '10%' }}>Restaurant Decription goes here</p>
+                            </div>
                         </div>
-                        </Animated>
-                        : null
-                    }
+                        : null}
+
                     {this.state.tableIsVisible ?
                         <div className="col-xs-8 col-md-8">
-                            <Animated animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.tableIsVisible}>
                                 <div className="page-header text-left" style={{ marginTop: '5%' }}>
                                     <h3>Please Select a table</h3>
                                 </div>
@@ -195,10 +225,8 @@ class Reserve extends Component {
                                         <button className="btn btn-primary" onClick={this.book}>Book</button>
                                     </div>
                                 </div>
-                            </Animated>
                         </div> : null}
                     {this.state.resultIsVisible ?
-                        <Animated animationIn="fadeInRight" animationOut="fadeOutLeft" animationInDuration={500} animationOutDuration={500} isVisible={this.state.resultIsVisible}>
                             <div className="page-header text-left" style={{ marginTop: '5%' }}>
                                 <h3>Thanks for reserving</h3>
                                 <h4>This is your reservation:</h4>
@@ -208,7 +236,7 @@ class Reserve extends Component {
                                 <p>Number of People: {this.state.result.numOfPeople}</p>
                                 <p>Restaurant Phone Number: {this.state.result.restaurant.businessNum}</p>
                             </div>
-                        </Animated> : null}
+                         : null}
 
 
                 </div>
@@ -219,4 +247,4 @@ class Reserve extends Component {
 }
 
 
-export default Reserve;
+export default withRouter(Reserve);

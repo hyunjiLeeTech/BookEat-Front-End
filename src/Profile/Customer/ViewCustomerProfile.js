@@ -95,7 +95,7 @@ class ViewCustomerProfile extends Component {
     e.preventDefault();
     console.log("submit customer profile")
     if (formValid(this.state)) {
-      console.log(this.state);
+      ds.editCustomerProfile(this.state);
     } else {
       console.log("Form is invalid!");
     }
@@ -356,7 +356,7 @@ class ViewCustomerProfile extends Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="signResultModalLabel">
-                    Sign up
+                    Edit Customer Profile
                   </h5>
                   <button
                     type="button"
@@ -368,7 +368,7 @@ class ViewCustomerProfile extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p className="alert alert-warning" id="signResultText">
+                  <p className="alert alert-warning" id="customerProfileResultText">
                     Please Wait...
                   </p>
                 </div>

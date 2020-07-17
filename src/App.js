@@ -35,6 +35,11 @@ import EmailConfirmation from "./RedirectPages/EmailConfirmation";
 import NotFound from "./RedirectPages/NotFound";
 import authService from "./Services/AuthService";
 import RestaurantReservation from "./Reservation/RestaurantReservation";
+import CustomerReserve from './Reservation/customerReserve';
+
+import Restaurant from './Restaurant/restaurant'
+import SearchResult from "./Home/SearchResult";
+import RestaurantDetails from "./Restaurant/RestaurantDetails";
 
 class App extends Component {
   queryUserInfo = async function (userType) {
@@ -107,6 +112,9 @@ class App extends Component {
           <Route exact path="/Login" render={() => <Login />} />
           <Route path='/logout' component={Logout} />
           <Route path='/layout' component={Layout} />
+          <Route path='/customerreserve/:id' component={CustomerReserve} />
+          <Route path='/restaurant/:id' component={Restaurant} />
+
           <Route
             exact
             path="/ViewCustomerProfile"
@@ -173,6 +181,8 @@ class App extends Component {
           />  
           <Route exact path="/NotFound" render={() => <NotFound />} />
           <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
+          <Route exact path="/SearchResult" render={() => <SearchResult />} />
+          <Route exact path="/RestaurantDetails" render={() => <RestaurantDetails />} />
         </Switch>
         <div className="footer">
           <Footer />

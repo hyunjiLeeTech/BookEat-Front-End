@@ -24,13 +24,15 @@ class RestaurantReservation extends Component {
     renderPresent() {
         var rows = [];
         for (var ro of this.state.upcoming) {
+            console.log("RO")
+            console.log(ro)
             rows.push(
                 <tr key={rows}>
                     <td >
                         {ro.customer.firstName + " " + ro.customer.lastName}
                     </td>
 
-                    <td > 
+                    <td >
                         {ro.table.rid}
                     </td>
 
@@ -44,6 +46,55 @@ class RestaurantReservation extends Component {
 
                     <td >
                         {ro.comments}
+                    </td>
+
+                    <td>
+                        <button type="button" className="btn btn-primary mr-sm-4 "
+                        data-toggle="modal"
+                        data-target="#cancelModal"
+                        > 
+                        Cancel Reservation </button>
+                        {/* Cancel Modal */}
+                        <div
+                            className="modal fade"
+                            id="cancelModal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="cancelLabel"
+                            aria-hidden="true"
+                        >
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="cancelModalLabel">
+                                            Cancel Reservation
+                </h5>
+                                        <button
+                                            type="button"
+                                            className="close"
+                                            data-dismiss="modal"
+                                            aria-label="Close"
+                                        >
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <p className="alert alert-warning" id="signResultText">
+                                            Please Wait...
+                </p>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            data-dismiss="modal"
+                                        >
+                                            Close
+                </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
 
                 </tr>
@@ -66,11 +117,11 @@ class RestaurantReservation extends Component {
         for (var r of this.state.past) {
             row.push(
                 <tr key={row}>
-                    <td > 
+                    <td >
                         {r.customer.firstName + " " + r.customer.lastName}
                     </td>
 
-                    <td >  
+                    <td >
                         {r.table.rid}
                     </td>
 
@@ -109,7 +160,7 @@ class RestaurantReservation extends Component {
         e.preventDefault();
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.querypast();
         this.queryPresent();
     }
@@ -148,6 +199,7 @@ class RestaurantReservation extends Component {
                                             <th scope="col">Date</th>
                                             <th scope="col"># of People</th>
                                             <th scope="col">Comments</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
