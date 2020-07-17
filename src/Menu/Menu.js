@@ -385,8 +385,8 @@ class Menu extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.renderMenuInfo()}
-                        {/* {this.renderTableData()} */}
+                        {/* {this.renderMenuInfo()} */}
+                        {this.renderTableData()}
                     </tbody>
                 </table>
                 {/* </div> */}
