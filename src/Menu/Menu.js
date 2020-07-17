@@ -46,24 +46,24 @@ class Menu extends Component {
             menuDescript: "",
 
             // For testing - after connecting with DB, delete
-            menus: [{
-                id: 1, MenuPicture: "picture",
-                menuName: "Noodle",
-                menuPrice: "25.50",
-                menuDescript: "gooooooood!!!!!",
-            },
-            {
-                id: 2, MenuPicture: "picture",
-                menuName: "Noodle",
-                menuPrice: "25.50",
-                menuDescript: "gooooooood!!!!!",
-            },
-            {
-                id: 3, MenuPicture: "picture",
-                menuName: "Noodle",
-                menuPrice: "25.50",
-                menuDescript: "goooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooood!!!!!",
-            }],
+            // menus: [{
+            //     id: 1, MenuPicture: "picture",
+            //     menuName: "Noodle",
+            //     menuPrice: "25.50",
+            //     menuDescript: "gooooooood!!!!!",
+            // },
+            // {
+            //     id: 2, MenuPicture: "picture",
+            //     menuName: "Noodle",
+            //     menuPrice: "25.50",
+            //     menuDescript: "gooooooood!!!!!",
+            // },
+            // {
+            //     id: 3, MenuPicture: "picture",
+            //     menuName: "Noodle",
+            //     menuPrice: "25.50",
+            //     menuDescript: "goooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooood!!!!!",
+            // }],
             // image: null,
             isError: {
                 MenuPicture: '&#160;',
@@ -76,6 +76,7 @@ class Menu extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderTableData = this.renderTableData.bind(this);
+        this.renderMenuInfo = this.renderMenuInfo.bind(this);
 
     }
 
@@ -113,6 +114,60 @@ class Menu extends Component {
             [e.target.id]: e.target.value,
         });
     };
+
+    componentWillMount() {
+        this.queryMenus();
+    }
+
+    queryMenus() {
+        ds.getMenus().then((res) => {
+            console.log(res.menus);
+            this.setState({
+                menus: res.menus
+            })
+        })
+    }
+
+    renderMenuInfo() {
+        var rows = [];
+        console.log("this is state menu: " + this.state.menus);
+        if (typeof this.state.menus != "undefined") {
+
+            for (var menu of this.state.menus) {
+                rows.push(
+                    <tr key={rows}>
+                        <td>{menu.menuName}</td>
+                        <td>{menu.menuPrice}</td>
+                        <td>{menu.menuDescript}</td>
+                        <td >
+                            <div className="form-group row">
+                                {/* <Link to="/EditMenu"> */}
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-sm mr-sm-2"
+                                    data-toggle="modal"
+                                    href="#EditMenu"
+                                >
+                                    Edit
+                                </button>
+                                {/* </Link> */}
+                            </div>
+                        </td>
+                        <td >
+                            <div className="form-group row">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary btn-sm mr-sm-2"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                )
+            }
+        }
+    }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -238,7 +293,7 @@ class Menu extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.renderTableData()}
+                        {this.renderMenuInfo()}
                     </tbody>
                 </table>
             </MainContainer>

@@ -259,5 +259,14 @@ export default {
     }).catch((err) => {
       console.log(err);
     })
+  },
+  getMenus() {
+    return Axios.get(serverAddress + "/menu/getmenus", {
+      headers: authHeader()
+    }).then((res) => {
+      return res.data
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 };
