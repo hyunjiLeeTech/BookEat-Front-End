@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MainContainer from "../component/Style/MainContainer";
 import "./EditMenu.js"
+import ds from "../Services/dataService"
 import { Link } from 'react-router-dom'
 
 const regExpPrice = RegExp(
@@ -118,6 +119,7 @@ class Menu extends Component {
         console.log("saved")
         if (formValid(this.state)) {
             console.log(this.state)
+            ds.addMenu(this.state);
         } else {
             console.log("Form is invalid!");
         }
