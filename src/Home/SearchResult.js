@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MainContainer from '../component/Style/MainContainer'
-import $ from "jquery";
+import SearchBox from './SearchBox';
 
 class SearchResult extends Component {
 
@@ -23,54 +23,7 @@ class SearchResult extends Component {
             <MainContainer>
                 <div className="container">
                     <div className="card text-center">
-                        <div className="card-body row text-center">
-                            <div className=" row col-sm-2">
-                                <input type="date" id="date" name="date" placeholder="Date"
-                                    className='form-control' required />
-
-                            </div>
-
-                            <div className="row col-sm-2">
-                                <input type="text" id="time" name="time" placeholder="Time"
-                                    className='form-control' required />
-                            </div>
-
-                            <div className="row col-md-2">
-                                <select
-                                    className="custom-select"
-                                    id="numberOfPeople"
-                                    name="numberOfPeople"
-                                    value={this.state.numberOfPeople}
-                                >
-                                    <option value=""># Of People</option>
-                                    <option value="1">1 People</option>
-                                    <option value="2">2 People</option>
-                                    <option value="3">3 People</option>
-                                    <option value="4">4 People</option>
-                                    <option value="5">5 People</option>
-                                    <option value="6">6 People</option>
-                                    <option value="7">7 People</option>
-                                    <option value="8">8 People</option>
-                                    <option value="9">9 People</option>
-                                    <option value="10">10 People</option>
-                                    <option value="11">11 People</option>
-                                    <option value="12">12 People</option>
-                                    <option value="13">13 People</option>
-                                    <option value="14">14 People</option>
-                                </select>
-
-                            </div>
-
-                            <div className="col-sm-5 form-group has-search">
-                                <span className="fa fa-search form-control-feedback"></span>
-                                <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
-
-                            </div>
-                            <div className="col-sm-2">
-                                <button type="button" className="btn btn-primary mr-sm-4"> Find</button>
-                            </div>
-
-                        </div>
+                           <SearchBox/>
                     </div>
 
                     <div className="row">
