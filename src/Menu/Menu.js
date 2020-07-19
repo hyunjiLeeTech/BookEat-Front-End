@@ -50,26 +50,6 @@ class Menu extends Component {
             disabled: true,
             contenteditable: false,
 
-            // For testing - after connecting with DB, delete
-            // menus: [{
-            //     id: 1, MenuPicture: "picture",
-            //     menuName: "Noodle",
-            //     menuPrice: "25.50",
-            //     menuDescript: "gooooooood!!!!!",
-            // },
-            // {
-            //     id: 2, MenuPicture: "picture",
-            //     menuName: "Noodle",
-            //     menuPrice: "25.50",
-            //     menuDescript: "gooooooood!!!!!",
-            // },
-            // {
-            //     id: 3, MenuPicture: "picture",
-            //     menuName: "Noodle",
-            //     menuPrice: "25.50",
-            //     menuDescript: "goooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooood!!!!!",
-            // }],
-            // image: null,
             isError: {
                 MenuPicture: '&#160;',
                 menuName: '&#160;',
@@ -196,13 +176,38 @@ class Menu extends Component {
     };
 
 
-    menuItemEditButton(index) {
+    menuItemEditButton(index) {  
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
-        this.forceUpdate();
-        this.setState({});
+      
+       // this.forceUpdate();
+        //this.setState({});
 
-        this.dataPass()
+       
+        this.callModal();
     }
+
+    //this.state.menus[index]
+    //Edit profile - button
+    callModal(index) {
+        this.setState(state => {
+            this.setState(state => 
+            //     {
+            //     return {
+            //         // edit: !state.edit
+            //     };
+            // },
+            
+             () => {
+                if (this.state.menus[index].contenteditable){
+                    $('this.state.menus[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+                }
+                else {
+                    $('this.state.menus[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+                }                
+            });
+        })
+    }
+
 
 
 
@@ -268,6 +273,7 @@ class Menu extends Component {
                                 type="button"
                                 className="btn btn-primary btn-sm mr-sm-2"
                                 onClick={() => this.menuItemEditButton(index)}
+                            // data-toggle="modal" data-target="#EditResultModal"
                             >
                                 {this.state.menus[index].contenteditable ? "Save Change" : "Edit"}
                             </button>
@@ -277,8 +283,10 @@ class Menu extends Component {
                     <td >
                         <div className="form-group row">
                             <button
+                                button id='delete_btn'
                                 type="button"
                                 className="btn btn-primary btn-sm mr-sm-2"
+                                data-toggle="modal" data-target="#DeleteResultModal"
                             >
                                 Delete
                     </button>
@@ -294,24 +302,7 @@ class Menu extends Component {
         this.setState({ contenteditable: !this.state.contenteditable })
         this.changeText();
     }
-    //this.state.menus[index]
-    //Edit profile - button
-    dataPass() {
-        this.setState(state => {
-            this.setState(state => {
-                return {
-                    // edit: !state.edit
-                };
-            }, () => {
-                if (this.state.edit) {
-                    // change #signResultModal with your code id
-                    $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
-                } else {
-                    $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-                }
-            });
-        })
-    }
+    
 
 
     render() {
@@ -321,7 +312,8 @@ class Menu extends Component {
                 <form onSubmit={this.handleSubmit} id="addMenu">
                     <div className="form-inline form-group mt-sm-4">
                         <h3> Add Menu </h3>
-                        <button type="submit" className="btn btn-primary ml-sm-5"> Save </button>
+                        <button type="submit" className="btn btn-primary ml-sm-5"
+                            data-toggle="modal" data-target="#menuAddResultModal"> Save </button>
                     </div>
 
                     {/* add menu */}
@@ -385,11 +377,142 @@ class Menu extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.renderMenuInfo()}
-                        {/* {this.renderTableData()} */}
+                        {/* {this.renderMenuInfo()} */}
+                        {this.renderTableData()}
                     </tbody>
                 </table>
                 {/* </div> */}
+
+                {/* addMenuModal */}
+                <div
+                    className="modal fade"
+                    id="menuAddResultModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="menuAddResultModal"
+                    aria-hidden="true"
+                >
+
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="menuAddResultModal">
+                                    Add Menu
+                            </h5>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p className="alert alert-warning" id="munuAddResultText">
+                                    Please Wait...
+                  </p>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-dismiss="modal"
+                                >
+                                    Close
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* EditMenuModal */}
+
+                <div
+                    className="modal fade"
+                    id="EditResultModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="EditResultModal"
+                    aria-hidden="true"
+                >
+
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="EditResultModal">
+                                    Edit Menu
+                            </h5>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p className="alert alert-warning" id="EditResultModalText">
+                                    Please Wait...
+                  </p>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-dismiss="modal"
+                                >
+                                    Close
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* DeleteMenuModal */}
+
+                <div
+                    className="modal fade"
+                    id="DeleteResultModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="DeleteResultModal"
+                    aria-hidden="true"
+                >
+
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="DeleteResultModal">
+                                    Delete Menu
+                            </h5>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p className="alert alert-warning" id="DeleteResultModalText">
+                                    Please Wait...
+                  </p>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-dismiss="modal"
+                                >
+                                    Close
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </MainContainer>
         );
     }
