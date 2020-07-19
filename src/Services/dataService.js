@@ -4,7 +4,50 @@ import serverAddress from "./ServerUrl";
 import Axios from "axios";
 import $ from "jquery";
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 export default {
+  restaurantCancelReservation(reservationId){
+    return Axios.post(serverAddress+'/restaurant/cancelreservation', {reservationId: reservationId}, {headers: authHeader()})
+    .then(res=>{
+      if(res.data.errcode !== 0){
+        throw res.data;
+      }
+    }).catch(err=>{
+      console.log(err);
+      throw(err);
+       //TODO: errhandling
+    })
+  },
+  customerCancelReservation(reservationId){
+    return Axios.post(serverAddress+'/customer/cancelreservation', {reservationId: reservationId}, {headers: authHeader()})
+    .then(res=>{
+      if(res.data.errcode !== 0){
+        throw res.data;
+      }
+    }).catch(err=>{
+      console.log(err);
+      throw(err);
+       //TODO: errhandling
+    })
+  },
+
+  async changeAccountPassword(oldPassword, newPassword){
+    await sleep(500)
+    return Axios.post(serverAddress + '/account/resetpassword', {oldPassword: oldPassword, newPassword: newPassword}, {headers: authHeader()}).then(res=>{
+      if(res.data.errcode !== 0){
+        throw res.data;
+      }
+    }).catch(err=>{
+      console.log(err);
+      throw(err);
+       //TODO: errhandling
+    })
+  },
   customersReserve(info) {
     return Axios.post(serverAddress + "/restaurant/reserve", info, {
       headers: authHeader(),

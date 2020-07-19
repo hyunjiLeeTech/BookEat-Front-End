@@ -40,6 +40,8 @@ import CustomerReserve from './Reservation/customerReserve';
 import Restaurant from './Restaurant/restaurant'
 import SearchResult from "./Home/SearchResult";
 import RestaurantDetails from "./Restaurant/RestaurantDetails";
+import { ToastContainer, toast, cssTransition } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   queryUserInfo = async function (userType) {
@@ -187,6 +189,7 @@ class App extends Component {
         <div className="footer">
           <Footer />
         </div>
+        <ToastContainer />
       </div>
     );
   }

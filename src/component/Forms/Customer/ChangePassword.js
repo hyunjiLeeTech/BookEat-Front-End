@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
 import Parser from "html-react-parser";
 import sha256 from "crypto-js/sha256";
+import { ToastContainer, toast, cssTransition } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import dataService from "../../../Services/dataService";
 
 //Validation
 const regExpPassword = RegExp(
@@ -49,6 +52,8 @@ class ChangePassword extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+
   handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -82,10 +87,25 @@ class ChangePassword extends Component {
   };
 
   handleSubmit = (e) => {
+    console.log("submitting")
     e.preventDefault();
     if (formValid(this.state)) {
       this.state.password = sha256(this.state.password).toString(); //hashing password
-      this.state.confirmpw = sha256(this.state.confirmpw).toString();
+      this.state.newPassword = sha256(this.state.newPassword).toString(); 
+      
+      const infoToast = toast("We are updating your password, Please wait", {type: toast.TYPE.INFO, autoClose: false,});
+      dataService.changeAccountPassword(this.state.password, this.state.newPassword).then((res)=>{
+        toast.update(infoToast,{render: "Password Updated", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated'})
+      }).catch(err=>{
+        console.log(err)
+        toast.update(infoToast,{render: "Error Occured", type: toast.TYPE.ERROR, autoClose: 5000})
+      }).finally(()=>{
+        this.setState({
+          newPassword: '',
+          password: '',
+          confirmpw: '',
+        })
+      })
     } else {
       console.log("Form is invalid!");
     }
@@ -108,11 +128,11 @@ class ChangePassword extends Component {
   }
 
   render() {
+    
     const { isError } = this.state;
 
     return (
       <MainContainer>
-
 
      
         <div className="container">
@@ -213,8 +233,6 @@ class ChangePassword extends Component {
             </div>
           </div>
         </form> 
-
-
       </MainContainer >
     );
   }
