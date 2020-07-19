@@ -21,10 +21,18 @@ export default {
         throw err
       });
   },
-
-
-
-
+  restaurantConfirmReservation(reservationId){
+    return Axios.post(serverAddress+'/restaurant/confirmattendence', {reservationId: reservationId}, {headers: authHeader()})
+    .then(res=>{
+      if(res.data.errcode !== 0){
+        throw res.data;
+      }
+    }).catch(err=>{
+      console.log(err);
+      throw(err);
+       //TODO: errhandling
+    })
+  },
   restaurantCancelReservation(reservationId){
     return Axios.post(serverAddress+'/restaurant/cancelreservation', {reservationId: reservationId}, {headers: authHeader()})
     .then(res=>{

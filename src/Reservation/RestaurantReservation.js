@@ -35,6 +35,17 @@ class RestaurantReservation extends Component {
     }
 
     confirmAttandance(reservationId){
+        const infoToast = toast("Please Wait", {autoClose: false})
+        dataService.restaurantConfirmReservation(reservationId).then(res=>{
+            toast.update(infoToast,{render: "Reservation confirm", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated'})
+            $("#"+reservationId+"btn").attr('disabled', 'true').text("Confirm")
+        }).catch(err=>{
+            if(err.errcode){
+                toast.update(infoToast,{render: err.errmsg, type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated'})
+            }else{
+                toast.update(infoToast,{render: "error occured", type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated'})
+            }
+        })
 
     }
 
