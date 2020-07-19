@@ -59,7 +59,7 @@ class Menu extends Component {
         this.renderTableData = this.renderTableData.bind(this);
         this.renderMenuInfo = this.renderMenuInfo.bind(this);
         this.menuItemEditButton = this.menuItemEditButton.bind(this);
-
+        this.handleChangeInList = this.handleChangeInList.bind(this);
     }
 
     onImageChange = (event, index) => {
@@ -80,7 +80,7 @@ class Menu extends Component {
         }
     };
 
-    handleChange = (e) => {
+    handleChangeInList(e, index){
         e.preventDefault();
         const { name, value } = e.target;
         let isError = { ...this.state.isError };
@@ -100,6 +100,33 @@ class Menu extends Component {
             default:
                 break;
         }
+        this.state.menus[index][e.target.id] = e.target.value; //Set state does not allow to set an object inside of an array
+        this.forceUpdate(); //forcing udpate the UI
+    }
+
+    handleChange = (e) => {
+        console.log(this.state)
+        e.preventDefault();
+        const { name, value } = e.target;
+        let isError = { ...this.state.isError };
+        switch (name) {
+            case "menuName":
+                isError.menuName =
+                    value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
+                break;
+            case "menuPrice":
+                isError.menuPrice =
+                    regExpPrice.test(value) ? "&#160;" : "Atleast 1 character required";
+                break;
+            case "menuDescript":
+                isError.menuDescript =
+                    value.length >= 5 && value.length <= 100 ? "&#160;" : "Atleast 5 character required";
+                break;
+            default:
+                break;
+        }
+        console.log([e.target.id]);
+        console.log([e.target.value]);
         this.setState({
             isError,
             [e.target.id]: e.target.value,
@@ -175,6 +202,7 @@ class Menu extends Component {
 
 
     menuItemEditButton(index) {  
+        console.log(this.state.menus);
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
       
        // this.forceUpdate();
@@ -245,7 +273,7 @@ class Menu extends Component {
                     <tr>{menuDescript}</tr> */}
                     <td>
                         <tr contenteditable={(this.state.menus[index].contenteditable)} >
-                            <input type="text" id="menuName" name="menuName" defaultValue={menuName}
+                            <input type="text" id="menuName" name="menuName" defaultValue={menuName}  onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                         </tr>
 
