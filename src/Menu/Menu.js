@@ -80,7 +80,7 @@ class Menu extends Component {
         }
     };
 
-    handleChangeInList(e, index){
+    handleChangeInList(e, index) {
         e.preventDefault();
         const { name, value } = e.target;
         let isError = { ...this.state.isError };
@@ -192,7 +192,7 @@ class Menu extends Component {
         console.log("saved")
         if (formValid(this.state)) {
             console.log(this.state)
-            ds.addMenu(this.state).then(()=>{
+            ds.addMenu(this.state).then(() => {
                 this.queryMenus();
             })
         } else {
@@ -201,11 +201,15 @@ class Menu extends Component {
     };
 
 
-    menuItemEditButton(index) {  
+    menuItemEditButton(index) {
         console.log(this.state.menus);
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
-      
-       // this.forceUpdate();
+
+        if (!this.state.menus[index].contenteditable) {
+            ds.editMenu(this.state.menus[index]);
+        }
+
+        // this.forceUpdate();
         //this.setState({});
         this.callModal();
     }
@@ -214,21 +218,21 @@ class Menu extends Component {
     //Edit profile - button
     callModal(index) {
         this.setState(state => {
-            this.setState(state => 
-            //     {
-            //     return {
-            //         // edit: !state.edit
-            //     };
-            // },
-            
-             () => {
-                if (this.state.menus[index].contenteditable){
-                    $('this.state.menus[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
-                }
-                else {
-                    $('this.state.menus[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-                }                
-            });
+            this.setState(state =>
+                //     {
+                //     return {
+                //         // edit: !state.edit
+                //     };
+                // },
+
+                () => {
+                    if (this.state.menus[index].contenteditable) {
+                        $('this.state.menus[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+                    }
+                    else {
+                        $('this.state.menus[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+                    }
+                });
         })
     }
 
@@ -273,17 +277,17 @@ class Menu extends Component {
                     <tr>{menuDescript}</tr> */}
                     <td>
                         <tr contenteditable={(this.state.menus[index].contenteditable)} >
-                            <input type="text" id="menuName" name="menuName" defaultValue={menuName}  onChange={(e) => this.handleChangeInList(e, index)}
+                            <input type="text" id="menuName" name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                         </tr>
 
                         <tr contenteditable={(this.state.menus[index].contenteditable)}>
-                            <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice}
+                            <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
 
                         <div className="form-group" >
                             <tr contenteditable={(this.state.menus[index].contenteditable)}>
-                                <textarea row="3" id="menuDescript" name="menuDescript" defaultValue={menuDescript}
+                                <textarea row="3" id="menuDescript" name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
                                     className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />
                             </tr>
                         </div>
@@ -326,7 +330,7 @@ class Menu extends Component {
         this.setState({ contenteditable: !this.state.contenteditable })
         this.changeText();
     }
-    
+
 
 
     render() {

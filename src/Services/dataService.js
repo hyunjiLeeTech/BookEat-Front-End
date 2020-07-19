@@ -11,41 +11,41 @@ function sleep(ms) {
 }
 
 export default {
-  restaurantCancelReservation(reservationId){
-    return Axios.post(serverAddress+'/restaurant/cancelreservation', {reservationId: reservationId}, {headers: authHeader()})
-    .then(res=>{
-      if(res.data.errcode !== 0){
-        throw res.data;
-      }
-    }).catch(err=>{
-      console.log(err);
-      throw(err);
-       //TODO: errhandling
-    })
+  restaurantCancelReservation(reservationId) {
+    return Axios.post(serverAddress + '/restaurant/cancelreservation', { reservationId: reservationId }, { headers: authHeader() })
+      .then(res => {
+        if (res.data.errcode !== 0) {
+          throw res.data;
+        }
+      }).catch(err => {
+        console.log(err);
+        throw (err);
+        //TODO: errhandling
+      })
   },
-  customerCancelReservation(reservationId){
-    return Axios.post(serverAddress+'/customer/cancelreservation', {reservationId: reservationId}, {headers: authHeader()})
-    .then(res=>{
-      if(res.data.errcode !== 0){
-        throw res.data;
-      }
-    }).catch(err=>{
-      console.log(err);
-      throw(err);
-       //TODO: errhandling
-    })
+  customerCancelReservation(reservationId) {
+    return Axios.post(serverAddress + '/customer/cancelreservation', { reservationId: reservationId }, { headers: authHeader() })
+      .then(res => {
+        if (res.data.errcode !== 0) {
+          throw res.data;
+        }
+      }).catch(err => {
+        console.log(err);
+        throw (err);
+        //TODO: errhandling
+      })
   },
 
-  async changeAccountPassword(oldPassword, newPassword){
+  async changeAccountPassword(oldPassword, newPassword) {
     await sleep(500)
-    return Axios.post(serverAddress + '/account/resetpassword', {oldPassword: oldPassword, newPassword: newPassword}, {headers: authHeader()}).then(res=>{
-      if(res.data.errcode !== 0){
+    return Axios.post(serverAddress + '/account/resetpassword', { oldPassword: oldPassword, newPassword: newPassword }, { headers: authHeader() }).then(res => {
+      if (res.data.errcode !== 0) {
         throw res.data;
       }
-    }).catch(err=>{
+    }).catch(err => {
       console.log(err);
-      throw(err);
-       //TODO: errhandling
+      throw (err);
+      //TODO: errhandling
     })
   },
   customersReserve(info) {
@@ -311,5 +311,14 @@ export default {
     }).catch((err) => {
       console.log(err)
     })
+  },
+  editMenu(state) {
+    return Axios.post(serverAddress + "/menu/editmenu", state, {
+      headers: authHeader()
+    }).then((res) => {
+      console.log(res);
+    }).catch(((err) => {
+      console.log(err);
+    }))
   }
 };
