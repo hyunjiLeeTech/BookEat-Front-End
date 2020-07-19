@@ -11,6 +11,28 @@ function sleep(ms) {
 }
 
 export default {
+  search(info) {
+    return Axios.post(serverAddress + "/search", info)
+      .then(function (req) {
+        return req.data;
+      })
+      .catch((err) => {
+        //TODO: errhandling
+        throw err
+      });
+  },
+  restaurantConfirmReservation(reservationId) {
+    return Axios.post(serverAddress + '/restaurant/confirmattendence', { reservationId: reservationId }, { headers: authHeader() })
+      .then(res => {
+        if (res.data.errcode !== 0) {
+          throw res.data;
+        }
+      }).catch(err => {
+        console.log(err);
+        throw (err);
+        //TODO: errhandling
+      })
+  },
   restaurantCancelReservation(reservationId) {
     return Axios.post(serverAddress + '/restaurant/cancelreservation', { reservationId: reservationId }, { headers: authHeader() })
       .then(res => {

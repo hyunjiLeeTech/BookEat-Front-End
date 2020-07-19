@@ -8,8 +8,20 @@ class SearchBox extends Component {
             numberOfPeople: '',
             dateTime: new Date(),
             resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
+            date: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e){
+        e.preventDefault();
+        const { name, value } = e.target;
+        let isError = { ...this.state.isError };
+        switch (name) {
+            case 'date':
+                this.setState({date: value})
+        }
     }
 
     handleSubmit(e) {
@@ -34,66 +46,86 @@ class SearchBox extends Component {
     componentDidMount() {
     }
 
+    renderTimeOption(date) {
+        var options = [
+            <option {...(new Date(date + ' 0:00') < new Date() ? { disabled: true } : {})} value="0:00">12:00 AM</option>,
+            <option {...(new Date(date + ' 0:30') < new Date() ? { disabled: true } : {})} value="0:30">12:30 AM</option>,
+            <option {...(new Date(date + ' 1:00') < new Date() ? { disabled: true } : {})} value="1:00">1:00 AM</option>,
+            <option {...(new Date(date + ' 1:30') < new Date() ? { disabled: true } : {})} value="1:30">1:30 AM</option>,
+
+            <option {...(new Date(date + ' 7:00') < new Date() ? { disabled: true } : {})} value="7:00">7:00 AM</option>,
+            <option {...(new Date(date + ' 7:30') < new Date() ? { disabled: true } : {})} value="7:30">7:30 AM</option>,
+            <option {...(new Date(date + ' 8:00') < new Date() ? { disabled: true } : {})} value="8:00">8:00 AM</option>,
+            <option {...(new Date(date + ' 8:30') < new Date() ? { disabled: true } : {})} value="8:30">8:30 AM</option>,
+            <option {...(new Date(date + ' 9:00') < new Date() ? { disabled: true } : {})} value="9:00">9:00 AM</option>,
+            <option {...(new Date(date + ' 9:30') < new Date() ? { disabled: true } : {})} value="9:30">9:30 AM</option>,
+            <option {...(new Date(date + ' 10:00') < new Date() ? { disabled: true } : {})} value="10:00">10:00 AM</option>,
+            <option {...(new Date(date + ' 10:30') < new Date() ? { disabled: true } : {})} value="10:30">10:30 AM</option>,
+            <option {...(new Date(date + ' 11:00') < new Date() ? { disabled: true } : {})} value="11:00">11:00 AM</option>,
+            <option {...(new Date(date + ' 11:30') < new Date() ? { disabled: true } : {})} value="11:30">11:30 AM</option>,
+            <option {...(new Date(date + ' 12:00') < new Date() ? { disabled: true } : {})} value="12:00">12:00 PM</option>,
+            <option {...(new Date(date + ' 12:30') < new Date() ? { disabled: true } : {})} value="12:30">12:30 PM</option>,
+            <option {...(new Date(date + ' 13:00') < new Date() ? { disabled: true } : {})} value="13:00">1:00 PM</option>,
+            <option {...(new Date(date + ' 13:30') < new Date() ? { disabled: true } : {})} value="13:30">1:30 PM</option>,
+            <option {...(new Date(date + ' 14:00') < new Date() ? { disabled: true } : {})} value="14:00">2:00 PM</option>,
+            <option {...(new Date(date + ' 14:30') < new Date() ? { disabled: true } : {})} value="14:30">2:30 PM</option>,
+            <option {...(new Date(date + ' 15:00') < new Date() ? { disabled: true } : {})} value="15:00">3:00 PM</option>,
+            <option {...(new Date(date + ' 15:30') < new Date() ? { disabled: true } : {})} value="15:30">3:30 PM</option>,
+            <option {...(new Date(date + ' 16:00') < new Date() ? { disabled: true } : {})} value="16:00">4:00 PM</option>,
+            <option {...(new Date(date + ' 16:30') < new Date() ? { disabled: true } : {})} value="16:30">4:30 PM</option>,
+            <option {...(new Date(date + ' 17:00') < new Date() ? { disabled: true } : {})} value="17:00">5:00 PM</option>,
+            <option {...(new Date(date + ' 17:30') < new Date() ? { disabled: true } : {})} value="17:30">5:30 PM</option>,
+            <option {...(new Date(date + ' 18:00') < new Date() ? { disabled: true } : {})} value="18:00">6:00 PM</option>,
+            <option {...(new Date(date + ' 18:30') < new Date() ? { disabled: true } : {})} value="18:30">6:30 PM</option>,
+            <option {...(new Date(date + ' 19:00') < new Date() ? { disabled: true } : {})} value="19:00">7:00 PM</option>,
+            <option {...(new Date(date + ' 19:30') < new Date() ? { disabled: true } : {})} value="19:30">7:30 PM</option>,
+            <option {...(new Date(date + ' 20:00') < new Date() ? { disabled: true } : {})} value="20:00">8:00 PM</option>,
+            <option {...(new Date(date + ' 20:30') < new Date() ? { disabled: true } : {})} value="20:30">8:30 PM</option>,
+            <option {...(new Date(date + ' 21:00') < new Date() ? { disabled: true } : {})} value="21:00">9:00 PM</option>,
+            <option {...(new Date(date + ' 21:30') < new Date() ? { disabled: true } : {})} value="21:30">9:30 PM</option>,
+            <option {...(new Date(date + ' 22:00') < new Date() ? { disabled: true } : {})} value="22:00">10:00 PM</option>,
+            <option {...(new Date(date + ' 22:30') < new Date() ? { disabled: true } : {})} value="22:30">10:30 PM</option>,
+            <option {...(new Date(date + ' 23:00') < new Date() ? { disabled: true } : {})} value="23:00">11:00 PM</option>,
+            <option {...(new Date(date + ' 23:30') < new Date() ? { disabled: true } : {})} value="23:30">11:30 PM</option>,
+        ];
+        // console.log(new Date())
+
+        // for (var o of options) {
+        //     console.log(new Date(date + ' ' + o.props['value']))
+        //     if (new Date(date + ' ' + o.props['value']) < new Date()) {
+        //         console.log(new Date(date + ' ' + o.props['value']).toString() + ' disabled')
+        //     }
+        // }
+
+
+return(
+    <select
+    className="custom-select"
+    id="time"
+    name="time"
+    value={this.state.time}
+    required
+>
+    <option value="">Time</option>
+    {options}
+</select>
+)
+
+
+
+    }
+
     render() {
         return (
-           
-                <div className="row justify-content-start card-body">
-                <div className=" row col-sm-2">
-                    <input type="date" id="date" name="date" placeholder="Date"
-                        className='form-control' required />
 
+            <div className="row justify-content-start card-body">
+                <div className=" row col-sm-2">
+                    <input type="date" id="date" name="date" placeholder="Date" onChange={this.handleChange}
+                        className='form-control'  required />
                 </div>
 
                 <div className="row col-sm-2">
-
-                    <select
-                        className="custom-select"
-                        id="time"
-                        name="time"
-                        value={this.state.time}
-                        required
-                    >
-                        <option value="">Time</option>
-                        <option value="7am">7:00 AM</option>
-                        <option value="730am">7:30 AM</option>
-                        <option value="8am">8:00 AM</option>
-                        <option value="830am">8:30 AM</option>
-                        <option value="9am">9:00 AM</option>
-                        <option value="930am">9:30 AM</option>
-                        <option value="10am">10:00 AM</option>
-                        <option value="1030am">10:30 AM</option>
-                        <option value="11am">11:00 AM</option>
-                        <option value="1130am">11:30 AM</option>
-                        <option value="12pm">12:00 PM</option>
-                        <option value="1230pm">12:30 PM</option>
-                        <option value="1pm">1:00 PM</option>
-                        <option value="130pm">1:30 PM</option>
-                        <option value="2pm">2:00 PM</option>
-                        <option value="230pm">2:30 PM</option>
-                        <option value="3pm">3:00 PM</option>
-                        <option value="330pm">3:30 PM</option>
-                        <option value="4pm">4:00 PM</option>
-                        <option value="430pm">4:30 PM</option>
-                        <option value="5pm">5:00 PM</option>
-                        <option value="530pm">5:30 PM</option>
-                        <option value="6pm">6:00 PM</option>
-                        <option value="630pm">6:30 PM</option>
-                        <option value="7pm">7:00 PM</option>
-                        <option value="730pm">7:30 PM</option>
-                        <option value="8pm">8:00 PM</option>
-                        <option value="830pm">8:30 PM</option>
-                        <option value="9pm">9:00 PM</option>
-                        <option value="930pm">9:30 PM</option>
-                        <option value="10pm">10:00 PM</option>
-                        <option value="1030pm">10:30 PM</option>
-                        <option value="11pm">11:00 PM</option>
-                        <option value="1130pm">11:30 PM</option>
-                        <option value="12am">12:00 AM</option>
-                        <option value="1230am">12:30 AM</option>
-                        <option value="1am">1:00 AM</option>
-                        <option value="130am">1:30 AM</option>
-                    </select>
-
+                    {this.renderTimeOption(this.state.date)}
 
                 </div>
 

@@ -95,6 +95,10 @@ class RestaurantProfile extends Component {
 
 
       image: '',
+
+      //Discount
+      discdescription: '',
+      promdescription: '',
       isError: {
         resname: "&#160;",
         streetnumber: "&#160;",
@@ -109,7 +113,9 @@ class RestaurantProfile extends Component {
         category: "&#160;",
         priceRange: "&#160;",
         description: "&#160;",
-        picture: "&#160;"
+        picture: "&#160;",
+        discdescription: "&#160;",
+        promdescription: "&#160;"
       }
 
     };
@@ -186,6 +192,17 @@ class RestaurantProfile extends Component {
         break;
       case "description":
         isError.description =
+          value.length >= 1 && value.length <= 255
+            ? "&#160;"
+            : "Atleast write something";
+        break;
+      case "discdescription":
+        isError.discdescription = regExpNumbers.test(value)
+          ? "&#160;"
+          : "Please put some promotional numbers";
+        break;
+      case "promdescription":
+        isError.promdescription =
           value.length >= 1 && value.length <= 255
             ? "&#160;"
             : "Atleast write something";
@@ -356,6 +373,10 @@ class RestaurantProfile extends Component {
     t6.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
+    var t3 = document.getElementById("discdescription");
+    t3.onkeypress = function (e) {
+      if (e.keyCode === 32) return false;
+    };
 
     //Disable Button
     $(document).ready(function () {
@@ -489,6 +510,8 @@ class RestaurantProfile extends Component {
     });
   }
 
+
+
   render() {
     const { isError } = this.state;
     return (
@@ -524,6 +547,21 @@ class RestaurantProfile extends Component {
                   aria-selected="false"
                 >
                   Menu
+                </a>
+              </li>
+              <li className="nav-item">
+                {/* <Link to='/ChangePassword'>
+                                    <button className="nav-link" data-toggle="tab">Password</button>
+                                </Link> */}
+                <a
+                  className="nav-link"
+                  data-toggle="tab"
+                  role="tab"
+                  href="#discount"
+                  aria-controls="discount"
+                  aria-selected="false"
+                >
+                  Discount
                 </a>
               </li>
               <li className="nav-item">
@@ -571,7 +609,7 @@ class RestaurantProfile extends Component {
                   Password
                 </a>
               </li>
-           
+
             </ul>
           </div>
 
@@ -1727,29 +1765,6 @@ class RestaurantProfile extends Component {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="panel-footer row "> */}
-                  {/* <div className="col-sm-6 text-left">
-                      <button className="btn btn-primary">Save</button>
-                  <div className="panel-footer row ">
-                    <div className="col-sm-6 text-left">
-                      <button
-                        className="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#resProfileResultModal"
-                      >
-                        Save
-                      </button>
-                    </div>
-
-                    <div className="col-sm-6 text-right">
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        id="editButton"
-                      >
-                        Edit
-                    </button>
-                    </div> */}
 
                   <div className="form-inline">
                     <div className="form-group text-center ">
@@ -1759,55 +1774,55 @@ class RestaurantProfile extends Component {
                       </button>
                     </div>
                     <div className="form-group text-center ">
-                      
-                        <button type="button" className="btn btn-primary mr-sm-4 "
-                         data-toggle="modal"
-                         data-target="#deleteRestaurantModal">
-                          {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
+
+                      <button type="button" className="btn btn-primary mr-sm-4 "
+                        data-toggle="modal"
+                        data-target="#deleteRestaurantModal">
+                        {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
-                    {/* Delete Modal */}
-              <div
-                className="modal fade"
-                id="deleteRestaurantModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="deleteRestaurantLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="deleteRestaurantModalLabel">
-                        Delete Restaurant Profile
+                      {/* Delete Modal */}
+                      <div
+                        className="modal fade"
+                        id="deleteRestaurantModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="deleteRestaurantLabel"
+                        aria-hidden="true"
+                      >
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5 className="modal-title" id="deleteRestaurantModalLabel">
+                                Delete Restaurant Profile
                 </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      <p className="alert alert-warning" id="signResultText">
-                        Please Wait...
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              <p className="alert alert-warning" id="signResultText">
+                                Please Wait...
                 </p>
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        data-dismiss="modal"
-                      >
-                        Close
+                            </div>
+                            <div className="modal-footer">
+                              <button
+                                type="button"
+                                className="btn btn-primary"
+                                data-dismiss="modal"
+                              >
+                                Close
                 </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                    
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
 
@@ -1898,9 +1913,114 @@ class RestaurantProfile extends Component {
 
               {/* Start Reservation */}
               <div id="reservation" className="tab-pane fade" role="tabpanel" aria-labelledby="reservation">
-                    <RestaurantReservation/>
+                <RestaurantReservation />
               </div>
               {/* End Reservation */}
+
+              {/* Start Discount */}
+              <div id="discount" className="tab-pane fade" role="tabpanel" aria-labelledby="discount">
+                <br />
+                <h4>Discount Promotion</h4>
+                <hr />
+                <p>Add discounts or promotions here</p>
+                <div className="form-group row">
+                  <label
+                    htmlFor="discdescription"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Discount/Promotion
+                      </label>
+                  <div className="col-sm-2">
+                    <input
+                      className={
+                        isError.discdescription.length > 6
+                          ? "is-invalid form-control"
+                          : "form-control"
+                      }
+                      rows="1"
+                      id="discdescription"
+                      name="discdescription"
+                      value={this.state.discdescription}
+                      onChange={this.handleChange}
+
+                    ></input>
+                    <span className="invalid-feedback">
+                      {Parser(isError.discdescription)}
+                    </span>
+                  </div>
+                  <label
+                    htmlFor="discdescription"
+                    className="col-sm-2 col-form-label"
+                  >
+                    %
+                      </label>
+
+
+                </div>
+
+                <div className="form-group row">
+                  <label
+                    htmlFor="promdescription"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Discount/Promotion Description
+                      </label>
+                  <div className="col-md-10">
+                    <textarea
+                      className={
+                        isError.promdescription.length > 6
+                          ? "is-invalid form-control"
+                          : "form-control"
+                      }
+                      rows="5"
+                      id="promdescription"
+                      name="promdescription"
+                      value={this.state.promdescription}
+                      onChange={this.handleChange}
+
+                    ></textarea>
+                    <span className="invalid-feedback">
+                      {Parser(isError.promdescription)}
+                    </span>
+                  </div>
+                </div>
+
+                <button type="button"
+                  className="btn btn-primary">
+                  Add Discount
+                </button>
+                <br />
+                <br />
+                <h4>Discount/Promotion List</h4>
+                <hr />
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">%</th>
+                      <th scope="col">Description</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr >
+                      <td>
+                        % number here
+      </td>
+                      <td>
+                        comments here
+      </td>
+                      <td>
+                        <button id='save_edit_disc_btn' onClick={this.handleEdit.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
+                          {this.state.edit ? "Save Change" : "Edit"}
+
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* End Discount */}
 
             </div>
           </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MainContainer from '../component/Style/MainContainer'
 import SearchBox from './SearchBox';
 import './SearchResult.css'
+import dataService from '../Services/dataService';
 
 class SearchResult extends Component {
 
@@ -10,13 +11,28 @@ class SearchResult extends Component {
         this.state = {
             numberOfPeople: '',
             dateTime: new Date(),
-            resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
+            //resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
+            restaurants: [],
+            filters: [],
         }
 
     }
+    componentWillMount() {
+        dataService.search({
+            numberOfPeople: this.state.numberOfPeople,
+            dateTime: this.state.dateTime,
+            filters: this.state.filters,
+        })
+        .then(res=>{
+            console.log(res.restaurants)
+            this.setState({restaurants: res.restaurants});
+        }).catch(err=>{//TODO: err handling
 
+        })
+    }
 
     componentDidMount() {
+
     }
 
     render() {
@@ -27,6 +43,8 @@ class SearchResult extends Component {
                         <SearchBox />
                     </div>
 
+
+                    {/* Filter Side of the Page */}
                     <div className="row">
                         <div className="col-sm-4">
                             <div >
@@ -262,6 +280,7 @@ class SearchResult extends Component {
                             </div>
                         </div>
 
+                        {/* Results  */}
                         <div className="col-sm-8">
                             <br />
                             <h4>You search for " "</h4>
@@ -275,8 +294,8 @@ class SearchResult extends Component {
                                             <div className="col-md-6">
                                                 <div className="card-block">
                                                     <h6 className="card-title">Restaurant Title</h6>
-                                                    <p className="card-text">Restaurant Description</p>
                                                     <p className="card-text">Starts Price Range Cuisine Style</p>
+                                                    <p className="card-text">Restaurant Description</p>
                                                     <button href="#" className="btn btn-primary">Reserve</button>
                                                 </div>
                                             </div>
