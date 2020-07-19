@@ -6,6 +6,7 @@ import { Tab } from "bootstrap";
 import Maincontainer from "../../component/Style/MainContainer"
 import { FaThumbsUp } from 'react-icons/fa'
 import { IconContext } from "react-icons"
+import { ToastContainer, toast, cssTransition } from 'react-toastify';
 
 class CustomerReviewHistory extends Component {
   constructor(props) {
@@ -13,11 +14,11 @@ class CustomerReviewHistory extends Component {
     this.state = {
       reviews: [
         {
-          id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] },
+          id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }, open: false
         },
         //  For testing
         {
-          id: "1", date: new Date(), comment: "good", foodRate: 1, serviceRate: 10, satisfactionRate: 3, environmentRate: 2, customer: {}, restauarnt: {}, reservation: { menuItem: [] },
+          id: "1", date: new Date(), comment: "good", foodRate: 1, serviceRate: 10, satisfactionRate: 3, environmentRate: 2, customer: {}, restauarnt: {}, reservation: { menuItem: [] }, open: false
         }
       ],
       id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
@@ -253,8 +254,16 @@ class CustomerReviewHistory extends Component {
     if(this.state.reviews[index].contenteditable){
       //This is updating
       //call server API to update database
-      //Show feedback
+      //Show UI feedback
+
+      console.log("Showing toast")
+      //communicating with server
+      var t = toast("Updating, please wait", {type: toast.TYPE.INFO, autoClose: false,})
       
+      setTimeout(()=>{ //get the feedback from server
+        toast.update(t, {render: "Saved!",type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated'})
+      },1000)
+
     }
     
     
