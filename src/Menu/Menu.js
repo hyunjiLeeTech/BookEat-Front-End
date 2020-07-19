@@ -59,6 +59,7 @@ class Menu extends Component {
         this.renderTableData = this.renderTableData.bind(this);
         this.renderMenuInfo = this.renderMenuInfo.bind(this);
         this.menuItemEditButton = this.menuItemEditButton.bind(this);
+        this.menuItemDeleteButton = this.menuItemDeleteButton.bind(this);
         this.handleChangeInList = this.handleChangeInList.bind(this);
     }
 
@@ -200,6 +201,12 @@ class Menu extends Component {
         }
     };
 
+    menuItemDeleteButton(index) {
+        ds.deleteMenu(this.state.menus[index]).then(() => {
+            this.queryMenus();
+        })
+    }
+
 
     menuItemEditButton(index) {
         console.log(this.state.menus);
@@ -314,6 +321,7 @@ class Menu extends Component {
                                 button id='delete_btn'
                                 type="button"
                                 className="btn btn-primary btn-sm mr-sm-2"
+                                onClick={() => this.menuItemDeleteButton(index)}
                                 data-toggle="modal" data-target="#DeleteResultModal"
                             >
                                 Delete

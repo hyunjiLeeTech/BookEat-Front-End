@@ -320,5 +320,14 @@ export default {
     }).catch(((err) => {
       console.log(err);
     }))
+  },
+  deleteMenu(state) {
+    return Axios.post(serverAddress + "/menu/deletemenu", state, {
+      headers: authHeader()
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    })
   }
 };
