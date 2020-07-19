@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import MainContainer from '../component/Style/MainContainer'
 import Parser from 'html-react-parser'
 import $ from "jquery";
 import dataService from '../Services/dataService';
@@ -36,6 +34,10 @@ class RestaurantReservation extends Component {
         })
     }
 
+    confirmAttandance(reservationId){
+
+    }
+
     renderPresent() {
         var rows = [];
         for (var ro of this.state.upcoming) {
@@ -61,6 +63,14 @@ class RestaurantReservation extends Component {
 
                     <td >
                         {ro.comments}
+                    </td>
+
+                    <td>
+                        <button type="button" className="btn btn-success mr-sm-4"
+                         id={ro._id + 'btn'}
+                         onClick={() => this.confirmAttandance(ro._id)}>
+                            Confirm Attandance 
+                        </button>
                     </td>
 
                     <td>
@@ -215,6 +225,7 @@ class RestaurantReservation extends Component {
                                             <th scope="col">Date</th>
                                             <th scope="col"># of People</th>
                                             <th scope="col">Comments</th>
+                                            <th scope="col"></th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
