@@ -4,6 +4,7 @@ import MainContainer from '../component/Style/MainContainer'
 import Parser from 'html-react-parser'
 import $ from "jquery";
 import dataService from '../Services/dataService';
+import { ToastContainer, toast, cssTransition } from 'react-toastify';
 
 class RestaurantReservation extends Component {
 
@@ -21,18 +22,32 @@ class RestaurantReservation extends Component {
         this.renderPresent = this.renderPresent.bind(this);
     }
 
+    cancelReservation(reservationId){
+        const infoToast = toast("Please Wait", {autoClose: false})
+        dataService.restaurantCancelReservation(reservationId).then(res=>{
+            toast.update(infoToast,{render: "Reservation cancelled", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated'})
+            $("#"+reservationId+"btn").attr('disabled', 'true').text("Cancelled")
+        }).catch(err=>{
+            if(err.errcode){
+                toast.update(infoToast,{render: err.errmsg, type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated'})
+            }else{
+                toast.update(infoToast,{render: "error occured", type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated'})
+            }
+        })
+    }
+
     renderPresent() {
         var rows = [];
         for (var ro of this.state.upcoming) {
             console.log("RO")
             console.log(ro)
-            rows.push(   
-                <tr key={rows}>
+            rows.push(
+                <tr key={rows} id={ro._id}>
                     <td >
                         {ro.customer.firstName + " " + ro.customer.lastName}
                     </td>
 
-                    <td > 
+                    <td >
                         {ro.table.rid}
                     </td>
 
@@ -46,6 +61,58 @@ class RestaurantReservation extends Component {
 
                     <td >
                         {ro.comments}
+                    </td>
+
+                    <td>
+                        <button type="button" className="btn btn-primary mr-sm-4 "
+                            id={ro._id + 'btn'}
+                            onClick={()=>this.cancelReservation(ro._id)}
+                        >
+                            Cancel Reservation </button>
+
+
+                        {/* Cancel Modal */}
+                        {/* This results in mutiple modals in the page. do not put this into a loop */}
+                        {/* <div
+                            className="modal fade"
+                            id="cancelModal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="cancelLabel"
+                            aria-hidden="true"
+                        >
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="cancelModalLabel">
+                                            Cancel Reservation
+                                        </h5>
+                                        <button
+                                            type="button"
+                                            className="close"
+                                            data-dismiss="modal"
+                                            aria-label="Close"
+                                        >
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <p className="alert alert-warning" id="signResultText">
+                                            Please Wait...
+                                        </p>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            data-dismiss="modal"
+                                        >
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
                     </td>
 
                 </tr>
@@ -63,16 +130,16 @@ class RestaurantReservation extends Component {
         })
     }
 
-    renderPast() {
+    renderPast() { //TODO: display reservation status
         var row = [];
         for (var r of this.state.past) {
             row.push(
                 <tr key={row}>
-                    <td > 
+                    <td >
                         {r.customer.firstName + " " + r.customer.lastName}
                     </td>
 
-                    <td >  
+                    <td >
                         {r.table.rid}
                     </td>
 
@@ -118,7 +185,6 @@ class RestaurantReservation extends Component {
 
     render() {
         return (
-            <MainContainer>
                 <div className="card">
                     <div className="card-header">
                         <ul className="nav nav-tabs card-header-tabs">
@@ -137,7 +203,6 @@ class RestaurantReservation extends Component {
                         </ul>
                     </div>
 
-
                     <div className="card-body">
                         <div className="tab-content">
                             {/* Start Upcoming Reservation */}
@@ -150,6 +215,7 @@ class RestaurantReservation extends Component {
                                             <th scope="col">Date</th>
                                             <th scope="col"># of People</th>
                                             <th scope="col">Comments</th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -189,8 +255,6 @@ class RestaurantReservation extends Component {
 
 
                 </div>
-
-            </MainContainer>
         )
     }
 

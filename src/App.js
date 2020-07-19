@@ -21,6 +21,7 @@ import CustomerReservation from './Reservation/Customer/CustomerReservation';
 import CustomerReservationHistory from './Reservation/Customer/CustomerReservationHistory'
 import CustomerReviewHistory from './Review/Customer/CustomerReviewHistory'
 import Menu from './Menu/Menu'
+import EditMenu from './Menu/EditMenu'
 
 //test
 import Test from './component/Forms/Customer/Test';
@@ -38,6 +39,9 @@ import CustomerReserve from './Reservation/customerReserve';
 
 import Restaurant from './Restaurant/restaurant'
 import SearchResult from "./Home/SearchResult";
+import RestaurantDetails from "./Restaurant/RestaurantDetails";
+import { ToastContainer, toast, cssTransition } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class App extends Component {
   queryUserInfo = async function (userType) {
@@ -171,13 +175,21 @@ class App extends Component {
             path="/Menu"
             render={() => <Menu />}
           />
+
+          <Route
+            exact
+            path="/EditMenu"
+            render={() => <EditMenu />}
+          />  
           <Route exact path="/NotFound" render={() => <NotFound />} />
           <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
           <Route exact path="/SearchResult" render={() => <SearchResult />} />
+          <Route exact path="/RestaurantDetails" render={() => <RestaurantDetails />} />
         </Switch>
         <div className="footer">
           <Footer />
         </div>
+        <ToastContainer />
       </div>
     );
   }

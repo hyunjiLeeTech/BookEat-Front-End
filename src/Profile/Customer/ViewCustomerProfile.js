@@ -18,7 +18,7 @@ const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
 );
 
-const formValid = ({ isError, ...rest }) => {
+const formValid = ({ isError, ...customer }) => {
   let isValid = false;
 
   Object.values(isError).forEach((val) => {
@@ -29,7 +29,8 @@ const formValid = ({ isError, ...rest }) => {
     }
   });
 
-  Object.values(rest).forEach((val) => {
+  Object.values(customer).forEach((val) => {
+    console.log(customer);
     if (val === null) {
       isValid = false;
     } else {
@@ -57,6 +58,9 @@ class ViewCustomerProfile extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.handleSubmitCustomerProfile = this.handleSubmitCustomerProfile.bind(this);
+    // this.onClick = this.onClick.bind(this);
   }
 
   handleChange = (e) => {
@@ -87,13 +91,24 @@ class ViewCustomerProfile extends Component {
     });
   };
 
+  handleSubmitCustomerProfile = (e) => {
+    e.preventDefault();
+    console.log("submit customer profile")
+    if (formValid(this.state)) {
+      ds.editCustomerProfile(this.state);
+    } else {
+      console.log("Form is invalid!");
+    }
+  };
+
+
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
       Axios.post(serverAddress + "/updatecustomerinfo", this.state).then(
-        (res) => {
-          console.log(res);
-          if (res.data.errcode === 0) {
+        (customer) => {
+          console.log(customer);
+          if (customer.data.errcode === 0) {
             $("#updateResultText")
               .text("Profile update is finished.")
               .removeClass("alert-warning")
@@ -102,7 +117,7 @@ class ViewCustomerProfile extends Component {
               .addClass("alert-success");
           } else {
             $("#updateResultText")
-              .text("Sorry, " + res.data.errmsg)
+              .text("Sorry, " + customer.data.errmsg)
               .removeClass("alert-warning")
               .removeClass("alert-danger")
               .removeClass("alert-success");
@@ -152,7 +167,7 @@ class ViewCustomerProfile extends Component {
       $("#accept-terms").removeAttr("disabled");
     });
   }
-    // Edit profile - disable
+  // Edit profile - disable
   handleClick() {
     this.setState({ disabled: !this.state.disabled })
 
@@ -165,6 +180,12 @@ class ViewCustomerProfile extends Component {
       return {
         edit: !state.edit
       };
+    }, () => {
+      if (this.state.edit) {
+        $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
+      } else {
+        $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+      }
     });
   }
 
@@ -202,7 +223,7 @@ class ViewCustomerProfile extends Component {
 
           <div className="tab-content">
             <div id="myProfile" className="container tab-pane active card">
-              <div form onSubmit={this.handleSubmit}  id="profile" className="card-body" noValidate >
+              <form onSubmit={this.handleSubmitCustomerProfile} id="profile" className="card-body" noValidate >
                 <br />
                 <h3>My profile</h3>
                 <br />
@@ -222,7 +243,7 @@ class ViewCustomerProfile extends Component {
                       value={this.state.firstname}
                       className="form-control"
                       disabled={(this.state.disabled)}
-                      className={isError.firstname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required 
+                      className={isError.firstname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                     />
                     <span className="invalid-feedback">{Parser(isError.firstname)}</span>
                   </div>
@@ -240,7 +261,7 @@ class ViewCustomerProfile extends Component {
                       value={this.state.lastname}
                       className="form-control"
                       disabled={(this.state.disabled)}
-                      className={isError.lastname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required 
+                      className={isError.lastname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                     />
                     <span className="invalid-feedback">{Parser(isError.firstname)}</span>
                   </div>
@@ -262,7 +283,7 @@ class ViewCustomerProfile extends Component {
                       className="form-control"
                       disabled={(this.state.disabled)}
                       className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.phonenumber} placeholder="Phone Number"
-                      onChange={this.handleChange} required 
+                      onChange={this.handleChange} required
                     />
                     <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
                   </div>
@@ -286,41 +307,41 @@ class ViewCustomerProfile extends Component {
 
                 <div className="form-inline">
                   <div className="form-group text-center ">
-                    <button onClick={this.handleClick.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
+                    <button id='save_edit_btn' onClick={this.handleClick.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
                       {this.state.edit ? "Save Change" : "Edit"}
 
                     </button>
                   </div>
                   <div className="form-group text-center ">
                     <Link to="/">
-                    <button  type="button" className="btn btn-primary mr-sm-4 ">
-                      {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
+                      <button type="button" className="btn btn-primary mr-sm-4 ">
+                        {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
                     </Link>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
 
-            <div  id="password" className=" tab-pane card-body">
-           
-              
-              < ChangePassword />
+            <div id="password" className=" tab-pane card-body">
+              <form onSubmit={this.handleSubmit} noValidate>
+                < ChangePassword />
+              </form>
             </div>
 
-            <div form onSubmit={this.handleSubmit} noValidate
-              id="myReservation"
-              className="container tab-pane fade "
-            >
-              
-              <CustomerReservationHistory />
+            <div id="myReservation"
+              className="container tab-pane fade ">
+              <form onSubmit={this.handleSubmit} noValidate>
+                <CustomerReservationHistory />
+              </form>
             </div>
-           
-            <div form onSubmit={this.handleSubmit} noValidate id="myReview" className="container tab-pane fade">
-              
+
+            <div  id="myReview" className="container tab-pane fade">
+            <form onSubmit={this.handleSubmit} noValidate>
               <CustomerReviewHistory />
-            </div>            
+            </form>
+            </div>
           </div>
 
           <div
@@ -335,7 +356,7 @@ class ViewCustomerProfile extends Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="signResultModalLabel">
-                    Sign up
+                    Edit Customer Profile
                   </h5>
                   <button
                     type="button"
@@ -347,7 +368,7 @@ class ViewCustomerProfile extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p className="alert alert-warning" id="signResultText">
+                  <p className="alert alert-warning" id="customerProfileResultText">
                     Please Wait...
                   </p>
                 </div>
