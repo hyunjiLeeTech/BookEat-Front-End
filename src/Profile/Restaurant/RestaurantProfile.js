@@ -98,6 +98,7 @@ class RestaurantProfile extends Component {
 
       //Discount
       discdescription: '',
+      promdescription: '',
       isError: {
         resname: "&#160;",
         streetnumber: "&#160;",
@@ -113,7 +114,8 @@ class RestaurantProfile extends Component {
         priceRange: "&#160;",
         description: "&#160;",
         picture: "&#160;",
-        discdescription: "&#160;"
+        discdescription: "&#160;",
+        promdescription: "&#160;"
       }
 
     };
@@ -198,6 +200,12 @@ class RestaurantProfile extends Component {
         isError.discdescription = regExpNumbers.test(value)
           ? "&#160;"
           : "Please put some promotional numbers";
+        break;
+      case "promdescription":
+        isError.promdescription =
+          value.length >= 1 && value.length <= 255
+            ? "&#160;"
+            : "Atleast write something";
         break;
       default:
         break;
@@ -501,6 +509,8 @@ class RestaurantProfile extends Component {
       }
     });
   }
+
+
 
   render() {
     const { isError } = this.state;
@@ -1912,10 +1922,16 @@ class RestaurantProfile extends Component {
                 <br />
                 <h4>Discount Promotion</h4>
                 <hr />
-                <p>Add discount or promotions here</p>
+                <p>Add discounts or promotions here</p>
                 <div className="form-group row">
-                  <div className="col-md-10">
-                    <textarea
+                  <label
+                    htmlFor="discdescription"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Discount/Promotion
+                      </label>
+                  <div className="col-sm-2">
+                    <input
                       className={
                         isError.discdescription.length > 6
                           ? "is-invalid form-control"
@@ -1927,7 +1943,7 @@ class RestaurantProfile extends Component {
                       value={this.state.discdescription}
                       onChange={this.handleChange}
 
-                    ></textarea>
+                    ></input>
                     <span className="invalid-feedback">
                       {Parser(isError.discdescription)}
                     </span>
@@ -1939,10 +1955,69 @@ class RestaurantProfile extends Component {
                     %
                       </label>
 
-                      <button> Add Discount</button>
+
                 </div>
 
+                <div className="form-group row">
+                  <label
+                    htmlFor="promdescription"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Discount/Promotion Description
+                      </label>
+                  <div className="col-md-10">
+                    <textarea
+                      className={
+                        isError.promdescription.length > 6
+                          ? "is-invalid form-control"
+                          : "form-control"
+                      }
+                      rows="5"
+                      id="promdescription"
+                      name="promdescription"
+                      value={this.state.promdescription}
+                      onChange={this.handleChange}
 
+                    ></textarea>
+                    <span className="invalid-feedback">
+                      {Parser(isError.promdescription)}
+                    </span>
+                  </div>
+                </div>
+
+                <button type="button"
+                  className="btn btn-primary">
+                  Add Discount
+                </button>
+                <br />
+                <br />
+                <h4>Discount/Promotion List</h4>
+                <hr />
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">%</th>
+                      <th scope="col">Description</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr >
+                      <td>
+                        % number here
+      </td>
+                      <td>
+                        comments here
+      </td>
+                      <td>
+                        <button id='save_edit_disc_btn' onClick={this.handleEdit.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
+                          {this.state.edit ? "Save Change" : "Edit"}
+
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
               {/* End Discount */}
