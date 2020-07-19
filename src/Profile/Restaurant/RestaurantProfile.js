@@ -45,7 +45,6 @@ const formValid = ({ isError, ...rest }) => {
       isValid = true;
     }
   });
-
   return isValid;
 };
 
@@ -96,6 +95,9 @@ class RestaurantProfile extends Component {
 
 
       image: '',
+
+      //Discount
+      discdescription: '',
       isError: {
         resname: "&#160;",
         streetnumber: "&#160;",
@@ -110,7 +112,8 @@ class RestaurantProfile extends Component {
         category: "&#160;",
         priceRange: "&#160;",
         description: "&#160;",
-        picture: "&#160;"
+        picture: "&#160;",
+        discdescription: "&#160;"
       }
 
     };
@@ -190,6 +193,11 @@ class RestaurantProfile extends Component {
           value.length >= 1 && value.length <= 255
             ? "&#160;"
             : "Atleast write something";
+        break;
+      case "discdescription":
+        isError.discdescription = regExpNumbers.test(value)
+          ? "&#160;"
+          : "Please put some promotional numbers";
         break;
       default:
         break;
@@ -355,6 +363,10 @@ class RestaurantProfile extends Component {
     };
     var t6 = document.getElementById("phonenumber");
     t6.onkeypress = function (e) {
+      if (e.keyCode === 32) return false;
+    };
+    var t3 = document.getElementById("discdescription");
+    t3.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
 
@@ -528,6 +540,21 @@ class RestaurantProfile extends Component {
                 </a>
               </li>
               <li className="nav-item">
+                {/* <Link to='/ChangePassword'>
+                                    <button className="nav-link" data-toggle="tab">Password</button>
+                                </Link> */}
+                <a
+                  className="nav-link"
+                  data-toggle="tab"
+                  role="tab"
+                  href="#discount"
+                  aria-controls="discount"
+                  aria-selected="false"
+                >
+                  Discount
+                </a>
+              </li>
+              <li className="nav-item">
                 {/* <Link to='#managerAccount'>
                                     <button className="nav-link" data-toggle="tab">Manager</button>
                                 </Link> */}
@@ -572,7 +599,7 @@ class RestaurantProfile extends Component {
                   Password
                 </a>
               </li>
-           
+
             </ul>
           </div>
 
@@ -1728,29 +1755,6 @@ class RestaurantProfile extends Component {
                       </div>
                     </div>
                   </div>
-                  {/* <div className="panel-footer row "> */}
-                  {/* <div className="col-sm-6 text-left">
-                      <button className="btn btn-primary">Save</button>
-                  <div className="panel-footer row ">
-                    <div className="col-sm-6 text-left">
-                      <button
-                        className="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#resProfileResultModal"
-                      >
-                        Save
-                      </button>
-                    </div>
-
-                    <div className="col-sm-6 text-right">
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        id="editButton"
-                      >
-                        Edit
-                    </button>
-                    </div> */}
 
                   <div className="form-inline">
                     <div className="form-group text-center ">
@@ -1760,55 +1764,55 @@ class RestaurantProfile extends Component {
                       </button>
                     </div>
                     <div className="form-group text-center ">
-                      
-                        <button type="button" className="btn btn-primary mr-sm-4 "
-                         data-toggle="modal"
-                         data-target="#deleteRestaurantModal">
-                          {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
+
+                      <button type="button" className="btn btn-primary mr-sm-4 "
+                        data-toggle="modal"
+                        data-target="#deleteRestaurantModal">
+                        {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
-                    {/* Delete Modal */}
-              <div
-                className="modal fade"
-                id="deleteRestaurantModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="deleteRestaurantLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="deleteRestaurantModalLabel">
-                        Delete Restaurant Profile
+                      {/* Delete Modal */}
+                      <div
+                        className="modal fade"
+                        id="deleteRestaurantModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="deleteRestaurantLabel"
+                        aria-hidden="true"
+                      >
+                        <div className="modal-dialog" role="document">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5 className="modal-title" id="deleteRestaurantModalLabel">
+                                Delete Restaurant Profile
                 </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      <p className="alert alert-warning" id="signResultText">
-                        Please Wait...
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div className="modal-body">
+                              <p className="alert alert-warning" id="signResultText">
+                                Please Wait...
                 </p>
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        data-dismiss="modal"
-                      >
-                        Close
+                            </div>
+                            <div className="modal-footer">
+                              <button
+                                type="button"
+                                className="btn btn-primary"
+                                data-dismiss="modal"
+                              >
+                                Close
                 </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                    
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
 
@@ -1899,9 +1903,49 @@ class RestaurantProfile extends Component {
 
               {/* Start Reservation */}
               <div id="reservation" className="tab-pane fade" role="tabpanel" aria-labelledby="reservation">
-                    <RestaurantReservation/>
+                <RestaurantReservation />
               </div>
               {/* End Reservation */}
+
+              {/* Start Discount */}
+              <div id="discount" className="tab-pane fade" role="tabpanel" aria-labelledby="discount">
+                <br />
+                <h4>Discount Promotion</h4>
+                <hr />
+                <p>Add discount or promotions here</p>
+                <div className="form-group row">
+                  <div className="col-md-10">
+                    <textarea
+                      className={
+                        isError.discdescription.length > 6
+                          ? "is-invalid form-control"
+                          : "form-control"
+                      }
+                      rows="1"
+                      id="discdescription"
+                      name="discdescription"
+                      value={this.state.discdescription}
+                      onChange={this.handleChange}
+
+                    ></textarea>
+                    <span className="invalid-feedback">
+                      {Parser(isError.discdescription)}
+                    </span>
+                  </div>
+                  <label
+                    htmlFor="discdescription"
+                    className="col-sm-2 col-form-label"
+                  >
+                    %
+                      </label>
+
+                      <button> Add Discount</button>
+                </div>
+
+
+              </div>
+
+              {/* End Discount */}
 
             </div>
           </div>

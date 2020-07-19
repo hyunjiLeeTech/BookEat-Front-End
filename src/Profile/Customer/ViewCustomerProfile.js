@@ -313,35 +313,37 @@ class ViewCustomerProfile extends Component {
                     </button>
                   </div>
                   <div className="form-group text-center ">
-                    <Link to="/">
-                      <button type="button" className="btn btn-primary mr-sm-4 ">
+                    {/* <Link to="/"> */}
+                      <button type="button" className="btn btn-primary mr-sm-4 "
+                        data-toggle="modal" data-target="#DeleteResultModal"
+                      >
                         {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
-                    </Link>
+                    {/* </Link> */}
                   </div>
                 </div>
               </form>
             </div>
 
             <div id="password" className=" tab-pane card-body">
-
-
-              < ChangePassword />
+              <form onSubmit={this.handleSubmit} noValidate>
+                < ChangePassword />
+              </form>
             </div>
 
-            <form onSubmit={this.handleSubmit} noValidate
-              id="myReservation"
-              className="container tab-pane fade "
-            >
+            <div id="myReservation"
+              className="container tab-pane fade ">
+              <form onSubmit={this.handleSubmit} noValidate>
+                <CustomerReservationHistory />
+              </form>
+            </div>
 
-              <CustomerReservationHistory />
-            </form>
-
-            <form onSubmit={this.handleSubmit} noValidate id="myReview" className="container tab-pane fade">
-
-              <CustomerReviewHistory />
-            </form>
+            <div id="myReview" className="container tab-pane fade">
+              <form onSubmit={this.handleSubmit} noValidate>
+                <CustomerReviewHistory />
+              </form>
+            </div>
           </div>
 
           <div
@@ -385,6 +387,50 @@ class ViewCustomerProfile extends Component {
             </div>
           </div>
         </div>
+
+        {/* DeleteMenuModal */}
+
+        <div
+                    className="modal fade"
+                    id="DeleteResultModal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="DeleteResultModal"
+                    aria-hidden="true"
+                >
+
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="DeleteResultModal">
+                                    Delete Menu
+                            </h5>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p className="alert alert-warning" id="DeleteResultModalText">
+                                    Please Wait...
+                  </p>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-dismiss="modal"
+                                >
+                                    Close
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
       </MainContainer>
     );
   }
