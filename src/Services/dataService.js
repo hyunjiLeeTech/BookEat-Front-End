@@ -294,4 +294,22 @@ export default {
         console.log(err);
       });
   },
+  addMenu(state) {
+    return Axios.post(serverAddress + "/menu/addmenu", state, {
+      headers: authHeader()
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    })
+  },
+  getMenus() {
+    return Axios.get(serverAddress + "/menu/getmenus", {
+      headers: authHeader()
+    }).then((res) => {
+      return res.data
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 };

@@ -6,19 +6,19 @@ import $ from "jquery";
 import "../../../Profile/Customer/ViewCustomerProfile.css";
 import { Tab } from "bootstrap";
 import authService from "../../../Services/AuthService";
-import serverAddress from "../../../Services/ServerUrl";
-import ds from "../../../Services/dataService";
+// import serverAddress from "../../../Services/ServerUrl";
+// import ds from "../../../Services/dataService";
 import Axios from "axios";
 import ChangePassword from "../Customer/ChangePassword"
 import CustomerReservationHistory from "../../../Reservation/Customer/CustomerReservationHistory"
 import CustomerReviewHistory from "../../../Review/Customer/CustomerReviewHistory"
 
 
-const regExpPhone = RegExp(
-  /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
+const regExpPrice = RegExp(
+  /(\d+\.\d{2,2})/g
 );
 
-const formValid = ({ isError, ...customer }) => {
+const formValid = ({ isError, ...rest }) => {
   let isValid = false;
 
   Object.values(isError).forEach((val) => {
@@ -29,8 +29,7 @@ const formValid = ({ isError, ...customer }) => {
     }
   });
 
-  Object.values(customer).forEach((val) => {
-    console.log(customer);
+  Object.values(rest).forEach((val) => {
     if (val === null) {
       isValid = false;
     } else {
@@ -43,55 +42,77 @@ const formValid = ({ isError, ...customer }) => {
 
 class Test extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      firstname: "",
-      lastname: "",
-      email: "",
-      phonenumber: "",
-      isError: {
-        firstname: "&#160;",
-        lastname: "&#160;",
-        phonenumber: "&#160;",
+      menus: [{
+        id: 1, MenuPicture: "",
+        menuName: "",
+        menuPrice: "",
+        menuDescript: "",
+        contenteditable: false,
       },
-      disabled: true
-      //add1
-    //   const [title, setTitle] = useState('')
-      //add1
+
+      // For testing - after connecting with DB, delete
+
+      {
+        id: 2, MenuPicture: "picture",
+        menuName: "Noodle",
+        menuPrice: "25.50",
+        menuDescript: "gooooooood!!!!!",
+        contenteditable: false,
+      }],
+      disabled: true,
+      contenteditable: false,
+      // image: null,
+      isError: {
+        MenuPicture: '&#160;',
+        menuName: '&#160;',
+        menuPrice: '&#160;',
+        menuDescript: '&#160;'
+      }
     };
+    this.onImageChange = this.onImageChange.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.renderTableData = this.renderTableData.bind(this);
+    this.menuItemEditButton = this.menuItemEditButton.bind(this);
 
-    this.handleSubmitCustomerProfile = this.handleSubmitCustomerProfile.bind(this);
-    // this.onClick = this.onClick.bind(this);
-
-    
   }
 
+  onImageChange = (event, index) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      // this.setState({
+      //   image: URL.createObjectURL(img)
+      // });
+      if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
+        this.state.menus[index].MenuPicture = URL.createObjectURL(img)
+        this.forceUpdate();
+      } else {
+        this.setState({
+          image: URL.createObjectURL(img),
+        })
+      }
+
+    }
+  };
+
   handleChange = (e) => {
-   // add2
-   this.setState({id: e.target.value});
-   // add2
-
-
-
     e.preventDefault();
     const { name, value } = e.target;
     let isError = { ...this.state.isError };
     switch (name) {
-      case "firstname":
-        isError.firstname =
-          value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
-
-        break;
-      case "lastname":
-        isError.lastname =
+      case "menuName":
+        isError.menuName =
           value.length >= 2 && value.length <= 32 ? "&#160;" : "Atleast 2 character required";
         break;
-      case "phonenumber":
-        isError.phonenumber = regExpPhone.test(value)
-          ? "&#160;"
-          : "Phone Number is invalid";
+      case "menuPrice":
+        isError.menuPrice =
+          regExpPrice.test(value) ? "&#160;" : "Atleast 1 character required";
+        break;
+      case "menuDescript":
+        isError.menuDescript =
+          value.length >= 5 && value.length <= 100 ? "&#160;" : "Atleast 5 character required";
         break;
       default:
         break;
@@ -102,310 +123,218 @@ class Test extends Component {
     });
   };
 
-  handleSubmitCustomerProfile = (e) => {
-    //  console.log("i came here")
-    const target = e.target;
-    const value = target.name === 'firstname'? target.checked:
-    target.value;
-    const name = target.name;
-    this.setState({
-        [name]: value
-    });
-    e.preventDefault();
-    console.log("submit customer profile")
-    if (formValid(this.state)) {
-      console.log(this.state);
-    } else {
-      console.log("Form is invalid!");
-    }
-  };
-
-
   handleSubmit = (e) => {
-    //add3  
-    alert ( 'this is subited: ' + this.state.value);
-    //add3
-
     e.preventDefault();
+    console.log("saved")
     if (formValid(this.state)) {
-      Axios.post(serverAddress + "/updatecustomerinfo", this.state).then(
-        (customer) => {
-          console.log(customer);
-          if (customer.data.errcode === 0) {
-            $("#updateResultText")
-              .text("Profile update is finished.")
-              .removeClass("alert-warning")
-              .removeClass("alert-danger")
-              .removeClass("alert-success")
-              .addClass("alert-success");
-          } else {
-            $("#updateResultText")
-              .text("Sorry, " + customer.data.errmsg)
-              .removeClass("alert-warning")
-              .removeClass("alert-danger")
-              .removeClass("alert-success");
-          }
-        }
-      );
-      console.log(this.state);
+      console.log(this.state)
     } else {
       console.log("Form is invalid!");
     }
   };
 
-  async componentDidMount() {
-    const customer = await ds.getCustomerInformation();
 
-    if (customer) {
-      this.setState((state, props) => {
-        return {
-          firstname:
-            typeof customer.firstName != "undefined" ? customer.firstName : "",
-          lastname:
-            typeof customer.lastName != "undefined" ? customer.lastName : "",
-          phonenumber:
-            typeof customer.phoneNumber != "undefined"
-              ? customer.phoneNumber
-              : "",
-          email:
-            typeof customer.account != "undefined"
-              ? customer.account.email
-              : "",
-        };
-      });
-    }
-    // Avoid spacing on the form
-    var t4 = document.getElementById("firstname");
-    t4.onkeypress = function (event) {
-      if (event.keyCode === 32) return false;
-    };
+  menuItemEditButton(index) {
+    this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
+    this.forceUpdate();
+    this.setState({});
 
-    var t5 = document.getElementById("lastname");
-    t5.onkeypress = function (event) {
-      if (event.keyCode === 32) return false;
-    };
-
-    // Accept term and condition click link
-    $("#conditionbtn").on("click", () => {
-      $("#accept-terms").removeAttr("disabled");
-    });
+    this.dataPass()
   }
-  // Edit profile - disable
+
+
+
+  renderTableData() {
+    return this.state.menus.map((menu, index) => {
+      const { id, MenuPicture, menuName, menuPrice, menuDescript } = menu
+      return (
+        <tr key={id} id={'menurow' + index}>
+          {/* <td>{MenuPicture}</td> */}
+          <td contenteditable={(this.state.contenteditable)} >
+            <div>
+
+            </div>
+            <div>
+              {/* <row> 
+              <input type="file" name="menuPicture" disabled={(this.state.disabled)}
+                onChange={this.onImageChange} />
+              <img src={this.state.image} />
+               </row>   */}
+              <container>
+                <row>
+                  <input type="file" name="menuPicture"
+                    onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
+
+
+                  {
+                    !this.state.menus[index].contenteditable ? <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                      : null
+                  }
+
+
+
+                </row>
+              </container>
+            </div>
+          </td>
+          {/* <tr>{menuName}</tr>
+                  <tr>{menuPrice}</tr>
+                  <tr>{menuDescript}</tr> */}
+          <td>
+            <tr contenteditable={(this.state.menus[index].contenteditable)} >
+              <input type="text" id="menuName" name="menuName" defaultValue={menuName}
+                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
+            </tr>
+
+            <tr contenteditable={(this.state.menus[index].contenteditable)}>
+              <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice}
+                className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
+
+            <div className="form-group" >
+              <tr contenteditable={(this.state.menus[index].contenteditable)}>
+                <textarea  row="3" id="menuDescript" name="menuDescript" defaultValue={menuDescript}
+                  className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />            
+            </tr>
+            </div>
+
+          </td>
+          <td >
+            <div className="form-group row">
+              {/* <Link to="/EditMenu"> */}
+              <button
+                button id='save_edit_btn'
+                type="button"
+                className="btn btn-primary btn-sm mr-sm-2"
+                onClick={() => this.menuItemEditButton(index)}
+              >
+                {this.state.menus[index].contenteditable ? "Save Change" : "Edit"}
+              </button>
+              {/* </Link> */}
+            </div>
+          </td>
+          <td >
+            <div className="form-group row">
+              <button
+                type="button"
+                className="btn btn-primary btn-sm mr-sm-2"
+              >
+                Delete
+                  </button>
+            </div>
+          </td>
+        </tr>
+      )
+    })
+  }
+
   handleClick() {
     this.setState({ disabled: !this.state.disabled })
-
+    this.setState({ contenteditable: !this.state.contenteditable })
     this.changeText();
   }
-
+  //this.state.menus[index]
   //Edit profile - button
-  changeText() {
+  dataPass() {
     this.setState(state => {
-      return {
-        edit: !state.edit
-      };
-    });
+      this.setState(state => {
+        return {
+          // edit: !state.edit
+        };
+      }, () => {
+        if (this.state.edit) {
+          // change #signResultModal with your code id
+          $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#signResultModal').attr('type', 'button')
+        } else {
+          $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+        }
+      });
+    })
   }
+
 
   render() {
     const { isError } = this.state;
-    const { customer } = this.props;
-
     return (
       <MainContainer>
-        <div className="container mt-3">
-          <div className="card">
-            <ul className="nav nav-tabs">
-              <li className="nav-item">
-                <a className="nav-link active" data-toggle="tab" href="#myProfile">
-                  My profile
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" data-toggle="tab" href="#password">
-                  Password
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" data-toggle="tab" href="#myReservation">
-                  My reservation
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" data-toggle="tab" href="#myReview">
-                  My review
-                </a>
-              </li>
-            </ul>
+        <div form onSubmit={this.handleSubmit} id="addMenu">
+          <div className="form-inline form-group mt-sm-4">
+            <h3> Add Menu </h3>
+            <button type="submit" className="btn btn-primary ml-sm-5"> Save </button>
           </div>
 
-          <div className="tab-content">
-            <div id="myProfile" className="container tab-pane active card">
-              <form onSubmit={this.handleSubmitCustomerProfile} id="profile" className="card-body" noValidate >
-                <br />
-                <h3>My profile</h3>
-                <br />
-                <div className="form-group row">
-                  <label
-                    htmlFor="firstname"
-                    className="col-sm-2 col-form-label"
-                  >
-                    {" "}
-                    First Name
-                  </label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      id="firstname"
-                      name="firstname"
-                      value={this.state.firstname}
-                      className="form-control"
-                      disabled={(this.state.disabled)}
-                      className={isError.firstname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
-                    />
-                    <span className="invalid-feedback">{Parser(isError.firstname)}</span>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <label htmlFor="lastname" className="col-md-2 col-form-label">
-                    {" "}
-                    Last Name
-                  </label>
-                  <div className="col-md-10">
-                    <input
-                      type="text"
-                      id="lastname"
-                      name="lastname"
-                      value={this.state.lastname}
-                      className="form-control"
-                      disabled={(this.state.disabled)}
-                      className={isError.lastname.length > 6 ? "is-invalid form-control" : "form-control"}
-                      onChange={this.handleChange} required
-                    />
-                    <span className="invalid-feedback">{Parser(isError.firstname)}</span>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <label
-                    htmlFor="phonenumber"
-                    className="col-md-2 col-form-label"
-                  >
-                    {" "}
-                    Phone number
-                  </label>
-                  <div className="col-md-10">
-                    <input
-                      type="text"
-                      id="phonenumber"
-                      name="phonenumber"
-                      value={this.state.phonenumber}
-                      className="form-control"
-                      disabled={(this.state.disabled)}
-                      className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.phonenumber} placeholder="Phone Number"
-                      onChange={this.handleChange} required
-                    />
-                    <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
-                  </div>
-                </div>
-                <div className="form-group row">
-                  <label htmlFor="email" className="col-md-2 col-form-label">
-                    {" "}
-                    Email
-                  </label>
-                  <div className="col-md-10">
-                    <input
-                      type="text"
-                      id="email"
-                      name="email"
-                      value={this.state.email}
-                      className="form-control"
-                      disabled={true}
+          {/* add menu */}
+          <div id="menu">
+            <div className="row">
+              <div className="col-sm-3 border">
+                <container>
+                  <row>
+                    <input type="file" name="menuPicture" onChange={this.onImageChange} />
+                    <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+                  </row>
+                </container>
+              </div>
+              <div className="col-sm-9 border">
+                <div className="col container-fluid">
+                  <div className="form-inline">
+                    <label htmlFor="menuName" className="col-sm-2 border-0">Name </label>
+                    <input type="text" id="menuName" name="menuName" className="form-control col-smd-10 mt-sm-2"
+                      className={isError.menuName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                     />
                   </div>
-                </div>
-
-                <div className="form-inline">
-                  <div className="form-group text-center ">
-                    <button onClick={this.handleClick.bind(this)} type="submit" className="btn btn-primary mr-sm-4 ">
-                      {this.state.edit ? "Save Change" : "Edit"}
-
-                    </button>
+                  <div className=" form-inline">
+                    <label htmlFor="menuPrice" className="col-sm-2 border-0">Price</label>
+                    <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" placeholder="price format: 12.30"
+                      className={isError.menuPrice.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
                   </div>
-                  <div className="form-group text-center ">
-                    <Link to="/">
-                      <button type="submit" className="btn btn-primary mr-sm-4 ">
-                        {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
-                      Delete
-                    </button>
-                    </Link>
+                  <div className="form-inline">
+                    <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
+                    <textarea row="3" required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2"
+                      className={isError.menuDescript.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
+                    />
                   </div>
-                </div>
-              </form>
-            </div>
-
-            <div id="password" className=" tab-pane card-body">
-
-
-              < ChangePassword />
-            </div>
-
-            <form onSubmit={this.handleSubmit} noValidate
-              id="myReservation"
-              className="container tab-pane fade "
-            >
-
-              <CustomerReservationHistory />
-            </form>
-
-            <form onSubmit={this.handleSubmit} noValidate id="myReview" className="container tab-pane fade">
-
-              <CustomerReviewHistory />
-            </form>
-          </div>
-
-          <div
-            className="modal fade"
-            id="signResultModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="signResultModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="signResultModalLabel">
-                    Sign up
-                  </h5>
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <p className="alert alert-warning" id="signResultText">
-                    Please Wait...
-                  </p>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+
+        {/* Menu List */}
+        <h3><br />
+          <br />Menu List</h3>
+        {/* <div className="col-md-12"> */}
+        <table id='menus' className="table table-striped col-md-12">
+          <thead>
+            <tr>
+              <th >Image</th>
+              <th className="col-md-5" >Menu Detail</th>
+              <th >Edit</th>
+              <th>Delete</th>
+
+              {/* <th className="col-md-3">Image</th>
+              <th className="col-md-5" >Menu Detail</th>
+              <th className="col-md-2">Edit</th>
+              <th className="col-md-2">Delete</th> */}
+
+              {/* <th scope="col.sm.3" class="col-sm-3">Image</th>
+              <th scope="col">Menu Detail</th>
+              <th scope="col">Edit</th>
+              <th scope="col">Delete</th> */}
+            </tr>
+          </thead>
+          <tbody>
+            {this.renderTableData()}
+          </tbody>
+        </table>
+        {/* </div> */}
       </MainContainer>
     );
   }
 }
 
+
+
+
+
 export default Test;
+
