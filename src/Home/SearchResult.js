@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MainContainer from '../component/Style/MainContainer'
 import SearchBox from './SearchBox';
 import './SearchResult.css'
+import dataService from '../Services/dataService';
 
 class SearchResult extends Component {
 
@@ -10,13 +11,28 @@ class SearchResult extends Component {
         this.state = {
             numberOfPeople: '',
             dateTime: new Date(),
-            resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
+            //resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
+            restaurants: [],
+            filters: [],
         }
 
     }
+    componentWillMount() {
+        dataService.search({
+            numberOfPeople: this.state.numberOfPeople,
+            dateTime: this.state.dateTime,
+            filters: this.state.filters,
+        })
+        .then(res=>{
+            console.log(res.restaurants)
+            this.setState({restaurants: res.restaurants});
+        }).catch(err=>{//TODO: err handling
 
+        })
+    }
 
     componentDidMount() {
+
     }
 
     render() {
