@@ -37,10 +37,6 @@ class Menu extends Component {
         this.state = {
             //Oringin
             menus: [{
-                id: 1, MenuPicture: "picture",
-                menuName: "Noodle",
-                menuPrice: "25.50",
-                menuDescript: "gooooooood!!!!!",
             }],
 
             menuPicture: "",
@@ -169,7 +165,9 @@ class Menu extends Component {
         console.log("saved")
         if (formValid(this.state)) {
             console.log(this.state)
-            ds.addMenu(this.state);
+            ds.addMenu(this.state).then(()=>{
+                this.queryMenus();
+            })
         } else {
             console.log("Form is invalid!");
         }
@@ -181,8 +179,6 @@ class Menu extends Component {
       
        // this.forceUpdate();
         //this.setState({});
-
-       
         this.callModal();
     }
 
