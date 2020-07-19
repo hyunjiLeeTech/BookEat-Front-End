@@ -12,11 +12,15 @@ class CustomerReviewHistory extends Component {
     super(props)
     this.state = {
       reviews: [
-        { id: "", date: "", comment: "", foodRate: "", serviceRate: "", satisfactionRate: "", environmentRate: "" },
+        {
+          id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] },
+        },
         //  For testing
-        { id: "1", date: "20200505", comment: "good", foodRate: "*", serviceRate: "**", satisfactionRate: "**", environmentRate: "**" }
+        {
+          id: "1", date: new Date(), comment: "good", foodRate: 1, serviceRate: 10, satisfactionRate: 3, environmentRate: 2, customer: {}, restauarnt: {}, reservation: { menuItem: [] },
+        }
       ],
-      id: "", date: "", comment: "", foodRate: "", serviceRate: "", satisfactionRate: "", environmentRate: "",
+      id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
       disabled: true,
       contenteditable: false,
       open: false
@@ -26,7 +30,14 @@ class CustomerReviewHistory extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  toggle(index){
+  componentDidMount() {
+    //Query data from the server
+    //this.setState();
+  }
+
+
+
+  toggle(index) {
     this.setState({
       open: !this.state.reviews[index].open
     })
@@ -43,22 +54,31 @@ class CustomerReviewHistory extends Component {
     // }
   };
 
+  renderStars(stars) {//stars is a number
+    //'⭐'
+    var starstring = '';
+    for (var i = 0; i < stars; i++) {
+      starstring += '⭐';
+    }
+    //some magic    
+    return <span>{starstring}</span>
+  }
 
   renderTable() {
     return this.state.reviews.map((review, index) => {
       const { id, date, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
       return (
         //<form onSubmit={this.handleSubmit} id="rendTab" >
-          <tr key={id} id={'reviewrow' + index}>
-            <td  defaultValue={date}> {date}</td>
-            {/* <td contenteditable="true"> {comment}</td> */}
-            <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <textarea row="2" type="text" id="comment" name="comment"
-                defaultValue={comment} className="border-none"
-                disabled={(!this.state.reviews[index].contenteditable)} /></td>
+        <tr key={id} id={'reviewrow' + index}>
+          <td defaultValue={date.toString()}> {date.toString()}</td>
+          {/* <td contenteditable="true"> {comment}</td> */}
+          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+            <textarea row="2" type="text" id="comment" name="comment"
+              defaultValue={comment} className="border-none"
+              disabled={(!this.state.reviews[index].contenteditable)} /></td>
 
 
-            {/* <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          {/* <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <input type="text" id="foodRate" name="foodRate"
               defaultValue={foodRate} className="border-none" disabled={(!this.state.reviews[index].contenteditable)} /></td>
 
@@ -92,8 +112,8 @@ class CustomerReviewHistory extends Component {
 
 
 
-            <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              {/* <container>
+          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+            {/* <container>
             <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                   // onChange={(e) => this.onImageChange(e, index)}
@@ -104,22 +124,22 @@ class CustomerReviewHistory extends Component {
                 }
               </div>
             </container> */}
-              <div class="dropdown">
-                <button type="button"  class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  disabled={(!this.state.reviews[index].contenteditable)}
-                  defaultValue={foodRate}
-                >
-                  Food Rate
+            <div class="dropdown">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                disabled={(!this.state.reviews[index].contenteditable)}
+                defaultValue={foodRate}
+              >
+                Food Rate
                 </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href='#' value={this.state.food1}> <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.food2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.food3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href='#' value={this.state.food1}> <FaThumbsUp /> </a>
+                <a class="dropdown-item" href='#' value={this.state.food2}> <FaThumbsUp />  <FaThumbsUp />  </a>
+                <a class="dropdown-item" href='#' value={this.state.food3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
               </div>
-            </td>
+            </div>
+          </td>
 
-            {/* <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          {/* <td contenteditable={(this.state.reviews[index].contenteditable)}>
               <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                   disabled={(!this.state.reviews[index].contenteditable)}
@@ -137,86 +157,92 @@ class CustomerReviewHistory extends Component {
 
           {/* test for showUp button when Edit button is clicked -------------------------*/}
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <div class="dropdown">
-                <button type="button" onClick={this.toggle.bind(this)} className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  disabled={(!this.state.reviews[index].contenteditable)}
-                  defaultValue={serviceRate}
-                >
-                  Service Rate
+            {
+              this.state.reviews[index].contenteditable ?
+                <div class="dropdown">
+                  <button type="button" onClick={this.toggle.bind(this)} className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                    disabled={(!this.state.reviews[index].contenteditable)}
+                    defaultValue={serviceRate}
+                  >
+                    Service Rate
+              </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href='#' value={this.state.service1}> <FaThumbsUp /> </a>
+                    <a class="dropdown-item" href='#' value={this.state.service2}> <FaThumbsUp />  <FaThumbsUp />  </a>
+                    <a class="dropdown-item" href='#' value={this.state.service3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
+                  </div>
+                </div> : this.renderStars(this.state.reviews[index].serviceRate)
+
+            }
+
+
+          </td>
+
+
+
+          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+            <div class="dropdown">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                disabled={(!this.state.reviews[index].contenteditable)}
+                defaultValue={satisfactionRate}
+              >
+                Satisfaction Rate
                 </button>
-                <div class="dropdown-menu">
-                <a class="dropdown-item" href='#' value={this.state.service1}> <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.service2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.service3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
-              </div>
-            </td>
-
-
-
-            <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  disabled={(!this.state.reviews[index].contenteditable)}
-                  defaultValue={satisfactionRate}
-                >
-                  Satisfaction Rate
-                </button>
-                <div class="dropdown-menu">
+              <div class="dropdown-menu">
                 <a class="dropdown-item" href='#' value={this.state.satify1} > <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.satify2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.satify3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
+                <a class="dropdown-item" href='#' value={this.state.satify2}> <FaThumbsUp />  <FaThumbsUp />  </a>
+                <a class="dropdown-item" href='#' value={this.state.satify3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
               </div>
-            </td>
+            </div>
+          </td>
 
-            <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" 
+          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+            <div class="dropdown">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                 disabled={(!this.state.reviews[index].contenteditable)}
                 defaultValue={environmentRate}
-                >
-                  Environment Rate
+              >
+                Environment Rate
                 </button>
-                <div class="dropdown-menu">
+              <div class="dropdown-menu">
                 <a class="dropdown-item" href='#' value={this.state.environ1}> <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.environ2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.environ3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
+                <a class="dropdown-item" href='#' value={this.state.environ2}> <FaThumbsUp />  <FaThumbsUp />  </a>
+                <a class="dropdown-item" href='#' value={this.state.environ3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
               </div>
-            </td>
+            </div>
+          </td>
 
-            <td >
-              {" "}
-              <div className="form-inline">
-                <div className="form-group">
-                  {/* <Link to="/"> */}
-                  <button
-                    id='save_edit_btn'
-                    onClick={() => this.handleClickReview(index)}
-                    type="button"
-                    className="btn btn-primary btn-sm mr-sm-2"
-                  >
-                    {this.state.reviews[index].contenteditable ? "Save Change" : "Edit"}
+          <td >
+            {" "}
+            <div className="form-inline">
+              <div className="form-group">
+                {/* <Link to="/"> */}
+                <button
+                  id='save_edit_btn'
+                  onClick={() => this.handleClickReview(index)}
+                  type="button"
+                  className="btn btn-primary btn-sm mr-sm-2"
+                >
+                  {this.state.reviews[index].contenteditable ? "Save Change" : "Edit"}
 
-                  </button>
-                  {/* </Link> */}
-                </div>
-                <div className="form-group">
-                  {/* <Link to="/"> */}
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm mr-sm-2"
-                    data-toggle="modal" data-target="#DeleteResultModal"
-                  >
-                    Delete
                 </button>
-                  {/* </Link> */}
-                </div>
+                {/* </Link> */}
               </div>
-            </td>
-          </tr> 
-          //</form>
+              <div className="form-group">
+                {/* <Link to="/"> */}
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm mr-sm-2"
+                  data-toggle="modal" data-target="#DeleteResultModal"
+                >
+                  Delete
+                </button>
+                {/* </Link> */}
+              </div>
+            </div>
+          </td>
+        </tr>
+        //</form>
       )
     })
   }
@@ -224,11 +250,19 @@ class CustomerReviewHistory extends Component {
 
 
   handleClickReview(index) {
+    if(this.state.reviews[index].contenteditable){
+      //This is updating
+      //call server API to update database
+      //Show feedback
+      
+    }
+    
+    
     this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
 
     this.forceUpdate();
-    this.setState({});
-
+    //this.setState({});
+  
     this.callModalReview();
   }
 
