@@ -43,6 +43,8 @@ class SearchResult extends Component {
                         <SearchBox />
                     </div>
 
+
+                    {/* Filter Side of the Page */}
                     <div className="row">
                         <div className="col-sm-4">
                             <div >
@@ -278,6 +280,7 @@ class SearchResult extends Component {
                             </div>
                         </div>
 
+                        {/* Results  */}
                         <div className="col-sm-8">
                             <br />
                             <h4>You search for " "</h4>
@@ -291,8 +294,8 @@ class SearchResult extends Component {
                                             <div className="col-md-6">
                                                 <div className="card-block">
                                                     <h6 className="card-title">Restaurant Title</h6>
-                                                    <p className="card-text">Restaurant Description</p>
                                                     <p className="card-text">Starts Price Range Cuisine Style</p>
+                                                    <p className="card-text">Restaurant Description</p>
                                                     <button href="#" className="btn btn-primary">Reserve</button>
                                                 </div>
                                             </div>
