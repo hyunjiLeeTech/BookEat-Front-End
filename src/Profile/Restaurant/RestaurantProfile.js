@@ -99,6 +99,8 @@ class RestaurantProfile extends Component {
       //Discount
       discdescription: '',
       promdescription: '',
+      discounts: [],
+      contentTable: false,
 
       isError: {
         resname: "&#160;",
@@ -127,6 +129,7 @@ class RestaurantProfile extends Component {
     this.handleSubmitResProfile = this.handleSubmitResProfile.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
+    this.renderDiscountTable = this.renderDiscountTable.bind(this);
 
   }
   onImageChange = event => {
@@ -262,6 +265,9 @@ class RestaurantProfile extends Component {
     ds.getDiscounts().then((res) => {
       console.log("this is discounts");
       console.log(res.discounts);
+      this.setState({
+        discounts: res.discounts
+      })
     })
   }
 
@@ -532,6 +538,80 @@ class RestaurantProfile extends Component {
         $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
       }
     });
+  }
+
+
+  // Discount
+
+  discountEditButton(index) {
+    console.log(this.state.discounts);
+    this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
+
+    if (!this.state.discounts[index].contentTable) {
+      // add stuff for editbutton here
+    }
+    this.callModal();
+  }
+
+  discountDeleteButton(index) {
+    // add stuff for delete button here
+  }
+
+  callModal(index) {
+
+    this.setState(state => () => {
+      if (this.state.discounts[index].contentTable) {
+        $('this.state.discounts[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+      }
+      else {
+        $('this.state.discounts[index].#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+      }
+
+    })
+
+  }
+
+  renderDiscountTable() {
+
+    var rows = [];
+    console.log("discount state" + this.state.discounts);
+    if (typeof this.state.discounts != "undefined") {
+      for (var discount of this.state.discounts) {
+        rows.push(
+          <tr key={rows}>
+            <td >
+              {discount.discdescription}
+            </td>
+            <td>
+              {discount.promdescription}
+            </td>
+            <td>
+              <button id='save_edit_disc_btn'
+                onClick={this.discountEditButton.bind(this)}
+                type="button" className="btn btn-primary mr-sm-4 "
+                data-target="#EditResultModal">
+                {this.state.discount ? "Save Change" : "Edit"}
+
+              </button>
+            </td>
+            <td>
+              <button
+                button id='delete_btn'
+                type="button"
+                className="btn btn-primary btn-sm mr-sm-2"
+                onClick={this.discountDeleteButton.bind(this)}
+                data-toggle="modal" data-target="#DeleteResultModal"
+              >
+                Delete
+                    </button>
+            </td>
+          </tr>
+        )
+      }
+    }
+
+
+
   }
 
 
@@ -2018,29 +2098,17 @@ class RestaurantProfile extends Component {
                 <br />
                 <h4>Discount/Promotion List</h4>
                 <hr />
-                <table className="table table-striped">
+                <table id="discount" className="table table-striped">
                   <thead>
                     <tr>
                       <th scope="col">%</th>
                       <th scope="col">Description</th>
                       <th scope="col"></th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr >
-                      <td>
-                        % number here
-      </td>
-                      <td>
-                        comments here
-      </td>
-                      <td>
-                        <button id='save_edit_disc_btn' onClick={this.handleEdit.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
-                          {this.state.edit ? "Save Change" : "Edit"}
-
-                        </button>
-                      </td>
-                    </tr>
+                    {this.renderDiscountTable()}
                   </tbody>
                 </table>
               </div>
