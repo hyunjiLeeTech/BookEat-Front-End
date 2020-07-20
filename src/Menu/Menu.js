@@ -176,13 +176,13 @@ class Menu extends Component {
     };
 
 
-    menuItemEditButton(index) {  
+    menuItemEditButton(index) {
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
-      
-       // this.forceUpdate();
+
+        // this.forceUpdate();
         //this.setState({});
 
-       
+
         this.callModal();
     }
 
@@ -190,21 +190,21 @@ class Menu extends Component {
     //Edit profile - button
     callModal(index) {
         this.setState(state => {
-            this.setState(state => 
-            //     {
-            //     return {
-            //         // edit: !state.edit
-            //     };
-            // },
-            
-             () => {
-                if (this.state.menus[index].contenteditable){
-                    $('this.state.menus[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
-                }
-                else {
-                    $('this.state.menus[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-                }                
-            });
+            this.setState(state =>
+                //     {
+                //     return {
+                //         // edit: !state.edit
+                //     };
+                // },
+
+                () => {
+                    if (this.state.menus[index].contenteditable) {
+                        $('this.state.menus[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+                    }
+                    else {
+                        $('this.state.menus[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+                    }
+                });
         })
     }
 
@@ -218,9 +218,6 @@ class Menu extends Component {
                 <tr key={id} id={'menurow' + index}>
                     {/* <td>{MenuPicture}</td> */}
                     <td contenteditable={(this.state.contenteditable)} >
-                        <div>
-
-                        </div>
                         <div>
                             {/* <row> 
                 <input type="file" name="menuPicture" disabled={(this.state.disabled)}
@@ -250,7 +247,8 @@ class Menu extends Component {
                     <td>
                         <tr contenteditable={(this.state.menus[index].contenteditable)} >
                             <input type="text" id="menuName" name="menuName" defaultValue={menuName}
-                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
+                                className="border-none"
+                                disabled={(!this.state.menus[index].contenteditable)} />
                         </tr>
 
                         <tr contenteditable={(this.state.menus[index].contenteditable)}>
@@ -302,7 +300,7 @@ class Menu extends Component {
         this.setState({ contenteditable: !this.state.contenteditable })
         this.changeText();
     }
-    
+
 
 
     render() {
@@ -377,8 +375,8 @@ class Menu extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {this.renderMenuInfo()} */}
-                        {this.renderTableData()}
+                        {this.renderMenuInfo()}
+                        {/* {this.renderTableData()} */}
                     </tbody>
                 </table>
                 {/* </div> */}
