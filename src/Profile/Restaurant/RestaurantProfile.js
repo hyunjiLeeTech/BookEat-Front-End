@@ -254,6 +254,17 @@ class RestaurantProfile extends Component {
   //   });
   // };
 
+  componentWillMount() {
+    this.queryDiscounts();
+  }
+
+  queryDiscounts() {
+    ds.getDiscounts().then((res) => {
+      console.log("this is discounts");
+      console.log(res.discounts);
+    })
+  }
+
   async componentDidMount() {
     const usr = authService.getCurrentUser();
     const restaurant = await ds.getRestaurantInformation();

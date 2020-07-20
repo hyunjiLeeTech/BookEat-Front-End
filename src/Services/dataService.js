@@ -360,6 +360,14 @@ export default {
     }).catch((err) => {
       console.log(err);
     })
-  },
+  }, getDiscounts() {
+    return Axios.get(serverAddress + "/discount/getdiscounts", {
+      headers: authHeader()
+    }).then((res) => {
+      return res.data;
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
 
 };
