@@ -99,6 +99,7 @@ class RestaurantProfile extends Component {
       //Discount
       discdescription: '',
       promdescription: '',
+
       isError: {
         resname: "&#160;",
         streetnumber: "&#160;",
@@ -121,6 +122,7 @@ class RestaurantProfile extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleAddDiscount = this.handleAddDiscount.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSubmitResProfile = this.handleSubmitResProfile.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -217,14 +219,25 @@ class RestaurantProfile extends Component {
 
   handleSubmitResProfile = (e) => {
     e.preventDefault();
-    console.log("submit res profile")
     if (formValid(this.state)) {
-      console.log(this.state);
       ds.editRestaurantProfile(this.state);
     } else {
       console.log("Form is invalid!");
     }
   };
+
+  handleAddDiscount = (e) => {
+    e.preventDefault();
+    var discount = {
+      percent: this.state.discdescription,
+      descript: this.state.promdescription
+    }
+
+    ds.addDiscount(discount).then((res) => {
+      this.queryDiscounts();
+      console.log("add discount success")
+    });
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -1986,6 +1999,7 @@ class RestaurantProfile extends Component {
                 </div>
 
                 <button type="button"
+                  onClick={this.handleAddDiscount.bind(this)}
                   className="btn btn-primary">
                   Add Discount
                 </button>

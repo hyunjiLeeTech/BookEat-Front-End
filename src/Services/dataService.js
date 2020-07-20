@@ -351,5 +351,15 @@ export default {
     }).catch((err) => {
       console.log(err);
     })
-  }
+  },
+  addDiscount(state) {
+    return Axios.post(serverAddress + "/discount/adddiscount", state, {
+      headers: authHeader()
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    })
+  },
+
 };
