@@ -13,6 +13,7 @@ import Manager from "./Manager";
 import ChangePassword from "../../component/Forms/Customer/ChangePassword";
 import Menu from "../../Menu/Menu"
 import RestaurantReservation from "../../Reservation/RestaurantReservation";
+import RestaurantLayout from "../../Restaurant/RestaurantLayout";
 
 
 //Validation
@@ -651,6 +652,21 @@ class RestaurantProfile extends Component {
                   aria-selected="false"
                 >
                   Menu
+                </a>
+              </li>
+              <li className="nav-item">
+                {/* <Link to='/'>
+                                    <button className="nav-link" data-toggle="tab">Menu</button>
+                                </Link> */}
+                <a
+                  className="nav-link"
+                  data-toggle="tab"
+                  role="tab"
+                  href="#layout"
+                  aria-controls="layout"
+                  aria-selected="false"
+                >
+                  Restaurant Layout
                 </a>
               </li>
               <li className="nav-item">
@@ -2020,6 +2036,12 @@ class RestaurantProfile extends Component {
                 <RestaurantReservation />
               </div>
               {/* End Reservation */}
+
+              {/* Start Restaurant Layout */}
+              <div id="layout" className="tab-pane fade" role="tabpanel" aria-labelledby="layout">
+                <RestaurantLayout />
+              </div>
+              {/* End Restaurant Layout */}
 
               {/* Start Discount */}
               <div id="discount" className="tab-pane fade" role="tabpanel" aria-labelledby="discount">
