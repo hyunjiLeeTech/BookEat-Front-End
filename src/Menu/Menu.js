@@ -209,15 +209,12 @@ class Menu extends Component {
 
 
     menuItemEditButton(index) {
-        console.log(this.state.menus);
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
-
-        if (!this.state.menus[index].contenteditable) {
-            ds.editMenu(this.state.menus[index]);
-        }
 
         // this.forceUpdate();
         //this.setState({});
+
+
         this.callModal();
     }
 
@@ -254,9 +251,6 @@ class Menu extends Component {
                     {/* <td>{MenuPicture}</td> */}
                     <td contenteditable={(this.state.contenteditable)} >
                         <div>
-
-                        </div>
-                        <div>
                             {/* <row> 
                 <input type="file" name="menuPicture" disabled={(this.state.disabled)}
                   onChange={this.onImageChange} />
@@ -284,8 +278,9 @@ class Menu extends Component {
                     <tr>{menuDescript}</tr> */}
                     <td>
                         <tr contenteditable={(this.state.menus[index].contenteditable)} >
-                            <input type="text" id="menuName" name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
-                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
+                            <input type="text" id="menuName" name="menuName" defaultValue={menuName}
+                                className="border-none"
+                                disabled={(!this.state.menus[index].contenteditable)} />
                         </tr>
 
                         <tr contenteditable={(this.state.menus[index].contenteditable)}>
@@ -413,8 +408,8 @@ class Menu extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {this.renderMenuInfo()} */}
-                        {this.renderTableData()}
+                        {this.renderMenuInfo()}
+                        {/* {this.renderTableData()} */}
                     </tbody>
                 </table>
                 {/* </div> */}
