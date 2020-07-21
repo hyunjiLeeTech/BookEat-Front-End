@@ -136,6 +136,7 @@ return(
                         id="numberOfPeople"
                         name="numberOfPeople"
                         value={this.state.numberOfPeople}
+                        onChange={this.handleChange}
                         required
                     >
                         <option value=""># Of People</option>
