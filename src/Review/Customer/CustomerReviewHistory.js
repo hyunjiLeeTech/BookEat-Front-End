@@ -6,30 +6,33 @@ import { Tab } from "bootstrap";
 import Maincontainer from "../../component/Style/MainContainer"
 import { FaThumbsUp } from 'react-icons/fa'
 import { IconContext } from "react-icons"
+import { ToastContainer, toast, cssTransition } from 'react-toastify';
 
 class CustomerReviewHistory extends Component {
   constructor(props) {
     super(props)
     this.state = {
       reviews: [
-        { id: "", date: "", comment: "", foodRate: "", serviceRate: "", satisfactionRate: "", environmentRate: "" },
+        {
+          id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
+        },
         //  For testing
-        { id: "1", date: "20200505", comment: "good", foodRate: "*", serviceRate: "**", satisfactionRate: "**", environmentRate: "**" }
+        {
+          id: "", date: new Date(), comment: "good", foodRate: 1, serviceRate: 5, satisfactionRate: 3, environmentRate: 2, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
+        }
       ],
-      id: "", date: "", comment: "", foodRate: "", serviceRate: "", satisfactionRate: "", environmentRate: "",
+      // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
       disabled: true,
-      contenteditable: false,
-      open: false
+      contenteditable: false
     };
 
     this.handleClickReview = this.handleClickReview.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  toggle(index){
-    this.setState({
-      open: !this.state.reviews[index].open
-    })
+  componentDidMount() {
+    //Query data from the server
+    //this.setState();
   }
 
   handleSubmit = (e) => {
@@ -43,215 +46,196 @@ class CustomerReviewHistory extends Component {
     // }
   };
 
+  renderStars(stars) {//stars is a number
+    //'⭐'
+    var starstring = '';
+    for (var i = 0; i < stars; i++) {
+      starstring += '⭐';
+    }
+    //some magic    
+    return <span>{starstring}</span>
+  }
 
   renderTable() {
     return this.state.reviews.map((review, index) => {
       const { id, date, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
       return (
-        //<form onSubmit={this.handleSubmit} id="rendTab" >
-          <tr key={id} id={'reviewrow' + index}>
-            <td  defaultValue={date}> {date}</td>
-            {/* <td contenteditable="true"> {comment}</td> */}
-            <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <textarea row="2" type="text" id="comment" name="comment"
-                defaultValue={comment} className="border-none"
-                disabled={(!this.state.reviews[index].contenteditable)} /></td>
-
-
-            {/* <td contenteditable={(this.state.reviews[index].contenteditable)}>
-            <input type="text" id="foodRate" name="foodRate"
-              defaultValue={foodRate} className="border-none" disabled={(!this.state.reviews[index].contenteditable)} /></td>
+        <form onSubmit={this.handleSubmit} id="rendTab" >
+        <tr key={id} id={'reviewrow' + index}>
+          <td defaultValue={date.toString()}> {date.toString()}</td>
 
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
-            <input type="text" id="serviceRate" name="serviceRate"
-              defaultValue={serviceRate} className="border-none" disabled={(!this.state.reviews[index].contenteditable)} /></td>
+            <textarea row="2" type="text" id="comment" name="comment"
+              defaultValue={comment} className="border-none"
+              disabled={(!this.state.reviews[index].contenteditable)}
+               /></td>
+
+
 
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
-            <input type="text" id="satisfactionRate" name="satisfactionRate"
-              defaultValue={serviceRate} className="border-none" disabled={(!this.state.reviews[index].contenteditable)} /></td>
+            {
+              this.state.reviews[index].contenteditable ?
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
-            <input type="text" id="environmentRate" name="environmentRate"
-              defaultValue={serviceRate} className="border-none"
-              disabled={(!this.state.reviews[index].contenteditable)} /></td> \
-              
-               <td contenteditable={(this.state.reviews[index].contenteditable)}>
-            <input type="text" id="serviceRate" name="serviceRate"
-              defaultValue={serviceRate} className="border-none" disabled={(!this.state.reviews[index].contenteditable)} /></td>
-
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
-            <input type="text" id="satisfactionRate" name="satisfactionRate"
-              defaultValue={serviceRate} className="border-none" disabled={(!this.state.reviews[index].contenteditable)} /></td>
-
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
-            <input type="text" id="environmentRate" name="environmentRate"
-              defaultValue={serviceRate} className="border-none"
-              disabled={(!this.state.reviews[index].contenteditable)} /></td>
-
-              */}
-
-
-
-            <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              {/* <container>
-            <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  // onChange={(e) => this.onImageChange(e, index)}
-                  disabled={(!this.state.reviews[index].contenteditable)} />
-                {
-                  !this.state.reviews[index].contenteditable ? src={this.state.reviews[index].foodRate}
-                    : null
-                }
-              </div>
-            </container> */}
-              <div class="dropdown">
-                <button type="button"  class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  disabled={(!this.state.reviews[index].contenteditable)}
-                  defaultValue={foodRate}
-                >
-                  Food Rate
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href='#' value={this.state.food1}> <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.food2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.food3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
-              </div>
-            </td>
-
-            {/* <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  disabled={(!this.state.reviews[index].contenteditable)}
-                >
-                  Service Rate
-                </button>
-                <div class="dropdown-menu">
-                <a class="dropdown-item" href='#' value={this.state.service1}> <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.service2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.service3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
-              </div>
-            </td> */}
-
-
-          {/* test for showUp button when Edit button is clicked -------------------------*/}
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <div class="dropdown">
-                <button type="button" onClick={this.toggle.bind(this)} className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  disabled={(!this.state.reviews[index].contenteditable)}
-                  defaultValue={serviceRate}
-                >
-                  Service Rate
-                </button>
-                <div class="dropdown-menu">
-                <a class="dropdown-item" href='#' value={this.state.service1}> <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.service2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.service3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
-              </div>
-            </td>
-
-
-
-            <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  disabled={(!this.state.reviews[index].contenteditable)}
-                  defaultValue={satisfactionRate}
-                >
-                  Satisfaction Rate
-                </button>
-                <div class="dropdown-menu">
-                <a class="dropdown-item" href='#' value={this.state.satify1} > <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.satify2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.satify3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
-              </div>
-            </td>
-
-            <td contenteditable={(this.state.reviews[index].contenteditable)}>
-              <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" 
-                disabled={(!this.state.reviews[index].contenteditable)}
-                defaultValue={environmentRate}
-                >
-                  Environment Rate
-                </button>
-                <div class="dropdown-menu">
-                <a class="dropdown-item" href='#' value={this.state.environ1}> <FaThumbsUp /> </a>
-                  <a class="dropdown-item" href='#' value={this.state.environ2}> <FaThumbsUp />  <FaThumbsUp />  </a>
-                  <a class="dropdown-item" href='#' value={this.state.environ3}> <FaThumbsUp />  <FaThumbsUp /> <FaThumbsUp /> </a>
-                </div>
-              </div>
-            </td>
-
-            <td >
-              {" "}
-              <div className="form-inline">
-                <div className="form-group">
-                  {/* <Link to="/"> */}
-                  <button
-                    id='save_edit_btn'
-                    onClick={() => this.handleClickReview(index)}
-                    type="button"
-                    className="btn btn-primary btn-sm mr-sm-2"
+                <div class="dropdown">
+                  <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                    disabled={(!this.state.reviews[index].contenteditable)}
+                    defaultValue={foodRate}
                   >
-                    {this.state.reviews[index].contenteditable ? "Save Change" : "Edit"}
-
-                  </button>
-                  {/* </Link> */}
-                </div>
-                <div className="form-group">
-                  {/* <Link to="/"> */}
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm mr-sm-2"
-                    data-toggle="modal" data-target="#DeleteResultModal"
-                  >
-                    Delete
+                    Food Rate
                 </button>
-                  {/* </Link> */}
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href='#' value={this.state.food1}> ⭐ </a>
+                    <a class="dropdown-item" href='#' value={this.state.food2}> ⭐⭐ </a>
+                    <a class="dropdown-item" href='#' value={this.state.food3}> ⭐⭐⭐</a>
+                  </div>
                 </div>
+                : this.renderStars(this.state.reviews[index].foodRate)
+            }
+          </td>
+
+
+          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+            {
+              this.state.reviews[index].contenteditable ?
+                <div class="dropdown">
+                  <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                    disabled={(!this.state.reviews[index].contenteditable)}
+                    defaultValue={serviceRate}
+                  >
+                    Service Rate
+              </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href='#' value={this.state.service1}> ⭐ </a>
+                    <a class="dropdown-item" href='#' value={this.state.service2}> ⭐⭐  </a>
+                    <a class="dropdown-item" href='#' value={this.state.service3}>  ⭐⭐⭐ </a>
+                  </div>
+                </div> : this.renderStars(this.state.reviews[index].serviceRate)
+            }
+          </td>
+
+          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+            {
+              this.state.reviews[index].contenteditable ?
+                <div class="dropdown">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                    disabled={(!this.state.reviews[index].contenteditable)}
+                    defaultValue={satisfactionRate}
+                  >
+                    Satisfaction Rate
+                </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href='#' value={this.state.satisfy1} > ⭐ </a>
+                    <a class="dropdown-item" href='#' value={this.state.satisfy2}> ⭐⭐  </a>
+                    <a class="dropdown-item" href='#' value={this.state.satisfy3}> ⭐⭐⭐ </a>
+                  </div>
+                </div>
+                : this.renderStars(this.state.reviews[index].satisfactionRate)
+            }
+          </td>
+
+          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+            {
+
+              this.state.reviews[index].contenteditable ?
+                <div class="dropdown">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                    disabled={(!this.state.reviews[index].contenteditable)}
+                    defaultValue={environmentRate}
+                  >
+                    Environment Rate
+                </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href='#' value={this.state.environ1}> ⭐ </a>
+                    <a class="dropdown-item" href='#' value={this.state.environ2}> ⭐⭐  </a>
+                    <a class="dropdown-item" href='#' value={this.state.environ3}> ⭐⭐⭐ </a>
+                  </div>
+                </div> : this.renderStars(this.state.reviews[index].serviceRate)
+            }
+          </td>
+
+          <td >
+            {" "}
+            <div className="form-inline">
+              <div className="form-group">
+                {/* <Link to="/"> */}
+                <button
+                  id='save_edit_btn'
+                  onClick={() => this.handleClickReview(index)}
+                  type="button"
+                  className="btn btn-primary btn-sm mr-sm-2"
+                >
+                  {this.state.reviews[index].contenteditable ? "Save Change" : "Edit"}
+
+                </button>
+                {/* </Link> */}
               </div>
-            </td>
-          </tr> 
-          //</form>
+              <div className="form-group">
+                {/* <Link to="/"> */}
+                <button
+                  id='delete_btn'
+                  type="button"
+                  className="btn btn-primary btn-sm mr-sm-2"
+                  data-toggle="modal"
+                  data-target="#DeleteResultModal"
+                // onClick={() => this.handleClickReview(index,id)}
+                >
+                  Delete
+                </button>
+                {/* </Link> */}
+              </div>
+            </div>
+          </td>
+        </tr>
+        </form> 
       )
     })
   }
 
 
 
-  handleClickReview(index) {
+  handleClickReview(index) { 
+    // sample
+    // if (this.state.reviews[index].contenteditable) {
+    //   //This is updating
+    //   //call server API to update database
+    //   //Show UI feedback
+
+    //   console.log("Showing toast")
+    //   //communicating with server
+    //   var t = toast("Updating, please wait", { type: toast.TYPE.INFO, autoClose: false, })
+
+    //   setTimeout(() => { //get the feedback from server
+    //     toast.update(t, { render: "Saved!", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
+    //   }, 1000)
+
+    // }
+
+
     this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
 
-    this.forceUpdate();
-    this.setState({});
+    // this.setState.reviews[index]({contenteditable: !this.state.contenteditable})
 
-    this.callModalReview();
+    this.forceUpdate();
+    //this.setState({});
+
+    this.callModalReview(index);
   }
 
 
   callModalReview(index) {
     this.setState(state => {
-      this.setState(state =>
-        //     {
-        //     return {
-        //         // edit: !state.edit
+        //   return {
+        // //         // edit: !state.edit
         //     };
-        // },
-
-        () => {
-          if (this.state.menus[index].contenteditable) {
-            $('this.state.reviews[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+        },() => {
+          if (this.state.reviews[index].contenteditable ) {
+            $('#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditeResultModal').attr('type', 'button')
           }
           else {
-            $('this.state.reviews[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+            $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
           }
         });
-    })
-  }
+      }
 
   handleChange(e) {
     console.log(e.target.value);
@@ -301,7 +285,7 @@ class CustomerReviewHistory extends Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="DeleteResultModal">
-                    Delete Menu
+                    Delete Review
                             </h5>
                   <button
                     type="button"
@@ -314,6 +298,50 @@ class CustomerReviewHistory extends Component {
                 </div>
                 <div className="modal-body">
                   <p className="alert alert-warning" id="DeleteResultModalText">
+                    Please Wait...
+                  </p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+            </div>
+
+             {/* EditeReviewModal */}
+
+          <div
+            className="modal fade"
+            id="EditeResultModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="EditeResultModal"
+            aria-hidden="true"
+          >
+
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="EditeResultModal">
+                    Saving Changes
+                            </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p className="alert alert-warning" id="EditeResultModalText">
                     Please Wait...
                   </p>
                 </div>

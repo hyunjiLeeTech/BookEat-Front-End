@@ -254,9 +254,6 @@ class Menu extends Component {
                     {/* <td>{MenuPicture}</td> */}
                     <td contenteditable={(this.state.contenteditable)} >
                         <div>
-
-                        </div>
-                        <div>
                             {/* <row> 
                 <input type="file" name="menuPicture" disabled={(this.state.disabled)}
                   onChange={this.onImageChange} />
@@ -413,8 +410,8 @@ class Menu extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {this.renderMenuInfo()} */}
-                        {this.renderTableData()}
+                        {this.renderMenuInfo()}
+                        {/* {this.renderTableData()} */}
                     </tbody>
                 </table>
                 {/* </div> */}
