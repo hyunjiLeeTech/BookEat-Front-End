@@ -186,6 +186,8 @@ class App extends Component {
           <Route exact path="/SearchResult" render={() => <SearchResult />} />
           <Route exact path="/RestaurantDetails" render={() => <RestaurantDetails />} />
         </Switch>
+        <div className="footer-padding">
+        </div>
         <div className="footer">
           <Footer />
         </div>
