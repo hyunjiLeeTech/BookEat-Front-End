@@ -14,11 +14,11 @@ class CustomerReviewHistory extends Component {
     this.state = {
       reviews: [
         {
-          id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
+          id: "", date:"", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
         },
         //  For testing
         {
-          id: "", date: new Date(), comment: "good", foodRate: 1, serviceRate: 5, satisfactionRate: 3, environmentRate: 2, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
+          id: "", date:"", comment: "good", foodRate: 1, serviceRate: 5, satisfactionRate: 3, environmentRate: 2, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
         }
       ],
       // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
@@ -60,7 +60,7 @@ class CustomerReviewHistory extends Component {
     return this.state.reviews.map((review, index) => {
       const { id, date, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
       return (
-        <form onSubmit={this.handleSubmit} id="rendTab" >
+      // <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={id} id={'reviewrow' + index}>
           <td defaultValue={date.toString()}> {date.toString()}</td>
 
@@ -107,7 +107,7 @@ class CustomerReviewHistory extends Component {
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href='#' value={this.state.service1}> ⭐ </a>
                     <a class="dropdown-item" href='#' value={this.state.service2}> ⭐⭐  </a>
-                    <a class="dropdown-item" href='#' value={this.state.service3}>  ⭐⭐⭐ </a>
+                    <a class="dropdown-item" href='#' value={this.state.service3}> ⭐⭐⭐ </a>
                   </div>
                 </div> : this.renderStars(this.state.reviews[index].serviceRate)
             }
@@ -124,7 +124,7 @@ class CustomerReviewHistory extends Component {
                     Satisfaction Rate
                 </button>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href='#' value={this.state.satisfy1} > ⭐ </a>
+                    <a class="dropdown-item" href='#' value={this.state.satisfy1} >⭐ </a>
                     <a class="dropdown-item" href='#' value={this.state.satisfy2}> ⭐⭐  </a>
                     <a class="dropdown-item" href='#' value={this.state.satisfy3}> ⭐⭐⭐ </a>
                   </div>
@@ -186,7 +186,7 @@ class CustomerReviewHistory extends Component {
             </div>
           </td>
         </tr>
-        </form> 
+      // </form> 
       )
     })
   }
