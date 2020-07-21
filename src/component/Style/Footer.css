@@ -1,21 +1,22 @@
-.page-footer .bg-muted{
-    background-color:  #1D3557;
+.page-footer .bg-muted {
+    background-color: #1d3557;
 }
 
-.bg-muted{
-    background-color:  #1D3557;
+.bg-muted {
+    background-color: #1d3557;
 }
 
 /* footer.page-footer{
     display: block !important;
 } */
-  
-.footer{
-   position: block;
-    left: 0;
+
+
+
+.footer {
+    position: absolute;
+    right: 0;
     bottom: 0;
+    left: 0;
     width: 100%;
     text-align: center;
-  }
-  
-  
+}

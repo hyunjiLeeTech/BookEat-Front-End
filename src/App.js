@@ -103,7 +103,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div style={{position:'relative', minHeight:'100vh'}}>
         <NavBar />
         <Switch>
           //test
