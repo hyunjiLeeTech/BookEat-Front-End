@@ -9,13 +9,17 @@ import Axios from 'axios';
 import authHeader from '../Services/authHeader';
 import { useParams } from "react-router";
 import { withRouter } from "react-router";
+import CAFE from '../Image/CAFE.jpg';
+import './RestaurantDetails.css'
+import ResReview from '../Review/ResReview';
+import ViewMenu from '../Menu/ViewMenu';
 
 class Restaurant extends Component {
     constructor(props){
         super(props)
         this.state = {
             id: this.props.match.params.id,
-            res: {},
+            res: [],
         }
     }
 
@@ -30,13 +34,97 @@ class Restaurant extends Component {
     }
 
     componentDidMount(){
+        console.log(this.state.res)
     }
 
     render(){
-        return(<div>
-            {JSON.stringify(this.state.res)}<br/><br/><br/>
-            <Link to={'/customerreserve/' + this.state.id} >Reserve</Link>
-        </div>)
+        return(
+        // <div>
+        //     {JSON.stringify(this.state.res)}<br/><br/><br/>
+        //     <Link to={'/customerreserve/' + this.state.id} >Reserve</Link>
+        // </div>
+        <MainContainer>
+        <div className="card mb-3">
+            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                <ol className="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div className="carousel-inner" id="carousel_pictures">
+                    <div className="carousel-item active">
+                        <img className="d-inline-block" src={CAFE} alt="First slide" />
+                    </div>
+                    <div className="carousel-item">
+                        <img className="d-inline-block" src={CAFE} alt="Second slide" />
+                    </div>
+                    <div className="carousel-item">
+                        <img className="d-inline-block" src={CAFE} alt="Third slide" />
+                    </div>
+                </div>
+                <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="sr-only">Previous</span>
+                </a>
+                <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="sr-only">Next</span>
+                </a>
+            </div>
+            <div className="card-body">
+            <h5 className="card-title">{this.state.res.resName}</h5>
+                <hr />
+                <p>Starts     Review      Price Range    Cuisine Style</p>
+                <p className="card-text">{this.state.res.restaurantDescription}</p>
+                <br />
+                <br />
+                <div className="row">
+                    <div className="col-sm-8">
+                        <h5>Menu</h5>
+                        <hr />
+                        <ViewMenu/>
+                        <br />
+                        <h5>Reviews</h5>
+                        <hr />
+                        <ResReview/>
+
+
+
+                    </div>
+                    <div className="col-sm-4">
+                        <h5>Make a reservation</h5>
+                        <hr />
+                        <p>Click the button to make a reservation</p>
+                        {/* <button type="button"
+                            className="btn btn-primary">
+                           Reserve here
+                        </button> */}
+                        <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
+                        <br />
+                        <br />
+                        <h5>Restaurant Information</h5>
+                        <hr />
+                        <h6>Address</h6>
+                    {/* <p>{this.state.res.addressId}</p> */}
+                    <hr/>
+                    <h6>Store Time</h6>
+                    <p></p>
+                    <hr/>
+                    <h6>Cuisine Style</h6>
+                    {/* <p>{this.state.res.cuisineStyleId}</p> */}
+                    <hr/>
+                    <h6>Category</h6>
+                    {/* <p>{this.state.res.categoryId}</p> */}
+                    
+                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </MainContainer>
+
+        )
     }
 
 }

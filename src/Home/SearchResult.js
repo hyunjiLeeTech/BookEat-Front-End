@@ -305,10 +305,10 @@ class SearchResult extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="card-block">
-                                <h6 className="card-title">{r.resName ? r.resName : 'unknown'}</h6>
+                            <Link to={'/restaurant/' + r._id}><h6 className="card-title">{r.resName ? r.resName : 'unknown'}</h6> </Link> 
                                 <p className="card-text">Starts {this.getPriceRnageById(r.priceRangeId)} {this.getCuisineNameById(r.cuisineStyleId)} {this.getCategoryNameById(r.categoryId)}</p>
                                 <p className="card-text">{r.restaurantDescription}</p>
-                                <Link to={'/restaurant/' + r._id} className="btn btn-primary">Reserve</Link>
+                                <Link to={'/customerreserve/' + r._id} className="btn btn-primary">Reserve</Link>
                             </div>
                         </div>
                         <div className="col-md-6">
