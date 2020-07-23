@@ -4,7 +4,7 @@ import table_m from '../../Image/table-m.png' //TODO: find table_m picture
 import table_l from '../../Image/table-l.png' //TODO: find table_l picture
 import './Layout.css'
 import $ from 'jquery';
-
+import Carousel from 'react-bootstrap/Carousel'
 
 class Layout extends Component {
     constructor(props){
@@ -73,6 +73,68 @@ class Layout extends Component {
         }
         this.rowhtmls = rowshtmls;
     }
+
+    genCarousel(htmls) {
+        const [index, setIndex] = useState(0);
+      
+        const handleSelect = (selectedIndex, e) => {
+          setIndex(selectedIndex);
+        };
+        
+
+
+        return (
+          <Carousel activeIndex={index} onSelect={handleSelect}>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="holder.js/800x400?text=First slide&bg=373940"
+                alt="First slide"
+              />
+              <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="holder.js/800x400?text=Second slide&bg=282c34"
+                alt="Second slide"
+              />
+      
+              <Carousel.Caption>
+                <h3>Second slide label</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src="holder.js/800x400?text=Third slide&bg=20232a"
+                alt="Third slide"
+              />
+      
+              <Carousel.Caption>
+                <h3>Third slide label</h3>
+                <p>
+                  Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                </p>
+              </Carousel.Caption>
+            </Carousel.Item>
+          </Carousel>
+        );
+      }
+      
+
+
+    
+
+
+
+
+
+
 
     componentDidMount() { //TODO: add prefer icon depends on the table prefereces, e.g. quite, door, etc.
         var reactThis = this; //get react reference.
