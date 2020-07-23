@@ -57,6 +57,7 @@ class Menu extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderTableData = this.renderTableData.bind(this);
+        this.addMenuWithImage = this.addMenuWithImage.bind(this);
         this.renderMenuInfo = this.renderMenuInfo.bind(this);
         this.menuItemEditButton = this.menuItemEditButton.bind(this);
         this.menuItemDeleteButton = this.menuItemDeleteButton.bind(this);
@@ -74,7 +75,8 @@ class Menu extends Component {
                 this.forceUpdate();
             } else {
                 this.setState({
-                    image: URL.createObjectURL(img),
+                    //image: URL.createObjectURL(img),
+                    image: event.target.files[0]
                 })
             }
 
@@ -147,6 +149,23 @@ class Menu extends Component {
         })
     }
 
+    async addMenuWithImage(state) {
+        const formData = new FormData();
+        formData.append('menuImage', state.image);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        var menuImageId = await ds.addMenuImage(formData, config);
+        state.menuImageId = menuImageId;
+        console.log(state);
+        await ds.addMenu(state).then(() => {
+            this.queryMenus();
+        })
+
+    }
+
     renderMenuInfo() {
         var rows = [];
         console.log("this is state menu: " + this.state.menus);
@@ -188,14 +207,12 @@ class Menu extends Component {
         }
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
         console.log("saved")
         if (formValid(this.state)) {
             console.log(this.state)
-            ds.addMenu(this.state).then(() => {
-                this.queryMenus();
-            })
+            this.addMenuWithImage(this.state);
         } else {
             console.log("Form is invalid!");
         }

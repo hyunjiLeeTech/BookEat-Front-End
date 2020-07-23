@@ -368,6 +368,13 @@ export default {
     }).catch((err) => {
       console.log(err);
     })
+  },
+  async addMenuImage(formData, config) {
+    console.log("add menu image start");
+    return await Axios.post(serverAddress + "/addMenuImage", formData, config
+    ).then((res) => {
+      return res.data.menuImage;
+    })
   }
 
 };
