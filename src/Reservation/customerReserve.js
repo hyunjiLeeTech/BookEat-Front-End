@@ -209,7 +209,7 @@ class Reserve extends Component {
                         : null}
 
                     {this.state.tableIsVisible ?
-                        <div className="col-xs-8 col-md-8">
+                        <div className="col-xs-12 col-md-12">
                                 <div className="page-header text-left" style={{ marginTop: '5%' }}>
                                     <h3>Please Select a table</h3>
                                 </div>

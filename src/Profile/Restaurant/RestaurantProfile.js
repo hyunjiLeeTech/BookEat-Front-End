@@ -265,10 +265,10 @@ class RestaurantProfile extends Component {
   queryDiscounts() {
     ds.getDiscounts().then((res) => {
       console.log("this is discounts");
-      console.log(res.discounts);
-      this.setState({
-        discounts: res.discounts
-      })
+      //console.log(res.discounts);
+      // this.setState({
+      //   discounts: res.discounts
+      // })
     })
   }
 
