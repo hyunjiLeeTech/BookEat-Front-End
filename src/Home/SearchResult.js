@@ -29,6 +29,8 @@ class SearchResult extends Component {
             priceRangesReady: false,
             resultsReady: false,
             resultsErr: false,
+            keyword: '',
+            times: [],
         }
         this.querySearchResults = this.querySearchResults.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
@@ -39,6 +41,18 @@ class SearchResult extends Component {
         const urlParams = new URLSearchParams(queryString);
         var dt = new Date(urlParams.get('dateTime'))
         var numberOfPeople = urlParams.get('numOfPeople')
+        var keyword = urlParams.get('keyword')
+
+        //var restopentime = this.state.restaurants[0].monOpenTime; //ID
+        //find this ID in times array 
+        // for(var time of this.state.times){
+        //     if(restopentime === time._id){
+        //         restopentime = time.storeTimeName; // 7:00AM
+        //     }
+        // }
+        if(this.state.keyword != null)
+        this.state.keyword = keyword;
+
         if (Object.prototype.toString.call(dt) === "[object Date]") {
             // it is a date
             if (isNaN(dt.getTime())) {  // d.valueOf() could also work
@@ -87,6 +101,7 @@ class SearchResult extends Component {
         this.setState({
             resultsReady: false
         })
+        console.log(this.state.keyword);
         dataService.search({
             numberOfPeople: this.state.numberOfPeople,
             dateTime: this.state.dateTime,
@@ -95,6 +110,7 @@ class SearchResult extends Component {
                 cuisines: Array.from(this.state.filters.cuisine),
                 categories: Array.from(this.state.filters.category)
             },
+            keyword: this.state.keyword,
         })
             .then(res => {
                 console.log(res.restaurants)

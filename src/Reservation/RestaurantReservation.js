@@ -49,6 +49,10 @@ class RestaurantReservation extends Component {
 
     }
 
+    viewFoodOrder(reservationId){
+        //TODO: Add the food order component 
+    }
+
     renderPresent() {
         var rows = [];
         for (var ro of this.state.upcoming) {
@@ -77,7 +81,16 @@ class RestaurantReservation extends Component {
                     </td>
 
                     <td>
-                        <button type="button" className="btn btn-success mr-sm-4"
+                    <button type="button" className="btn btn-primary btn-sm"
+                         id={ro._id + 'btn'}
+                         onClick={() => this.confirmAttandance(ro._id)}> 
+                         {/* TODO:Change onClick to foodorder */}
+                            View Order
+                        </button>
+                    </td>
+
+                    <td>
+                        <button type="button" className="btn btn-success btn-sm"
                          id={ro._id + 'btn'}
                          onClick={() => this.confirmAttandance(ro._id)}>
                             Confirm Attandance 
@@ -85,7 +98,7 @@ class RestaurantReservation extends Component {
                     </td>
 
                     <td>
-                        <button type="button" className="btn btn-primary mr-sm-4 "
+                        <button type="button" className="btn btn-danger btn-sm"
                             id={ro._id + 'btn'}
                             onClick={()=>this.cancelReservation(ro._id)}
                         >
@@ -236,6 +249,7 @@ class RestaurantReservation extends Component {
                                             <th scope="col">Date</th>
                                             <th scope="col"># of People</th>
                                             <th scope="col">Comments</th>
+                                            <th scope="col">Food Order</th>
                                             <th scope="col"></th>
                                             <th scope="col"></th>
                                         </tr>

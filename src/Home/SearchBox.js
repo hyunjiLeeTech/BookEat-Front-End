@@ -9,7 +9,8 @@ class SearchBox extends Component {
             numberOfPeople: '',
             dateTime: new Date(),
             //resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
-            date: ''
+            date: '',
+            keyword: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -28,6 +29,9 @@ class SearchBox extends Component {
                 break;
             case 'time':
                 this.setState({ time: value })
+                break;
+            case 'keyword':
+                this.setState({ keyword: value })
         }
     }
 
@@ -48,12 +52,16 @@ class SearchBox extends Component {
             dateTime: dateTime,
             numofpeople: numofpeople
         })
-        window.location.href = '/searchResult?dateTime=' + dateTime + '&numOfPeople=' + numofpeople;
+        window.location.href = '/searchResult?dateTime=' + dateTime + '&numOfPeople=' + numofpeople + "&keyword="+this.state.keyword;
     }
 
     componentDidMount() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
+        var keyword = urlParams.get('keyword')
+        this.setState({keyword: keyword});
+        //this.state.keyword = keyword;
+        //console.log(this.state.keyword)
         if(urlParams.get('dateTime') != null && urlParams.get('numOfPeople') != null){
             var date = new Date(urlParams.get('dateTime'))
             var numOfPeople = urlParams.get('numOfPeople');
@@ -147,7 +155,7 @@ class SearchBox extends Component {
         return (
 
             <div className="row justify-content-start card-body">
-                <div className=" row col-sm-2">
+                <div className=" row col-sm-3">
                     <input type="date" id="date" name="date" value={this.state.date} placeholder="Date" onChange={this.handleChange}
                         className='form-control' required />
                 </div>
@@ -187,13 +195,13 @@ class SearchBox extends Component {
 
                 </div>
 
-                <div className="col-sm-5 form-group has-search">
+                <div className="col-sm-4 form-group has-search">
                     <span className="fa fa-search form-control-feedback"></span>
-                    <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
+                    <input className="form-control" name='keyword' value={this.state.keyword} onChange={this.handleChange} type="text" placeholder="Search" aria-label="Search" />
 
                 </div>
                 <div className="col-sm-2">
-                    <button type="button" className="btn btn-primary mr-sm-4" onClick={this.handleSubmit}> Find</button>
+                    <button type="button" className="btn btn-primary mr-sm-4"  onClick={this.handleSubmit}> Find</button>
                 </div>
 
             </div>
