@@ -6,108 +6,252 @@ import './ResReview.css'
 
 class ResReview extends Component {
 
- //Design got it from https://bootsnipp.com/snippets/40pMm but partially change
+    constructor(props) {
+        super(props)
+        this.state = {
+            reviews: [
+                {
+                    id: "", date: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
+                }
+            ],
+            disabled: true,
+            contenteditable: false
+        };
+
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("saved")
+
+    };
+
+    renderStars(stars) {//stars is a number
+        //'⭐'
+        var starstring = '';
+        for (var i = 0; i < stars; i++) {
+            starstring += '⭐';
+        }
+        //some magic    
+        return <span role="img">{starstring}</span>
+    }
+
+    renderTable() {
+        return this.state.reviews.map((review, index) => {
+            const { id, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
+            return (
+                // <form onSubmit={this.handleSubmit} id="rendTab" >
+                <tr key={id} id={'reviewrow' + index}>
+
+
+                    <td contenteditable={(this.state.reviews[index].contenteditable)}>
+                        <textarea row="5" type="text" id="comment" name="comment"
+                            defaultValue={comment} className="border-none"
+
+                        /></td>
+
+
+
+                    <td contenteditable={(this.state.reviews[index].contenteditable)}>
+                        {
+                            this.state.reviews[index].contenteditable ?
+
+                                <div class="dropdown">
+                                    <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+
+                                        defaultValue={foodRate}
+                                    >
+                                        Food Rate
+                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href='#' value={this.state.food1}> <span role="img">⭐</span> </a>
+                                        <a class="dropdown-item" href='#' value={this.state.food2}> <span role="img">⭐⭐</span> </a>
+                                        <a class="dropdown-item" href='#' value={this.state.food3}> <span role="img">⭐⭐⭐</span></a>
+                                    </div>
+                                </div>
+                                : this.renderStars(this.state.reviews[index].foodRate)
+                        }
+                    </td>
+
+
+                    <td contenteditable={(this.state.reviews[index].contenteditable)}>
+                        {
+                            this.state.reviews[index].contenteditable ?
+                                <div class="dropdown">
+                                    <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+
+                                        defaultValue={serviceRate}
+                                    >
+                                        Service Rate
+                  </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href='#' value={this.state.service1}> <span role="img">⭐</span> </a>
+                                        <a class="dropdown-item" href='#' value={this.state.service2}> <span role="img">⭐⭐</span>  </a>
+                                        <a class="dropdown-item" href='#' value={this.state.service3}> <span role="img">⭐⭐⭐</span> </a>
+                                    </div>
+                                </div> : this.renderStars(this.state.reviews[index].serviceRate)
+                        }
+                    </td>
+
+                    <td contenteditable={(this.state.reviews[index].contenteditable)}>
+                        {
+                            this.state.reviews[index].contenteditable ?
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+
+                                        defaultValue={satisfactionRate}
+                                    >
+                                        Satisfaction Rate
+                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href='#' value={this.state.satisfy1} ><span role="img">⭐ </span> </a>
+                                        <a class="dropdown-item" href='#' value={this.state.satisfy2}> <span role="img">⭐⭐</span>  </a>
+                                        <a class="dropdown-item" href='#' value={this.state.satisfy3}> <span role="img">⭐⭐⭐ </span></a>
+                                    </div>
+                                </div>
+                                : this.renderStars(this.state.reviews[index].satisfactionRate)
+                        }
+                    </td>
+
+                    <td contenteditable={(this.state.reviews[index].contenteditable)}>
+                        {
+
+                            this.state.reviews[index].contenteditable ?
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+
+                                        defaultValue={environmentRate}
+                                    >
+                                        Environment Rate
+                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href='#' value={this.state.environ1}> <span role="img">⭐</span> </a>
+                                        <a class="dropdown-item" href='#' value={this.state.environ2}> <span role="img">⭐⭐</span>  </a>
+                                        <a class="dropdown-item" href='#' value={this.state.environ3}> <span role="img">⭐⭐⭐</span> </a>
+                                    </div>
+                                </div> : this.renderStars(this.state.reviews[index].serviceRate)
+                        }
+                    </td>
+
+
+                </tr>
+                // </form> 
+            )
+        })
+    }
+
+
+
+
+
+
+    handleChange(e) {
+        console.log(e.target.value);
+        this.setState({ id: e.target.value });
+    }
+
 
     render() {
         return (
             <div className="container">
                 <div className="row">
 
-                    <div className="col-sm-5">
+                    <div className="col-sm-4">
                         <div className="rating-block">
-                            <h4>Average user rating</h4>
+                            <h4>Users Rating</h4>
                             <h2 className="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
                             <button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
-                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span aria-hidden="true">⭐</span>
                             </button>
                             <button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
-                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span aria-hidden="true">⭐</span>
                             </button>
                             <button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
-                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span aria-hidden="true">⭐</span>
                             </button>
                             <button type="button" className="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span aria-hidden="true">⭐</span>
                             </button>
                             <button type="button" className="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                <span className="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span aria-hidden="true">⭐</span>
                             </button>
                         </div>
                     </div>
                     <div className="col-sm-6">
-                        <h4>Rating breakdown</h4>
-                        <div className="pull-left">
-                            <div className="pull-left" >
-                                5 <span className="glyphicon glyphicon-star"></span>
+                        <div class="dropdown">
+                            <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Food Rate
+                            </button>
+                            <div className="dropdown-menu">
+                                <a className="dropdown-item" href='#' value={this.state.food1}> <span role="img">⭐</span> </a>
+                                <a className="dropdown-item" href='#' value={this.state.food2}> <span role="img">⭐⭐</span> </a>
+                                <a className="dropdown-item" href='#' value={this.state.food3}> <span role="img">⭐⭐⭐</span></a>
                             </div>
-                            <div className="pull-left" >
-                                <div className="progress" >
-                                    <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" >
-                                        <span className="sr-only">80% Complete (danger)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="pull-right" >1</div>
                         </div>
-                        <div className="pull-left">
-                            <div className="pull-left" >
-                                4 <span className="glyphicon glyphicon-star"></span>
-                            </div>
-                            <div className="pull-left" >
-                                <div className="progress" >
-                                    <div className="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" >
-                                        <span className="sr-only">80% Complete (danger)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="pull-right" >1</div>
+                        <div class="dropdown">
+                            {/* <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+
+                            >
+                                Service Rate
+                                </button>
+                            <ul class="dropdown-menu">
+                                <li className="dropdown-item"  value={this.state.service1}> <span role="img">⭐</span> </li>
+                                <li className="dropdown-item"  value={this.state.service2}> <span role="img">⭐⭐</span>  </li>
+                                <li className="dropdown-item"  value={this.state.service3}> <span role="img">⭐⭐⭐</span> </li>
+                            </ul> */}
+
+                            <select className="custom-select"
+                                id="serviceRate"
+                                name="serviceRate"
+                            >
+                                <option value="">Service Rate</option>
+                                <option value="">⭐</option>
+                                <option value="">⭐⭐</option>
+                                <option value="">⭐⭐⭐</option>
+                            </select>
                         </div>
-                        <div className="pull-left">
-                            <div className="pull-left" >
-                                3 <span className="glyphicon glyphicon-star"></span>
-                            </div>
-                            <div className="pull-left" >
-                                <div className="progress" >
-                                    <div className="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" >
-                                        <span className="sr-only">80% Complete (danger)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="pull-right" >0</div>
+
+                        <div className="dropdown">
+                            <label>Service Rate</label>
+                            <button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
+                                <span aria-hidden="true">⭐</span>
+                            </button>
+                            <button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
+                                <span aria-hidden="true">⭐</span>
+                            </button>
+                            <button type="button" className="btn btn-warning btn-sm" aria-label="Left Align">
+                                <span aria-hidden="true">⭐</span>
+                            </button>
                         </div>
-                        <div className="pull-left">
-                            <div className="pull-left" >
-                                2 <span className="glyphicon glyphicon-star"></span>
-                            </div>
-                            <div className="pull-left" >
-                                <div className="progress" >
-                                    <div className="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" >
-                                        <span className="sr-only">80% Complete (danger)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="pull-right" >0</div>
-                        </div>
-                        <div className="pull-left">
-                            <div className="pull-left" >
-                                1 <span className="glyphicon glyphicon-star"></span>
-                            </div>
-                            <div className="pull-left" >
-                                <div className="progress" >
-                                    <div className="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" >
-                                        <span className="sr-only">80% Complete (danger)</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="pull-right" >0</div>
-                        </div>
+
+                        <textarea
+                            className="col-sm-12"
+                            rows="4"
+                            id="description"
+                            name="description"
+                        //   value={this.state.description}
+                        //   onChange={this.handleChange}
+                        //   disabled={(!this.state.disabled)}
+                        ></textarea>
+                        {/* <span className="invalid-feedback">
+                          {Parser(isError.description)}
+                        </span> */}
+                        <button type="button" className="btn btn-primary float-right"> Add Review</button>
                     </div>
                 </div>
+
 
                 <div className="row">
                     <div className="col-sm-12">
                         <hr />
                         <div className="col-sm-12">
+
+
+                            {/* <p>{this.renderTable()}</p>
+
                             <textarea
                                 className="col-sm-12"
                                 rows="4"
@@ -120,12 +264,12 @@ class ResReview extends Component {
                             {/* <span className="invalid-feedback">
                           {Parser(isError.description)}
                         </span> */}
-                        <button type="button" className="btn btn-primary float-right"> Add Review</button>
+                            {/* <button type="button" className="btn btn-primary float-right"> Add Review</button> */}
                         </div>
 
-                        <br/>
-                        <br/>
-                      
+                        <br />
+                        <br />
+
 
 
                         <div className="review-block">
@@ -163,7 +307,9 @@ class ResReview extends Component {
                     </div>
                 </div>
 
+
             </div>
+
         )
     }
 
