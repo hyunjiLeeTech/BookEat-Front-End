@@ -76,6 +76,9 @@ class RestaurantProfile extends Component {
       //price range
       priceRange: "",
 
+      // eating time
+      eatingTime: "",
+
       // open and close time
       monOpenTime: "",
       monCloseTime: "",
@@ -119,7 +122,8 @@ class RestaurantProfile extends Component {
         description: "&#160;",
         picture: "&#160;",
         discdescription: "&#160;",
-        promdescription: "&#160;"
+        promdescription: "&#160;",
+        eatingTime: "&#160;"
       }
 
     };
@@ -1001,6 +1005,33 @@ class RestaurantProfile extends Component {
                         <span className="invalid-feedback">
                           {Parser(isError.businessnumber)}
                         </span>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label
+                        htmlFor="eatingTime"
+                        className="col-sm-2 col-form-label"
+                      >
+                        Eating Time
+                      </label>
+
+                      <div className="col-md-10 row">
+                        <select
+                          className="custom-select col-md-5"
+                          id="eatingTime"
+                          name="cuisineStyle"
+                          value={this.state.eatingTime}
+                          onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
+                        >
+                          <option value="">Choose Max Eating Time</option>
+                          <option value="1">1 hour</option>
+                          <option value="2">2 hour</option>
+                          <option value="3">3 hour</option>
+                        </select>
+                        <p className="text-right">*This is the max hour customers can dine in</p>
+                      
                       </div>
                     </div>
 
@@ -2027,7 +2058,7 @@ class RestaurantProfile extends Component {
 
               {/* Start Menu */}
               <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
-                <Menu />
+                {/* <Menu /> */}
               </div>
               {/* End Menu */}
 
