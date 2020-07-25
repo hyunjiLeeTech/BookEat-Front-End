@@ -378,7 +378,7 @@ export default {
     })
   },
   async getImage(state) {
-    return await Axios.get(`${serverAddress}/getimage`, { params: { imageId: state.imageId } })
+    return await Axios.get(`${serverAddress}/getimage/${state.imageId}`)
       .then((res) => {
         return res;
       })
