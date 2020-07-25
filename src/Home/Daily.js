@@ -3,23 +3,51 @@ import MainContainer from '../component/Style/MainContainer';
 import $ from "jquery";
 import { Link } from 'react-router-dom'
 import CAFE from '../Image/CAFE.jpg'
-
+import Star from '../component/Style/Stars'
 
 class Daily extends Component {
 
     constructor(props) {
         super(props)
-        // this.state = {
-        //     restaurant: [ {id:"", restaurantName:"", restaurantPicture:"", totalRate:"" },
-        //     {id:"", restaurantName:"", restaurantPicture:"", totalRate:"" },
-        //     {id:"", restaurantName:"", restaurantPicture:"", totalRate:"" },
-        //     {id:"", restaurantName:"", restaurantPicture:"", totalRate:"" }]
+        this.state = {
+            rastaurants: [
+                { id: "", resName: "", resPicture: "", starAverage: 0 },  
+                // for testing              
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: "1" },                
+                { id: "", resName: "Eat", resPicture: "CAFE", starAverage: "2" },                
+                { id: "", resName: "BookEat", resPicture: "CAFE", starAverage: "3" }
+                
+            ]
+        }
+    }
 
-        //restaurants: []    }
+    renderStars(stars) {//stars is a number
+        var starstring = '';
+        for (var i = 0; i < stars; i++) {
+            starstring += '⭐';
+        }
+        //some magic    
+        return <span>{starstring}</span>
+    }
 
-        // renderRestaurants(restaurants) {
+    renderRestaurants() {
+        return this.state.rastaurants.map((restaurant, index) => {
+            const { id, resName, resPicture, starAverage } = restaurant
+            return (
+                // <form onSubmit={this.handleSubmit} id="rendRes">
+                 <div key={id} id={'restaurantrow' + index} className="card text-center scroll" style={{ width: "18rem" , height: "13rem"}}>
+                        <img className="card-img-top" 
+                        src={resPicture} alt="Card image cap" />
+                        <div className="card-body" >
+                            < div className="card-title" value={resName}><h7>{resName}  {this.renderStars(starAverage)}</h7><h2/>
+                          
+                        </div>
+                        </div>
+                     </div>
+                // </form>
+            )
 
-        // }
+        })
 
     }
 
@@ -28,20 +56,7 @@ class Daily extends Component {
             <MainContainer>
                 <h5>Daily Pick Up</h5>
                 <div class="card-deck">
-                    <div class="card">
-                        <img class="card-img-top" src={CAFE.jpg} alt="Card image cap" />
-                        <div class="card-body">
-                            <h5 class="card-title">restaurantName</h5>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img class="card-img-top" src=".../100px180/" alt="Card image cap" />
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>                    
+                    {this.renderRestaurants()}
                 </div>
             </MainContainer>
         )

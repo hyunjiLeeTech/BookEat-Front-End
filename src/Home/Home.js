@@ -27,7 +27,7 @@ class Home extends Component {
                     <hr />
                     <Star type='bar' stars={3.8} />
                     <hr />
-                    <Star type='splitedBar' stars={3.8} />
+                    <Star type='splitedBar' stars={3.8} /> 
                     <hr />
                     <Star isClickAble={true} type='star' stars={2} callback={
                         (e) => { console.log(e) }
