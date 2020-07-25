@@ -325,10 +325,12 @@ export default {
       console.log(err);
     })
   },
-  getMenus() {
-    return Axios.get(serverAddress + "/menu/getmenus", {
+  async getMenus() {
+    return await Axios.get(serverAddress + "/menu/getmenus", {
       headers: authHeader()
     }).then((res) => {
+      console.log("ds get menu")
+      console.log(res.data);
       return res.data
     }).catch((err) => {
       console.log(err)
@@ -371,10 +373,19 @@ export default {
   },
   async addMenuImage(formData, config) {
     console.log("add menu image start");
-    return await Axios.post(serverAddress + "/addMenuImage", formData, config
-    ).then((res) => {
+    return await Axios.post(serverAddress + "/addMenuImage", formData, config).then((res) => {
       return res.data.menuImage;
     })
-  }
-
+  },
+  async getImage(state) {
+    return await Axios.get(serverAddress + "/getimage", state)
+      .then((res) => {
+        console.log(res);
+        console.log('success get image');
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };

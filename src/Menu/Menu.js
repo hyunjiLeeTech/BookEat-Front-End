@@ -140,13 +140,23 @@ class Menu extends Component {
         this.queryMenus();
     }
 
-    queryMenus() {
-        ds.getMenus().then((res) => {
-            console.log(res.menus);
-            this.setState({
-                menus: res.menus
-            })
-        })
+    async queryMenus() {
+        // ds.getMenus().then((res) => {
+        //     console.log(res.menus);
+        //     this.setState({
+        //         menus: res.menus
+        //     })
+        // })
+        let menuContents = await ds.getMenus();
+
+        console.log("hello this is image");
+        let image = await ds.getImageTest();
+        console.log(image);
+
+        console.log('query menus');
+        console.log(menuContents);
+
+        let menus = await ds.getImage(menuContents);
     }
 
     async addMenuWithImage(state) {
@@ -213,6 +223,7 @@ class Menu extends Component {
         if (formValid(this.state)) {
             console.log(this.state)
             this.addMenuWithImage(this.state);
+
         } else {
             console.log("Form is invalid!");
         }
