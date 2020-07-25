@@ -11,36 +11,6 @@ function sleep(ms) {
 }
 
 export default {
-  getPriceRanges(){
-    return Axios.get(serverAddress + "/pricerange")
-      .then(function (req) {
-        return req.data;
-      })
-      .catch((err) => {
-        //TODO: errhandling
-        throw err
-      });
-  },
-  getCuisines(){
-    return Axios.get(serverAddress + "/cuisinestyle")
-      .then(function (req) {
-        return req.data;
-      })
-      .catch((err) => {
-        //TODO: errhandling
-        throw err
-      });
-  },
-  getCategories(){
-    return Axios.get(serverAddress + "/category")
-      .then(function (req) {
-        return req.data;
-      })
-      .catch((err) => {
-        //TODO: errhandling
-        throw err
-      });
-  },
   search(info) {
     return Axios.post(serverAddress + "/search", info)
       .then(function (req) {
@@ -108,7 +78,6 @@ export default {
         return req.data;
       })
       .catch((err) => {
-        throw err;
         //TODO: errhandling
       });
   },
