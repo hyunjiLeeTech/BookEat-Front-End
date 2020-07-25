@@ -13,6 +13,7 @@ import Manager from "./Manager";
 import ChangePassword from "../../component/Forms/Customer/ChangePassword";
 import Menu from "../../Menu/Menu"
 import RestaurantReservation from "../../Reservation/RestaurantReservation";
+import RestaurantLayout from "../../Restaurant/RestaurantLayout";
 
 
 //Validation
@@ -75,6 +76,9 @@ class RestaurantProfile extends Component {
       //price range
       priceRange: "",
 
+      // eating time
+      eatingTime: "",
+
       // open and close time
       monOpenTime: "",
       monCloseTime: "",
@@ -93,12 +97,11 @@ class RestaurantProfile extends Component {
       description: "",
       picture: "",
 
-
-      image: '',
-
       //Discount
       discdescription: '',
       promdescription: '',
+      discounts: [],
+      contentTable: false,
 
       isError: {
         resname: "&#160;",
@@ -116,7 +119,8 @@ class RestaurantProfile extends Component {
         description: "&#160;",
         picture: "&#160;",
         discdescription: "&#160;",
-        promdescription: "&#160;"
+        promdescription: "&#160;",
+        eatingTime: "&#160;"
       }
 
     };
@@ -127,14 +131,24 @@ class RestaurantProfile extends Component {
     this.handleSubmitResProfile = this.handleSubmitResProfile.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
+    this.renderDiscountTable = this.renderDiscountTable.bind(this);
 
   }
-  onImageChange = event => {
+  onImageChange = (event, index) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      this.setState({
-        image: URL.createObjectURL(img)
-      });
+      // this.setState({
+      //   image: URL.createObjectURL(img)
+      // });
+      if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
+        this.state.picture = URL.createObjectURL(img)
+        this.forceUpdate();
+      } else {
+        this.setState({
+          image: URL.createObjectURL(img),
+        })
+      }
+
     }
   };
 
@@ -261,7 +275,10 @@ class RestaurantProfile extends Component {
   queryDiscounts() {
     ds.getDiscounts().then((res) => {
       console.log("this is discounts");
-      console.log(res.discounts);
+      //console.log(res.discounts);
+      // this.setState({
+      //   discounts: res.discounts
+      // })
     })
   }
 
@@ -475,26 +492,26 @@ class RestaurantProfile extends Component {
       });
 
       //Restaurant Image Upload
-      $('#upload').on('click', function () {
-        var file_data = $('#upload').prop('upload')[0];
-        var form_data = new FormData();
-        form_data.append('upload', file_data);
-        $.ajax({
-          url: 'http://localhost:3000/Image', // point to server-side controller method
-          dataType: 'text', // what to expect back from the server
-          cache: false,
-          contentType: false,
-          processData: false,
-          data: form_data,
-          type: 'post',
-          success: function (response) {
-            $('#msg').html(response); // display success response from the server
-          },
-          error: function (response) {
-            $('#msg').html(response); // display error response from the server
-          }
-        });
-      });
+      // $('#upload').on('click', function () {
+      //   var file_data = $('#upload').prop('upload')[0];
+      //   var form_data = new FormData();
+      //   form_data.append('upload', file_data);
+      //   $.ajax({
+      //     url: 'http://localhost:3000/Image', // point to server-side controller method
+      //     dataType: 'text', // what to expect back from the server
+      //     cache: false,
+      //     contentType: false,
+      //     processData: false,
+      //     data: form_data,
+      //     type: 'post',
+      //     success: function (response) {
+      //       $('#msg').html(response); // display success response from the server
+      //     },
+      //     error: function (response) {
+      //       $('#msg').html(response); // display error response from the server
+      //     }
+      //   });
+      // });
 
     });
   }
@@ -535,6 +552,80 @@ class RestaurantProfile extends Component {
   }
 
 
+  // Discount
+
+  discountEditButton(index) {
+    console.log(this.state.discounts);
+    this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
+
+    if (!this.state.discounts[index].contentTable) {
+      // add stuff for editbutton here
+    }
+    this.callModal();
+  }
+
+  discountDeleteButton(index) {
+    // add stuff for delete button here
+  }
+
+  callModal(index) {
+
+    this.setState(state => () => {
+      if (this.state.discounts[index].contentTable) {
+        $('this.state.discounts[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+      }
+      else {
+        $('this.state.discounts[index].#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+      }
+
+    })
+
+  }
+
+  renderDiscountTable() {
+
+    var rows = [];
+    console.log("discount state" + this.state.discounts);
+    if (typeof this.state.discounts != "undefined") {
+      for (var discount of this.state.discounts) {
+        rows.push(
+          <tr key={rows}>
+            <td >
+              {discount.discdescription}
+            </td>
+            <td>
+              {discount.promdescription}
+            </td>
+            <td>
+              <button id='save_edit_disc_btn'
+                onClick={this.discountEditButton.bind(this)}
+                type="button" className="btn btn-primary mr-sm-4 "
+                data-target="#EditResultModal">
+                {this.state.discount ? "Save Change" : "Edit"}
+
+              </button>
+            </td>
+            <td>
+              <button
+                button id='delete_btn'
+                type="button"
+                className="btn btn-primary btn-sm mr-sm-2"
+                onClick={this.discountDeleteButton.bind(this)}
+                data-toggle="modal" data-target="#DeleteResultModal"
+              >
+                Delete
+                    </button>
+            </td>
+          </tr>
+        )
+      }
+    }
+
+
+
+  }
+
+
 
   render() {
     const { isError } = this.state;
@@ -571,6 +662,21 @@ class RestaurantProfile extends Component {
                   aria-selected="false"
                 >
                   Menu
+                </a>
+              </li>
+              <li className="nav-item">
+                {/* <Link to='/'>
+                                    <button className="nav-link" data-toggle="tab">Menu</button>
+                                </Link> */}
+                <a
+                  className="nav-link"
+                  data-toggle="tab"
+                  role="tab"
+                  href="#layout"
+                  aria-controls="layout"
+                  aria-selected="false"
+                >
+                  Restaurant Layout
                 </a>
               </li>
               <li className="nav-item">
@@ -905,6 +1011,33 @@ class RestaurantProfile extends Component {
                         <span className="invalid-feedback">
                           {Parser(isError.businessnumber)}
                         </span>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label
+                        htmlFor="eatingTime"
+                        className="col-sm-2 col-form-label"
+                      >
+                        Eating Time
+                      </label>
+
+                      <div className="col-md-10 row">
+                        <select
+                          className="custom-select col-md-5"
+                          id="eatingTime"
+                          name="cuisineStyle"
+                          value={this.state.eatingTime}
+                          onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
+                        >
+                          <option value="">Choose Max Eating Time</option>
+                          <option value="1">1 hour</option>
+                          <option value="2">2 hour</option>
+                          <option value="3">3 hour</option>
+                        </select>
+                        <p className="text-right">*This is the max hour customers can dine in</p>
+
                       </div>
                     </div>
 
@@ -1737,7 +1870,7 @@ class RestaurantProfile extends Component {
                         Restaurant Picture
                       </label>
 
-                      <div className="custom-file col-md-9">
+                      {/* <div className="custom-file col-md-9">
                         <input
                           type="file"
                           multiple
@@ -1758,7 +1891,14 @@ class RestaurantProfile extends Component {
                       <div className="input-group-append">
                         <button className="btn btn-outline-secondary" type="button" id="upload">Upload</button>
                       </div>
-                      <p id="msg"></p>
+                      <p id="msg"></p> */}
+
+                      <input type="file" name="picture" id="picture" value={this.state.picture}
+                        onChange={this.onImageChange} disabled={(!this.state.disabled)} />
+
+                      <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+
+
 
                     </div>
 
@@ -1931,7 +2071,7 @@ class RestaurantProfile extends Component {
 
               {/* Start Menu */}
               <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
-                <Menu />
+                {/* <Menu /> */}
               </div>
               {/* End Menu */}
 
@@ -1940,6 +2080,12 @@ class RestaurantProfile extends Component {
                 <RestaurantReservation />
               </div>
               {/* End Reservation */}
+
+              {/* Start Restaurant Layout */}
+              <div id="layout" className="tab-pane fade" role="tabpanel" aria-labelledby="layout">
+                <RestaurantLayout />
+              </div>
+              {/* End Restaurant Layout */}
 
               {/* Start Discount */}
               <div id="discount" className="tab-pane fade" role="tabpanel" aria-labelledby="discount">
@@ -2018,29 +2164,17 @@ class RestaurantProfile extends Component {
                 <br />
                 <h4>Discount/Promotion List</h4>
                 <hr />
-                <table className="table table-striped">
+                <table id="discount" className="table table-striped">
                   <thead>
                     <tr>
                       <th scope="col">%</th>
                       <th scope="col">Description</th>
                       <th scope="col"></th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr >
-                      <td>
-                        % number here
-      </td>
-                      <td>
-                        comments here
-      </td>
-                      <td>
-                        <button id='save_edit_disc_btn' onClick={this.handleEdit.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
-                          {this.state.edit ? "Save Change" : "Edit"}
-
-                        </button>
-                      </td>
-                    </tr>
+                    {this.renderDiscountTable()}
                   </tbody>
                 </table>
               </div>
