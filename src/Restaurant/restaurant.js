@@ -13,6 +13,7 @@ import CAFE from '../Image/CAFE.jpg';
 import './RestaurantDetails.css'
 import ResReview from '../Review/ResReview';
 import ViewMenu from '../Menu/ViewMenu';
+import FullscreenError from '../component/Style/FullscreenError'
 
 class Restaurant extends Component {
     constructor(props){
@@ -20,6 +21,7 @@ class Restaurant extends Component {
         this.state = {
             id: this.props.match.params.id,
             res: [],
+            resultsErr: false,
         }
     }
 
@@ -36,6 +38,53 @@ class Restaurant extends Component {
     componentDidMount(){
         console.log(this.state.res)
     }
+    getCuisineNameById(id) {
+        try {
+            for (var c of this.cuisines) {
+                if (c._id == id) return c.cuisineName;
+            }
+        } catch (err) {
+            return null
+        }
+
+        return null;
+    }
+
+    getCategoryNameById(id) {
+        try {
+            for (var c of this.categories) {
+                if (c._id == id) return c.categoryName;
+            }
+        } catch (err) {
+            return null
+        }
+
+        return null;
+    }
+
+    getPriceRnageById(id) {
+        var renderPriceRangeText = function (name) {
+            switch (name) {
+                case 'low':
+                    return '$ ($0-$50)'
+                case 'medium':
+                    return '$$ ($50-$100)'
+                case 'high':
+                    return '$$$ ($100+)'
+                default:
+                    return ''
+            }
+        }
+        try {
+            for (var c of this.priceRanges) {
+                if (c._id == id) return renderPriceRangeText(c.priceRangeName)
+            }
+        } catch (err) {
+            return null
+        }
+
+        return null;
+    }
 
     render(){
         return(
@@ -43,7 +92,14 @@ class Restaurant extends Component {
         //     {JSON.stringify(this.state.res)}<br/><br/><br/>
         //     <Link to={'/customerreserve/' + this.state.id} >Reserve</Link>
         // </div>
+        
         <MainContainer>
+            {this.state.resultsErr
+                    ?
+                    FullscreenError("An error occured, please try again later")
+                    :
+                    null
+                }
         <div className="card mb-3">
             <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                 <ol className="carousel-indicators">
@@ -111,10 +167,10 @@ class Restaurant extends Component {
                     <p></p>
                     <hr/>
                     <h6>Cuisine Style</h6>
-                    {/* <p>{this.state.res.cuisineStyleId}</p> */}
+                    <p>{this.getCuisineNameById(this.state.res.cuisineStyleId)}</p>
                     <hr/>
                     <h6>Category</h6>
-                    {/* <p>{this.state.res.categoryId}</p> */}
+                    <p>{this.getCategoryNameById(this.state.res.categoryId)}</p>
                     
                        
                     </div>
