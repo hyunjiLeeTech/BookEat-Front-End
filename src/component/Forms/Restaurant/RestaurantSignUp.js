@@ -219,7 +219,9 @@ class RestaurantSignUp extends Component {
       <MainContainer>
         <div className="container">
           <div className="page-header text-center">
-            <h1>Welcome to BookEat!</h1>
+            <br/>
+            <h1>Restaurant's Sign Up</h1>
+            <br/>
           </div>
 
           <form className="text-center" onSubmit={this.handleSubmit} noValidate>

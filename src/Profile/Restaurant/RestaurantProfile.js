@@ -76,6 +76,9 @@ class RestaurantProfile extends Component {
       //price range
       priceRange: "",
 
+      // eating time
+      eatingTime: "",
+
       // open and close time
       monOpenTime: "",
       monCloseTime: "",
@@ -93,9 +96,6 @@ class RestaurantProfile extends Component {
       sunCloseTime: "",
       description: "",
       picture: "",
-
-
-      image: '',
 
       //Discount
       discdescription: '',
@@ -119,7 +119,8 @@ class RestaurantProfile extends Component {
         description: "&#160;",
         picture: "&#160;",
         discdescription: "&#160;",
-        promdescription: "&#160;"
+        promdescription: "&#160;",
+        eatingTime: "&#160;"
       }
 
     };
@@ -133,12 +134,21 @@ class RestaurantProfile extends Component {
     this.renderDiscountTable = this.renderDiscountTable.bind(this);
 
   }
-  onImageChange = event => {
+  onImageChange = (event, index) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      this.setState({
-        image: URL.createObjectURL(img)
-      });
+      // this.setState({
+      //   image: URL.createObjectURL(img)
+      // });
+      if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
+        this.state.picture = URL.createObjectURL(img)
+        this.forceUpdate();
+      } else {
+        this.setState({
+          image: URL.createObjectURL(img),
+        })
+      }
+
     }
   };
 
@@ -264,11 +274,11 @@ class RestaurantProfile extends Component {
 
   queryDiscounts() {
     ds.getDiscounts().then((res) => {
-      console.log("this is discounts");
+      //console.log("this is discounts");
       //console.log(res.discounts);
-      // this.setState({
-      //   discounts: res.discounts
-      // })
+      this.setState({
+        discounts: res.discounts
+      })
     })
   }
 
@@ -482,26 +492,26 @@ class RestaurantProfile extends Component {
       });
 
       //Restaurant Image Upload
-      $('#upload').on('click', function () {
-        var file_data = $('#upload').prop('upload')[0];
-        var form_data = new FormData();
-        form_data.append('upload', file_data);
-        $.ajax({
-          url: 'http://localhost:3000/Image', // point to server-side controller method
-          dataType: 'text', // what to expect back from the server
-          cache: false,
-          contentType: false,
-          processData: false,
-          data: form_data,
-          type: 'post',
-          success: function (response) {
-            $('#msg').html(response); // display success response from the server
-          },
-          error: function (response) {
-            $('#msg').html(response); // display error response from the server
-          }
-        });
-      });
+      // $('#upload').on('click', function () {
+      //   var file_data = $('#upload').prop('upload')[0];
+      //   var form_data = new FormData();
+      //   form_data.append('upload', file_data);
+      //   $.ajax({
+      //     url: 'http://localhost:3000/Image', // point to server-side controller method
+      //     dataType: 'text', // what to expect back from the server
+      //     cache: false,
+      //     contentType: false,
+      //     processData: false,
+      //     data: form_data,
+      //     type: 'post',
+      //     success: function (response) {
+      //       $('#msg').html(response); // display success response from the server
+      //     },
+      //     error: function (response) {
+      //       $('#msg').html(response); // display error response from the server
+      //     }
+      //   });
+      // });
 
     });
   }
@@ -573,9 +583,9 @@ class RestaurantProfile extends Component {
   }
 
   renderDiscountTable() {
-
     var rows = [];
     console.log("discount state" + this.state.discounts);
+    console.log("HERE");
     if (typeof this.state.discounts != "undefined") {
       for (var discount of this.state.discounts) {
         rows.push(
@@ -1001,6 +1011,33 @@ class RestaurantProfile extends Component {
                         <span className="invalid-feedback">
                           {Parser(isError.businessnumber)}
                         </span>
+                      </div>
+                    </div>
+
+                    <div className="form-group row">
+                      <label
+                        htmlFor="eatingTime"
+                        className="col-sm-2 col-form-label"
+                      >
+                        Eating Time
+                      </label>
+
+                      <div className="col-md-10 row">
+                        <select
+                          className="custom-select col-md-5"
+                          id="eatingTime"
+                          name="cuisineStyle"
+                          value={this.state.eatingTime}
+                          onChange={this.handleChange}
+                          disabled={(!this.state.disabled)}
+                        >
+                          <option value="">Choose Max Eating Time</option>
+                          <option value="1">1 hour</option>
+                          <option value="2">2 hour</option>
+                          <option value="3">3 hour</option>
+                        </select>
+                        <p className="text-right">*This is the max hour customers can dine in</p>
+
                       </div>
                     </div>
 
@@ -1833,7 +1870,7 @@ class RestaurantProfile extends Component {
                         Restaurant Picture
                       </label>
 
-                      <div className="custom-file col-md-9">
+                      {/* <div className="custom-file col-md-9">
                         <input
                           type="file"
                           multiple
@@ -1854,7 +1891,14 @@ class RestaurantProfile extends Component {
                       <div className="input-group-append">
                         <button className="btn btn-outline-secondary" type="button" id="upload">Upload</button>
                       </div>
-                      <p id="msg"></p>
+                      <p id="msg"></p> */}
+
+                      <input type="file" name="picture" id="picture" value={this.state.picture}
+                        onChange={this.onImageChange} disabled={(!this.state.disabled)} />
+
+                      <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+
+
 
                     </div>
 

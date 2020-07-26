@@ -155,7 +155,7 @@ class SearchBox extends Component {
         return (
 
             <div className="row justify-content-start card-body">
-                <div className=" row col-sm-2">
+                <div className=" row col-sm-3">
                     <input type="date" id="date" name="date" value={this.state.date} placeholder="Date" onChange={this.handleChange}
                         className='form-control' required />
                 </div>
@@ -195,7 +195,7 @@ class SearchBox extends Component {
 
                 </div>
 
-                <div className="col-sm-5 form-group has-search">
+                <div className="col-sm-4 form-group has-search">
                     <span className="fa fa-search form-control-feedback"></span>
                     <input className="form-control" name='keyword' value={this.state.keyword} onChange={this.handleChange} type="text" placeholder="Search" aria-label="Search" />
 
