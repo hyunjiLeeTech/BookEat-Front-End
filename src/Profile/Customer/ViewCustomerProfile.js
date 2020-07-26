@@ -152,15 +152,15 @@ class ViewCustomerProfile extends Component {
       });
     }
     // Avoid spacing on the form
-    var t4 = document.getElementById("firstname");
-    t4.onkeypress = function (event) {
-      if (event.keyCode === 32) return false;
-    };
+    // var t4 = document.getElementById("firstname");
+    // t4.onkeypress = function (event) {
+    //   if (event.keyCode === 32) return false;
+    // };
 
-    var t5 = document.getElementById("lastname");
-    t5.onkeypress = function (event) {
-      if (event.keyCode === 32) return false;
-    };
+    // var t5 = document.getElementById("lastname");
+    // t5.onkeypress = function (event) {
+    //   if (event.keyCode === 32) return false;
+    // };
 
     // Accept term and condition click link
     $("#conditionbtn").on("click", () => {
