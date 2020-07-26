@@ -4,12 +4,11 @@ import Daily from './Daily';
 import Feature from './Feature';
 import Favorite from './Favorite';
 import SearchBox from './SearchBox';
-
+import $ from "jquery";
 
 import Star from '../component/Style/Stars'
 class Home extends Component {
-
-
+    
     render() {
         return (
             <MainContainer>
@@ -48,11 +47,13 @@ class Home extends Component {
                         </div>
 
                     </header>
-                    <div className="card" >
-                        <div className="card-body">
-                            <Daily />
+                    <div className="card " >
+                        <div className="card-body" >                          
+                                <Daily />
                         </div>
                     </div>
+
+                   
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
@@ -65,8 +66,8 @@ class Home extends Component {
                             <Favorite />
                         </div>
                     </div>
-                </div>
-            </MainContainer>
+                </div >
+            </MainContainer >
 
         )
     }

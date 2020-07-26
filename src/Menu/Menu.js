@@ -141,22 +141,28 @@ class Menu extends Component {
     }
 
     async queryMenus() {
-        // ds.getMenus().then((res) => {
-        //     console.log(res.menus);
-        //     this.setState({
-        //         menus: res.menus
-        //     })
-        // })
         let menuContents = await ds.getMenus();
+        menuContents = menuContents.menus;
 
-        console.log("hello this is image");
-        let image = await ds.getImageTest();
-        console.log(image);
+        for (var i = 0; i < menuContents.length; i++) {
+            if (typeof menuContents[i].menuImageId !== 'undefined') {
+                console.log(menuContents[i].menuImageId);
+                var imageId = { imageId: menuContents[i].menuImageId };
+                menuContents[i].menuPicture = await ds.getImage(imageId);
+                console.log("get image success");
+            } else {
+                menuContents[i].menuPicture = {
+                    isImage: false,
+                    file: ''
+                }
+            }
+        }
 
-        console.log('query menus');
+        this.setState({
+            menus: menuContents
+        });
+
         console.log(menuContents);
-
-        let menus = await ds.getImage(menuContents);
     }
 
     async addMenuWithImage(state) {
@@ -291,12 +297,14 @@ class Menu extends Component {
                                 <row>
                                     <input type="file" name="menuPicture"
                                         onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
-
-
                                     {
-                                        !this.state.menus[index].contenteditable ? <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                                        !this.state.menus[index].contenteditable ? <img id={"menuImage" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={"http://localhost:5000/getimage/" + this.state.menus[index].menuImageId} />
                                             : null
                                     }
+                                    {/* {
+                                        !this.state.menus[index].contenteditable ? <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                                            : null
+                                    } */}
 
 
 

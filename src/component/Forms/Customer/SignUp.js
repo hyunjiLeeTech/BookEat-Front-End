@@ -248,12 +248,13 @@ class SignUp extends Component {
       <MainContainer>
         <div className="container">
           <div className="page-header text-center">
-            <h1>Welcome to BookEat!</h1>
+            <br />
+            <h1>Sign Up</h1>
           </div>
 
           <div className="row">
             <form onSubmit={this.handleSubmit} className="col-xs-6 col-md-8 needs-validation" noValidate>
-              <div className="col-xs-12 col-md-12 ">
+              <div className="col-xs-16 col-md-16 ">
 
                 <div className="form-group row">
                   <label htmlFor="firstname" className="col-sm-2 col-form-label" > First Name </label>
@@ -330,13 +331,33 @@ class SignUp extends Component {
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#signResultModal" >Sign Up</button>
                   <p>Already a member? <Link to='/Login'> Log In </Link></p>
+               <hr/>
                 </div>
+                
+                <p className="text-center">Or sign up with</p>
+                <div className="text-center">
+                  {/* GoogleSignUp */}
+                  {this.getContent()}
+                  <br></br>
+                  <FacebookLogin
+                    appId="186311976091336"
+                    //autoLoad={true}
+                    callback={responseFacebook}
+                    render={renderProps => (
+                      <button onClick={renderProps.onClick}><img src={Facebook} alt="" /></button>
+                    )}
+                  />
+                </div>
+
+                
               </div>
+
             </form>
 
 
             <div className="col-xs-6 col-md-4">
               <div className="resbox">
+
                 <h4>Be part of BookEat</h4>
                 <p>Want to advertise your restaurant? Sign Up here and be part of the BookEat Family!</p>
                 <div className="text-center">
@@ -344,20 +365,9 @@ class SignUp extends Component {
                     <button className="btn btn-primary">Restaurant Sign Up</button>
                   </Link>
                 </div>
-              </div>
-              {/* GoogleSignUp */}
-              {this.getContent()}
-              <br></br>
-              <FacebookLogin
-                appId="186311976091336"
-                //autoLoad={true}
-                callback={responseFacebook}
-                render={renderProps => (
-                  <button onClick={renderProps.onClick}><img src={Facebook} alt= ""/></button>
-                )}
-              />
+
             </div>
-            
+
           </div>
 
           <div className="modal fade" id="TmersModal" tabIndex="-1" role="dialog" aria-labelledby="TermsModalLabel" aria-hidden="true">
@@ -488,6 +498,7 @@ class SignUp extends Component {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </MainContainer>
     );

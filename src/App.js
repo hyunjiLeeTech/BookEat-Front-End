@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
 import SignUp from "./component/Forms/Customer/SignUp";
 import Home from "./Home/Home";
+
 import RestaurantSignUp from "./component/Forms/Restaurant/RestaurantSignUp";
 import NavBar from "./component/Style/NavBar";
 import Footer from "./component/Style/Footer";
@@ -23,9 +24,6 @@ import CustomerReviewHistory from './Review/Customer/CustomerReviewHistory'
 import Menu from './Menu/Menu'
 import EditMenu from './Menu/EditMenu'
 
-//test
-import Test from './component/Forms/Customer/Test';
-
 import $ from 'jquery'
 
 import authHeader from "./Services/authHeader";
@@ -39,6 +37,10 @@ import CustomerReserve from './Reservation/customerReserve';
 
 import Restaurant from './Restaurant/restaurant'
 import SearchResult from "./Home/SearchResult";
+import Daily from "./Home/Daily";
+import Favorite from "./Home/Favorite";
+import Feature from "./Home/Feature";
+
 import RestaurantDetails from "./Restaurant/RestaurantDetails";
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -106,8 +108,6 @@ class App extends Component {
       <div style={{position:'relative', minHeight:'100vh'}}>
         <NavBar />
         <Switch>
-          //test
-          <Route exact path="/Test" render={() => <Test />} />
 
           <Route exact path="/" render={() => <Home />} />
           <Route exact path="/SignUp" render={() => <SignUp />} />
@@ -184,6 +184,9 @@ class App extends Component {
           <Route exact path="/NotFound" render={() => <NotFound />} />
           <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
           <Route exact path="/SearchResult" render={() => <SearchResult />} />
+          <Route exact path="/Daily" render={() => <Daily />} />
+          <Route exact path="/Feature" render={() => <Feature />} />
+          <Route exact path="/Favorite" render={() => <Favorite />} />
           <Route exact path="/RestaurantDetails" render={() => <RestaurantDetails />} />
         </Switch>
         <div className="footer-padding">
