@@ -298,7 +298,7 @@ class Menu extends Component {
                                     <input type="file" name="menuPicture"
                                         onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
                                     {
-                                        !this.state.menus[index].contenteditable ? <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={"image/{ this.state.menus[index].MenuPicture}"} />
+                                        !this.state.menus[index].contenteditable ? <img id={"menuImage" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={"http://localhost:5000/getimage/" + this.state.menus[index].menuImageId} />
                                             : null
                                     }
                                     {/* {
