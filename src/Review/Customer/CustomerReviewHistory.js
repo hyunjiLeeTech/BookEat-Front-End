@@ -96,6 +96,8 @@ class CustomerReviewHistory extends Component {
                     <option value="this.state.food1" >⭐</option>
                     <option value="this.state.food2">⭐⭐</option>
                     <option value="this.state.food3">⭐⭐⭐</option>
+                    <option value="this.state.food4">⭐⭐⭐⭐</option>
+                    <option value="this.state.food5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].foodRate)
@@ -125,7 +127,9 @@ class CustomerReviewHistory extends Component {
                 <select className="form-conrol" id="serviceRate" >
                   <option value="this.state.service1" >⭐</option>
                   <option value="this.stae.service2">⭐⭐</option>
-                  <option  value="this.stae.service2">⭐⭐⭐</option>
+                  <option  value="this.stae.service3">⭐⭐⭐</option>
+                  <option value="this.stae.service4">⭐⭐⭐⭐</option>
+                  <option  value="this.stae.service5">⭐⭐⭐⭐⭐</option>
                 </select>
               </div>
                 : this.renderStars(this.state.reviews[index].serviceRate)
@@ -154,6 +158,8 @@ class CustomerReviewHistory extends Component {
                   <option value="this.state.satisfaction1" >⭐</option>
                   <option value="this.stae.satisfaction2">⭐⭐</option>
                   <option  value="this.stae.satisfaction3">⭐⭐⭐</option>
+                  <option value="this.stae.satisfaction4">⭐⭐⭐⭐</option>
+                  <option  value="this.stae.satisfaction5">⭐⭐⭐⭐⭐</option>
                 </select>
               </div>
                 : this.renderStars(this.state.reviews[index].satisfactionRate)
@@ -183,12 +189,14 @@ class CustomerReviewHistory extends Component {
                   {/* <option value="this.state.service1" >⭐</option>
                   <option value="this.stae.service2">⭐⭐</option>
                   <option  value="this.stae.service3">⭐⭐⭐</option> */}
-                  <option >⭐</option>
-                  <option >⭐⭐</option>
-                  <option >⭐⭐⭐</option>
+                  <option value="this.stae.environ1">⭐</option>
+                  <option value="this.stae.environ2">⭐⭐</option>
+                  <option value="this.stae.environ3">⭐⭐⭐</option>
+                  <option value="this.stae.environ4">⭐⭐⭐⭐</option>
+                  <option value="this.stae.environ15">⭐⭐⭐⭐⭐</option>
                 </select>
               </div>
-                : this.renderStars(this.state.reviews[index].serviceRate)
+                : this.renderStars(this.state.reviews[index].environmentRate)
             }
           </td>
 
