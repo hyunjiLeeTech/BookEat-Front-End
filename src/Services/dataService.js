@@ -119,7 +119,6 @@ export default {
         return req.data;
       })
       .catch((err) => {
-        throw err;
         //TODO: errhandling
       });
   },
