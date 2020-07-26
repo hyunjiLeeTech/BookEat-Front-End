@@ -11,7 +11,18 @@ function sleep(ms) {
 }
 
 export default {
-  getPriceRanges(){
+  getTables() {
+    return Axios.get(serverAddress + '/restaurant/gettables',{headers: authHeader()}).then((req) => {
+     
+        if (req.data.errcode !== 0) throw(req.data);
+        return(req.data);
+   
+
+    }).catch((err) => {
+      throw err;
+    })
+  },
+  getPriceRanges() {
     return Axios.get(serverAddress + "/pricerange")
       .then(function (req) {
         return req.data;
@@ -21,7 +32,7 @@ export default {
         throw err
       });
   },
-  getCuisines(){
+  getCuisines() {
     return Axios.get(serverAddress + "/cuisinestyle")
       .then(function (req) {
         return req.data;
@@ -31,7 +42,7 @@ export default {
         throw err
       });
   },
-  getCategories(){
+  getCategories() {
     return Axios.get(serverAddress + "/category")
       .then(function (req) {
         return req.data;
@@ -399,7 +410,7 @@ export default {
     }).then((res) => {
       return res.data;
     }).catch((err) => {
-      console.log(err);
+      throw(err)
     })
   },
   async addMenuImage(formData, config) {
@@ -409,11 +420,9 @@ export default {
     })
   },
   async getImage(state) {
-    return await Axios.get(serverAddress + "/getimage", state)
+    return await Axios.get(`${serverAddress}/getimage/${state.imageId}`)
       .then((res) => {
-        console.log(res);
-        console.log('success get image');
-        return res.data;
+        return res;
       })
       .catch((err) => {
         console.log(err);
