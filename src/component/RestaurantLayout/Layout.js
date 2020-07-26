@@ -13,11 +13,53 @@ class Layout extends Component {
             this.tables = props.tables;
             this.state = {
                 carouselIndex: 0,
-
+                tables: props.tables,
             }
         }
         this.genCarousel = this.genCarousel.bind(this);
     }
+
+    componentWillReceiveProps(nextProps){
+        if(this.state.tables!=nextProps.tables){
+            this.setState({tables: nextProps.tables})
+        }
+    }
+    
+    componentWillUpdate(){
+        var tables = this.state.tables
+        var tableCount = tables.length;
+        var row = [];
+        for (var i in tables) {
+            var theTable = tables[i];
+            var cn = theTable.prefers + " r-table col-md-4 hovereffect animated bounce" + (theTable.isOpen ? " open" : " close");
+            var tableImg = table_s;
+            if (theTable.capacity <= 4) tableImg = table_s;
+            else if (theTable.capacity <= 7) tableImg = table_m;
+            else if (theTable.capacity <= 10) tableImg = table_l;
+            row.push(
+                <div key={theTable._id} className={cn + " r-table-s"} id={i}>
+                    <img src={tableImg} className={theTable.isOpen ? " img-responsive" : ""} />
+                    {theTable.isOpen ?
+                        <div className="overlay">
+                            <h2>Click to Reserve</h2>
+                        </div> : <div>
+                            <div className="overlay">
+                                <p className="info">Unavalible</p>
+                            </div>
+                        </div>}
+                </div>
+            )
+        }
+
+        //this.rowhtmls = rowshtmls;
+        this.rows = row;
+    }
+
+    componentDidUpdate(){
+        console.log(this.state.tables)
+        console.log(this.props.tables);
+    }
+
 
     componentWillMount() {
         //fetch tables data from serverside
@@ -39,12 +81,11 @@ class Layout extends Component {
             //{ id: 115, rtid: 9, restaurantId: 1, isOpen: false, capacity: 9, prefers: "" },
             { id: 119, rtid: 10, restaurantId: 1, isOpen: false, capacity: 9, prefers: "kitchen" },
         ]
-        if (!this.tables)
-            this.tables = tables;
+        if (!this.state.tables)
+            this.state.tables = tables;
         else {
-            tables = this.tables;
+            tables = this.state.tables;
         }
-
         var rowshtmls = [];
         // var tableCount = tables.length > 9 ? 9 : tables.length;
         // for (var i = 0; i < tableCount / 3; i++) {

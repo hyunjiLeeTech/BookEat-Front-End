@@ -13,7 +13,7 @@ class Home extends Component {
         return (
             <MainContainer>
 
-                <div style={{ width: '20%' }}>
+                {/* <div style={{ width: '20%' }}> */}
                     {/* type: can be star, btns, splitedBar, bar
                     bar: unclickable, can display float value
                     splitedBar: unclickable, can display float value
@@ -22,7 +22,7 @@ class Home extends Component {
                 stars: number 1-5
                 callback: (StarClicked) => void starClicked is what user clicked
                  */}
-                    <Star />
+                    {/* <Star type="star"/>
                     <hr />
                     <Star type='bar' stars={3.8} />
                     <hr />
@@ -35,7 +35,7 @@ class Home extends Component {
                     <Star isClickAble={true} type='btns' stars={4} callback={
                         (e) => { console.log(e) }
                     } />
-                </div>
+                </div> */}
 
 
                 <div className="container">

@@ -41,6 +41,7 @@ class Star extends Component {
 
             return (<button type="button"
                 className={cn} aria-label="Left Align" id={i}
+                style={{width:'20%'}}
                 onClick={(e) => starClick(i, clickedCallback)}
                 key={i}
                 disabled={!nonBtn}>
