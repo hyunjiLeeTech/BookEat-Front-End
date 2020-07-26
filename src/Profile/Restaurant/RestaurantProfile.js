@@ -274,11 +274,13 @@ class RestaurantProfile extends Component {
 
   queryDiscounts() {
     ds.getDiscounts().then((res) => {
-      //console.log("this is discounts");
-      //console.log(res.discounts);
+      // console.log("this is discounts");
+      // console.log(res.discounts);
       this.setState({
         discounts: res.discounts
       })
+    }).catch(err=>{
+      //TODO handling err
     })
   }
 
@@ -591,7 +593,7 @@ class RestaurantProfile extends Component {
         rows.push(
           <tr key={rows}>
             <td >
-              {discount.discdescription}
+              {discount.percent}
             </td>
             <td>
               {discount.promdescription}
@@ -620,7 +622,7 @@ class RestaurantProfile extends Component {
         )
       }
     }
-
+    return rows;  
 
 
   }
