@@ -4,12 +4,11 @@ import Daily from './Daily';
 import Feature from './Feature';
 import Favorite from './Favorite';
 import SearchBox from './SearchBox';
-
+import $ from "jquery";
 
 import Star from '../component/Style/Stars'
 class Home extends Component {
-
-
+    
     render() {
         return (
             <MainContainer>
@@ -27,7 +26,7 @@ class Home extends Component {
                     <hr />
                     <Star type='bar' stars={3.8} />
                     <hr />
-                    <Star type='splitedBar' stars={3.8} /> 
+                    <Star type='splitedBar' stars={3.8} />
                     <hr />
                     <Star isClickAble={true} type='star' stars={2} callback={
                         (e) => { console.log(e) }
@@ -48,11 +47,13 @@ class Home extends Component {
                         </div>
 
                     </header>
-                    <div className="card" >
-                        <div className="card-body">
-                            <Daily />
+                    <div className="card " >
+                        <div className="card-body" >                          
+                                <Daily />
                         </div>
                     </div>
+
+                   
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
@@ -65,8 +66,8 @@ class Home extends Component {
                             <Favorite />
                         </div>
                     </div>
-                </div>
-            </MainContainer>
+                </div >
+            </MainContainer >
 
         )
     }
