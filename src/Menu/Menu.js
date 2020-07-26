@@ -57,6 +57,7 @@ class Menu extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderTableData = this.renderTableData.bind(this);
+        this.addMenuWithImage = this.addMenuWithImage.bind(this);
         this.renderMenuInfo = this.renderMenuInfo.bind(this);
         this.menuItemEditButton = this.menuItemEditButton.bind(this);
         this.menuItemDeleteButton = this.menuItemDeleteButton.bind(this);
@@ -74,7 +75,8 @@ class Menu extends Component {
                 this.forceUpdate();
             } else {
                 this.setState({
-                    image: URL.createObjectURL(img),
+                    //image: URL.createObjectURL(img),
+                    image: event.target.files[0]
                 })
             }
 
@@ -138,13 +140,40 @@ class Menu extends Component {
         this.queryMenus();
     }
 
-    queryMenus() {
-        ds.getMenus().then((res) => {
-            console.log(res.menus);
-            this.setState({
-                menus: res.menus
-            })
+    async queryMenus() {
+        // ds.getMenus().then((res) => {
+        //     console.log(res.menus);
+        //     this.setState({
+        //         menus: res.menus
+        //     })
+        // })
+        let menuContents = await ds.getMenus();
+
+        console.log("hello this is image");
+        let image = await ds.getImageTest();
+        console.log(image);
+
+        console.log('query menus');
+        console.log(menuContents);
+
+        let menus = await ds.getImage(menuContents);
+    }
+
+    async addMenuWithImage(state) {
+        const formData = new FormData();
+        formData.append('menuImage', state.image);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        var menuImageId = await ds.addMenuImage(formData, config);
+        state.menuImageId = menuImageId;
+        console.log(state);
+        await ds.addMenu(state).then(() => {
+            this.queryMenus();
         })
+
     }
 
     renderMenuInfo() {
@@ -188,14 +217,13 @@ class Menu extends Component {
         }
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
         console.log("saved")
         if (formValid(this.state)) {
             console.log(this.state)
-            ds.addMenu(this.state).then(() => {
-                this.queryMenus();
-            })
+            this.addMenuWithImage(this.state);
+
         } else {
             console.log("Form is invalid!");
         }
@@ -209,12 +237,15 @@ class Menu extends Component {
 
 
     menuItemEditButton(index) {
+        console.log(this.state.menus);
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
+
+        if (!this.state.menus[index].contenteditable) {
+            ds.editMenu(this.state.menus[index]);
+        }
 
         // this.forceUpdate();
         //this.setState({});
-
-
         this.callModal();
     }
 
@@ -278,9 +309,8 @@ class Menu extends Component {
                     <tr>{menuDescript}</tr> */}
                     <td>
                         <tr contenteditable={(this.state.menus[index].contenteditable)} >
-                            <input type="text" id="menuName" name="menuName" defaultValue={menuName}
-                                className="border-none"
-                                disabled={(!this.state.menus[index].contenteditable)} />
+                            <input type="text" id="menuName" name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
+                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                         </tr>
 
                         <tr contenteditable={(this.state.menus[index].contenteditable)}>
@@ -408,8 +438,8 @@ class Menu extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.renderMenuInfo()}
-                        {/* {this.renderTableData()} */}
+                        {/* {this.renderMenuInfo()} */}
+                        {this.renderTableData()}
                     </tbody>
                 </table>
                 {/* </div> */}
