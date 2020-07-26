@@ -193,7 +193,7 @@ class CustomerReviewHistory extends Component {
                   <option value="this.stae.environ2">⭐⭐</option>
                   <option value="this.stae.environ3">⭐⭐⭐</option>
                   <option value="this.stae.environ4">⭐⭐⭐⭐</option>
-                  <option value="this.stae.environ15">⭐⭐⭐⭐⭐</option>
+                  <option value="this.stae.environ5">⭐⭐⭐⭐⭐</option>
                 </select>
               </div>
                 : this.renderStars(this.state.reviews[index].environmentRate)
