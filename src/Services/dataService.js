@@ -420,11 +420,9 @@ export default {
     })
   },
   async getImage(state) {
-    return await Axios.get(serverAddress + "/getimage", state)
+    return await Axios.get(`${serverAddress}/getimage`, { params: { imageId: state.imageId } })
       .then((res) => {
-        console.log(res);
-        console.log('success get image');
-        return res.data;
+        return res;
       })
       .catch((err) => {
         console.log(err);
