@@ -73,22 +73,22 @@ class Daily extends Component {
     render() {
         return (
             <MainContainer>
-                <div className="container-fluid">
+                {/* <div className="container-fluid"> */}
                 <h5>Daily Pick Up</h5>
                 <div className="main">
               
                 <div className="wrapper">
                     <a className="prev" onClick={this.scroll.bind(null, -1)}>&#10094;</a>
                     <div className="image-container">
-                        {/* <div className="card-deck  image" > */}
-                        <div className="image" >
+                        <div className="card-deck  image" >
+                        {/* <div className="image" > */}
                             {this.renderRestaurants()}
                         </div>
                     </div>
                     <a className="next" onClick={this.scroll.bind(null, 1)}>&#10095;</a>
                 </div>
             </div >
-            </div>
+            {/* </div> */}
             </MainContainer >
         )
     }
