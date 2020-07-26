@@ -274,11 +274,11 @@ class RestaurantProfile extends Component {
 
   queryDiscounts() {
     ds.getDiscounts().then((res) => {
-      console.log("this is discounts");
+      //console.log("this is discounts");
       //console.log(res.discounts);
-      // this.setState({
-      //   discounts: res.discounts
-      // })
+      this.setState({
+        discounts: res.discounts
+      })
     })
   }
 
@@ -583,9 +583,9 @@ class RestaurantProfile extends Component {
   }
 
   renderDiscountTable() {
-
     var rows = [];
     console.log("discount state" + this.state.discounts);
+    console.log("HERE");
     if (typeof this.state.discounts != "undefined") {
       for (var discount of this.state.discounts) {
         rows.push(
@@ -2071,7 +2071,7 @@ class RestaurantProfile extends Component {
 
               {/* Start Menu */}
               <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
-                {/* <Menu /> */}
+                <Menu />
               </div>
               {/* End Menu */}
 
