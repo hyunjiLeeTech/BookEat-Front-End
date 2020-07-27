@@ -11,9 +11,9 @@ class CustomerReservationHistory extends Component {
     super(props)
     this.state = {
       reservations: [
-        { id: "", date: "", restaurantName:"", KindOfFood: "", NumOfPeople: "", NumOfTable: "" },
+        { id: "", date: "", restaurantId: "", restaurantName: "", KindOfFood: "", NumOfPeople: "", NumOfTable: "" },
         // testing
-        { id: "", date: "", restaurantName:"rest", KindOfFood: "apple", NumOfPeople: "10", NumOfTable: "5" },
+        { id: "", date: "", restaurantId: "", restaurantName: "rest", KindOfFood: "apple", NumOfPeople: "10", NumOfTable: "5" },
       ]
     }
 
@@ -21,7 +21,7 @@ class CustomerReservationHistory extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
   }
-  
+
   handleSubmit = (e) => {
     e.preventDefault();
     // console.log("saved")
@@ -31,7 +31,7 @@ class CustomerReservationHistory extends Component {
     // } else {
     //     console.log("Form is invalid!");
     // }
-};
+  };
 
   renderTable() {
     return this.state.reservations.map((reservation, index) => {
@@ -51,125 +51,129 @@ class CustomerReservationHistory extends Component {
   render() {
     return (
       <Maincontainer>
-        <form id="reservationEdit" 
+        <form id="reservationEdit"
         // onSubmit={this.handleSubmit} 
         >
-        <div className="form-group mt-5">
-          <h3> Upcomming reservation</h3>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Date</th>                
-                <th>Restaurant</th>
-                <th>Ordered Food</th>
-                <th># of Visitor</th>
-                <th># of Table </th>
-              </tr>
-            </thead>
-            <tbody> <tr>
-                <th value={this.state.UpDate}></th>                
+          <div className="form-group mt-5">
+            <h3> Upcomming reservation</h3>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Restaurant</th>
+                  <th>Ordered Food</th>
+                  <th># of Visitor</th>
+                  <th># of Table </th>
+                </tr>
+              </thead>
+              <tbody> <tr>
+                <th value={this.state.UpDate}></th>
                 <th value={this.state.UpRestaurant}></th>
                 <th value={this.state.UpKindOfFood}></th>
                 <th value={this.state.UpNumOfPeople}></th>
                 <th value={this.state.NumOfTable}> </th>
               </tr>
-            </tbody>
-          </table>
-        </div>
-        </form>
+              </tbody>
+            </table>
+          </div>
+        
 
         {/* Todo: Do it after finishing reservation  */}
         <div id="changeReservation" className="form-inline">
           <div className="form-group">
-            {/* <Link to="/"> */}
+            {/* <Link to={'/customerreserve/' + restaurantId._id} className="btn btn-primary"> */}
+            <Link to={'/customerreserve/'} >
               <button
                 type="button"
-                className="btn btn-primary btn-sm mr-sm-2"    >
+                className="btn btn-primary btn-sm mr-sm-2 lm-5rem">
                 Change reservation
                     </button>
-            {/* </Link> */}
+            </Link>
           </div>
 
           <div id="cancelReservation" className="form-group">
             {/* <Link to="/"> */}
-              <button
-                type="button"
-                className="btn btn-primary btn-sm mr-sm-2"                
-                data-toggle="modal" data-target="#DeleteResultModal"      
-              >
-                Cancel reservation
+            <button
+              type="button"
+              className="btn btn-primary btn-sm mr-sm-2"
+              data-toggle="modal" data-target="#DeleteResultModal"
+            >
+              Cancel reservation
                     </button>
             {/* </Link> */}
           </div>
         </div>
+        </form>
         <form id="reservationhistory" onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <br />
-          <br />
-          <h3> Reservation History</h3>
-          <p>
-            Thank you for loving BookEat. <br />
+          <div className="form-group">
+            <br />
+            <br />
+            <h3> Reservation History</h3>
+            <p>
+              Thank you for loving BookEat. <br />
                   Here is your BookEat history.{" "}
-          </p>
-          <table className="table table-striped">
-            <thead>
-              <tr>
-                <th>Date</th>                
-                <th>Restaurant</th>
-                <th>Ordered Food</th>
-                <th># of Visitor</th>
-                <th># of Table</th>
-              </tr>
-            </thead>
-            <tbody>
-            {this.renderTable()}
-            </tbody>
-          </table>
-        </div>
-</form>
-         {/* DeleteREservationModal */}
+            </p>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Restaurant</th>
+                  <th>Ordered Food</th>
+                  <th># of Visitor</th>
+                  <th># of Table</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderTable()}
+              </tbody>
+            </table>
+          </div>
+        </form>
 
-         <div
-                    className="modal fade"
-                    id="DeleteResultModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="DeleteResultModal"
-                    aria-hidden="true"
-                >
 
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="DeleteResultModal">
-                                    Cancel Reservation
+
+        {/* DeleteREservationModal */}
+        <div
+          className="modal fade"
+          id="DeleteResultModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="DeleteResultModal"
+          aria-hidden="true"
+        >
+
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="DeleteResultModal">
+                  Cancel Reservation
                             </h5>
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="alert alert-warning" id="DeleteResultModalText">
-                                    Please Wait...
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p className="alert alert-warning" id="DeleteResultModalText">
+                  Please Wait...
                                  </p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-dismiss="modal"
-                                >
-                                    Close
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  Close
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </Maincontainer>
     )
   }
