@@ -4,60 +4,87 @@ import $ from "jquery";
 import { Link } from 'react-router-dom'
 import CAFE from '../Image/CAFE.jpg'
 import Star from '../component/Style/Stars'
+import ScrollMenu from 'react-horizontal-scrolling-menu';
 
 class Favorite extends Component {
     constructor(props) {
         super(props)
         this.state = {
             rastaurants: [
-                { id: "", resName: "", resPicture: "", starAverage: 0 },  
+                { id: "", resName: "Book2", resPicture: "", starAverage: 3.8 },
                 // for testing              
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: "1" },                
-                { id: "", resName: "Eat", resPicture: "CAFE", starAverage: "2" },                
-                { id: "", resName: "BookEat", resPicture: "CAFE", starAverage: "3" }
-                
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
             ]
         }
+
     }
 
-    renderStars(stars) {//stars is a number
-        var starstring = '';
-        for (var i = 0; i < stars; i++) {
-            starstring += '⭐';
-        }
-        //some magic    
-        return <span>{starstring}</span>
+
+
+    renderRestaurant(r) {
+        return (
+            <div style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
+
+                <img src={r.resPicture} height='100%' width='100%' />
+                <Link to={'/restaurant/' + r._id}>{r.resName} </Link>
+                <Star isClickAble={false} type='splitedBar' stars={r.starAverage} style={{ margin: '1rem', border: '1px solid #000', width: '10rem', height: '15rem' }} />
+
+            </div>
+        )
+
     }
 
     renderRestaurants() {
-        return this.state.rastaurants.map((restaurant, index) => {
-            const { id, resName, resPicture, starAverage } = restaurant
-            return (
-                // <form onSubmit={this.handleSubmit} id="rendRes">
-                 <div key={id} id={'restaurantrow' + index} className="card text-center" style={{ width: "18rem" , height: "13rem"}}>
-                        <img className="card-img-top" 
-                        src={resPicture} alt="Card image cap" />
-                        <div className="card-body" >
-                            < div className="card-title" value={resName}><h7>{resName}  {this.renderStars(starAverage)}</h7><h2/>
-                          
-                        </div>
-                        </div>
-                     </div>
-                // </form>
-            )
-
-        })
-
+        var tr = [];
+        for (var r of this.state.rastaurants) {
+            tr.push(this.renderRestaurant(r))
+        }
+        return tr;
     }
 
+
     render() {
+        const Arrow = ({ text, className }) => {
+            return (
+                <div style={{ fontSize: '3rem' }}
+                    className={className}
+                >{text}</div>
+            );
+        };
+        // const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
+        // const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
+
+        const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
+        const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
+
         return (
-            <MainContainer>
-                <h5>Favorite Restaurants</h5>
-                <div class="card-deck">
-                    {this.renderRestaurants()}
-                </div>
-            </MainContainer>
+            <ScrollMenu
+                // arrowLeft={ArrowLeft}
+                // arrowRight={ArrowRight}
+                data={this.renderRestaurants()}
+            />
         )
     }
 }

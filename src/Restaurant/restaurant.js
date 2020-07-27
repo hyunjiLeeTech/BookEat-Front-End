@@ -138,7 +138,7 @@ class Restaurant extends Component {
                     <div className="col-sm-8">
                         <h5>Menu</h5>
                         <hr />
-                        <ViewMenu/>
+                        {/* <ViewMenu/> */}
                         <br />
                         <h5>Reviews</h5>
                         <hr />
