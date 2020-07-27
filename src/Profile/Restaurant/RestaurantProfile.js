@@ -279,7 +279,7 @@ class RestaurantProfile extends Component {
       this.setState({
         discounts: res.discounts
       })
-    }).catch(err=>{
+    }).catch(err => {
       //TODO handling err
     })
   }
@@ -596,7 +596,7 @@ class RestaurantProfile extends Component {
               {discount.percent}
             </td>
             <td>
-              {discount.promdescription}
+              {discount.description}
             </td>
             <td>
               <button id='save_edit_disc_btn'
@@ -622,7 +622,7 @@ class RestaurantProfile extends Component {
         )
       }
     }
-    return rows;  
+    return rows;
 
 
   }
