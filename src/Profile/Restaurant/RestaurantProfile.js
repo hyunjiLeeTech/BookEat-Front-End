@@ -131,7 +131,6 @@ class RestaurantProfile extends Component {
     this.handleSubmitResProfile = this.handleSubmitResProfile.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
-    this.renderDiscountTable = this.renderDiscountTable.bind(this);
     this.handleChangeInList = this.handleChangeInList.bind(this);
 
   }
@@ -626,48 +625,48 @@ class RestaurantProfile extends Component {
 
   }
 
-  renderDiscountTable() {
-    var rows = [];
-    console.log("discount state" + this.state.discounts);
-    console.log("HERE");
-    if (typeof this.state.discounts != "undefined") {
-      for (var discount of this.state.discounts) {
-        rows.push(
-          <tr key={rows}>
-            <td>
-              {discount.percent}
-            </td>
-            <td>
-              {discount.description}
-            </td>
-            <td>
-              <button id='save_edit_disc_btn'
-                onClick={this.discountEditButton.bind(this)}
-                type="button" className="btn btn-primary mr-sm-4 "
-                data-target="#EditResultModal">
-                {this.state.discount ? "Save Change" : "Edit"}
+  // renderDiscountTable() {
+  //   var rows = [];
+  //   console.log("discount state" + this.state.discounts);
+  //   console.log("HERE");
+  //   if (typeof this.state.discounts != "undefined") {
+  //     for (var discount of this.state.discounts) {
+  //       rows.push(
+  //         <tr key={rows}>
+  //           <td>
+  //             {discount.percent}
+  //           </td>
+  //           <td>
+  //             {discount.description}
+  //           </td>
+  //           <td>
+  //             <button id='save_edit_disc_btn'
+  //               onClick={this.discountEditButton.bind(this)}
+  //               type="button" className="btn btn-primary mr-sm-4 "
+  //               data-target="#EditResultModal">
+  //               {this.state.discount ? "Save Change" : "Edit"}
 
-              </button>
-            </td>
-            <td>
-              <button
-                button id='delete_btn'
-                type="button"
-                className="btn btn-primary btn-sm mr-sm-2"
-                onClick={this.discountDeleteButton.bind(this)}
-                data-toggle="modal" data-target="#DeleteResultModal"
-              >
-                Delete
-                    </button>
-            </td>
-          </tr>
-        )
-      }
-    }
-    return rows;
+  //             </button>
+  //           </td>
+  //           <td>
+  //             <button
+  //               button id='delete_btn'
+  //               type="button"
+  //               className="btn btn-primary btn-sm mr-sm-2"
+  //               onClick={this.discountDeleteButton.bind(this)}
+  //               data-toggle="modal" data-target="#DeleteResultModal"
+  //             >
+  //               Delete
+  //                   </button>
+  //           </td>
+  //         </tr>
+  //       )
+  //     }
+  //   }
+  //   return rows;
 
 
-  }
+  // }
 
   renderDataDiscount() {
     return this.state.discounts.map((discount, index) => {
