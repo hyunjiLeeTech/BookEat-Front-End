@@ -231,7 +231,7 @@ class RestaurantProfile extends Component {
     });
   }
 
-  handleChangeInList(e) {
+  handleChangeInList(e, index) {
     e.preventDefault();
     const { name, value } = e.target;
     let isError = { ...this.state.isError };
@@ -250,7 +250,7 @@ class RestaurantProfile extends Component {
       default:
         break;
     }
-    this.state.discounts[e.target.id] = e.target.value;
+    this.state.discounts[index][e.target.id] = e.target.value;
     this.forceUpdate();
   }
 
@@ -677,7 +677,7 @@ class RestaurantProfile extends Component {
             
               <input type="text" id="discdescription" name="discdescription"
                 defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
-                onChange={() => {this.handleChangeInList( index)}} />
+                onChange={(e) => this.handleChangeInList(e, index)} />
       
 
           </td>
@@ -688,7 +688,7 @@ class RestaurantProfile extends Component {
                 name="promdescription"
                 defaultValue={this.state.discounts[index].description}
                 disabled={(!this.state.discounts[index].contentTable)}
-                onChange={() => {this.handleChangeInList(index)}}
+                onChange={(e) => this.handleChangeInList(e, index)}
               ></textarea>
           
 
