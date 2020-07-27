@@ -558,11 +558,11 @@ class RestaurantProfile extends Component {
 
   discountEditButton(index) {
     console.log(this.state.discounts);
-    this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
+    this.state.discounts[index] = !this.state.discounts[index];
 
-    if (!this.state.discounts[index].contentTable) {
-      // add stuff for editbutton here
-    }
+    // if (!this.state.discounts[index]) {
+    //   // add stuff for editbutton here
+    // }
     this.callModal();
   }
 
@@ -573,12 +573,15 @@ class RestaurantProfile extends Component {
   callModal(index) {
 
     this.setState(state => () => {
-      if (this.state.discounts[index].contentTable) {
+      this.setState( state => () => {
+        if (this.state.discounts[index]) {
         $('this.state.discounts[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
       }
       else {
         $('this.state.discounts[index].#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
       }
+      })
+      
 
     })
 
@@ -1951,7 +1954,7 @@ class RestaurantProfile extends Component {
                       <div
                         className="modal fade"
                         id="deleteRestaurantModal"
-                        tabindex="-1"
+                        tabIndex="-1"
                         role="dialog"
                         aria-labelledby="deleteRestaurantLabel"
                         aria-hidden="true"
@@ -1996,7 +1999,7 @@ class RestaurantProfile extends Component {
                   <div
                     className="modal fade"
                     id="resProfileResultModal"
-                    tabindex="-1"
+                    tabIndex="-1"
                     role="dialog"
                     aria-labelledby="resProfileResultModalLabel"
                     aria-hidden="true"
