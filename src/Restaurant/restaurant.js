@@ -14,6 +14,7 @@ import './RestaurantDetails.css'
 import ResReview from '../Review/ResReview';
 import ViewMenu from '../Menu/ViewMenu';
 import FullscreenError from '../component/Style/FullscreenError'
+import FullScrrenLoading from '../component/Style/FullscreenLoading';
 
 class Restaurant extends Component {
     constructor(props){
@@ -22,6 +23,7 @@ class Restaurant extends Component {
             id: this.props.match.params.id,
             res: [],
             resultsErr: false,
+            isResLoaded: false,
         }
     }
 
@@ -30,13 +32,14 @@ class Restaurant extends Component {
             .then(res=>{
                 if(res.data.errcode === 0)
                 this.setState({
-                    res: res.data.restaurant
+                    res: res.data.restaurant,
+                    isResLoaded: true
                 })
+                console.log(this.state.res)
             })
     }
 
     componentDidMount(){
-        console.log(this.state.res)
     }
     getCuisineNameById(id) {
         try {
@@ -94,12 +97,24 @@ class Restaurant extends Component {
         // </div>
         
         <MainContainer>
+
             {this.state.resultsErr
                     ?
                     FullscreenError("An error occured, please try again later")
                     :
                     null
                 }
+
+
+        {!this.state.isResLoaded
+                    ?
+                    FullScrrenLoading({ type: 'cubes', color: '#000' })
+                    :
+                    null
+                }
+
+
+
         <div className="card mb-3">
             <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                 <ol className="carousel-indicators">
@@ -167,10 +182,10 @@ class Restaurant extends Component {
                     <p></p>
                     <hr/>
                     <h6>Cuisine Style</h6>
-                    <p>{this.getCuisineNameById(this.state.res.cuisineStyleId)}</p>
+                    <p>{this.state.isResLoaded ?  this.state.res.cuisineStyleId.cuisineName:null}</p>
                     <hr/>
                     <h6>Category</h6>
-                    <p>{this.getCategoryNameById(this.state.res.categoryId)}</p>
+                    <p>{this.state.isResLoaded  ?this.state.res.categoryId.categoryName : null}</p>
                     
                        
                     </div>
