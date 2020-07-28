@@ -12,11 +12,11 @@ function sleep(ms) {
 
 export default {
   getTables() {
-    return Axios.get(serverAddress + '/restaurant/gettables',{headers: authHeader()}).then((req) => {
-     
-        if (req.data.errcode !== 0) throw(req.data);
-        return(req.data);
-   
+    return Axios.get(serverAddress + '/restaurant/gettables', { headers: authHeader() }).then((req) => {
+
+      if (req.data.errcode !== 0) throw (req.data);
+      return (req.data);
+
 
     }).catch((err) => {
       throw err;
@@ -409,7 +409,17 @@ export default {
     }).then((res) => {
       return res.data;
     }).catch((err) => {
-      throw(err)
+      throw (err)
+    })
+  },
+  editDiscount(state) {
+    console.log("ds edit discount working");
+    return Axios.post(serverAddress + "/discount/editdiscount", state, {
+      headers: authHeader()
+    }).then((res) => {
+      return res.data;
+    }).catch((err) => {
+      throw err;
     })
   },
   async addMenuImage(formData, config) {

@@ -595,9 +595,13 @@ class RestaurantProfile extends Component {
     console.log(index);
     this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
 
-    // if (!this.state.discounts[index].contentTable) {
-    //   // add stuff for editbutton here
-    // }
+    if (!this.state.discounts[index].contenteditable) {
+      ds.editDiscount(this.state.discounts[index])
+        .then(() => {
+          this.queryDiscounts();
+        });
+    }
+
     this.callModal();
   }
 
@@ -674,23 +678,23 @@ class RestaurantProfile extends Component {
       return (
         <tr key={id} id={'discountrow' + index}>
           <td contentTable={(this.state.discounts[index].contentTable)}>
-            
-              <input type="text" id="discdescription" name="discdescription"
-                defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
-                onChange={(e) => this.handleChangeInList(e, index)} />
-      
+
+            <input type="text" id="discdescription" name="discdescription"
+              defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
+              onChange={(e) => this.handleChangeInList(e, index)} />
+
 
           </td>
           <td contentTable={(this.state.discounts[index].contentTable)} >
-              <textarea
-                rows="5"
-                id="promdescription"
-                name="promdescription"
-                defaultValue={this.state.discounts[index].description}
-                disabled={(!this.state.discounts[index].contentTable)}
-                onChange={(e) => this.handleChangeInList(e, index)}
-              ></textarea>
-          
+            <textarea
+              rows="5"
+              id="promdescription"
+              name="promdescription"
+              defaultValue={this.state.discounts[index].description}
+              disabled={(!this.state.discounts[index].contentTable)}
+              onChange={(e) => this.handleChangeInList(e, index)}
+            ></textarea>
+
 
           </td>
           <td>
