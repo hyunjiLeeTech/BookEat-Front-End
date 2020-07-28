@@ -14,10 +14,10 @@ class Star extends Component {
 
         var bar = (p, width) => {
             return (
-                <div class="progress" style={{ width: width }}>
-                    <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                <div className="progress" style={{ width: width }}>
+                    <div className="progress-bar" role="progressbar" aria-valuenow="60"
                         aria-valuemin="0" aria-valuemax="100" style={{ width: p + '%', background: '#ffc107' }}>
-                        <span class="sr-only">{p}</span>
+                        <span className="sr-only">{p}</span>
                     </div>
                 </div>)
         }
@@ -45,7 +45,7 @@ class Star extends Component {
                 onClick={(e) => starClick(i, clickedCallback)}
                 key={i}
                 disabled={!nonBtn}>
-                <span class="glyphicon glyphicon-star" aria-hidden="true">
+                <span className="glyphicon glyphicon-star" aria-hidden="true">
 
                     {isOpen ? c : c}
 
