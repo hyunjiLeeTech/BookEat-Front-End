@@ -4,6 +4,7 @@ import Parser from "html-react-parser";
 import $ from "jquery";
 import { Tab } from "bootstrap";
 import Maincontainer from "../../component/Style/MainContainer"
+import customerReserve from "../customerReserve"
 
 class CustomerReservationHistory extends Component {
 
@@ -82,7 +83,7 @@ class CustomerReservationHistory extends Component {
         <div id="changeReservation" className="form-inline">
           <div className="form-group">
             {/* <Link to={'/customerreserve/' + restaurantId._id} className="btn btn-primary"> */}
-            <Link to={'/customerreserve/'} >
+            <Link to={"/customerReserve"} >
               <button
                 type="button"
                 className="btn btn-primary btn-sm mr-sm-2 lm-5rem">
