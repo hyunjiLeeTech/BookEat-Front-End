@@ -27,12 +27,16 @@ class Reserve extends Component {
                 OwnerAccount: "",
                 Managers: ""
             },
+            menuItems: [],
+            selectedMenuItems: new Set(),
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.back = this.back.bind(this);
         this.book = this.book.bind(this);
         this.setTableId = this.setTableId.bind(this);
         this.getRoRmInfo = this.getRoRmInfo.bind(this);
+        this.getMenuInfo = this.getMenuInfo.bind(this);
+        this.renderMenuItems = this.renderMenuItems.bind(this);
     }
 
     setTableId(id) {
@@ -55,6 +59,7 @@ class Reserve extends Component {
 
     componentDidMount() {
         this.getRoRmInfo();
+        this.getMenuInfo();
     }
 
     handleSubmit(e) {
@@ -129,6 +134,7 @@ class Reserve extends Component {
                             {/* <span className="valid-feedback"></span> */}
                         </div>
                     </div>
+                    {this.renderMenuItems(this.state.menuItems)}
                     <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#signResultModal" >Next</button>
                     {/* TODO: for testing */}
                     <div style={{wordWrap: 'break-all', whiteSpace: 'pre-wrap'}}>
@@ -136,6 +142,9 @@ class Reserve extends Component {
                         <br /><br />
                         <p>OwnerAccountInfo: <code>{JSON.stringify(this.state.rorminfo.OwnerAccount)}</code></p><br /><br />
                         <p>ManagersInfo: <code>{JSON.stringify(this.state.rorminfo.Managers)}</code></p>
+                    </div>
+                    <div>
+                        {JSON.stringify(this.state.menuItems)}
                     </div>
 
                 </div>
@@ -166,6 +175,7 @@ class Reserve extends Component {
             dateTime: this.state.dateTime,
             tableId: this.state.selectedtableId,
             comments: this.state.comments,
+            menuItems: Array.from(this.state.selectedMenuItems),
         }).then(res => {
             if (res.errcode === 0) {
                 console.log(res)
@@ -187,6 +197,40 @@ class Reserve extends Component {
         }).catch(err => {
             console.log(err)
         })
+    }
+
+    getMenuInfo(){
+        var id = this.state.resId;
+        dataService.getMenusCustomer(id).then(res=>{
+            console.log(res.menus)
+            this.setState({
+                menuItems: res.menus,
+            })
+        }).catch(err=>{
+            console.log(err)
+        })
+    }    
+
+    renderMenuItems(items){
+        var tr = [];
+        var reactThis = this;
+        var handler = function(e){
+            if(e.target.checked){
+                reactThis.state.selectedMenuItems.add(e.target.value);
+            }else{
+                reactThis.state.selectedMenuItems.delete(e.target.value);
+            }
+            console.log(reactThis.state.selectedMenuItems)
+        }
+        for(var item of items){
+            tr.push(
+                <div>
+                <input type='checkbox' value={item._id} onChange={handler}/>
+                <label>{item.menuName}</label>
+            </div>
+            )
+        }
+        return tr;
     }
 
     render() {
