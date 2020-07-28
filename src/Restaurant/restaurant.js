@@ -14,6 +14,7 @@ import './RestaurantDetails.css'
 import ResReview from '../Review/ResReview';
 import ViewMenu from '../Menu/ViewMenu';
 import FullscreenError from '../component/Style/FullscreenError'
+import FullScrrenLoading from '../component/Style/FullscreenLoading';
 
 class Restaurant extends Component {
     constructor(props) {
@@ -22,20 +23,34 @@ class Restaurant extends Component {
             id: this.props.match.params.id,
             res: [],
             resultsErr: false,
+<<<<<<< HEAD
             categoriesReady: false,
             cuisinesReady: false,
             priceRangesReady: false,
          
+=======
+            isResLoaded: false,
+>>>>>>> sc
         }
     }
 
     componentWillMount() {
         Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
+<<<<<<< HEAD
             .then(res => {
                 if (res.data.errcode === 0)
                     this.setState({
                         res: res.data.restaurant
                     })
+=======
+            .then(res=>{
+                if(res.data.errcode === 0)
+                this.setState({
+                    res: res.data.restaurant,
+                    isResLoaded: true
+                })
+                console.log(this.state.res)
+>>>>>>> sc
             })
         if (!this.state.resultsErr) {
             dataService.getCategories().then(res => {
@@ -56,8 +71,12 @@ class Restaurant extends Component {
         }
     }
 
+<<<<<<< HEAD
     componentDidMount() {
         console.log(this.state.res)
+=======
+    componentDidMount(){
+>>>>>>> sc
     }
 
     renderPriceRange(priceRanges) {
@@ -173,6 +192,7 @@ class Restaurant extends Component {
         return null;
     }
 
+<<<<<<< HEAD
     render() {
         return (
             // <div>
@@ -182,11 +202,24 @@ class Restaurant extends Component {
 
             <MainContainer>
                 {this.state.resultsErr
+=======
+    render(){
+        return(
+        // <div>
+        //     {JSON.stringify(this.state.res)}<br/><br/><br/>
+        //     <Link to={'/customerreserve/' + this.state.id} >Reserve</Link>
+        // </div>
+        
+        <MainContainer>
+
+            {this.state.resultsErr
+>>>>>>> sc
                     ?
                     FullscreenError("An error occured, please try again later")
                     :
                     null
                 }
+<<<<<<< HEAD
                 <div className="card mb-3">
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                         <ol className="carousel-indicators">
@@ -213,6 +246,35 @@ class Restaurant extends Component {
                             <span className="carousel-control-next-icon" aria-hidden="true"></span>
                             <span className="sr-only">Next</span>
                         </a>
+=======
+
+
+        {!this.state.isResLoaded
+                    ?
+                    FullScrrenLoading({ type: 'cubes', color: '#000' })
+                    :
+                    null
+                }
+
+
+
+        <div className="card mb-3">
+            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                <ol className="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div className="carousel-inner" id="carousel_pictures">
+                    <div className="carousel-item active">
+                        <img className="d-inline-block" src={CAFE} alt="First slide" />
+                    </div>
+                    <div className="carousel-item">
+                        <img className="d-inline-block" src={CAFE} alt="Second slide" />
+                    </div>
+                    <div className="carousel-item">
+                        <img className="d-inline-block" src={CAFE} alt="Third slide" />
+>>>>>>> sc
                     </div>
                     <div className="card-body">
                         <h5 className="card-title">{this.state.res.resName}</h5>
@@ -242,6 +304,7 @@ class Restaurant extends Component {
                             className="btn btn-primary">
                            Reserve here
                         </button> */}
+<<<<<<< HEAD
                                 <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
                                 <br />
                                 <br />
@@ -263,6 +326,26 @@ class Restaurant extends Component {
                             </div>
                         </div>
 
+=======
+                        <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
+                        <br />
+                        <br />
+                        <h5>Restaurant Information</h5>
+                        <hr />
+                        <h6>Address</h6>
+                    {/* <p>{this.state.res.addressId}</p> */}
+                    <hr/>
+                    <h6>Store Time</h6>
+                    <p></p>
+                    <hr/>
+                    <h6>Cuisine Style</h6>
+                    <p>{this.state.isResLoaded ?  this.state.res.cuisineStyleId.cuisineName:null}</p>
+                    <hr/>
+                    <h6>Category</h6>
+                    <p>{this.state.isResLoaded  ?this.state.res.categoryId.categoryName : null}</p>
+                    
+                       
+>>>>>>> sc
                     </div>
                 </div>
             </MainContainer>
