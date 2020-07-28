@@ -23,176 +23,29 @@ class Restaurant extends Component {
             id: this.props.match.params.id,
             res: [],
             resultsErr: false,
-<<<<<<< HEAD
-            categoriesReady: false,
-            cuisinesReady: false,
-            priceRangesReady: false,
-         
-=======
             isResLoaded: false,
->>>>>>> sc
         }
     }
 
     componentWillMount() {
         Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
-<<<<<<< HEAD
             .then(res => {
                 if (res.data.errcode === 0)
                     this.setState({
-                        res: res.data.restaurant
+                        res: res.data.restaurant,
+                        isResLoaded: true
                     })
-=======
-            .then(res=>{
-                if(res.data.errcode === 0)
-                this.setState({
-                    res: res.data.restaurant,
-                    isResLoaded: true
-                })
                 console.log(this.state.res)
->>>>>>> sc
             })
-        if (!this.state.resultsErr) {
-            dataService.getCategories().then(res => {
-                this.categories = res;
-                this.setState({ categoriesReady: true })
-            })
-
-            dataService.getCuisines().then(res => {
-                this.cuisines = res;
-                this.setState({ cuisinesReady: true })
-            })
-
-            dataService.getPriceRanges().then(res => {
-                this.priceRanges = res;
-                this.setState({ priceRangesReady: true })
-            })
-
-        }
+        
     }
 
-<<<<<<< HEAD
     componentDidMount() {
         console.log(this.state.res)
-=======
-    componentDidMount(){
->>>>>>> sc
-    }
-
-    renderPriceRange(priceRanges) {
-        var tr = [];
-        var renderPriceRangeText = function (name) {
-            switch (name) {
-                case 'low':
-                    return '$ ($0-$50)'
-                case 'medium':
-                    return '$$ ($50-$100)'
-                case 'high':
-                    return '$$$ ($100+)'
-                default:
-                    return ''
-            }
-        }
-
-        for (var pr of priceRanges) {
-            if (pr.priceRangeName !== '')
-                tr.push(
-                    <div className="form-check" key={'pr' + pr._id}>
-                        <input name='priceRange' className="form-check-input" type="checkbox" value={pr._id} id={pr.priceRangeName} onChange={this.handleCheck} />
-                        <label className="form-check-label" htmlFor={pr.priceRangeName}>
-                            {
-                                renderPriceRangeText(pr.priceRangeName)
-                            }
-                        </label>
-                    </div>
-                )
-        }
-        return tr;
     }
 
 
-    renderCategory(categories) {
-        var tr = [];
-        for (var c of categories) {
-            if (c.categoryVal !== '')
-                tr.push(
-                    <div className="form-check" key={'category' + c._id}>
-                        <input name='categories' className="form-check-input" type="checkbox" value={c._id} id={c.categoryVal} onChange={this.handleCheck} />
-                        <label className="form-check-label" htmlFor={c.categoryVal}>
-                            {c.categoryName}
-                        </label>
-                    </div>
-                )
-        }
-        return tr;
-    }
 
-
-    renderCuisine(cuisines) {
-        var tr = [];
-        for (var c of cuisines) {
-            if (c.cuisineVal !== '')
-                tr.push(
-                    <div className="form-check" key={'cuisine' + c._id}>
-                        <input name='cuisines' className="form-check-input" type="checkbox" value={c._id} id={c.cuisineVal} onChange={this.handleCheck} />
-                        <label className="form-check-label" htmlFor={c.cuisineVal}>
-                            {c.cuisineName}
-                        </label>
-                    </div>
-                )
-        }
-        return tr
-    }
-
-    getCuisineNameById(id) {
-        try {
-            for (var c of this.cuisines) {
-                if (c._id == id) return c.cuisineName;
-            }
-        } catch (err) {
-            return null
-        }
-
-        return null;
-    }
-
-    getCategoryNameById(id) {
-        try {
-            for (var c of this.categories) {
-                if (c._id == id) return c.categoryName;
-            }
-        } catch (err) {
-            return null
-        }
-
-        return null;
-    }
-
-    getPriceRnageById(id) {
-        var renderPriceRangeText = function (name) {
-            switch (name) {
-                case 'low':
-                    return '$ ($0-$50)'
-                case 'medium':
-                    return '$$ ($50-$100)'
-                case 'high':
-                    return '$$$ ($100+)'
-                default:
-                    return ''
-            }
-        }
-        try {
-            for (var c of this.priceRanges) {
-                if (c._id == id) return renderPriceRangeText(c.priceRangeName)
-            }
-        } catch (err) {
-            return null
-        }
-
-        return null;
-    }
-
-<<<<<<< HEAD
     render() {
         return (
             // <div>
@@ -201,25 +54,24 @@ class Restaurant extends Component {
             // </div>
 
             <MainContainer>
-                {this.state.resultsErr
-=======
-    render(){
-        return(
-        // <div>
-        //     {JSON.stringify(this.state.res)}<br/><br/><br/>
-        //     <Link to={'/customerreserve/' + this.state.id} >Reserve</Link>
-        // </div>
-        
-        <MainContainer>
 
-            {this.state.resultsErr
->>>>>>> sc
+                {this.state.resultsErr
                     ?
                     FullscreenError("An error occured, please try again later")
                     :
                     null
                 }
-<<<<<<< HEAD
+
+
+                {!this.state.isResLoaded
+                    ?
+                    FullScrrenLoading({ type: 'cubes', color: '#000' })
+                    :
+                    null
+                }
+
+
+
                 <div className="card mb-3">
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                         <ol className="carousel-indicators">
@@ -237,49 +89,12 @@ class Restaurant extends Component {
                             <div className="carousel-item">
                                 <img className="d-inline-block" src={CAFE} alt="Third slide" />
                             </div>
+
                         </div>
-                        <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="sr-only">Previous</span>
-                        </a>
-                        <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="sr-only">Next</span>
-                        </a>
-=======
-
-
-        {!this.state.isResLoaded
-                    ?
-                    FullScrrenLoading({ type: 'cubes', color: '#000' })
-                    :
-                    null
-                }
-
-
-
-        <div className="card mb-3">
-            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                <ol className="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div className="carousel-inner" id="carousel_pictures">
-                    <div className="carousel-item active">
-                        <img className="d-inline-block" src={CAFE} alt="First slide" />
-                    </div>
-                    <div className="carousel-item">
-                        <img className="d-inline-block" src={CAFE} alt="Second slide" />
-                    </div>
-                    <div className="carousel-item">
-                        <img className="d-inline-block" src={CAFE} alt="Third slide" />
->>>>>>> sc
                     </div>
                     <div className="card-body">
                         <h5 className="card-title">{this.state.res.resName}</h5>
                         <hr />
-                        <p>Starts  {this.getPriceRnageById(this.state.res.priceRangeId)}     Price Range    Cuisine Style</p>
                         <p className="card-text">{this.state.res.restaurantDescription}</p>
                         <br />
                         <br />
@@ -304,50 +119,39 @@ class Restaurant extends Component {
                             className="btn btn-primary">
                            Reserve here
                         </button> */}
-<<<<<<< HEAD
                                 <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
                                 <br />
                                 <br />
                                 <h5>Restaurant Information</h5>
                                 <hr />
                                 <h6>Address</h6>
-                                {/* <p>{this.state.res.addressId}</p> */}
+                                <p>{this.state.isResLoaded ? this.state.res.addressId.streetNum : null} {this.state.isResLoaded ? this.state.res.addressId.streetName : null}
+                                {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null} 
+                                {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
                                 <hr />
                                 <h6>Store Time</h6>
-                                <p></p>
+                                <p>Monday {this.state.isResLoaded ? this.state.res.monOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.monCloseTimeId.storeTimeName : null}</p>
+                                <p>Tuesday {this.state.isResLoaded ? this.state.res.tueOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.tueCloseTimeId.storeTimeName : null}</p>
+                                <p>Wednesday {this.state.isResLoaded ? this.state.res.wedOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.wedCloseTimeId.storeTimeName : null}</p>
+                                <p>Thursday {this.state.isResLoaded ? this.state.res.thuOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.thuCloseTimeId.storeTimeName : null}</p>
+                                <p>Friday {this.state.isResLoaded ? this.state.res.friOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.friCloseTimeId.storeTimeName : null}</p>
+                                <p>Saturday {this.state.isResLoaded ? this.state.res.satOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.satCloseTimeId.storeTimeName : null}</p>
+                                <p>Sunday {this.state.isResLoaded ? this.state.res.sunOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.sunCloseTimeId.storeTimeName : null}</p>
                                 <hr />
                                 <h6>Cuisine Style</h6>
-                                <p>{this.getCuisineNameById(this.state.res.cuisineStyleId)}</p>
+                                <p>{this.state.isResLoaded ? this.state.res.cuisineStyleId.cuisineName : null}</p>
                                 <hr />
                                 <h6>Category</h6>
-                                <p>{this.getCategoryNameById(this.state.res.categoryId)}</p>
-
+                                <p>{this.state.isResLoaded ? this.state.res.categoryId.categoryName : null}</p>
+                                <hr/>
+                                <h6>Price Range</h6>
+                                <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
 
                             </div>
                         </div>
-
-=======
-                        <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
-                        <br />
-                        <br />
-                        <h5>Restaurant Information</h5>
-                        <hr />
-                        <h6>Address</h6>
-                    {/* <p>{this.state.res.addressId}</p> */}
-                    <hr/>
-                    <h6>Store Time</h6>
-                    <p></p>
-                    <hr/>
-                    <h6>Cuisine Style</h6>
-                    <p>{this.state.isResLoaded ?  this.state.res.cuisineStyleId.cuisineName:null}</p>
-                    <hr/>
-                    <h6>Category</h6>
-                    <p>{this.state.isResLoaded  ?this.state.res.categoryId.categoryName : null}</p>
-                    
-                       
->>>>>>> sc
                     </div>
                 </div>
+
             </MainContainer>
 
         )
