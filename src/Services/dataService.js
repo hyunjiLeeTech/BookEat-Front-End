@@ -413,8 +413,16 @@ export default {
     })
   },
   editDiscount(state) {
-    console.log("ds edit discount working");
     return Axios.post(serverAddress + "/discount/editdiscount", state, {
+      headers: authHeader()
+    }).then((res) => {
+      return res.data;
+    }).catch((err) => {
+      throw err;
+    })
+  },
+  deleteDiscount(state) {
+    return Axios.post(serverAddress + "/discount/deletediscount", state, {
       headers: authHeader()
     }).then((res) => {
       return res.data;

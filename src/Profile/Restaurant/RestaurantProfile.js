@@ -606,7 +606,9 @@ class RestaurantProfile extends Component {
   }
 
   discountDeleteButton(index) {
-    // add stuff for delete button here
+    ds.deleteDiscount(this.state.discounts[index]).then(() => {
+      this.queryDiscounts();
+    })
   }
 
   callModal(index) {
