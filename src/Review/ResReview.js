@@ -31,6 +31,10 @@ class ResReview extends Component {
         super(props)
         this.state = {
             comment: '',
+            food: '',
+            service: '',
+            enviroment: '',
+            satisfaction: '',
             reviews: [
             ],
             disabled: true,
@@ -100,7 +104,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Food</label>
                         <div className="col-sm-6">
-                            <Star isClickAble={true} type='star' stars={2} callback={
+                            <Star id="food" name="food" value={this.state.food} isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { console.log(e) }
                             } />
                         </div>
@@ -108,7 +112,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Service</label>
                         <div className="col-sm-6">
-                            <Star isClickAble={true} type='star' stars={2} callback={
+                            <Star id="service" name="service" value={this.state.service} isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { console.log(e) }
                             } />
                         </div>
@@ -118,7 +122,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Satisfaction</label>
                         <div className="col-sm-6">
-                            <Star isClickAble={true} type='star' stars={2} callback={
+                            <Star id="satisfaction" name="satisfaction" value={this.state.satisfaction} isClickAble={true} type='star' onChange={this.handleChange}  callback={
                                 (e) => { console.log(e) }
                             } />
                         </div>
@@ -126,7 +130,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Environment</label>
                         <div className="col-sm-6">
-                            <Star isClickAble={true} type='star' stars={2} callback={
+                            <Star id="enviroment" name="enviroment" value={this.state.enviroment} isClickAble={true} type='star' onChange={this.handleChange}  callback={
                                 (e) => { console.log(e) }
                             } />
                         </div>
