@@ -195,6 +195,15 @@ class ViewCustomerProfile extends Component {
 
     return (
       <MainContainer>
+
+
+
+
+
+
+
+
+
         <div className="container mt-3">
           <div className="card">
             <ul className="nav nav-tabs">
@@ -314,10 +323,10 @@ class ViewCustomerProfile extends Component {
                   </div>
                   <div className="form-group text-center ">
                     {/* <Link to="/"> */}
-                      <button type="button" className="btn btn-primary mr-sm-4 "
-                        data-toggle="modal" data-target="#DeleteResultModal"
-                      >
-                        {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
+                    <button type="button" className="btn btn-primary mr-sm-4 "
+                      data-toggle="modal" data-target="#AccountDeleteResultModal"
+                    >
+                      {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
                     {/* </Link> */}
@@ -391,46 +400,47 @@ class ViewCustomerProfile extends Component {
         {/* DeleteMenuModal */}
 
         <div
-                    className="modal fade"
-                    id="DeleteResultModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="DeleteResultModal"
-                    aria-hidden="true"
-                >
+          className="modal fade"
+          id="AccountDeleteResultModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="AccountDeleteResultModal"
+          aria-hidden="true"
+        >
 
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="DeleteResultModal">
-                                    Delete Menu
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="AccountDeleteResultModal">
+                  Delete Menu
                             </h5>
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="alert alert-warning" id="DeleteResultModalText">
-                                    Please Wait...
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p className="alert alert-warning" id="DeleteResultModalText">
+                  Please Wait...
                   </p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-dismiss="modal"
-                                >
-                                    Close
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  Close
                   </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </MainContainer>
     );
   }
