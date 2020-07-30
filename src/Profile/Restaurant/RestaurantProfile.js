@@ -136,22 +136,22 @@ class RestaurantProfile extends Component {
   }
   onImageChange = (event, index) => {
     if (event.target.files && event.target.files[0]) {
-        let img = event.target.files[0];
-        // this.setState({
-        //   image: URL.createObjectURL(img)
-        // });
-        if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
-            this.state.picture[index].MenuPicture = URL.createObjectURL(img)
-            this.forceUpdate();
-        } else {
-            this.setState({
-                //image: URL.createObjectURL(img),
-                picture: event.target.files[0]
-            })
-        }
+      let img = event.target.files[0];
+      // this.setState({
+      //   image: URL.createObjectURL(img)
+      // });
+      if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
+        this.state.picture[index].MenuPicture = URL.createObjectURL(img)
+        this.forceUpdate();
+      } else {
+        this.setState({
+          //image: URL.createObjectURL(img),
+          picture: event.target.files[0]
+        })
+      }
 
     }
-};
+  };
 
   handleChange(e) {
     e.preventDefault();
@@ -675,7 +675,7 @@ class RestaurantProfile extends Component {
               className="btn btn-primary btn-sm mr-sm-2"
               onClick={() => { this.discountDeleteButton(index) }}
               data-toggle="modal"
-              data-target="#DeleteResultModal"
+              data-target="#DiscountDeleteResultModal"
             >
               Delete
                     </button>
@@ -2252,49 +2252,6 @@ class RestaurantProfile extends Component {
                     {this.renderDataDiscount()}
                   </tbody>
                 </table>
-                {/* DeleteDiscountModal */}
-
-                <div
-                  className="modal fade"
-                  id="DeleteResultModal"
-                  tabIndex="-1"
-                  role="dialog"
-                  aria-labelledby="DeleteResultModal"
-                  aria-hidden="true"
-                >
-
-                  <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title" id="DeleteResultModal">
-                          Delete Discount
-                            </h5>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body">
-                        <p className="alert alert-warning" id="DeleteResultModalText">
-                          Please Wait...
-                  </p>
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          data-dismiss="modal"
-                        >
-                          Close
-                  </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
                 {/* Edit Discount Modal */}
 
@@ -2346,6 +2303,56 @@ class RestaurantProfile extends Component {
             </div>
           </div>
         </div>
+
+
+
+        {/* DeleteDiscountModal */}
+
+        <div
+          className="modal fade"
+          id="DiscountDeleteResultModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="DiscountDeleteResultModal"
+          aria-hidden="true"
+        >
+
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="DiscountDeleteResultModal">
+                  Delete Discount
+                            </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p className="alert alert-warning" id="DeleteResultModalText">
+                  Please Wait...
+                  </p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  Close
+                  </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
       </MainContainer>
     );
   }
