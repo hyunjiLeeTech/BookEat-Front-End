@@ -6,23 +6,23 @@ import Parser from "html-react-parser";
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
     Object.values(isError).forEach((val) => {
-      if (val !== '&#160;') {
-        isValid = false;
-      } else {
-        isValid = true;
-      }
+        if (val !== '&#160;') {
+            isValid = false;
+        } else {
+            isValid = true;
+        }
     });
-  
+
     Object.values(rest).forEach((val) => {
-      console.log(rest);
-      if (val === null) {
-        isValid = false;
-      } else {
-        isValid = true;
-      }
+        console.log(rest);
+        if (val === null) {
+            isValid = false;
+        } else {
+            isValid = true;
+        }
     });
     return isValid;
-  };
+};
 
 
 class ResReview extends Component {
@@ -50,7 +50,7 @@ class ResReview extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("saved")
-
+        console.log(this.state);
     };
 
 
@@ -59,15 +59,15 @@ class ResReview extends Component {
         const { name, value } = e.target;
         let isError = { ...this.state.isError };
         console.log(e.target.value);
-        switch(name){
+        switch (name) {
             case "comment":
                 isError.comment =
-          value.length >= 1 && value.length <= 255
-            ? "&#160;"
-            : "Write something please";
-        break;
-      default:
-          break;
+                    value.length >= 1 && value.length <= 255
+                        ? "&#160;"
+                        : "Write something please";
+                break;
+            default:
+                break;
         }
         this.setState({ [e.target.id]: e.target.value });
     }
@@ -144,10 +144,10 @@ class ResReview extends Component {
                             //   disabled={(!this.state.disabled)}
                             ></textarea>
                             <span className="invalid-feedback">
-                          {Parser(isError.comment)}
-                        </span>
+                                {Parser(isError.comment)}
+                            </span>
 
-                            <button type="submit" className="btn btn-primary float-right"> Add Review</button>
+                            <button type="submit" className="btn btn-primary float-right" onClick={this.handleSubmit}> Add Review</button>
 
                         </div>
 
@@ -176,8 +176,8 @@ class ResReview extends Component {
                                         <div className="review-block-rate col-sm-5">
 
                                             <p > Food </p> <Star type='splitedBar' stars={3.8} />
-                                            <p >Service </p> <Star type='splitedBar' stars={3.8} /> 
-                                            <p>Satisfaction</p> <Star type='splitedBar' stars={3.8} /> 
+                                            <p >Service </p> <Star type='splitedBar' stars={3.8} />
+                                            <p>Satisfaction</p> <Star type='splitedBar' stars={3.8} />
 
                                             <p>Environment</p>  <Star type='splitedBar' stars={3.8} />
 
