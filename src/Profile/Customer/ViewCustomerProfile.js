@@ -195,6 +195,15 @@ class ViewCustomerProfile extends Component {
 
     return (
       <MainContainer>
+
+
+
+
+
+
+
+
+
         <div className="container mt-3">
           <div className="card">
             <ul className="nav nav-tabs">
@@ -309,15 +318,13 @@ class ViewCustomerProfile extends Component {
                   <div className="form-group text-center ">
                     <button id='save_edit_btn' onClick={this.handleClick.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
                       {this.state.edit ? "Save Change" : "Edit"}
-
                     </button>
                   </div>
                   <div className="form-group text-center ">
                     {/* <Link to="/"> */}
-                      <button type="button" className="btn btn-primary mr-sm-4 "
-                        data-toggle="modal" data-target="#DeleteResultProfileModal"
-                      >
-                        {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
+                    <button type="button" className="btn btn-primary mr-sm-4 "
+                      data-toggle="modal" data-target="#AccountDeleteResultModal"
+                    >
                       Delete
                     </button>
                     {/* </Link> */}
@@ -391,46 +398,47 @@ class ViewCustomerProfile extends Component {
         {/* DeleteMenuModal */}
 
         <div
-                    className="modal fade"
-                    id="DeleteResultModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="DeleteResultProfileModal"
-                    aria-hidden="true"
-                >
+          className="modal fade"
+          id="AccountDeleteResultModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="AccountDeleteResultModal"
+          aria-hidden="true"
+        >
 
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="DeleteResultProfileModal">
-                                    Delete profile
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="AccountDeleteResultModal">
+                  Delete Menu
                             </h5>
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="alert alert-warning" id="DeleteResultModalText">
-                                    Please Wait...
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p className="alert alert-warning" id="DeleteResultModalText">
+                  Please Wait...
                   </p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-dismiss="modal"
-                                >
-                                    Close
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  Close
                   </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </MainContainer>
     );
   }

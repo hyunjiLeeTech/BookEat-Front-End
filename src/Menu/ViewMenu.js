@@ -31,7 +31,8 @@ class Menu extends Component {
     }
 
     queryMenus() {
-        ds.getMenus().then((res) => {
+        console.log("menu")
+        ds.getMenusCustomer().then((res) => {
             console.log(res.menus);
             this.setState({
                 menus: res.menus
@@ -56,6 +57,7 @@ class Menu extends Component {
                 )
             }
         }
+        return rows;
     }
 
     render() {

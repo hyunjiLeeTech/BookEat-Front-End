@@ -4,9 +4,6 @@ import MainContainer from "../../component/Style/MainContainer";
 import "./RestaurantProfile.css";
 import Parser from "html-react-parser";
 import $ from "jquery";
-import Axios from "axios";
-import sha256 from "crypto-js/sha256";
-import serverAddress from "../../Services/ServerUrl";
 import authService from "../../Services/AuthService";
 import ds from "../../Services/dataService";
 import Manager from "./Manager";
@@ -14,7 +11,8 @@ import ChangePassword from "../../component/Forms/Customer/ChangePassword";
 import Menu from "../../Menu/Menu"
 import RestaurantReservation from "../../Reservation/RestaurantReservation";
 import RestaurantLayout from "../../Restaurant/RestaurantLayout";
-
+import FullscreenError from '../../component/Style/FullscreenError'
+import FullScrrenLoading from '../../component/Style/FullscreenLoading';
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -102,6 +100,8 @@ class RestaurantProfile extends Component {
       promdescription: '',
       discounts: [],
       contentTable: false,
+      resultsErr: false,
+      isResLoaded: false,
 
       isError: {
         resname: "&#160;",
@@ -131,7 +131,7 @@ class RestaurantProfile extends Component {
     this.handleSubmitResProfile = this.handleSubmitResProfile.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
-    this.renderDiscountTable = this.renderDiscountTable.bind(this);
+    this.handleChangeInList = this.handleChangeInList.bind(this);
 
   }
   onImageChange = (event, index) => {
@@ -141,11 +141,12 @@ class RestaurantProfile extends Component {
       //   image: URL.createObjectURL(img)
       // });
       if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
-        this.state.picture = URL.createObjectURL(img)
+        this.state.picture[index].MenuPicture = URL.createObjectURL(img)
         this.forceUpdate();
       } else {
         this.setState({
-          image: URL.createObjectURL(img),
+          //image: URL.createObjectURL(img),
+          picture: event.target.files[0]
         })
       }
 
@@ -231,6 +232,29 @@ class RestaurantProfile extends Component {
     });
   }
 
+  handleChangeInList(e, index) {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let isError = { ...this.state.isError };
+    switch (name) {
+      case "discdescription":
+        isError.discdescription = regExpNumbers.test(value)
+          ? "&#160;"
+          : "Please put some promotional numbers";
+        break;
+      case "promdescription":
+        isError.promdescription =
+          value.length >= 1 && value.length <= 255
+            ? "&#160;"
+            : "Atleast write something";
+        break;
+      default:
+        break;
+    }
+    this.state.discounts[index][e.target.id] = e.target.value;
+    this.forceUpdate();
+  }
+
   handleSubmitResProfile = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
@@ -279,7 +303,10 @@ class RestaurantProfile extends Component {
       this.setState({
         discounts: res.discounts
       })
-    }).catch(err=>{
+      for (var discount of this.state.discounts) {
+        discount.contentTable = false;
+      }
+    }).catch(err => {
       //TODO handling err
     })
   }
@@ -527,6 +554,10 @@ class RestaurantProfile extends Component {
       accountId: usr.user._id
     });
 
+    this.setState({
+      contentTable: !this.state.contentTable
+    })
+
 
   }
 
@@ -535,7 +566,11 @@ class RestaurantProfile extends Component {
     this.setState({
       disabled: !this.state.disabled
     });
+    this.setState({
+      contentTable: !this.state.contentTable
+    })
     this.changeText();
+
   }
 
   //Edit profile - button
@@ -558,73 +593,96 @@ class RestaurantProfile extends Component {
 
   discountEditButton(index) {
     console.log(this.state.discounts);
+    console.log(index);
     this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
 
-    if (!this.state.discounts[index].contentTable) {
-      // add stuff for editbutton here
+    if (!this.state.discounts[index].contenteditable) {
+      ds.editDiscount(this.state.discounts[index])
+        .then(() => {
+          this.queryDiscounts();
+        });
     }
+
     this.callModal();
   }
 
   discountDeleteButton(index) {
-    // add stuff for delete button here
+    ds.deleteDiscount(this.state.discounts[index]).then(() => {
+      this.queryDiscounts();
+    })
   }
 
   callModal(index) {
+    this.setState(state => {
+      //   return {
+      //     discount: !state.discount
+      //   };
+      // },
+      this.setState(state =>
 
-    this.setState(state => () => {
-      if (this.state.discounts[index].contentTable) {
-        $('this.state.discounts[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
-      }
-      else {
-        $('this.state.discounts[index].#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-      }
-
+        () => {
+          if (this.state.discount[index].contentTable) {
+            $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+          }
+          else {
+            $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+          }
+        })
     })
 
   }
 
-  renderDiscountTable() {
-    var rows = [];
-    console.log("discount state" + this.state.discounts);
-    console.log("HERE");
-    if (typeof this.state.discounts != "undefined") {
-      for (var discount of this.state.discounts) {
-        rows.push(
-          <tr key={rows}>
-            <td >
-              {discount.percent}
-            </td>
-            <td>
-              {discount.promdescription}
-            </td>
-            <td>
-              <button id='save_edit_disc_btn'
-                onClick={this.discountEditButton.bind(this)}
-                type="button" className="btn btn-primary mr-sm-4 "
-                data-target="#EditResultModal">
-                {this.state.discount ? "Save Change" : "Edit"}
 
-              </button>
-            </td>
-            <td>
-              <button
-                button id='delete_btn'
-                type="button"
-                className="btn btn-primary btn-sm mr-sm-2"
-                onClick={this.discountDeleteButton.bind(this)}
-                data-toggle="modal" data-target="#DeleteResultModal"
-              >
-                Delete
+  renderDataDiscount() {
+    return this.state.discounts.map((discount, index) => {
+      const { id, discdescription, promdescription } = discount
+      return (
+        <tr key={id} id={'discountrow' + index}>
+          <td contentTable={(this.state.discounts[index].contentTable)}>
+
+            <input type="text" id="discdescription" name="discdescription"
+              defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
+              onChange={(e) => this.handleChangeInList(e, index)} />
+
+
+          </td>
+          <td contentTable={(this.state.discounts[index].contentTable)} >
+            <textarea
+              rows="5"
+              id="promdescription"
+              name="promdescription"
+              defaultValue={this.state.discounts[index].description}
+              disabled={(!this.state.discounts[index].contentTable)}
+              onChange={(e) => this.handleChangeInList(e, index)}
+            ></textarea>
+
+
+          </td>
+          <td>
+            <button id='save_edit_disc_btn'
+              onClick={() => { this.discountEditButton(index) }
+              }
+              type="button" className="btn btn-primary mr-sm-4 "
+              data-target="#EditResultModal">
+              {this.state.discounts[index].contentTable ? "Save Change" : "Edit"}
+
+            </button>
+          </td>
+          <td>
+            <button
+              id='delete_btn'
+              type="button"
+              className="btn btn-primary btn-sm mr-sm-2"
+              onClick={() => { this.discountDeleteButton(index) }}
+              data-toggle="modal"
+              data-target="#DiscountDeleteResultModal"
+            >
+              Delete
                     </button>
-            </td>
-          </tr>
-        )
-      }
-    }
-    return rows;  
-
-
+          </td>
+        </tr>
+      )
+    })
   }
 
 
@@ -633,6 +691,20 @@ class RestaurantProfile extends Component {
     const { isError } = this.state;
     return (
       <MainContainer>
+        {this.state.resultsErr
+          ?
+          FullscreenError("An error occured, please try again later")
+          :
+          null
+        }
+
+
+        {/* {!this.state.isResLoaded
+                    ?
+                    FullScrrenLoading({ type: 'cubes', color: '#000' })
+                    :
+                    null
+                } */}
         <div className="card">
           <div className="card-header">
             <ul className="nav nav-tabs card-header-tabs">
@@ -1898,7 +1970,7 @@ class RestaurantProfile extends Component {
                       <input type="file" name="picture" id="picture" value={this.state.picture}
                         onChange={this.onImageChange} disabled={(!this.state.disabled)} />
 
-                      <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+                      <img src={this.state.picture} style={{ maxHeight: '100%', maxWidth: '100%' }} />
 
 
 
@@ -1951,7 +2023,7 @@ class RestaurantProfile extends Component {
                       <div
                         className="modal fade"
                         id="deleteRestaurantModal"
-                        tabindex="-1"
+                        tabIndex="-1"
                         role="dialog"
                         aria-labelledby="deleteRestaurantLabel"
                         aria-hidden="true"
@@ -1996,7 +2068,7 @@ class RestaurantProfile extends Component {
                   <div
                     className="modal fade"
                     id="resProfileResultModal"
-                    tabindex="-1"
+                    tabIndex="-1"
                     role="dialog"
                     aria-labelledby="resProfileResultModalLabel"
                     aria-hidden="true"
@@ -2176,9 +2248,54 @@ class RestaurantProfile extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.renderDiscountTable()}
+                    {/* {this.renderDiscountTable()} */}
+                    {this.renderDataDiscount()}
                   </tbody>
                 </table>
+
+                {/* Edit Discount Modal */}
+
+                <div
+                  className="modal fade"
+                  id="EditResultModal"
+                  tabIndex="-1"
+                  role="dialog"
+                  aria-labelledby="EditResultModal"
+                  aria-hidden="true"
+                >
+
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="EditResultModal">
+                          Edit Discount
+                            </h5>
+                        <button
+                          type="button"
+                          className="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <p className="alert alert-warning" id="EditResultModalText">
+                          Please Wait...
+                  </p>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                  </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* End Discount */}
@@ -2186,6 +2303,56 @@ class RestaurantProfile extends Component {
             </div>
           </div>
         </div>
+
+
+
+        {/* DeleteDiscountModal */}
+
+        <div
+          className="modal fade"
+          id="DiscountDeleteResultModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="DiscountDeleteResultModal"
+          aria-hidden="true"
+        >
+
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="DiscountDeleteResultModal">
+                  Delete Discount
+                            </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p className="alert alert-warning" id="DeleteResultModalText">
+                  Please Wait...
+                  </p>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  Close
+                  </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
       </MainContainer>
     );
   }
