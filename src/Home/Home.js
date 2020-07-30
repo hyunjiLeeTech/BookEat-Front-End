@@ -49,7 +49,7 @@ class Home extends Component {
                     </header>
                     <div className="card " >
                         <div className="card-body" >    
-                        <h5>Daily Pick Up</h5>                      
+                        <h5>Daily Pick Up Restaurant</h5>                      
                                 <Daily />
                         </div>
                     </div>
@@ -58,14 +58,14 @@ class Home extends Component {
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
-                        <h5>Feature</h5>      
+                        <h5>Feature Restaurant</h5>      
                             <Feature />
                         </div>
                     </div>
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
-                        <h5>Favorite</h5>      
+                        <h5>Favorite Restaurant</h5>      
                             <Favorite />
                         </div>
                     </div>

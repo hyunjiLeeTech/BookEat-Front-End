@@ -315,7 +315,7 @@ class ViewCustomerProfile extends Component {
                   <div className="form-group text-center ">
                     {/* <Link to="/"> */}
                       <button type="button" className="btn btn-primary mr-sm-4 "
-                        data-toggle="modal" data-target="#DeleteResultModal"
+                        data-toggle="modal" data-target="#DeleteResultProfileModal"
                       >
                         {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
@@ -358,7 +358,7 @@ class ViewCustomerProfile extends Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="signResultModalLabel">
-                    Edit Customer Profile
+                    Edit Profile
                   </h5>
                   <button
                     type="button"
@@ -395,15 +395,15 @@ class ViewCustomerProfile extends Component {
                     id="DeleteResultModal"
                     tabindex="-1"
                     role="dialog"
-                    aria-labelledby="DeleteResultModal"
+                    aria-labelledby="DeleteResultProfileModal"
                     aria-hidden="true"
                 >
 
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="DeleteResultModal">
-                                    Delete Menu
+                                <h5 className="modal-title" id="DeleteResultProfileModal">
+                                    Delete profile
                             </h5>
                                 <button
                                     type="button"
