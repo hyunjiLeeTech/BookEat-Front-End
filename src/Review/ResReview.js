@@ -104,17 +104,16 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Food</label>
                         <div className="col-sm-6">
-                            <Star id="food" name="food" value={this.state.food} isClickAble={true} type='star' onChange={this.handleChange} callback={
-                                (e) => { console.log(e) }
+                            <Star id="food" name="food" isClickAble={true} type='star' onChange={this.handleChange} callback={
+                                (e) => { this.setState({ food: e }) }
                             } />
                         </div>
 
 
                         <label className="col-sm-4 col-form-label">Service</label>
                         <div className="col-sm-6">
-                            <Star id="service" name="service" value={this.state.service} isClickAble={true} type='star' onChange={this.handleChange} callback={
-                                (e) => { console.log(e) }
-                            } />
+                            <Star id="service" name="service" isClickAble={true} type='star' onChange={this.handleChange} callback={
+                                (e) => { this.setState({ service: e }) }} />
                         </div>
 
 
@@ -122,17 +121,15 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Satisfaction</label>
                         <div className="col-sm-6">
-                            <Star id="satisfaction" name="satisfaction" value={this.state.satisfaction} isClickAble={true} type='star' onChange={this.handleChange}  callback={
-                                (e) => { console.log(e) }
-                            } />
+                            <Star id="satisfaction" name="satisfaction" isClickAble={true} type='star' onChange={this.handleChange} callback={
+                                (e) => { this.setState({ satisfaction: e }) }} />
                         </div>
 
 
                         <label className="col-sm-4 col-form-label">Environment</label>
                         <div className="col-sm-6">
-                            <Star id="enviroment" name="enviroment" value={this.state.enviroment} isClickAble={true} type='star' onChange={this.handleChange}  callback={
-                                (e) => { console.log(e) }
-                            } />
+                            <Star id="enviroment" name="enviroment" isClickAble={true} type='star' onChange={this.handleChange} callback={
+                                (e) => { this.setState({ enviroment: e }) }} />
                         </div>
                         <br />
                         <br />
