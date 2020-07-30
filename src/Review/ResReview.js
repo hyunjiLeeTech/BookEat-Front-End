@@ -105,7 +105,7 @@ class ResReview extends Component {
                         <label className="col-sm-4 col-form-label">Food</label>
                         <div className="col-sm-6">
                             <Star id="food" name="food" value={this.state.food} isClickAble={true} type='star' onChange={this.handleChange} callback={
-                                (e) => { this.setState({food: e})}
+                                (e) => { this.setState({ food: e }) }
                             } />
                         </div>
 
@@ -113,7 +113,7 @@ class ResReview extends Component {
                         <label className="col-sm-4 col-form-label">Service</label>
                         <div className="col-sm-6">
                             <Star id="service" name="service" value={this.state.service} isClickAble={true} type='star' onChange={this.handleChange} callback={
-                                (e) => { this.setState({service: e})}
+                                (e) => { this.setState({ service: e }) }
                             } />
                         </div>
 
@@ -122,16 +122,16 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Satisfaction</label>
                         <div className="col-sm-6">
-                            <Star id="satisfaction" name="satisfaction" value={this.state.satisfaction} isClickAble={true} type='star' onChange={this.handleChange}  callback={
-                                (e) => { this.setState({satisfaction: e})}
+                            <Star id="satisfaction" name="satisfaction" value={this.state.satisfaction} isClickAble={true} type='star' onChange={this.handleChange} callback={
+                                (e) => { this.setState({ satisfaction: e }) }
                             } />
                         </div>
 
 
                         <label className="col-sm-4 col-form-label">Environment</label>
                         <div className="col-sm-6">
-                            <Star id="enviroment" name="enviroment"  isClickAble={true} type='star' onChange={this.handleChange}  callback={
-                                (e) => { this.setState({enviroment: e})}
+                            <Star id="enviroment" name="enviroment" isClickAble={true} type='star' onChange={this.handleChange} callback={
+                                (e) => { this.setState({ enviroment: e }) }
                             } />
                         </div>
                         <br />
@@ -151,14 +151,11 @@ class ResReview extends Component {
                                 {Parser(isError.comment)}
                             </span>
 
-                            <button type="submit" className="btn btn-primary float-right" onClick={this.handleSubmit}> Add Review</button>
+                            <button type="submit" className="btn btn-primary float-right" onClick={this.handleSubmit}
+                                data-toggle="modal"
+                                data-target="#AddReviewModal"> Add Review</button>
 
                         </div>
-
-
-
-
-
                     </div>
 
 
@@ -195,7 +192,49 @@ class ResReview extends Component {
                         </div>
                     </div>
                 </div>
+                {/* Add Review Modal */}
 
+                <div
+                    className="modal fade"
+                    id="AddReviewModal"
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-labelledby="AddReviewModal"
+                    aria-hidden="true"
+                >
+
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="AddReviewModal">
+                                    Add Review
+                            </h5>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p className="alert alert-warning" id="AddReviewModalText">
+                                    Please Wait...
+                  </p>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-dismiss="modal"
+                                >
+                                    Close
+                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
 
