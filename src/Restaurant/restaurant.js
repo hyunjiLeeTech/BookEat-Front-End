@@ -37,7 +37,7 @@ class Restaurant extends Component {
                     })
                 console.log(this.state.res)
             })
-        
+        console.log(this.state.id)
     }
 
     componentDidMount() {
@@ -145,7 +145,7 @@ class Restaurant extends Component {
                             <div className="col-sm-8">
                                 <h5>Menu</h5>
                                 <hr />
-                                <ViewMenu />
+                                <ViewMenu resId={this.state.id}/>
                                 <br />
                                 <h5>Reviews</h5>
                                 <hr />
