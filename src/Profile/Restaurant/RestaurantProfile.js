@@ -4,9 +4,6 @@ import MainContainer from "../../component/Style/MainContainer";
 import "./RestaurantProfile.css";
 import Parser from "html-react-parser";
 import $ from "jquery";
-import Axios from "axios";
-import sha256 from "crypto-js/sha256";
-import serverAddress from "../../Services/ServerUrl";
 import authService from "../../Services/AuthService";
 import ds from "../../Services/dataService";
 import Manager from "./Manager";
@@ -14,7 +11,8 @@ import ChangePassword from "../../component/Forms/Customer/ChangePassword";
 import Menu from "../../Menu/Menu"
 import RestaurantReservation from "../../Reservation/RestaurantReservation";
 import RestaurantLayout from "../../Restaurant/RestaurantLayout";
-
+import FullscreenError from '../../component/Style/FullscreenError'
+import FullScrrenLoading from '../../component/Style/FullscreenLoading';
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -102,6 +100,8 @@ class RestaurantProfile extends Component {
       promdescription: '',
       discounts: [],
       contentTable: false,
+      resultsErr: false,
+      isResLoaded: false,
 
       isError: {
         resname: "&#160;",
@@ -136,21 +136,22 @@ class RestaurantProfile extends Component {
   }
   onImageChange = (event, index) => {
     if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
-      // this.setState({
-      //   image: URL.createObjectURL(img)
-      // });
-      if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
-        this.state.picture = URL.createObjectURL(img)
-        this.forceUpdate();
-      } else {
-        this.setState({
-          image: URL.createObjectURL(img),
-        })
-      }
+        let img = event.target.files[0];
+        // this.setState({
+        //   image: URL.createObjectURL(img)
+        // });
+        if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
+            this.state.picture[index].MenuPicture = URL.createObjectURL(img)
+            this.forceUpdate();
+        } else {
+            this.setState({
+                //image: URL.createObjectURL(img),
+                picture: event.target.files[0]
+            })
+        }
 
     }
-  };
+};
 
   handleChange(e) {
     e.preventDefault();
@@ -595,14 +596,20 @@ class RestaurantProfile extends Component {
     console.log(index);
     this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
 
-    // if (!this.state.discounts[index].contentTable) {
-    //   // add stuff for editbutton here
-    // }
+    if (!this.state.discounts[index].contenteditable) {
+      ds.editDiscount(this.state.discounts[index])
+        .then(() => {
+          this.queryDiscounts();
+        });
+    }
+
     this.callModal();
   }
 
   discountDeleteButton(index) {
-    // add stuff for delete button here
+    ds.deleteDiscount(this.state.discounts[index]).then(() => {
+      this.queryDiscounts();
+    })
   }
 
   callModal(index) {
@@ -625,48 +632,6 @@ class RestaurantProfile extends Component {
 
   }
 
-  // renderDiscountTable() {
-  //   var rows = [];
-  //   console.log("discount state" + this.state.discounts);
-  //   console.log("HERE");
-  //   if (typeof this.state.discounts != "undefined") {
-  //     for (var discount of this.state.discounts) {
-  //       rows.push(
-  //         <tr key={rows}>
-  //           <td>
-  //             {discount.percent}
-  //           </td>
-  //           <td>
-  //             {discount.description}
-  //           </td>
-  //           <td>
-  //             <button id='save_edit_disc_btn'
-  //               onClick={this.discountEditButton.bind(this)}
-  //               type="button" className="btn btn-primary mr-sm-4 "
-  //               data-target="#EditResultModal">
-  //               {this.state.discount ? "Save Change" : "Edit"}
-
-  //             </button>
-  //           </td>
-  //           <td>
-  //             <button
-  //               button id='delete_btn'
-  //               type="button"
-  //               className="btn btn-primary btn-sm mr-sm-2"
-  //               onClick={this.discountDeleteButton.bind(this)}
-  //               data-toggle="modal" data-target="#DeleteResultModal"
-  //             >
-  //               Delete
-  //                   </button>
-  //           </td>
-  //         </tr>
-  //       )
-  //     }
-  //   }
-  //   return rows;
-
-
-  // }
 
   renderDataDiscount() {
     return this.state.discounts.map((discount, index) => {
@@ -674,23 +639,23 @@ class RestaurantProfile extends Component {
       return (
         <tr key={id} id={'discountrow' + index}>
           <td contentTable={(this.state.discounts[index].contentTable)}>
-            
-              <input type="text" id="discdescription" name="discdescription"
-                defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
-                onChange={(e) => this.handleChangeInList(e, index)} />
-      
+
+            <input type="text" id="discdescription" name="discdescription"
+              defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
+              onChange={(e) => this.handleChangeInList(e, index)} />
+
 
           </td>
           <td contentTable={(this.state.discounts[index].contentTable)} >
-              <textarea
-                rows="5"
-                id="promdescription"
-                name="promdescription"
-                defaultValue={this.state.discounts[index].description}
-                disabled={(!this.state.discounts[index].contentTable)}
-                onChange={(e) => this.handleChangeInList(e, index)}
-              ></textarea>
-          
+            <textarea
+              rows="5"
+              id="promdescription"
+              name="promdescription"
+              defaultValue={this.state.discounts[index].description}
+              disabled={(!this.state.discounts[index].contentTable)}
+              onChange={(e) => this.handleChangeInList(e, index)}
+            ></textarea>
+
 
           </td>
           <td>
@@ -705,11 +670,12 @@ class RestaurantProfile extends Component {
           </td>
           <td>
             <button
-              button id='delete_btn'
+              id='delete_btn'
               type="button"
               className="btn btn-primary btn-sm mr-sm-2"
               onClick={() => { this.discountDeleteButton(index) }}
-              data-toggle="modal" data-target="#DeleteResultModal"
+              data-toggle="modal"
+              data-target="#DeleteResultModal"
             >
               Delete
                     </button>
@@ -725,6 +691,20 @@ class RestaurantProfile extends Component {
     const { isError } = this.state;
     return (
       <MainContainer>
+        {this.state.resultsErr
+          ?
+          FullscreenError("An error occured, please try again later")
+          :
+          null
+        }
+
+
+        {/* {!this.state.isResLoaded
+                    ?
+                    FullScrrenLoading({ type: 'cubes', color: '#000' })
+                    :
+                    null
+                } */}
         <div className="card">
           <div className="card-header">
             <ul className="nav nav-tabs card-header-tabs">
@@ -1990,7 +1970,7 @@ class RestaurantProfile extends Component {
                       <input type="file" name="picture" id="picture" value={this.state.picture}
                         onChange={this.onImageChange} disabled={(!this.state.disabled)} />
 
-                      <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+                      <img src={this.state.picture} style={{ maxHeight: '100%', maxWidth: '100%' }} />
 
 
 
@@ -2272,6 +2252,93 @@ class RestaurantProfile extends Component {
                     {this.renderDataDiscount()}
                   </tbody>
                 </table>
+                {/* DeleteDiscountModal */}
+
+                <div
+                  className="modal fade"
+                  id="DeleteResultModal"
+                  tabIndex="-1"
+                  role="dialog"
+                  aria-labelledby="DeleteResultModal"
+                  aria-hidden="true"
+                >
+
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="DeleteResultModal">
+                          Delete Discount
+                            </h5>
+                        <button
+                          type="button"
+                          className="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <p className="alert alert-warning" id="DeleteResultModalText">
+                          Please Wait...
+                  </p>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                  </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Edit Discount Modal */}
+
+                <div
+                  className="modal fade"
+                  id="EditResultModal"
+                  tabIndex="-1"
+                  role="dialog"
+                  aria-labelledby="EditResultModal"
+                  aria-hidden="true"
+                >
+
+                  <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="EditResultModal">
+                          Edit Discount
+                            </h5>
+                        <button
+                          type="button"
+                          className="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div className="modal-body">
+                        <p className="alert alert-warning" id="EditResultModalText">
+                          Please Wait...
+                  </p>
+                      </div>
+                      <div className="modal-footer">
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                  </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* End Discount */}

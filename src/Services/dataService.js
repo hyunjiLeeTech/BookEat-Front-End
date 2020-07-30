@@ -418,6 +418,24 @@ export default {
       throw (err)
     })
   },
+  editDiscount(state) {
+    return Axios.post(serverAddress + "/discount/editdiscount", state, {
+      headers: authHeader()
+    }).then((res) => {
+      return res.data;
+    }).catch((err) => {
+      throw err;
+    })
+  },
+  deleteDiscount(state) {
+    return Axios.post(serverAddress + "/discount/deletediscount", state, {
+      headers: authHeader()
+    }).then((res) => {
+      return res.data;
+    }).catch((err) => {
+      throw err;
+    })
+  },
   async addMenuImage(formData, config) {
     console.log("add menu image start");
     return await Axios.post(serverAddress + "/addMenuImage", formData, config).then((res) => {
