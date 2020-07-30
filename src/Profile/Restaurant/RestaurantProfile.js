@@ -316,6 +316,7 @@ class RestaurantProfile extends Component {
     const restaurant = await ds.getRestaurantInformation();
     console.log(restaurant);
     console.log(restaurant.resName);
+    console.log("eating time: " + restaurant.eatingTime);
 
     // this.state = { resName: restaurant.resName };
     this.setState((state, props) => {
@@ -354,6 +355,10 @@ class RestaurantProfile extends Component {
         description:
           typeof restaurant.restaurantDescription != "undefined"
             ? restaurant.restaurantDescription
+            : "",
+        eatingTime:
+          typeof restaurant.eatingTime != "undefined"
+            ? restaurant.eatingTime
             : "",
         cuisineStyle:
           typeof restaurant.cuisineStyleId != "undefined"

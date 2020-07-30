@@ -22,8 +22,11 @@ export default {
   },
   getTables() {
     return Axios.get(serverAddress + '/restaurant/gettables', { headers: authHeader() }).then((req) => {
+
       if (req.data.errcode !== 0) throw (req.data);
       return (req.data);
+
+
     }).catch((err) => {
       throw err;
     })
