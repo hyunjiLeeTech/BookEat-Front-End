@@ -627,7 +627,7 @@ class RestaurantProfile extends Component {
 
         () => {
           if (this.state.discount[index].contentTable) {
-            $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+            $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#DiscountEditResultModal').attr('type', 'button')
           }
           else {
             $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
@@ -668,7 +668,7 @@ class RestaurantProfile extends Component {
               onClick={() => { this.discountEditButton(index) }
               }
               type="button" className="btn btn-primary mr-sm-4 "
-              data-target="#EditResultModal">
+              data-target="#DiscountEditResultModal">
               {this.state.discounts[index].contentTable ? "Save Change" : "Edit"}
 
             </button>
@@ -680,7 +680,7 @@ class RestaurantProfile extends Component {
               className="btn btn-primary btn-sm mr-sm-2"
               onClick={() => { this.discountDeleteButton(index) }}
               data-toggle="modal"
-              data-target="#DeleteResultModal"
+              data-target="#DiscountDDeleteResultModal"
             >
               Delete
                     </button>
@@ -2257,21 +2257,24 @@ class RestaurantProfile extends Component {
                     {this.renderDataDiscount()}
                   </tbody>
                 </table>
-                {/* DeleteDiscountModal */}
 
-                <div
+            </div>
+          </div>
+           {/* DeleteDiscountModal */}
+
+           <div
                   className="modal fade"
-                  id="DeleteResultModal"
+                  id="DiscountDDeleteResultModal"
                   tabIndex="-1"
                   role="dialog"
-                  aria-labelledby="DeleteResultModal"
+                  aria-labelledby="DiscountDDeleteResultModal"
                   aria-hidden="true"
                 >
 
                   <div className="modal-dialog" role="document">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title" id="DeleteResultModal">
+                        <h5 className="modal-title" id="DiscountDDeleteResultModal">
                           Delete Discount
                             </h5>
                         <button
@@ -2284,7 +2287,7 @@ class RestaurantProfile extends Component {
                         </button>
                       </div>
                       <div className="modal-body">
-                        <p className="alert alert-warning" id="DeleteResultModalText">
+                        <p className="alert alert-warning" id="DiscountDDeleteResultModalText">
                           Please Wait...
                   </p>
                       </div>
@@ -2305,17 +2308,17 @@ class RestaurantProfile extends Component {
 
                 <div
                   className="modal fade"
-                  id="EditResultModal"
+                  id="DiscountEditResultModal"
                   tabIndex="-1"
                   role="dialog"
-                  aria-labelledby="EditResultModal"
+                  aria-labelledby="DiscountEditResultModal"
                   aria-hidden="true"
                 >
 
                   <div className="modal-dialog" role="document">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title" id="EditResultModal">
+                        <h5 className="modal-title" id="DiscountEditResultModal">
                           Edit Discount
                             </h5>
                         <button
@@ -2328,7 +2331,7 @@ class RestaurantProfile extends Component {
                         </button>
                       </div>
                       <div className="modal-body">
-                        <p className="alert alert-warning" id="EditResultModalText">
+                        <p className="alert alert-warning" id="DiscountEditResultModalText">
                           Please Wait...
                   </p>
                       </div>
@@ -2347,9 +2350,6 @@ class RestaurantProfile extends Component {
               </div>
 
               {/* End Discount */}
-
-            </div>
-          </div>
         </div>
       </MainContainer>
     );
