@@ -14,171 +14,145 @@ import './RestaurantDetails.css'
 import ResReview from '../Review/ResReview';
 import ViewMenu from '../Menu/ViewMenu';
 import FullscreenError from '../component/Style/FullscreenError'
+import FullScrrenLoading from '../component/Style/FullscreenLoading';
 
 class Restaurant extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             id: this.props.match.params.id,
             res: [],
             resultsErr: false,
+            isResLoaded: false,
         }
     }
 
-    componentWillMount(){
+    componentWillMount() {
         Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
-            .then(res=>{
-                if(res.data.errcode === 0)
-                this.setState({
-                    res: res.data.restaurant
-                })
+            .then(res => {
+                if (res.data.errcode === 0)
+                    this.setState({
+                        res: res.data.restaurant,
+                        isResLoaded: true
+                    })
+                console.log(this.state.res)
             })
+        
     }
 
-    componentDidMount(){
+    componentDidMount() {
         console.log(this.state.res)
     }
-    getCuisineNameById(id) {
-        try {
-            for (var c of this.cuisines) {
-                if (c._id == id) return c.cuisineName;
-            }
-        } catch (err) {
-            return null
-        }
 
-        return null;
-    }
 
-    getCategoryNameById(id) {
-        try {
-            for (var c of this.categories) {
-                if (c._id == id) return c.categoryName;
-            }
-        } catch (err) {
-            return null
-        }
 
-        return null;
-    }
+    render() {
+        return (
+            // <div>
+            //     {JSON.stringify(this.state.res)}<br/><br/><br/>
+            //     <Link to={'/customerreserve/' + this.state.id} >Reserve</Link>
+            // </div>
 
-    getPriceRnageById(id) {
-        var renderPriceRangeText = function (name) {
-            switch (name) {
-                case 'low':
-                    return '$ ($0-$50)'
-                case 'medium':
-                    return '$$ ($50-$100)'
-                case 'high':
-                    return '$$$ ($100+)'
-                default:
-                    return ''
-            }
-        }
-        try {
-            for (var c of this.priceRanges) {
-                if (c._id == id) return renderPriceRangeText(c.priceRangeName)
-            }
-        } catch (err) {
-            return null
-        }
+            <MainContainer>
 
-        return null;
-    }
-
-    render(){
-        return(
-        // <div>
-        //     {JSON.stringify(this.state.res)}<br/><br/><br/>
-        //     <Link to={'/customerreserve/' + this.state.id} >Reserve</Link>
-        // </div>
-        
-        <MainContainer>
-            {this.state.resultsErr
+                {this.state.resultsErr
                     ?
                     FullscreenError("An error occured, please try again later")
                     :
                     null
                 }
-        <div className="card mb-3">
-            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                <ol className="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div className="carousel-inner" id="carousel_pictures">
-                    <div className="carousel-item active">
-                        <img className="d-inline-block" src={CAFE} alt="First slide" />
+
+
+                {!this.state.isResLoaded
+                    ?
+                    FullScrrenLoading({ type: 'cubes', color: '#000' })
+                    :
+                    null
+                }
+
+
+
+                <div className="card mb-3">
+                    <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
+                        <ol className="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div className="carousel-inner" id="carousel_pictures">
+                            <div className="carousel-item active">
+                                <img className="d-inline-block" src={CAFE} alt="First slide" />
+                            </div>
+                            <div className="carousel-item">
+                                <img className="d-inline-block" src={CAFE} alt="Second slide" />
+                            </div>
+                            <div className="carousel-item">
+                                <img className="d-inline-block" src={CAFE} alt="Third slide" />
+                            </div>
+
+                        </div>
                     </div>
-                    <div className="carousel-item">
-                        <img className="d-inline-block" src={CAFE} alt="Second slide" />
-                    </div>
-                    <div className="carousel-item">
-                        <img className="d-inline-block" src={CAFE} alt="Third slide" />
-                    </div>
-                </div>
-                <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="sr-only">Previous</span>
-                </a>
-                <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="sr-only">Next</span>
-                </a>
-            </div>
-            <div className="card-body">
-            <h5 className="card-title">{this.state.res.resName}</h5>
-                <hr />
-                <p>Starts     Review      Price Range    Cuisine Style</p>
-                <p className="card-text">{this.state.res.restaurantDescription}</p>
-                <br />
-                <br />
-                <div className="row">
-                    <div className="col-sm-8">
-                        <h5>Menu</h5>
+                    <div className="card-body">
+                        <h5 className="card-title">{this.state.res.resName}</h5>
                         <hr />
-                        <ViewMenu/>
+                        <p className="card-text">{this.state.res.restaurantDescription}</p>
                         <br />
-                        <h5>Reviews</h5>
-                        <hr />
-                        <ResReview/>
+                        <br />
+                        <div className="row">
+                            <div className="col-sm-8">
+                                <h5>Menu</h5>
+                                <hr />
+                                <ViewMenu />
+                                <br />
+                                <h5>Reviews</h5>
+                                <hr />
+                                <ResReview />
 
 
 
-                    </div>
-                    <div className="col-sm-4">
-                        <h5>Make a reservation</h5>
-                        <hr />
-                        <p>Click the button to make a reservation</p>
-                        {/* <button type="button"
+                            </div>
+                            <div className="col-sm-4">
+                                <h5>Make a reservation</h5>
+                                <hr />
+                                <p>Click the button to make a reservation</p>
+                                {/* <button type="button"
                             className="btn btn-primary">
                            Reserve here
                         </button> */}
-                        <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
-                        <br />
-                        <br />
-                        <h5>Restaurant Information</h5>
-                        <hr />
-                        <h6>Address</h6>
-                    {/* <p>{this.state.res.addressId}</p> */}
-                    <hr/>
-                    <h6>Store Time</h6>
-                    <p></p>
-                    <hr/>
-                    <h6>Cuisine Style</h6>
-                    <p>{this.getCuisineNameById(this.state.res.cuisineStyleId)}</p>
-                    <hr/>
-                    <h6>Category</h6>
-                    <p>{this.getCategoryNameById(this.state.res.categoryId)}</p>
-                    
-                       
+                                <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
+                                <br />
+                                <br />
+                                <h5>Restaurant Information</h5>
+                                <hr />
+                                <h6>Address</h6>
+                                <p>{this.state.isResLoaded ? this.state.res.addressId.streetNum : null} {this.state.isResLoaded ? this.state.res.addressId.streetName : null}
+                                {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null} 
+                                {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
+                                <hr />
+                                <h6>Store Time</h6>
+                                <p>Monday {this.state.isResLoaded ? this.state.res.monOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.monCloseTimeId.storeTimeName : null}</p>
+                                <p>Tuesday {this.state.isResLoaded ? this.state.res.tueOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.tueCloseTimeId.storeTimeName : null}</p>
+                                <p>Wednesday {this.state.isResLoaded ? this.state.res.wedOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.wedCloseTimeId.storeTimeName : null}</p>
+                                <p>Thursday {this.state.isResLoaded ? this.state.res.thuOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.thuCloseTimeId.storeTimeName : null}</p>
+                                <p>Friday {this.state.isResLoaded ? this.state.res.friOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.friCloseTimeId.storeTimeName : null}</p>
+                                <p>Saturday {this.state.isResLoaded ? this.state.res.satOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.satCloseTimeId.storeTimeName : null}</p>
+                                <p>Sunday {this.state.isResLoaded ? this.state.res.sunOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.sunCloseTimeId.storeTimeName : null}</p>
+                                <hr />
+                                <h6>Cuisine Style</h6>
+                                <p>{this.state.isResLoaded ? this.state.res.cuisineStyleId.cuisineName : null}</p>
+                                <hr />
+                                <h6>Category</h6>
+                                <p>{this.state.isResLoaded ? this.state.res.categoryId.categoryName : null}</p>
+                                <hr/>
+                                <h6>Price Range</h6>
+                                <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </MainContainer>
+            </MainContainer>
 
         )
     }

@@ -1,8 +1,28 @@
 import React, { Component } from 'react'
 import './ResReview.css'
 import Star from './../component/Style/Stars'
+import Parser from "html-react-parser";
 
-
+const formValid = ({ isError, ...rest }) => {
+    let isValid = false;
+    Object.values(isError).forEach((val) => {
+      if (val !== '&#160;') {
+        isValid = false;
+      } else {
+        isValid = true;
+      }
+    });
+  
+    Object.values(rest).forEach((val) => {
+      console.log(rest);
+      if (val === null) {
+        isValid = false;
+      } else {
+        isValid = true;
+      }
+    });
+    return isValid;
+  };
 
 
 class ResReview extends Component {
@@ -10,15 +30,20 @@ class ResReview extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            comment: '',
             reviews: [
-               
             ],
             disabled: true,
-            contenteditable: false
+            contenteditable: false,
+            isError: {
+                comment: "&#160;"
+            }
+
         };
 
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
 
@@ -30,12 +55,26 @@ class ResReview extends Component {
 
 
     handleChange(e) {
+        e.preventDefault();
+        const { name, value } = e.target;
+        let isError = { ...this.state.isError };
         console.log(e.target.value);
-        this.setState({ id: e.target.value });
+        switch(name){
+            case "comment":
+                isError.comment =
+          value.length >= 1 && value.length <= 255
+            ? "&#160;"
+            : "Write something please";
+        break;
+      default:
+          break;
+        }
+        this.setState({ [e.target.id]: e.target.value });
     }
 
 
     render() {
+        const { isError } = this.state;
         return (
             <div className="container">
                 <div className="row">
@@ -43,8 +82,18 @@ class ResReview extends Component {
                     <div className="col-sm-4">
                         <div className="rating-block">
                             <h4>Users Rating</h4>
-                            <h2 className="bold padding-bottom-7">4.3 <small>/ 5</small></h2>
+                            <h6>Food</h6>
                             <Star type='splitedBar' stars={3.8} />
+                            <br />
+                            <h6>Service</h6>
+                            <Star type='splitedBar' stars={3.8} />
+                            <br />
+                            <h6>Satisfaction</h6>
+                            <Star type='splitedBar' stars={3.8} />
+                            <br />
+                            <h6>Environment</h6>
+                            <Star type='splitedBar' stars={3.8} />
+
                         </div>
                     </div>
                     <div className="col-sm-8 row">
@@ -81,28 +130,28 @@ class ResReview extends Component {
                                 (e) => { console.log(e) }
                             } />
                         </div>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <div className="col-sm-12">
 
                             <textarea
-                            className="col-sm-12"
-                            rows="4"
-                            id="description"
-                            name="description"
-                        //   value={this.state.description}
-                        //   onChange={this.handleChange}
-                        //   disabled={(!this.state.disabled)}
-                        ></textarea>
-                        {/* <span className="invalid-feedback">
-                          {Parser(isError.description)}
-                        </span> */}
+                                className="col-sm-12"
+                                rows="4"
+                                id="comment"
+                                name="comment"
+                                value={this.state.comment}
+                                onChange={this.handleChange}
+                            //   disabled={(!this.state.disabled)}
+                            ></textarea>
+                            <span className="invalid-feedback">
+                          {Parser(isError.comment)}
+                        </span>
 
-                        <button type="button" className="btn btn-primary float-right"> Add Review</button> 
+                            <button type="submit" className="btn btn-primary float-right"> Add Review</button>
 
                         </div>
 
-                        
+
 
 
 
@@ -112,10 +161,10 @@ class ResReview extends Component {
                     <div className="row">
                         <div className="col-sm-12">
                             <hr />
-                           
+
 
                             <br />
-                          
+
                             <div className="review-block">
                                 <div className="row">
 
@@ -125,7 +174,13 @@ class ResReview extends Component {
                                     </div>
                                     <div className="col-sm-9">
                                         <div className="review-block-rate col-sm-5">
-                                        <Star type='splitedBar' stars={3.8} />
+
+                                            <p > Food </p> <Star type='splitedBar' stars={3.8} />
+                                            <p >Service </p> <Star type='splitedBar' stars={3.8} /> 
+                                            <p>Satisfaction</p> <Star type='splitedBar' stars={3.8} /> 
+
+                                            <p>Environment</p>  <Star type='splitedBar' stars={3.8} />
+
                                         </div>
                                         <div className="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
                                     </div>

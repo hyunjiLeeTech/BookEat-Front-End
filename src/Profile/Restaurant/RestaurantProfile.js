@@ -621,10 +621,10 @@ class RestaurantProfile extends Component {
 
         () => {
           if (this.state.discount[index].contentTable) {
-            $('#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+            $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
           }
           else {
-            $('#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+            $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
           }
         })
     })

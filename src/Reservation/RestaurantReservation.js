@@ -3,6 +3,8 @@ import Parser from 'html-react-parser'
 import $ from "jquery";
 import dataService from '../Services/dataService';
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
+import Axios from 'axios';
+import authHeader from '../Services/authHeader';
 
 class RestaurantReservation extends Component {
 
@@ -49,8 +51,11 @@ class RestaurantReservation extends Component {
 
     }
 
-    viewFoodOrder(reservationId){
+    viewFoodOrder(foodOrderId){
         //TODO: Add the food order component 
+        Axios.get('http://localhost:5000/restaurant/getfoodorder/' + foodOrderId, {headers: authHeader()}).then((res)=>{
+            console.log(res);
+        })
     }
 
     renderPresent() {
@@ -83,7 +88,7 @@ class RestaurantReservation extends Component {
                     <td>
                     <button type="button" className="btn btn-primary btn-sm"
                          id={ro._id + 'btn'}
-                         onClick={() => this.confirmAttandance(ro._id)}> 
+                         onClick={() => this.viewFoodOrder(ro.FoodOrder)}> 
                          {/* TODO:Change onClick to foodorder */}
                             View Order
                         </button>
