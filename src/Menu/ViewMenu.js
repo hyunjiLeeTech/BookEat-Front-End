@@ -12,7 +12,7 @@ class Menu extends Component {
             //Oringin
             menus: [{
             }],
-
+            resId: props.resId,
             menuPicture: "",
             menuName: "",
             menuPrice: "",
@@ -32,7 +32,7 @@ class Menu extends Component {
 
     queryMenus() {
         console.log("menu")
-        ds.getMenusCustomer().then((res) => {
+        ds.getMenusCustomer(this.state.resId).then((res) => {
             console.log(res.menus);
             this.setState({
                 menus: res.menus
