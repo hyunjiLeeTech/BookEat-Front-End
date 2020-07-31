@@ -102,7 +102,7 @@ class Restaurant extends Component {
                             <div className="col-sm-8">
                                 <h5>Menu</h5>
                                 <hr />
-                                <ViewMenu resId={this.state.id}/>
+                                <ViewMenu resId={this.state.id} />
                                 <br />
                                 <h5>Reviews</h5>
                                 <hr />
@@ -126,8 +126,11 @@ class Restaurant extends Component {
                                 <hr />
                                 <h6>Address</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.addressId.streetNum : null} {this.state.isResLoaded ? this.state.res.addressId.streetName : null}
-                                {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null} 
-                                {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
+                                    {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null}
+                                    {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
+                                <hr />
+                                <h6>Phone Number</h6>
+                                <p>{this.state.isResLoaded ? this.state.res.phoneNumber : null}</p>
                                 <hr />
                                 <h6>Store Time</h6>
                                 <p>Monday {this.state.isResLoaded ? this.state.res.monOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.monCloseTimeId.storeTimeName : null}</p>
@@ -143,7 +146,7 @@ class Restaurant extends Component {
                                 <hr />
                                 <h6>Category</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.categoryId.categoryName : null}</p>
-                                <hr/>
+                                <hr />
                                 <h6>Price Range</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
 
