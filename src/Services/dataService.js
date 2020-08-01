@@ -445,6 +445,15 @@ export default {
       return res.data.menuImage;
     })
   },
+  async editMenuImage(formData, config) {
+    console.log("edit menu image start");
+    return await Axios.post(serverAddress + "/editMenuImage", formData, config).then((res) => {
+      return res.data.menuImage;
+    })
+  },
+  async deleteMenuImage() {
+    console.log("delete menu image start");
+  },
   async getImage(state) {
     return await Axios.get(`${serverAddress}/getimage/${state.imageId}`)
       .then((res) => {
