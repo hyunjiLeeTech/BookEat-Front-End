@@ -15,6 +15,7 @@ import ResReview from '../Review/ResReview';
 import ViewMenu from '../Menu/ViewMenu';
 import FullscreenError from '../component/Style/FullscreenError'
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
+import ds from "../Services/dataService";
 
 class Restaurant extends Component {
     constructor(props) {
@@ -22,12 +23,13 @@ class Restaurant extends Component {
         this.state = {
             id: this.props.match.params.id,
             res: [],
+            reviews: [],
             resultsErr: false,
             isResLoaded: false,
         }
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
             .then(res => {
                 if (res.data.errcode === 0)
@@ -37,7 +39,19 @@ class Restaurant extends Component {
                     })
                 console.log(this.state.res)
             })
-        console.log(this.state.id)
+        var resId = this.state.id;
+
+        await this.queryReviews(resId);
+        console.log("after get reviews");
+        console.log(this.state);
+    }
+
+    async queryReviews(resId) {
+        var reviews = await ds.getReviewsRestaurantSide(resId);
+
+        this.setState({
+            reviews: reviews
+        })
     }
 
     componentDidMount() {
@@ -106,7 +120,7 @@ class Restaurant extends Component {
                                 <br />
                                 <h5>Reviews</h5>
                                 <hr />
-                                <ResReview resId={this.state.id}/>
+                                <ResReview resId={this.state.id} />
 
 
 

@@ -470,5 +470,13 @@ export default {
       }).catch((err) => {
         throw err;
       })
-  }
+  },
+  getReviewsRestaurantSide(resId) {
+    return Axios.get(serverAddress + "/review/getreviewsrestaurantside", { headers: authHeader(), params: resId })
+      .then((res) => {
+        return res.data.reviews;
+      }).catch((err) => {
+        throw err;
+      })
+  },
 };
