@@ -451,8 +451,16 @@ export default {
       return res.data.menuImage;
     })
   },
-  async deleteMenuImage() {
+  async deleteMenuImage(state) {
     console.log("delete menu image start");
+    return await Axios.delete(`${serverAddress}/deleteMenuImage/${state}`)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   },
   async getImage(state) {
     return await Axios.get(`${serverAddress}/getimage/${state.imageId}`)

@@ -261,11 +261,15 @@ class Menu extends Component {
     };
 
     menuItemDeleteButton(index) {
-        ds.deleteMenu(this.state.menus[index]).then(() => {
+        var menu = this.state.menus[index];
+        if (menu.menuPicture.isImage != false) {
+            ds.deleteMenuImage(menu.menuImageId);
+        }
+
+        ds.deleteMenu(menu).then(() => {
             this.queryMenus();
         })
     }
-
 
     menuItemEditButton(index) {
         console.log(this.state.menus);
