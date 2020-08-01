@@ -462,5 +462,13 @@ export default {
       }).catch((err) => {
         throw err;
       })
+  },
+  getReviewsCustomerSide() {
+    return Axios.get(serverAddress + "/review/getreviewscustomerside", { headers: authHeader() })
+      .then((res) => {
+        return res.data.reviews;
+      }).catch((err) => {
+        throw err;
+      })
   }
 };
