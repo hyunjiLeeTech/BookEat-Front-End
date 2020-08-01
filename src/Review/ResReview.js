@@ -143,7 +143,7 @@ class ResReview extends Component {
                                 rows="4"
                                 id="comment"
                                 name="comment"
-                                value={this.state.resId.comment}
+                                value={this.state.comment}
                                 onChange={this.handleChange}
                             //   disabled={(!this.state.disabled)}
                             ></textarea>
