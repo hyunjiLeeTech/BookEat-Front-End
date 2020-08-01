@@ -37,6 +37,7 @@ class ResReview extends Component {
             satisfaction: '',
             reviews: [
             ],
+            resId: props.resId,
             disabled: true,
             contenteditable: false,
             isError: {
