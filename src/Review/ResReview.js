@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './ResReview.css'
 import Star from './../component/Style/Stars'
 import Parser from "html-react-parser";
+import ds from "../Services/dataService";
 
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
@@ -56,6 +57,7 @@ class ResReview extends Component {
         e.preventDefault();
         console.log("saved")
         console.log(this.state);
+        ds.addReview(this.state);
     };
 
 
@@ -113,7 +115,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Service</label>
                         <div className="col-sm-6">
-                            <Star id="service" name="service"  isClickAble={true} type='star' onChange={this.handleChange} callback={
+                            <Star id="service" name="service" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ service: e }) }
                             } />
                         </div>
@@ -123,7 +125,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Satisfaction</label>
                         <div className="col-sm-6">
-                            <Star id="satisfaction" name="satisfaction"  isClickAble={true} type='star' onChange={this.handleChange} callback={
+                            <Star id="satisfaction" name="satisfaction" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ satisfaction: e }) }
                             } />
                         </div>

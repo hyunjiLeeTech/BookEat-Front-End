@@ -454,4 +454,13 @@ export default {
         console.log(err);
       });
   },
+  addReview(state) {
+    return Axios.post(serverAddress + "/review/addreview", state,
+      { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+  }
 };
