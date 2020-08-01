@@ -104,7 +104,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Food</label>
                         <div className="col-sm-6">
-                            <Star id="food" name="food" value={this.state.food} isClickAble={true} type='star' onChange={this.handleChange} callback={
+                            <Star id="food" name="food" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ food: e }) }
                             } />
                         </div>
@@ -112,7 +112,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Service</label>
                         <div className="col-sm-6">
-                            <Star id="service" name="service" value={this.state.service} isClickAble={true} type='star' onChange={this.handleChange} callback={
+                            <Star id="service" name="service"  isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ service: e }) }
                             } />
                         </div>
@@ -122,7 +122,7 @@ class ResReview extends Component {
 
                         <label className="col-sm-4 col-form-label">Satisfaction</label>
                         <div className="col-sm-6">
-                            <Star id="satisfaction" name="satisfaction" value={this.state.satisfaction} isClickAble={true} type='star' onChange={this.handleChange} callback={
+                            <Star id="satisfaction" name="satisfaction"  isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ satisfaction: e }) }
                             } />
                         </div>
@@ -143,7 +143,7 @@ class ResReview extends Component {
                                 rows="4"
                                 id="comment"
                                 name="comment"
-                                value={this.state.comment}
+                                value={this.state.resId.comment}
                                 onChange={this.handleChange}
                             //   disabled={(!this.state.disabled)}
                             ></textarea>
@@ -170,7 +170,7 @@ class ResReview extends Component {
                                 <div className="row">
 
                                     <div className="col-sm-3">
-                                        <div className="review-block-name"><a href="#">nktailor</a></div>
+                                        <div className="review-block-name">nktailor</div>
                                         <div className="review-block-date">January 29, 2016<br />1 day ago</div>
                                     </div>
                                     <div className="col-sm-9">
