@@ -41,7 +41,6 @@ import Daily from "./Home/Daily";
 import Favorite from "./Home/Favorite";
 import Feature from "./Home/Feature";
 
-import RestaurantDetails from "./Restaurant/RestaurantDetails";
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -187,7 +186,6 @@ class App extends Component {
           <Route exact path="/Daily" render={() => <Daily />} />
           <Route exact path="/Feature" render={() => <Feature />} />
           <Route exact path="/Favorite" render={() => <Favorite />} />
-          <Route exact path="/RestaurantDetails" render={() => <RestaurantDetails />} />
         </Switch>
         <div className="footer-padding">
         </div>
