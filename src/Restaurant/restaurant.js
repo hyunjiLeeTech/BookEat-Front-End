@@ -106,7 +106,7 @@ class Restaurant extends Component {
                                 <br />
                                 <h5>Reviews</h5>
                                 <hr />
-                                <ResReview />
+                                <ResReview resId={this.state.id}/>
 
 
 
