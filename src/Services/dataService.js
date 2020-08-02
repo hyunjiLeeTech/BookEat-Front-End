@@ -11,11 +11,11 @@ function sleep(ms) {
 }
 
 export default {
-  confirmEmail(accountId){
+  confirmEmail(accountId) {
     return Axios.get(serverAddress + '/verifyEmail/' + accountId)
-      .then(res=>{
+      .then(res => {
         return (res.data)
-      }).catch(err=>{
+      }).catch(err => {
         throw err
       })
   },
@@ -504,4 +504,12 @@ export default {
         throw err;
       })
   },
+  getReviewsResManProfile() {
+    return Axios.get(serverAddress + "/review/getreviewsresownermanager", { headers: authHeader() })
+      .then((res) => {
+        return res.data.reviews;
+      }).catch((err) => {
+        throw err;
+      })
+  }
 };
