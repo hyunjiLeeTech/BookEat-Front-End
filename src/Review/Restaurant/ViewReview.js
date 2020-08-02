@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Star from '../../component/Style/Stars'
 import ds from "../../Services/dataService";
+import moment from 'moment';
 
 
 class ViewReview extends Component {
@@ -55,7 +56,7 @@ class ViewReview extends Component {
 
                     <tr key={rows} className="tableReview">
                         <td>
-                            {review.updatedAt}
+                            {moment(review.updatedAt).format("YYYY-MM-DD")}
                         </td>
                         <td >
                             {review.customerId.firstName + " " + review.customerId.lastName}
