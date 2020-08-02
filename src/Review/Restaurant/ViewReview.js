@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './ResReview.css'
 import Star from '../../component/Style/Stars'
 import ds from "../../Services/dataService";
 
@@ -16,7 +15,7 @@ class ViewReview extends Component {
             satisfaction: '',
             reviews: [
             ],
-            resId: props.resId,
+            resId: this.props.resId,
             disabled: true,
             contenteditable: false,
         };
@@ -34,7 +33,7 @@ class ViewReview extends Component {
     }
 
     async queryReviews(resId) {
-        var reviews = await ds.getReviewsRestaurantSide(resId);
+        var reviews = await ds.getReviewsResManProfile(resId);
 
         this.setState({
             reviews: reviews
@@ -50,35 +49,39 @@ class ViewReview extends Component {
         var rows = [];
         console.log("this state reviews: " + this.state.reviews);
         if (typeof this.state.reviews != "undefined") {
+
             for (var review of this.state.reviews) {
                 rows.push(
 
-                    <tr key={rows}>
+                    <tr key={rows} className="tableReview">
+                        <td>
+                            {review.updatedAt}
+                        </td>
                         <td >
-                        {review.customerId.firstName + " " + review.customerId.lastName}
-                    </td>
+                            {review.customerId.firstName + " " + review.customerId.lastName}
+                        </td>
 
-                    <td >
-                    <Star type='splitedBar' stars={review.food} />
-                    </td>
+                        <td >
+                            <Star type='star' stars={review.food} />
+                        </td>
 
-                    <td >
-                    <Star type='splitedBar' stars={review.service} />
-                    </td>
+                        <td >
+                            <Star type='star' stars={review.service} />
+                        </td>
 
-                    <td >
-                    <Star type='splitedBar' stars={review.satisfaction} />
-                    </td>
+                        <td >
+                            <Star type='star' stars={review.satisfaction} />
+                        </td>
 
-                    <td >
-                    <Star type='splitedBar' stars={review.environment} />
-                    </td>
+                        <td >
+                            <Star type='star' stars={review.environment} />
+                        </td>
 
-                    <td>
-                    {review.comment}
-                    </td>
+                        <td>
+                            {review.comment}
+                        </td>
                     </tr>
-                
+
                 )
             }
         }
@@ -96,9 +99,10 @@ class ViewReview extends Component {
                     <h3>Reviews</h3>
                     <br />
                     <hr />
-                    <table className="table table-striped">
+                    <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
+                                <th scope="col">Date</th>
                                 <th scope="col">Customer</th>
                                 <th scope="col">Food</th>
                                 <th scope="col">Service</th>

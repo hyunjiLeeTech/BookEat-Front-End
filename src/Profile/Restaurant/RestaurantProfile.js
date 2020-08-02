@@ -13,6 +13,7 @@ import RestaurantReservation from "../../Reservation/RestaurantReservation";
 import RestaurantLayout from "../../Restaurant/RestaurantLayout";
 import FullscreenError from '../../component/Style/FullscreenError'
 import FullScrrenLoading from '../../component/Style/FullscreenLoading';
+import ViewReview from "../../Review/Restaurant/ViewReview";
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -640,7 +641,7 @@ class RestaurantProfile extends Component {
     return this.state.discounts.map((discount, index) => {
       const { id, discdescription, promdescription } = discount
       return (
-        <tr key={id} id={'discountrow' + index}>
+        <tr key={discount} id={'discountrow' + index}>
           <td contentTable={(this.state.discounts[index].contentTable)}>
 
             <input type="text" id="discdescription" name="discdescription"
@@ -799,6 +800,21 @@ class RestaurantProfile extends Component {
                   aria-selected="false"
                 >
                   Reservations
+                </a>
+              </li>
+              <li className="nav-item">
+                {/* <Link to='/ChangePassword'>
+                                    <button className="nav-link" data-toggle="tab">Password</button>
+                                </Link> */}
+                <a
+                  className="nav-link"
+                  data-toggle="tab"
+                  role="tab"
+                  href="#review"
+                  aria-controls="review"
+                  aria-selected="false"
+                >
+                  Review
                 </a>
               </li>
               <li className="nav-item">
@@ -2131,6 +2147,19 @@ class RestaurantProfile extends Component {
                 aria-labelledby="managerAccount"
               >
                 <Manager />
+              </div>
+
+              {/* End of Manager Account */}
+
+              {/* Start of Review*/}
+
+              <div
+                id="review"
+                className="tab-pane fade"
+                role="tabpanel"
+                aria-labelledby="review"
+              >
+                <ViewReview />
               </div>
 
               {/* End of Manager Account */}
