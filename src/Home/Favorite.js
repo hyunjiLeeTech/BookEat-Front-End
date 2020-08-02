@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import MainContainer from '../component/Style/MainContainer';
-import $ from "jquery";
+// import MainContainer from '../component/Style/MainContainer';
+// import $ from "jquery";
 import { Link } from 'react-router-dom'
-import CAFE from '../Image/CAFE.jpg'
+// import CAFE from '../Image/CAFE.jpg'
 import Star from '../component/Style/Stars'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 
@@ -76,8 +76,8 @@ class Favorite extends Component {
         // const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
         // const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 
-        const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
-        const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
+        // const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
+        // const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 
         return (
             <ScrollMenu

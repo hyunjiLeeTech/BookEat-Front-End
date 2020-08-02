@@ -6,6 +6,7 @@ import Axios from "axios";
 import sha256 from "crypto-js/sha256";
 import serverAddress from "../../../Services/ServerUrl";
 import "../Customer/SignUp.css";
+import FullscreenError from '../../Style/FullscreenError'
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -72,6 +73,7 @@ class RestaurantSignUp extends Component {
         password: "&#160;",
         confirmpw: "&#160;",
       },
+      resultsErr: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -217,11 +219,18 @@ class RestaurantSignUp extends Component {
     const { isError } = this.state;
     return (
       <MainContainer>
+        {this.state.resultsErr
+          ?
+          FullscreenError("An error occured, please try again later")
+          :
+          null
+        }
+
         <div className="container">
           <div className="page-header text-center">
-            <br/>
+            <br />
             <h1>Restaurant's Sign Up</h1>
-            <br/>
+            <br />
           </div>
 
           <form className="text-center" onSubmit={this.handleSubmit} noValidate>

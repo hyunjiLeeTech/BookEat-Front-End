@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Parser from "html-react-parser";
-import $ from "jquery";
-import { Tab } from "bootstrap";
+// import Parser from "html-react-parser";
+// import $ from "jquery";
+// import { Tab } from "bootstrap";
 import Maincontainer from "../../component/Style/MainContainer"
-import customerReserve from "../customerReserve"
+// import customerReserve from "../customerReserve"
+import FullscreenError from '../../component/Style/FullscreenError'
 
 class CustomerReservationHistory extends Component {
 
@@ -15,7 +16,8 @@ class CustomerReservationHistory extends Component {
         { id: "", date: "", restaurantId: "", restaurantName: "", KindOfFood: "", NumOfPeople: "", NumOfTable: "" },
         // testing
         { id: "", date: "", restaurantId: "", restaurantName: "rest", KindOfFood: "apple", NumOfPeople: "10", NumOfTable: "5" },
-      ]
+      ],
+      resultsErr: false
     }
 
     this.renderTable = this.renderTable.bind(this);
@@ -52,6 +54,12 @@ class CustomerReservationHistory extends Component {
   render() {
     return (
       <Maincontainer>
+         {this.state.resultsErr
+                    ?
+                    FullscreenError("An error occured, please try again later")
+                    :
+                    null
+                }
         <form id="reservationEdit"
         // onSubmit={this.handleSubmit} 
         >

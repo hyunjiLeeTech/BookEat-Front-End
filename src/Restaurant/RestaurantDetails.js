@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MainContainer from '../component/Style/MainContainer'
-import $ from "jquery";
+// import $ from "jquery";
 import CAFE from '../Image/CAFE.jpg';
 import './RestaurantDetails.css'
 import ResReview from '../Review/ResReview';

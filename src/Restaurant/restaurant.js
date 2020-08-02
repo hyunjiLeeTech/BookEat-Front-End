@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import dataService from '../Services/dataService';
+// import dataService from '../Services/dataService';
 import MainContainer from '../component/Style/MainContainer';
-import $ from 'jquery';
-import Layout from '../component/RestaurantLayout/Layout'
-import { Animated } from 'react-animated-css';
+// import $ from 'jquery';
+// import Layout from '../component/RestaurantLayout/Layout'
+// import { Animated } from 'react-animated-css';
 import Axios from 'axios';
-import authHeader from '../Services/authHeader';
-import { useParams } from "react-router";
+// import authHeader from '../Services/authHeader';
+// import { useParams } from "react-router";
 import { withRouter } from "react-router";
 import CAFE from '../Image/CAFE.jpg';
 import './RestaurantDetails.css'
@@ -61,49 +61,6 @@ class Restaurant extends Component {
                     :
                     null
                 }
-        <div className="card mb-3">
-            <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                <ol className="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div className="carousel-inner" id="carousel_pictures">
-                    <div className="carousel-item active">
-                        <img className="d-inline-block" src={CAFE} alt="First slide" />
-                    </div>
-                    <div className="carousel-item">
-                        <img className="d-inline-block" src={CAFE} alt="Second slide" />
-                    </div>
-                    <div className="carousel-item">
-                        <img className="d-inline-block" src={CAFE} alt="Third slide" />
-                    </div>
-                </div>
-                <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="sr-only">Previous</span>
-                </a>
-                <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="sr-only">Next</span>
-                </a>
-            </div>
-            <div className="card-body">
-            <h5 className="card-title">{this.state.res.resName}</h5>
-                <hr />
-                <p>Starts     Review      Price Range    Cuisine Style</p>
-                <p className="card-text">{this.state.res.restaurantDescription}</p>
-                <br />
-                <br />
-                <div className="row">
-                    <div className="col-sm-8">
-                        <h5>Menu</h5>
-                        <hr />
-                        {/* <ViewMenu/> */}
-                        <br />
-                        <h5>Reviews</h5>
-                        <hr />
-                        <ResReview/>
 
 
                 {!this.state.isResLoaded

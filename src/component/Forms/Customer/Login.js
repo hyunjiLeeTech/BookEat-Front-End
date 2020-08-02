@@ -3,18 +3,20 @@ import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
 import "./SignUp.js";
 import Parser from "html-react-parser";
-import $, { data } from "jquery";
-import FaceBook from "../../../Image/FACEBOOK.PNG";
-import Google from "../../../Image/google.PNG";
-import Axios from "axios";
-import serverAddress from "../../../Services/ServerUrl";
+import $ from "jquery";
+// import $, { data } from "jquery";
+// import FaceBook from "../../../Image/FACEBOOK.PNG";
+// import Google from "../../../Image/google.PNG";
+// import Axios from "axios";
+// import serverAddress from "../../../Services/ServerUrl";
 import authService from "../../../Services/AuthService";
-import authHeader from "../../../Services/authHeader";
+// import authHeader from "../../../Services/authHeader";
 import sha256 from "crypto-js/sha256";
 //import FaceBook from "../../../Image/FACEBOOK.PNG";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import ds from "../../../Services/dataService";
+import FullscreenError from '../../Style/FullscreenError';
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 
@@ -60,6 +62,7 @@ class Login extends Component {
         email: "&#160;",
         password: "&#160;",
       },
+      resultsErr: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -220,6 +223,12 @@ class Login extends Component {
 
     return (
       <MainContainer>
+         {this.state.resultsErr
+                    ?
+                    FullscreenError("An error occured, please try again later")
+                    :
+                    null
+                }
         <div className="card">
           <div className="card-body">
             <div className="page-header text-center">

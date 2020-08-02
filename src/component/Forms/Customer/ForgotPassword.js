@@ -4,6 +4,7 @@ import MainContainer from "../../Style/MainContainer";
 import "./SignUp.js";
 import Parser from "html-react-parser";
 import $ from "jquery";
+import FullscreenError from '../../Style/FullscreenError'
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -38,6 +39,7 @@ class ForgotPassword extends Component {
       isError: {
         email: "&#160;",
       },
+      resultsErr: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -91,6 +93,13 @@ class ForgotPassword extends Component {
 
     return (
       <MainContainer>
+         {this.state.resultsErr
+                    ?
+                    FullscreenError("An error occured, please try again later")
+                    :
+                    null
+                }
+
         <div className="container">
           <div className="page-header text-center">
             <br />

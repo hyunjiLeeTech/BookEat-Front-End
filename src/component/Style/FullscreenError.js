@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactLoading from 'react-loading';
+// import ReactLoading from 'react-loading';
 import './FullscreenError.css'
 
 const FullScrrenLoading = (msg) => (

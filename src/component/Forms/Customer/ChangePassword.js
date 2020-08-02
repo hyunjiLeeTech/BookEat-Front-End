@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import MainContainer from "../../Style/MainContainer";
 import Parser from "html-react-parser";
 import sha256 from "crypto-js/sha256";
-import { ToastContainer, toast, cssTransition } from 'react-toastify';
+// import { ToastContainer, toast, cssTransition } from 'react-toastify';
+import FullscreenError from '../../Style/FullscreenError';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dataService from "../../../Services/dataService";
 
@@ -46,6 +48,7 @@ class ChangePassword extends Component {
         newPassword: "&#160;",
         confirmpw: "&#160;"
       },
+      resultsErr: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -91,15 +94,15 @@ class ChangePassword extends Component {
     e.preventDefault();
     if (formValid(this.state)) {
       this.state.password = sha256(this.state.password).toString(); //hashing password
-      this.state.newPassword = sha256(this.state.newPassword).toString(); 
-      
-      const infoToast = toast("We are updating your password, Please wait", {type: toast.TYPE.INFO, autoClose: false,});
-      dataService.changeAccountPassword(this.state.password, this.state.newPassword).then((res)=>{
-        toast.update(infoToast,{render: "Password Updated", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated'})
-      }).catch(err=>{
+      this.state.newPassword = sha256(this.state.newPassword).toString();
+
+      const infoToast = toast("We are updating your password, Please wait", { type: toast.TYPE.INFO, autoClose: false, });
+      dataService.changeAccountPassword(this.state.password, this.state.newPassword).then((res) => {
+        toast.update(infoToast, { render: "Password Updated", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
+      }).catch(err => {
         console.log(err)
-        toast.update(infoToast,{render: "Error Occured", type: toast.TYPE.ERROR, autoClose: 5000})
-      }).finally(()=>{
+        toast.update(infoToast, { render: "Error Occured", type: toast.TYPE.ERROR, autoClose: 5000 })
+      }).finally(() => {
         this.setState({
           newPassword: '',
           password: '',
@@ -128,13 +131,20 @@ class ChangePassword extends Component {
   }
 
   render() {
-    
+
     const { isError } = this.state;
 
     return (
       <MainContainer>
 
-     
+        {this.state.resultsErr
+          ?
+          FullscreenError("An error occured, please try again later")
+          :
+          null
+        }
+
+
         <div className="container">
           <div className="page-header text-center">
             <br />
@@ -232,7 +242,7 @@ class ChangePassword extends Component {
               </div>
             </div>
           </div>
-        </form> 
+        </form>
       </MainContainer >
     );
   }

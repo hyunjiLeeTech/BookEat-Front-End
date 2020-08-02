@@ -4,9 +4,10 @@ import Daily from './Daily';
 import Feature from './Feature';
 import Favorite from './Favorite';
 import SearchBox from './SearchBox';
-import $ from "jquery";
+// import FullscreenError from '../component/Style/FullscreenError'
+// import $ from "jquery";
 
-import Star from '../component/Style/Stars'
+// import Star from '../component/Style/Stars'
 class Home extends Component {
     
     render() {
