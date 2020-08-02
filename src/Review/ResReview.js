@@ -104,7 +104,7 @@ class ResReview extends Component {
                     <div key={rows} className="row">
 
                         <div className="col-sm-4">
-                            <div className="review-block-name">{review.customerId}</div>
+                            <div className="review-block-name">{review.customerId.firstName + " " + review.customerId.lastName}</div>
                             <div className="review-block-date">{review.updatedAt}</div>
                         </div>
                         <div className="col-sm-8">
