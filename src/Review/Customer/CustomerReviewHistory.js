@@ -70,7 +70,7 @@ class CustomerReviewHistory extends Component {
     return this.state.reviews.map((review, index) => {
       const { id, date, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
       return (
-        <form onSubmit={this.handleSubmit} id="rendTab" >
+        // <form onSubmit={this.handleSubmit} id="rendTab" >
           <tr key={id} id={'reviewrow' + index}>
             <td defaultValue={date.toString()}> {date.toString()}</td>
 
@@ -233,7 +233,7 @@ class CustomerReviewHistory extends Component {
                     type="button"
                     className="btn btn-primary btn-sm mr-sm-2"
                     data-toggle="modal"
-                    data-target="#DeleteResultModal"
+                    data-target="#DeleteReviewResultModal"
                   // onClick={() => this.handleClickReview(index,id)}
                   >
                     Delete
@@ -243,7 +243,7 @@ class CustomerReviewHistory extends Component {
               </div>
             </td>
           </tr>
-        </form>
+        // </form>
       )
     })
   }
@@ -331,17 +331,17 @@ class CustomerReviewHistory extends Component {
 
           <div
             className="modal fade"
-            id="DeleteResultModal"
+            id="DeleteReviewResultModal"
             tabindex="-1"
             role="dialog"
-            aria-labelledby="DeleteResultModal"
+            aria-labelledby="DeleteReviewResultModal"
             aria-hidden="true"
           >
 
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="DeleteResultModal">
+                  <h5 className="modal-title" id="DeleteReviewResultModal">
                     Delete Review
                             </h5>
                   <button

@@ -10,7 +10,6 @@
 }
 .menu-item.active {
   border: 1px green solid;
-  overflow: auto;
 }
  
 .scroll-menu-arrow {

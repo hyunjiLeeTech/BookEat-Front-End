@@ -32,10 +32,14 @@ class ResReview extends Component {
         super(props)
         this.state = {
             comment: '',
-            food: '',
-            service: '',
-            enviroment: '',
-            satisfaction: '',
+            food: 0,
+            service: 0,
+            enviroment: 0,
+            satisfaction: 0,
+            foodAvg: 0,
+            serviceAvg: 0,
+            environmentAvg: 0,
+            satisfactionAvg: 0,
             reviews: [
             ],
             resId: props.resId,
@@ -63,9 +67,30 @@ class ResReview extends Component {
     async queryReviews(resId) {
         var reviews = await ds.getReviewsRestaurantSide(resId);
 
+        var serviceAvg = 0;
+        var envirAvg = 0;
+        var satisAvg = 0;
+        var foodAvg = 0;
+
+
+        if (typeof reviews !== 'undefined') {
+            for (var i = 0; i < reviews.length; i++) {
+                serviceAvg = typeof reviews[i].service !== 'undefined' ? serviceAvg + reviews[i].service : serviceAvg;
+                envirAvg = typeof reviews[i].environment !== 'undefined' ? envirAvg + reviews[i].environment : envirAvg;
+                satisAvg = typeof reviews[i].satisfaction !== 'undefined' ? satisAvg + reviews[i].satisfaction : satisAvg;
+                foodAvg = typeof reviews[i].food !== 'undefined' ? foodAvg + reviews[i].food : foodAvg;
+            }
+        }
+
         this.setState({
-            reviews: reviews
+            reviews: reviews,
+            foodAvg: foodAvg / reviews.length,
+            serviceAvg: serviceAvg / reviews.length,
+            environmentAvg: envirAvg / reviews.length,
+            satisfactionAvg: satisAvg / reviews.length,
         })
+
+        console.log(this.state);
     }
 
 
