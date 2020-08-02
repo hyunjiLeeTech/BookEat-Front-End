@@ -2162,7 +2162,7 @@ class RestaurantProfile extends Component {
                 <ViewReview />
               </div>
 
-              {/* End of Manager Account */}
+              {/* End of Review Account */}
 
               {/* Start Password */}
               <div
