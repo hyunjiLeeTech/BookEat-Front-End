@@ -147,23 +147,26 @@ class Menu extends Component {
         let menuContents = await ds.getMenus();
         menuContents = menuContents.menus;
 
-        for (var i = 0; i < menuContents.length; i++) {
-            if (typeof menuContents[i].menuImageId !== 'undefined') {
-                console.log(menuContents[i].menuImageId);
-                var imageId = { imageId: menuContents[i].menuImageId };
-                menuContents[i].menuPicture = await ds.getImage(imageId);
-                console.log("get image success");
-            } else {
-                menuContents[i].menuPicture = {
-                    isImage: false,
-                    file: ''
+        if (typeof menuContents !== 'undefined') {
+
+            for (var i = 0; i < menuContents.length; i++) {
+                if (typeof menuContents[i].menuImageId !== 'undefined') {
+                    console.log(menuContents[i].menuImageId);
+                    var imageId = { imageId: menuContents[i].menuImageId };
+                    menuContents[i].menuPicture = await ds.getImage(imageId);
+                    console.log("get image success");
+                } else {
+                    menuContents[i].menuPicture = {
+                        isImage: false,
+                        file: ''
+                    }
                 }
             }
-        }
 
-        this.setState({
-            menus: menuContents
-        });
+            this.setState({
+                menus: menuContents
+            });
+        }
 
         console.log(menuContents);
     }
