@@ -355,26 +355,7 @@ class SearchResult extends Component {
                             <div >
                                 <br />
                                 <p>Price Range</p>
-                                <hr></hr>
-
-                                {/* <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="priceLow" />
-                                    <label className="form-check-label" htmlFor="priceLow">
-                                        $ ($0-$50)
-                                 </label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="priceMedium" />
-                                    <label className="form-check-label" htmlFor="priceMedium">
-                                        $$ ($50-$100)
-                                 </label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="priceHigh" />
-                                    <label className="form-check-label" htmlFor="priceHigh">
-                                        $$$ ($100+)
-                                 </label>
-                                </div> */}
+                                <hr/>
                                 {this.state.priceRangesReady ? this.renderPriceRange(this.priceRanges) : null}
 
                             </div>
@@ -382,149 +363,14 @@ class SearchResult extends Component {
                             <div>
                                 <br />
                                 <p>Cuisine Style</p>
-                                <hr></hr>
-                                {/* <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleAmerican" />
-                                    <label className="form-check-label" htmlFor="styleAmerican">
-                                        American
-                                 </label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleItalian" />
-                                    <label className="form-check-label" htmlFor="styleItalian">
-                                        Italian
-                                 </label>
-                                </div>
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleSteak" />
-                                    <label className="form-check-label" htmlFor="styleSteak">
-                                        Steak House
-                                 </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleSeafood" />
-                                    <label className="form-check-label" htmlFor="styleSeafood">
-                                        Seafood
-                                 </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleFrench" />
-                                    <label className="form-check-label" htmlFor="styleFrench">
-                                        French
-                                 </label>
-                                </div> */}
+                                <hr/>
                                 {this.state.cuisinesReady ? this.renderCuisineFirst5(this.cuisines) : null}
 
-                                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">More</a>
+                                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">More</a>
 
 
                                 <div className="collapse list-unstyled" id="pageSubmenu">
                                     {this.state.cuisinesReady ? this.renderCuisineAfter5(this.cuisines) : null}
-                                    {/*   <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleIndian" />
-                                        <label className="form-check-label" htmlFor="styleIndian">
-                                            Indian
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleJapanese" />
-                                        <label className="form-check-label" htmlFor="styleJapanese">
-                                            Japanese
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleBritish" />
-                                        <label className="form-check-label" htmlFor="styleBritish">
-                                            British
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleBarbecue" />
-                                        <label className="form-check-label" htmlFor="styleBarbecue">
-                                            Barbecue
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleTapas" />
-                                        <label className="form-check-label" htmlFor="styleTapas">
-                                            Tapas
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleGrill" />
-                                        <label className="form-check-label" htmlFor="styleGrill">
-                                            Grill
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleConform" />
-                                        <label className="form-check-label" htmlFor="styleConform">
-                                            Conform Food
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleAfternoon" />
-                                        <label className="form-check-label" htmlFor="styleAfternoon">
-                                            Afternoon Tea
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleBurgers" />
-                                        <label className="form-check-label" htmlFor="styleBurgers">
-                                            Burgers
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleCanadian" />
-                                        <label className="form-check-label" htmlFor="styleCanadian">
-                                            Canadian
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleVegan" />
-                                        <label className="form-check-label" htmlFor="styleVegan">
-                                            Vegan
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleVegetarian" />
-                                        <label className="form-check-label" htmlFor="styleVegetarian">
-                                            Vegetarian
-                                 </label>
-                                    </div>
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleAsian" />
-                                        <label className="form-check-label" htmlFor="styleAsian">
-                                            Asian
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleEuropean" />
-                                        <label className="form-check-label" htmlFor="styleEuropean">
-                                            European
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleContinental" />
-                                        <label className="form-check-label" htmlFor="styleContinental">
-                                            Continental
-                                 </label>
-                                    </div> */}
 
                                 </div>
                             </div>
@@ -534,62 +380,7 @@ class SearchResult extends Component {
                                 <br />
                                 <p>Category</p>
                                 <hr />
-                                {/* <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleEthinic" />
-                                    <label className="form-check-label" htmlFor="styleEthinic">
-                                        Ethinic
-                                 </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleFast" />
-                                    <label className="form-check-label" htmlFor="styleFast">
-                                        Fast Food
-                                 </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleFastCasual" />
-                                    <label className="form-check-label" htmlFor="styleFastCasual">
-                                        Fast Casual
-                                 </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="styleCasual" />
-                                    <label className="form-check-label" htmlFor="styleCasual">
-                                        Casual Dining
-                                 </label>
-                                </div>
-
-                                <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" value="" id="stylePremium" />
-                                    <label className="form-check-label" htmlFor="stylePremium">
-                                        Premium Dining
-                                 </label>
-                                </div>
-
-                                <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">More</a>
-                                <div className="collapse list-unstyled" id="pageSubmenu2">
-
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleFamily" />
-                                        <label className="form-check-label" htmlFor="styleFamily">
-                                            Family Dining
-                                 </label>
-                                    </div>
-
-                                    <div className="form-check">
-                                        <input className="form-check-input" type="checkbox" value="" id="styleFine" />
-                                        <label className="form-check-label" htmlFor="styleFine">
-                                            Fine Dining
-                                 </label>
-                                    </div> */}
                                 {this.state.categoriesReady ? this.renderCategory(this.categories) : null}
-
-
-
                             </div>
                             <hr />
                             <button className='btn btn-primary' onClick={this.querySearchResults}>Apply filters</button>
@@ -598,57 +389,18 @@ class SearchResult extends Component {
                         {/* Results  */}
                         <div className="col-sm-8">
                             <br />
-                            <h4>You search for " "</h4>
+                            <h4>You search for "{this.state.keyword}"</h4>
                             <p> Restaurants availables</p>
                             <hr />
 
                             <section>
                                 <div className="container">
-                                    {/* <div className="card">
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <div className="card-block">
-                                                    <h6 className="card-title">Restaurant Title</h6>
-                                                    <p className="card-text">Starts Price Range Cuisine Style</p>
-                                                    <p className="card-text">Restaurant Description</p>
-                                                    <button href="#" className="btn btn-primary">Reserve</button>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="card-img-bottom">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="card">
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <div className="card-block">
-                                                    <h6 className="card-title">Restaurant Title</h6>
-                                                    <p className="card-text">Starts Price Range Cuisine Style</p>
-                                                    <p className="card-text">Restaurant Description</p>
-                                                    <button href="#" className="btn btn-primary">Reserve</button>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="card-img-bottom">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
                                     {this.renderRestaurants(this.state.restaurants)}
-
-
                                 </div>
-
-
-
                             </section>
 
                         </div>
                     </div>
-
 
                 </div>
             </MainContainer>
