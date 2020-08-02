@@ -370,8 +370,8 @@ class SignUp extends Component {
                 <h4>Be part of BookEat</h4>
                 <p>Want to advertise your restaurant? Sign Up here and be part of the BookEat Family!</p>
                 <div className="text-center">
-                  <Link to="/RestaurantSignUp">
-                    <button className="btn btn-primary">Restaurant Sign Up</button>
+                  <Link to="/RestaurantSignUp" className="btn btn-primary">
+                   Restaurant Sign Up
                   </Link>
                 </div>
 
