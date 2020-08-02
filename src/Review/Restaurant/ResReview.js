@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import './ResReview.css'
-import Star from './../component/Style/Stars'
+import Star from '../../component/Style/Stars'
 import Parser from "html-react-parser";
-import ds from "../Services/dataService";
+import ds from "../../Services/dataService";
 
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
