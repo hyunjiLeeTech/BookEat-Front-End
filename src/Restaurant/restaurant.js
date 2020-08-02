@@ -39,20 +39,20 @@ class Restaurant extends Component {
                     })
                 console.log(this.state.res)
             })
-        var resId = this.state.id;
+        // var resId = this.state.id;
 
-        await this.queryReviews(resId);
-        console.log("after get reviews");
-        console.log(this.state);
+        // await this.queryReviews(resId);
+        // console.log("after get reviews");
+        // console.log(this.state);
     }
 
-    async queryReviews(resId) {
-        var reviews = await ds.getReviewsRestaurantSide(resId);
+    // async queryReviews(resId) {
+    //     var reviews = await ds.getReviewsRestaurantSide(resId);
 
-        this.setState({
-            reviews: reviews
-        })
-    }
+    //     this.setState({
+    //         reviews: reviews
+    //     })
+    // }
 
     componentDidMount() {
         console.log(this.state.res)
@@ -62,11 +62,7 @@ class Restaurant extends Component {
 
     render() {
         return (
-            // <div>
-            //     {JSON.stringify(this.state.res)}<br/><br/><br/>
-            //     <Link to={'/customerreserve/' + this.state.id} >Reserve</Link>
-            // </div>
-
+           
             <MainContainer>
 
                 {this.state.resultsErr
@@ -129,10 +125,6 @@ class Restaurant extends Component {
                                 <h5>Make a reservation</h5>
                                 <hr />
                                 <p>Click the button to make a reservation</p>
-                                {/* <button type="button"
-                            className="btn btn-primary">
-                           Reserve here
-                        </button> */}
                                 <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
                                 <br />
                                 <br />

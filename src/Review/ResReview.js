@@ -32,10 +32,14 @@ class ResReview extends Component {
         super(props)
         this.state = {
             comment: '',
-            food: '',
-            service: '',
-            enviroment: '',
-            satisfaction: '',
+            food: 0,
+            service: 0,
+            enviroment: 0,
+            satisfaction: 0,
+            foodAvg: 0,
+            serviceAvg: 0,
+            environmentAvg: 0,
+            satisfactionAvg: 0,
             reviews: [
             ],
             resId: props.resId,
@@ -50,6 +54,43 @@ class ResReview extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    async componentWillMount() {
+        var resId = this.state.resId;
+
+        await this.queryReviews(resId);
+        console.log("after get reviews");
+        console.log(this.state);
+    }
+
+    async queryReviews(resId) {
+        var reviews = await ds.getReviewsRestaurantSide(resId);
+
+        var serviceAvg = 0;
+        var envirAvg = 0;
+        var satisAvg = 0;
+        var foodAvg = 0;
+
+
+        if (typeof reviews !== 'undefined') {
+            for (var i = 0; i < reviews.length; i++) {
+                serviceAvg = typeof reviews[i].service !== 'undefined' ? serviceAvg + reviews[i].service : serviceAvg;
+                envirAvg = typeof reviews[i].environment !== 'undefined' ? envirAvg + reviews[i].environment : envirAvg;
+                satisAvg = typeof reviews[i].satisfaction !== 'undefined' ? satisAvg + reviews[i].satisfaction : satisAvg;
+                foodAvg = typeof reviews[i].food !== 'undefined' ? foodAvg + reviews[i].food : foodAvg;
+            }
+        }
+
+        this.setState({
+            reviews: reviews,
+            foodAvg: foodAvg / reviews.length,
+            serviceAvg: serviceAvg / reviews.length,
+            environmentAvg: envirAvg / reviews.length,
+            satisfactionAvg: satisAvg / reviews.length,
+        })
+
+        console.log(this.state);
     }
 
 
@@ -77,6 +118,54 @@ class ResReview extends Component {
                 break;
         }
         this.setState({ [e.target.id]: e.target.value });
+    }
+
+    queryReviewList() {
+        var rows = [];
+        console.log("this state reviews: " + this.state.reviews);
+        if (typeof this.state.reviews != "undefined") {
+            for (var review of this.state.reviews) {
+                rows.push(
+                    <div key={rows} className="row">
+
+                        <div className="col-sm-4">
+                            <div className="review-block-name">{review.customerId.firstName + " " + review.customerId.lastName}</div>
+                            <div className="review-block-date">{review.updatedAt}</div>
+                        </div>
+                        <div className="col-sm-8">
+                            <div className="review-block-rate col-sm-8">
+                                <div className="form-group row">
+                                    <label className="col-sm-5 col-form-label "> Food </label>
+                                    <div className="col-sm-7">
+                                        <Star type='splitedBar' stars={review.food} />
+                                    </div>
+
+                                    <label className="col-sm-5 col-form-label">Service </label>
+                                    <div className="col-sm-7">
+                                        <Star type='splitedBar' stars={review.service} />
+                                    </div>
+
+                                    <label className="col-sm-5 col-form-label">Satisfaction</label>
+                                    <div className="col-sm-7">
+                                        <Star type='splitedBar' stars={review.satisfaction} />
+                                    </div>
+
+                                    <label className="col-sm-5 col-form-label">Environment</label>
+                                    <div className="col-sm-7">
+                                        <Star type='splitedBar' stars={review.environment} />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="review-block-description">{review.comment}</div>
+                            <hr />
+                        </div>
+
+                    </div>
+
+                )
+            }
+        }
+        return rows;
     }
 
 
@@ -162,39 +251,16 @@ class ResReview extends Component {
                     </div>
 
 
-                    <div className="row">
-                        <div className="col-sm-12">
-                            <hr />
-
-
-                            <br />
-
-                            <div className="review-block">
-                                <div className="row">
-
-                                    <div className="col-sm-3">
-                                        <div className="review-block-name">nktailor</div>
-                                        <div className="review-block-date">January 29, 2016<br />1 day ago</div>
-                                    </div>
-                                    <div className="col-sm-9">
-                                        <div className="review-block-rate col-sm-5">
-
-                                            <p > Food </p> <Star type='splitedBar' stars={3.8} />
-                                            <p >Service </p> <Star type='splitedBar' stars={3.8} />
-                                            <p>Satisfaction</p> <Star type='splitedBar' stars={3.8} />
-
-                                            <p>Environment</p>  <Star type='splitedBar' stars={3.8} />
-
-                                        </div>
-                                        <div className="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-                                    </div>
-                                </div>
-                                <hr />
-
-                            </div>
+                    {/* <div className="row"> */}
+                    <div className="col-sm-12">
+                        <hr />
+                        <br />
+                        <div className="review-block">
+                            {this.queryReviewList()}
                         </div>
                     </div>
                 </div>
+                {/* </div> */}
                 {/* Add Review Modal */}
 
                 <div

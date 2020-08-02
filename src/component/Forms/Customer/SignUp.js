@@ -131,7 +131,7 @@ class SignUp extends Component {
       Axios.post(serverAddress + "/customersignup", this.state).then(res => {
         console.log(res)
         if (res.data.errcode === 0) {
-          $("#signResultText").text("Congrats, You can now log into BookEat using your account").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+          $("#signResultText").text("Congrats, check your email to confirm that you are human").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
             .addClass("alert-success");
         } else {
           $("#signResultText").text("Sorry, " + res.data.errmsg).removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
@@ -370,8 +370,8 @@ class SignUp extends Component {
                 <h4>Be part of BookEat</h4>
                 <p>Want to advertise your restaurant? Sign Up here and be part of the BookEat Family!</p>
                 <div className="text-center">
-                  <Link to="/RestaurantSignUp">
-                    <button className="btn btn-primary">Restaurant Sign Up</button>
+                  <Link to="/RestaurantSignUp" className="btn btn-primary">
+                   Restaurant Sign Up
                   </Link>
                 </div>
 
