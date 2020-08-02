@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import dataService from '../Services/dataService';
+// import dataService from '../Services/dataService';
 import MainContainer from '../component/Style/MainContainer';
-import $ from 'jquery';
-import Layout from '../component/RestaurantLayout/Layout'
-import { Animated } from 'react-animated-css';
+// import $ from 'jquery';
+// import Layout from '../component/RestaurantLayout/Layout'
+// import { Animated } from 'react-animated-css';
 import Axios from 'axios';
-import authHeader from '../Services/authHeader';
-import { useParams } from "react-router";
+// import authHeader from '../Services/authHeader';
+// import { useParams } from "react-router";
 import { withRouter } from "react-router";
 import CAFE from '../Image/CAFE.jpg';
 import './RestaurantDetails.css'

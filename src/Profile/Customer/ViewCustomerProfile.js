@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import MainContainer from "../../component/Style/MainContainer";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Parser from "html-react-parser";
 import $ from "jquery";
 import "./ViewCustomerProfile.css";
-import { Tab } from "bootstrap";
-import authService from "../../Services/AuthService";
+// import { Tab } from "bootstrap";
+// import authService from "../../Services/AuthService";
 import serverAddress from "../../Services/ServerUrl";
 import ds from "../../Services//dataService";
 import Axios from "axios";
 import ChangePassword from "../../component/Forms/Customer/ChangePassword"
 import CustomerReservationHistory from "../../Reservation/Customer/CustomerReservationHistory"
 import CustomerReviewHistory from "../../Review/Customer/CustomerReviewHistory"
-
+import FullscreenError from "../../component/Style/FullscreenError"
 
 const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
@@ -54,7 +54,8 @@ class ViewCustomerProfile extends Component {
         lastname: "&#160;",
         phonenumber: "&#160;",
       },
-      disabled: true
+      disabled: true,
+      resultsErr: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -195,7 +196,12 @@ class ViewCustomerProfile extends Component {
 
     return (
       <MainContainer>
-
+        {this.state.resultsErr
+          ?
+          FullscreenError("An error occured, please try again later")
+          :
+          null
+        }
 
 
 
@@ -318,7 +324,6 @@ class ViewCustomerProfile extends Component {
                   <div className="form-group text-center ">
                     <button id='save_edit_btn' onClick={this.handleClick.bind(this)} type="button" className="btn btn-primary mr-sm-4 ">
                       {this.state.edit ? "Save Change" : "Edit"}
-
                     </button>
                   </div>
                   <div className="form-group text-center ">
@@ -326,7 +331,6 @@ class ViewCustomerProfile extends Component {
                     <button type="button" className="btn btn-primary mr-sm-4 "
                       data-toggle="modal" data-target="#AccountDeleteResultModal"
                     >
-                      {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
                     {/* </Link> */}
@@ -367,7 +371,7 @@ class ViewCustomerProfile extends Component {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title" id="signResultModalLabel">
-                    Edit Customer Profile
+                    Edit Profile
                   </h5>
                   <button
                     type="button"

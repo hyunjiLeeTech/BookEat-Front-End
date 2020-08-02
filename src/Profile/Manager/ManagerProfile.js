@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import MainContainer from "../../component/Style/MainContainer";
 import Parser from "html-react-parser";
 import $ from "jquery";
@@ -7,6 +7,8 @@ import ChangePassword from "../../component/Forms/Customer/ChangePassword";
 import RestaurantReservation from "../../Reservation/RestaurantReservation";
 import Menu from "../../Menu/Menu";
 import ds from "../../Services/dataService";
+import FullscreenError from '../../component/Style/FullscreenError'
+
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 
@@ -14,9 +16,9 @@ const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
 );
 
-const regExpPassword = RegExp(
-  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
-);
+// const regExpPassword = RegExp(
+//   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
+// );
 
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
@@ -54,6 +56,7 @@ class ManagerProfile extends Component {
         firstName: "&#160;",
         lastName: "&#160;",
       },
+      resultsErr: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -194,6 +197,12 @@ class ManagerProfile extends Component {
     const { isError } = this.state;
     return (
       <MainContainer>
+        {this.state.resultsErr
+          ?
+          FullscreenError("An error occured, please try again later")
+          :
+          null
+        }
         <div className="card">
           <div className="card-header">
             <ul className="nav nav-tabs card-header-tabs">

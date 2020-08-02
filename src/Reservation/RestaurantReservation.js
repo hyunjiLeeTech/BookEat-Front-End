@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import Parser from 'html-react-parser'
+// import Parser from 'html-react-parser'
 import $ from "jquery";
 import dataService from '../Services/dataService';
-import { ToastContainer, toast, cssTransition } from 'react-toastify';
+import { toast } from 'react-toastify';
+// import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import Axios from 'axios';
 import authHeader from '../Services/authHeader';
 

@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import MainContainer from "../component/Style/MainContainer";
 import "./EditMenu.js"
 import ds from "../Services/dataService"
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import $ from "jquery";
+import FullscreenError from '../component/Style/FullscreenError'
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
@@ -51,7 +52,8 @@ class Menu extends Component {
                 menuName: '&#160;',
                 menuPrice: '&#160;',
                 menuDescript: '&#160;'
-            }
+            },
+            resultsErr: false
         };
         this.onImageChange = this.onImageChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -408,6 +410,12 @@ class Menu extends Component {
         const { isError } = this.state;
         return (
             <MainContainer>
+                {this.state.resultsErr
+                    ?
+                    FullscreenError("An error occured, please try again later")
+                    :
+                    null
+                }
                 <form onSubmit={this.handleSubmit} id="addMenu">
                     <div className="form-inline form-group mt-sm-4">
                         <h3> Add Menu </h3>

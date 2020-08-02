@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MainContainer from "../component/Style/MainContainer";
 import "./Menu.js"
 import { Link } from 'react-router-dom'
-import { Modal } from 'bootstrap';
+// import { Modal } from 'bootstrap';
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g

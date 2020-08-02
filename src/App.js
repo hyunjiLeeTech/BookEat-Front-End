@@ -18,7 +18,7 @@ import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import Logout from './component/Forms/Logout';
 import Layout from './component/RestaurantLayout/Layout';
-import CustomerReservation from './Reservation/Customer/CustomerReservation';
+// import CustomerReservation from './Reservation/Customer/CustomerReservation';
 import CustomerReservationHistory from './Reservation/Customer/CustomerReservationHistory'
 import CustomerReviewHistory from './Review/Customer/CustomerReviewHistory'
 import Menu from './Menu/Menu'
@@ -152,11 +152,11 @@ class App extends Component {
             path="/EmailConfirmation/:id"
             render={() => <EmailConfirmation />}
           />
-          <Route
+          {/* <Route
             exact
             path="/CustomerReservation"
             render={() => <CustomerReservation />}
-          />
+          /> */}
 
           <Route
             exact

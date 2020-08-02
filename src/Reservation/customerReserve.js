@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+// import { NavLink, Link } from 'react-router-dom'
 import dataService from '../Services/dataService';
 import MainContainer from '../component/Style/MainContainer';
 import $ from 'jquery';
@@ -63,7 +63,7 @@ class Reserve extends Component {
     }
 
     handleSubmit(e) {
-        var react = this;
+        // var react = this;
         e.preventDefault();
         console.log("submit")
         var numofpeople = $('#numofpeople').val();
