@@ -58,6 +58,7 @@ class Menu extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.renderTableData = this.renderTableData.bind(this);
         this.addMenuWithImage = this.addMenuWithImage.bind(this);
+        this.editMenuWithImage = this.editMenuWithImage.bind(this);
         this.renderMenuInfo = this.renderMenuInfo.bind(this);
         this.menuItemEditButton = this.menuItemEditButton.bind(this);
         this.menuItemDeleteButton = this.menuItemDeleteButton.bind(this);
@@ -166,6 +167,7 @@ class Menu extends Component {
     }
 
     async addMenuWithImage(state) {
+        console.log(this);
         const formData = new FormData();
         formData.append('menuImage', state.image);
         const config = {
@@ -177,6 +179,29 @@ class Menu extends Component {
         state.menuImageId = menuImageId;
         console.log(state);
         await ds.addMenu(state).then(() => {
+            this.queryMenus();
+        })
+
+    }
+
+    async editMenuWithImage(state) {
+        console.log(state);
+        if (state.isImage) {
+            await ds.deleteMenuImage();
+        }
+
+        const formData = new FormData();
+        formData.append('menuImage', state.image);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        var menuImageId = await ds.editMenuImage(formData, config);
+        state.menuImageId = menuImageId;
+        console.log("afer ds.editmenuimage");
+        console.log(state);
+        await ds.editMenu(state).then(() => {
             this.queryMenus();
         })
 
@@ -236,17 +261,22 @@ class Menu extends Component {
     };
 
     menuItemDeleteButton(index) {
-        ds.deleteMenu(this.state.menus[index]).then(() => {
+        var menu = this.state.menus[index];
+        if (menu.menuPicture.isImage != false) {
+            ds.deleteMenuImage(menu.menuImageId);
+        }
+
+        ds.deleteMenu(menu).then(() => {
             this.queryMenus();
         })
     }
-
 
     menuItemEditButton(index) {
         console.log(this.state.menus);
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
 
         if (!this.state.menus[index].contenteditable) {
+            //this.editMenuWithImage(this.state.menus[index]); // contain the back-end logic for edit menu with image. need to be tested after the front-end side of issue fixed
             ds.editMenu(this.state.menus[index]);
         }
 

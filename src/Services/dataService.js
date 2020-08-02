@@ -453,6 +453,23 @@ export default {
       return res.data.menuImage;
     })
   },
+  async editMenuImage(formData, config) {
+    console.log("edit menu image start");
+    return await Axios.post(serverAddress + "/editMenuImage", formData, config).then((res) => {
+      return res.data.menuImage;
+    })
+  },
+  async deleteMenuImage(state) {
+    console.log("delete menu image start");
+    return await Axios.delete(`${serverAddress}/deleteMenuImage/${state}`)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  },
   async getImage(state) {
     return await Axios.get(`${serverAddress}/getimage/${state.imageId}`)
       .then((res) => {
@@ -461,5 +478,30 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+  },
+  addReview(state) {
+    return Axios.post(serverAddress + "/review/addreview", state,
+      { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+  },
+  getReviewsCustomerSide() {
+    return Axios.get(serverAddress + "/review/getreviewscustomerside", { headers: authHeader() })
+      .then((res) => {
+        return res.data.reviews;
+      }).catch((err) => {
+        throw err;
+      })
+  },
+  getReviewsRestaurantSide(resId) {
+    return Axios.get(serverAddress + "/review/getreviewsrestaurantside", { headers: authHeader(), params: resId })
+      .then((res) => {
+        return res.data.reviews;
+      }).catch((err) => {
+        throw err;
+      })
   },
 };

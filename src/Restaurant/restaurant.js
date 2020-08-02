@@ -15,6 +15,7 @@ import ResReview from '../Review/ResReview';
 import ViewMenu from '../Menu/ViewMenu';
 import FullscreenError from '../component/Style/FullscreenError'
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
+import ds from "../Services/dataService";
 
 class Restaurant extends Component {
     constructor(props) {
@@ -22,12 +23,13 @@ class Restaurant extends Component {
         this.state = {
             id: this.props.match.params.id,
             res: [],
+            reviews: [],
             resultsErr: false,
             isResLoaded: false,
         }
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
             .then(res => {
                 if (res.data.errcode === 0)
@@ -37,7 +39,19 @@ class Restaurant extends Component {
                     })
                 console.log(this.state.res)
             })
-        console.log(this.state.id)
+        var resId = this.state.id;
+
+        await this.queryReviews(resId);
+        console.log("after get reviews");
+        console.log(this.state);
+    }
+
+    async queryReviews(resId) {
+        var reviews = await ds.getReviewsRestaurantSide(resId);
+
+        this.setState({
+            reviews: reviews
+        })
     }
 
     componentDidMount() {
@@ -102,11 +116,11 @@ class Restaurant extends Component {
                             <div className="col-sm-8">
                                 <h5>Menu</h5>
                                 <hr />
-                                <ViewMenu resId={this.state.id}/>
+                                <ViewMenu resId={this.state.id} />
                                 <br />
                                 <h5>Reviews</h5>
                                 <hr />
-                                <ResReview />
+                                <ResReview resId={this.state.id} />
 
 
 
@@ -126,8 +140,11 @@ class Restaurant extends Component {
                                 <hr />
                                 <h6>Address</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.addressId.streetNum : null} {this.state.isResLoaded ? this.state.res.addressId.streetName : null}
-                                {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null} 
-                                {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
+                                    {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null}
+                                    {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
+                                <hr />
+                                <h6>Phone Number</h6>
+                                <p>{this.state.isResLoaded ? this.state.res.phoneNumber : null}</p>
                                 <hr />
                                 <h6>Store Time</h6>
                                 <p>Monday {this.state.isResLoaded ? this.state.res.monOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.monCloseTimeId.storeTimeName : null}</p>
@@ -143,7 +160,7 @@ class Restaurant extends Component {
                                 <hr />
                                 <h6>Category</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.categoryId.categoryName : null}</p>
-                                <hr/>
+                                <hr />
                                 <h6>Price Range</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
 

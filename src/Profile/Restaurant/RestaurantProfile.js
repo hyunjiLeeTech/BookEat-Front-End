@@ -134,6 +134,7 @@ class RestaurantProfile extends Component {
     this.handleChangeInList = this.handleChangeInList.bind(this);
 
   }
+
   onImageChange = (event, index) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -141,7 +142,7 @@ class RestaurantProfile extends Component {
       //   image: URL.createObjectURL(img)
       // });
       if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
-        this.state.picture[index].MenuPicture = URL.createObjectURL(img)
+        this.state.picture = URL.createObjectURL(img)
         this.forceUpdate();
       } else {
         this.setState({
@@ -152,6 +153,8 @@ class RestaurantProfile extends Component {
 
     }
   };
+
+ 
 
   handleChange(e) {
     e.preventDefault();
@@ -286,11 +289,6 @@ class RestaurantProfile extends Component {
     }
   };
 
-  // handleMultiplePictures = (e) => {
-  //   this.setState({
-  //     picture: [...this.state.picture, ...e.target.pictures],
-  //   });
-  // };
 
   componentWillMount() {
     this.queryDiscounts();
@@ -1972,7 +1970,7 @@ class RestaurantProfile extends Component {
                       </div>
                       <p id="msg"></p> */}
 
-                      <input type="file" name="picture" id="picture" value={this.state.picture}
+                      <input type="file" name="picture" id="picture" 
                         onChange={this.onImageChange} disabled={(!this.state.disabled)} />
 
                       <img src={this.state.picture} style={{ maxHeight: '100%', maxWidth: '100%' }} />
@@ -2253,7 +2251,6 @@ class RestaurantProfile extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* {this.renderDiscountTable()} */}
                     {this.renderDataDiscount()}
                   </tbody>
                 </table>
@@ -2351,55 +2348,6 @@ class RestaurantProfile extends Component {
 
               {/* End Discount */}
         </div>
-
-
-
-        {/* DeleteDiscountModal */}
-
-        <div
-          className="modal fade"
-          id="DiscountDeleteResultModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="DiscountDeleteResultModal"
-          aria-hidden="true"
-        >
-
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="DiscountDeleteResultModal">
-                  Delete Discount
-                            </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <p className="alert alert-warning" id="DeleteResultModalText">
-                  Please Wait...
-                  </p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-dismiss="modal"
-                >
-                  Close
-                  </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
 
       </MainContainer>
     );
