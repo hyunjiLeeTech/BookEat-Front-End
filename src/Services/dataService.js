@@ -11,6 +11,14 @@ function sleep(ms) {
 }
 
 export default {
+  confirmEmail(accountId){
+    return Axios.get(serverAddress + '/verifyEmail/' + accountId)
+      .then(res=>{
+        return (res.data)
+      }).catch(err=>{
+        throw err
+      })
+  },
   getMenusCustomer(id) {
     return Axios.get(serverAddress + '/menus/restaurants/' + id, { headers: authHeader() }).then((req) => {
       console.log(req)

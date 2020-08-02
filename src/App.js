@@ -150,7 +150,7 @@ class App extends Component {
           />
           <Route
             exact
-            path="/EmailConfirmation"
+            path="/EmailConfirmation/:id"
             render={() => <EmailConfirmation />}
           />
           <Route
