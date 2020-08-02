@@ -1,27 +1,30 @@
 import React, { Component } from 'react'
 import MainContainer from '../component/Style/MainContainer'
 import { withRouter } from "react-router";
-
+import { Link } from "react-router-dom";
+import ds from "../Services/dataService"
 
 class EmailConfirmation extends Component {
 
-
     //TODO: email confirmation
     //use: this.props.match.params.id
+
     render() {
         return (
             <MainContainer>
                 <div className="container">
                     {this.props.match.params.id}
                     <div className=" card-body text-center">
-                       
-                            <h3>Confirm your email address</h3>
-                            <p>Please check your inbox for a confirmation email.
-                            Click the link in the email to confirm your email address.
-                            </p>
-                            <p> After you verify, return to this page to continue.</p>
-                            <p>Didn't receive the email? Send it again</p>
-                     
+                        <br />
+                        <br />
+                        <br />
+                        <h3>Success email verification</h3>
+                        <p>Click the following button to log in to your account and start exploring</p>
+                        <Link to='/Login' className="btn btn-primary"> Log In </Link>
+                        <br />
+                        <br />
+                        <p>Thank you for choosing BookEat!</p>
+
                     </div>
                 </div>
             </MainContainer>
