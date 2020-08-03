@@ -78,13 +78,14 @@ class Menu extends Component {
                 this.forceUpdate();
             } else {
                 this.setState({
-                    //image: URL.createObjectURL(img),
+                    // image: URL.createObjectURL(img),
                     image: event.target.files[0]
                 })
             }
 
         }
     };
+
 
     handleChangeInList(e, index) {
         e.preventDefault();
@@ -283,11 +284,12 @@ class Menu extends Component {
         if (!this.state.menus[index].contenteditable) {
             //this.editMenuWithImage(this.state.menus[index]); // contain the back-end logic for edit menu with image. need to be tested after the front-end side of issue fixed
             ds.editMenu(this.state.menus[index]);
+            
         }
 
         // this.forceUpdate();
         //this.setState({});
-        this.callModal();
+        this.callModal(index);
     }
 
     //this.state.menus[index]
@@ -330,16 +332,16 @@ class Menu extends Component {
                  </row>   */}
                             <container>
                                 <row>
-                                    <input type="file" name="menuPicture"
+                                    <input type="file" name="MenuPicture" id="MenuPicture" defaultValue={MenuPicture}
                                         onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
-                                    {
+                                    {/* {
                                         !this.state.menus[index].contenteditable ? <img id={"menuImage" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={"http://localhost:5000/getimage/" + this.state.menus[index].menuImageId} />
                                             : null
-                                    }
-                                    {/* {
-                                        !this.state.menus[index].contenteditable ? <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
-                                            : null
                                     } */}
+                                    {
+                                        !this.state.menus[index].contenteditable ? <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                                            : null
+                                    }
 
 
 
@@ -347,6 +349,7 @@ class Menu extends Component {
                             </container>
                         </div>
                     </td>
+               
                     {/* <tr>{menuName}</tr>
                     <tr>{menuPrice}</tr>
                     <tr>{menuDescript}</tr> */}
@@ -432,8 +435,12 @@ class Menu extends Component {
                             <div className="col-sm-3 border">
                                 <container>
                                     <row>
-                                        <input type="file" name="menuPicture" onChange={this.onImageChange} />
+                                        <input type="file" name="menuPicture" id="menuPicture" onChange={this.onImageChange} />
                                         <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+
+
+                                        {/* <input type="file" name="menuPicture" onChange={this.onImageChange} />
+                                        <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} /> */}
                                     </row>
                                 </container>
                             </div>
