@@ -5,6 +5,8 @@ import ds from "../Services/dataService"
 // import { Link } from 'react-router-dom'
 import $ from "jquery";
 import FullscreenError from '../component/Style/FullscreenError'
+import serverAddress from '../Services/ServerUrl';
+import FullScrrenLoading from '../component/Style/FullscreenLoading';
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
@@ -39,7 +41,7 @@ class Menu extends Component {
             //Oringin
             menus: [{
             }],
-
+            
             menuPicture: "",
             menuName: "",
             menuPrice: "",
@@ -53,7 +55,8 @@ class Menu extends Component {
                 menuPrice: '&#160;',
                 menuDescript: '&#160;'
             },
-            resultsErr: false
+            resultsErr: false,
+            isLoading: false
         };
         this.onImageChange = this.onImageChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -75,6 +78,7 @@ class Menu extends Component {
             // });
             if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
                 this.state.menus[index].MenuPicture = URL.createObjectURL(img)
+                this.state.menus[index].image = img
                 this.forceUpdate();
             } else {
                 this.setState({
@@ -145,6 +149,8 @@ class Menu extends Component {
     }
 
     async queryMenus() {
+        this.setState({isLoading : true})
+        this.setState({menus: []})
         let menuContents = await ds.getMenus();
         menuContents = menuContents.menus;
 
@@ -168,11 +174,14 @@ class Menu extends Component {
                 menus: menuContents
             });
         }
-
+        console.log("Result of query menus")
         console.log(menuContents);
+        this.setState({isLoading : false})
     }
 
     async addMenuWithImage(state) {
+        this.setState({isLoading : true})
+
         console.log(this);
         const formData = new FormData();
         formData.append('menuImage', state.image);
@@ -186,11 +195,16 @@ class Menu extends Component {
         console.log(state);
         await ds.addMenu(state).then(() => {
             this.queryMenus();
+        }).finally(()=>{
+            this.setState({isLoading : false})
+
         })
 
     }
 
     async editMenuWithImage(state) {
+        this.setState({isLoading : true})
+
         console.log(state);
         if (state.isImage) {
             await ds.deleteMenuImage();
@@ -206,11 +220,15 @@ class Menu extends Component {
         var menuImageId = await ds.editMenuImage(formData, config);
         state.menuImageId = menuImageId;
         console.log("afer ds.editmenuimage");
-        console.log(state);
         await ds.editMenu(state).then(() => {
+            console.log('edit menu fullfilled')
             this.queryMenus();
-        })
 
+        }).catch(err => {
+            console.log(err)
+        }).finally(()=>{
+            this.setState({isLoading : true})
+        })
     }
 
     renderMenuInfo() {
@@ -232,6 +250,7 @@ class Menu extends Component {
                                     className="btn btn-primary btn-sm mr-sm-2"
                                     data-toggle="modal"
                                     href="#EditMenu"
+                                    
                                 >
                                     Edit
                                 </button>
@@ -278,15 +297,18 @@ class Menu extends Component {
     }
 
     menuItemEditButton(index) {
-        console.log(this.state.menus);
+        //console.log(this.state.menus);
+        console.log(this.state.menus[index])
+
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
 
         if (!this.state.menus[index].contenteditable) {
             //this.editMenuWithImage(this.state.menus[index]); // contain the back-end logic for edit menu with image. need to be tested after the front-end side of issue fixed
-            ds.editMenu(this.state.menus[index]);
-            
+            //ds.editMenu(this.state.menus[index]);
+            //console.log('call edit menu')
+            this.editMenuWithImage(this.state.menus[index])
+            //$('#EditResultModal').modal('show') //Show the modal 
         }
-
         // this.forceUpdate();
         //this.setState({});
         this.callModal(index);
@@ -318,6 +340,7 @@ class Menu extends Component {
 
 
     renderTableData() {
+        console.log(this.state.menus);
         return this.state.menus.map((menu, index) => {
             const { id, MenuPicture, menuName, menuPrice, menuDescript } = menu
             return (
@@ -339,8 +362,16 @@ class Menu extends Component {
                                             : null
                                     } */}
                                     {
-                                        !this.state.menus[index].contenteditable ? <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
-                                            : null
+                                        this.state.menus[index].contenteditable ? 
+                                        
+                                        <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                                            : 
+                                            
+                                            <div>
+                                                sadfsadfsdf
+                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} />
+
+                                            </div>
                                     }
 
 
@@ -379,7 +410,7 @@ class Menu extends Component {
                                 type="button"
                                 className="btn btn-primary btn-sm mr-sm-2"
                                 onClick={() => this.menuItemEditButton(index)}
-                            // data-toggle="modal" data-target="#EditResultModal"
+                                //data-toggle="modal" data-target="#EditResultModal"
                             >
                                 {this.state.menus[index].contenteditable ? "Save Change" : "Edit"}
                             </button>
@@ -422,6 +453,9 @@ class Menu extends Component {
                     :
                     null
                 }
+                {this.state.isLoading ?
+                    FullScrrenLoading({type: 'balls', color: '#000'}) : null    
+            }
                 <form onSubmit={this.handleSubmit} id="addMenu">
                     <div className="form-inline form-group mt-sm-4">
                         <h3> Add Menu </h3>
@@ -436,7 +470,7 @@ class Menu extends Component {
                                 <container>
                                     <row>
                                         <input type="file" name="menuPicture" id="menuPicture" onChange={this.onImageChange} />
-                                        <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+                                        <img src={this.state.image? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} />
 
 
                                         {/* <input type="file" name="menuPicture" onChange={this.onImageChange} />
