@@ -194,10 +194,10 @@ class Menu extends Component {
         state.menuImageId = menuImageId;
         console.log(state);
         await ds.addMenu(state).then(() => {
-            this.queryMenus();
-        }).finally(()=>{
+           
+        }).finally(async()=>{
+            await this.queryMenus();
             this.setState({isLoading : false})
-
         })
 
     }
