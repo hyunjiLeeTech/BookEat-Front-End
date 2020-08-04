@@ -9,6 +9,23 @@ class EmailConfirmation extends Component {
     //TODO: email confirmation
     //use: this.props.match.params.id
 
+    constructor(props){
+        super(props)
+        this.state = {
+            id: this.props.match.params.id
+        }
+    }
+
+    emailConfirmation(){
+        console.log("this is user" + this.props.match.params.id);
+        ds.confirmEmail(this.props.match.params.id).then((user) => {
+            console.log(user.id);
+            this.setState({
+                id: user.id
+            })
+        })
+    }
+
     render() {
         return (
             <MainContainer>
