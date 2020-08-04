@@ -2,7 +2,7 @@ import React from 'react';
 // import ReactLoading from 'react-loading';
 import './FullscreenError.css'
 
-const FullScrrenLoading = (msg) => (
+const FullScrrenError = (msg) => (
 	<div id="fullScreenErrorWrapper">
         <div id="fullScreenErrorMsg">
 <h2>{msg}</h2>
@@ -11,4 +11,4 @@ const FullScrrenLoading = (msg) => (
     
 );
 
-export default FullScrrenLoading;
+export default FullScrrenError;

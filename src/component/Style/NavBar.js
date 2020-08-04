@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import NavBarRightLoggedin from './NavBarRight-loggedin';
 import NavBarRightLoggedOut from './NavBarRight-loggedout';
 import authService from '../../Services/AuthService';
+import BookEat_logo from '../../Image/BookEat_logo-03.jpg'
 const NavBar = () => {
     const user = authService.getCurrentUser();
 
@@ -50,7 +51,7 @@ const NavBar = () => {
         // </nav>
 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <NavLink to="/" className="nav-link">BookEat</NavLink>
+            <NavLink to="/" className="nav-link"> BookEat_logo</NavLink>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
