@@ -9,11 +9,32 @@ class EmailConfirmation extends Component {
     //TODO: email confirmation
     //use: this.props.match.params.id
 
+    constructor(props){
+        super(props)
+        this.state = {
+            id: this.props.match.params.id
+        };
+    }
+
+    emailConfirmation(id){
+        ds.confirmEmail(id).then(() => {
+            console.log(id);
+            this.setState({
+                id: id
+            })
+        })
+    }
+
+    componentWillMount(){
+        var _id = this.state.id;
+        this.emailConfirmation(_id);
+        console.log("mount" + this.props.match.params.id);
+    }
+
     render() {
         return (
             <MainContainer>
                 <div className="container">
-                    {this.props.match.params.id}
                     <div className=" card-body text-center">
                         <br />
                         <br />
