@@ -42,9 +42,30 @@ class CustomerReviewHistory extends Component {
     this.forceUpdate(); //forcing udpate the UI
   }
 
-  handleClickEditReview() {
-
+  handleClickEditReview(index) {
+  this.setState.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
+  if (!this.state.reviews[index].contenteditable){
+    this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable
+    $('#EditeReviewResultModal').modal('show')
   }
+  }
+  
+//   async editReview(state) {
+//     this.setState({ isLoading: true })
+
+//     // var menuImageId = await ds.editMenuImage(formData, config);
+//     // state.menuImageId = menuImageId;
+//     // console.log("afer ds.editmenuimage");
+//     // await ds.review(state).then(() => {
+//     //     console.log('edit review fullfilled')
+//     //     this.queryMenus();
+
+//     // }).catch(err => {
+//     //     console.log(err)
+//     // }).finally(() => {
+//     //     this.setState({ isLoading: true })
+//     // })
+// }
 
   handleClickDeleteReview(id) {
     ds.deleteReview({ _id: id });
@@ -96,7 +117,7 @@ class CustomerReviewHistory extends Component {
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={id} id={'reviewrow' + index}>
           <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
-          <td defaultValue="..">..</td>
+          <td defaultValue={resName}>..</td>
 
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
