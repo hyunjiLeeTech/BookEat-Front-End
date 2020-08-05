@@ -538,4 +538,21 @@ export default {
       return res.data.resPictures;
     })
   },
+  editReview(state) {
+    return Axios.post(serverAddress + "/review/editreview", state, { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+
+  },
+  deleteReview(state) {
+    return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+  }
 };
