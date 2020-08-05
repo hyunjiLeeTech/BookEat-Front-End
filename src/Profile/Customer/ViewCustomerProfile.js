@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import MainContainer from "../../component/Style/MainContainer";
-// import { Link } from "react-router-dom";
 import Parser from "html-react-parser";
 import $ from "jquery";
 import "./ViewCustomerProfile.css";
-// import { Tab } from "bootstrap";
-// import authService from "../../Services/AuthService";
 import serverAddress from "../../Services/ServerUrl";
 import ds from "../../Services//dataService";
 import Axios from "axios";
@@ -362,7 +359,7 @@ class ViewCustomerProfile extends Component {
           <div
             className="modal fade"
             id="signResultModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby="signResultModalLabel"
             aria-hidden="true"
@@ -406,7 +403,7 @@ class ViewCustomerProfile extends Component {
         <div
           className="modal fade"
           id="AccountDeleteResultModal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="AccountDeleteResultModal"
           aria-hidden="true"

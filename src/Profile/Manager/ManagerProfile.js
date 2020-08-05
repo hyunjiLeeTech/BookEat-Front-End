@@ -8,6 +8,7 @@ import RestaurantReservation from "../../Reservation/RestaurantReservation";
 import Menu from "../../Menu/Menu";
 import ds from "../../Services/dataService";
 import FullscreenError from '../../component/Style/FullscreenError'
+import ViewReview from '../../Review/Restaurant/ViewReview'
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -15,10 +16,6 @@ const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
 );
-
-// const regExpPassword = RegExp(
-//   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
-// );
 
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
@@ -249,6 +246,21 @@ class ManagerProfile extends Component {
                   aria-selected="false"
                 >
                   Reservation
+                </a>
+              </li>
+              <li className="nav-item">
+                {/* <Link to='#managerAccount'>
+                                    <button className="nav-link" data-toggle="tab">Manager</button>
+                                </Link> */}
+                <a
+                  class="nav-link"
+                  data-toggle="tab"
+                  role="tab"
+                  href="#manReview"
+                  aria-controls="manReview"
+                  aria-selected="false"
+                >
+                  Review
                 </a>
               </li>
               <li className="nav-item">
@@ -494,6 +506,19 @@ class ManagerProfile extends Component {
                 <Menu />
               </div>
               {/* End mENU */}
+
+              {/* Start of Review*/}
+
+              <div
+                id="manReview"
+                className="tab-pane fade"
+                role="tabpanel"
+                aria-labelledby="manReview"
+              >
+                <ViewReview />
+              </div>
+
+              {/* End of Review Account */}
             </div>
           </div>
         </div>

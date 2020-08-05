@@ -11,11 +11,11 @@ function sleep(ms) {
 }
 
 export default {
-  confirmEmail(accountId){
+  confirmEmail(accountId) {
     return Axios.get(serverAddress + '/verifyEmail/' + accountId)
-      .then(res=>{
+      .then(res => {
         return (res.data)
-      }).catch(err=>{
+      }).catch(err => {
         throw err
       })
   },
@@ -379,6 +379,21 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
+      if (res.data.errcode === 0) {
+        $("#munuAddResultText")
+          .text("Menu is added")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#munuAddResultText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
     }).catch((err) => {
       console.log(err);
     })
@@ -400,7 +415,7 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log('fullfilled');
-      if(res.data.errcode === 1) throw data
+      if (res.data.errcode === 1) throw data
       return res.data;
     }).catch(((err) => {
       console.log(err);
@@ -508,4 +523,36 @@ export default {
         throw err;
       })
   },
+  getReviewsResManProfile() {
+    return Axios.get(serverAddress + "/review/getreviewsresownermanager", { headers: authHeader() })
+      .then((res) => {
+        return res.data.reviews;
+      }).catch((err) => {
+        throw err;
+      })
+  },
+  async addResPictures(formData, config) {
+    console.log("add res pictures start");
+    return await Axios.post(serverAddress + "/addResPictures", formData, config).then((res) => {
+      console.log("add res pictures done");
+      return res.data.resPictures;
+    })
+  },
+  editReview(state) {
+    return Axios.post(serverAddress + "/review/editreview", state, { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+
+  },
+  deleteReview(state) {
+    return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+  }
 };
