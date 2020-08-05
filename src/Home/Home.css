@@ -30,58 +30,35 @@
   div.scrollmenu a:hover {
     background-color: #777;
   } */
-  .main {
-    text-align: center;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+
+
+  .carousel-inner{
+    height: 10rem;
+    min-height: 500px;
   }
-  
-  .title {
-   font-size: 42px;
-  }
-  
-  
-  .image {
-    height: 100px;
-    width: 100px;
-    font-size: 25px;
-    background: blue;
-    margin: 10px;
-    display: inline-block;
-    line-height: 100px; 
-  }
-  
-  
-  .image-container {
-    vertical-align: middle;
-    display: inline-block;
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    width: 50%;
-  }
-  
-  .prev, .next {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    height: 100%;
-    cursor: pointer;
-    color: black;
-    transition: 0.6s ease;
-  }
-  
-  .next {
-    margin-left: 5px;
-  }
-  
-  .prev {
-    margin-right: 5px;
-  }
-  
-  .prev:hover, .next:hover {
-    color: white;
-    height: 100%;
-    background-color: rgba(0,0,0,0.8);
-  }
+
+  .mainText {
+    position: absolute;
+    top: 10rem;
+    width: 60rem;
+    color: #FFF;
+}
+
+.mainText h1{
+  margin:0;
+  position: absolute;
+  top:50%;
+  left:50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+}
+
+.mainText p{
+  margin:0;
+  position: absolute;
+  top:130%;
+  left:60%;
+  margin-right: -90%;
+  transform: translate(-90%, -90%)
+}
+
