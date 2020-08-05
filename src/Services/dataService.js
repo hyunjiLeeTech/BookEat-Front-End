@@ -379,6 +379,21 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
+      if (res.data.errcode === 0) {
+        $("#munuAddResultText")
+          .text("Menu is added")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#munuAddResultText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
     }).catch((err) => {
       console.log(err);
     })
