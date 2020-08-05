@@ -2176,7 +2176,7 @@ class RestaurantProfile extends Component {
 
               {/* Start Menu */}
               <div id="menu" className="tab-pane fade" role="tabpanel" aria-labelledby="menu">
-                {/* <Menu /> */}
+                <Menu />
               </div>
               {/* End Menu */}
 
