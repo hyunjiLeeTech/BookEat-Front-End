@@ -416,7 +416,7 @@ class ViewCustomerProfile extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="AccountDeleteResultModal">
-                  Delete Menu
+                  Delete Profile
                             </h5>
                 <button
                   type="button"
