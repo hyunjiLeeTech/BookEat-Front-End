@@ -8,6 +8,7 @@ import { FaThumbsUp } from 'react-icons/fa'
 import { IconContext } from "react-icons"
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import ds from "../../Services/dataService";
+import moment from 'moment';
 
 class CustomerReviewHistory extends Component {
   constructor(props) {
@@ -36,22 +37,25 @@ class CustomerReviewHistory extends Component {
   handleChangeInList(e, index) {
     e.preventDefault();
     const { name, value } = e.target;
-   
+
     this.state.reviews[index][e.target.id] = e.target.value; //Set state does not allow to set an object inside of an array
     this.forceUpdate(); //forcing udpate the UI
-}
+  }
   componentDidMount() {
     //Query data from the server
     //this.setState();
   }
 
   componentWillMount() {
-    this.queryReviews();
+    this.queryReviews()
   }
 
   async queryReviews() {
     let reviews = await ds.getReviewsCustomerSide();
-    console.log(reviews);
+
+    this.setState({
+      reviews: reviews
+    });
   }
 
   handleSubmit = (e) => {
@@ -79,14 +83,14 @@ class CustomerReviewHistory extends Component {
     return this.state.reviews.map((review, index) => {
       const { id, date, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
       return (
-        // <form onSubmit={this.handleSubmit} id="rendTab" >
+        //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={id} id={'reviewrow' + index}>
-          <td defaultValue={date.toString()}> {date.toString()}</td>
+          <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
           <td defaultValue={resName}>{resName}</td>
-         
+
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
-            onChange={(e) => this.handleChangeInList(e, index)}
+              onChange={(e) => this.handleChangeInList(e, index)}
               defaultValue={comment} className="border-none"
               disabled={(!this.state.reviews[index].contenteditable)}
             /></td>
@@ -112,11 +116,11 @@ class CustomerReviewHistory extends Component {
                 // </div>
 
                 <div className="Form-group" >
-                  <select className="form-conrol" 
-                  id="foodRate"
-                  name="foodRate"
-                  value={this.state.foodRate}
-                  onChange={(e) => this.handleChangeInList(e, index)}
+                  <select className="form-conrol"
+                    id="foodRate"
+                    name="foodRate"
+                    value={this.state.foodRate}
+                    onChange={(e) => this.handleChangeInList(e, index)}
                   >
                     <option value="food1">⭐</option>
                     <option value="food2">⭐⭐</option>
@@ -125,7 +129,7 @@ class CustomerReviewHistory extends Component {
                     <option value="food5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
-                : this.renderStars(this.state.reviews[index].foodRate)
+                : this.renderStars(this.state.reviews[index].food)
 
             }
           </td>
@@ -149,11 +153,11 @@ class CustomerReviewHistory extends Component {
                 // </div> 
 
                 <div className="Form-group">
-                  <select className="form-conrol" 
-                  id="serviceRate"
-                  name="serviceRate"
-                  value={this.state.serviceRate}
-                  onChange={(e) => this.handleChangeInList(e, index)}
+                  <select className="form-conrol"
+                    id="serviceRate"
+                    name="serviceRate"
+                    value={this.state.serviceRate}
+                    onChange={(e) => this.handleChangeInList(e, index)}
                   >
                     <option value="service1" >⭐</option>
                     <option value="service2">⭐⭐</option>
@@ -162,7 +166,7 @@ class CustomerReviewHistory extends Component {
                     <option value="service5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
-                : this.renderStars(this.state.reviews[index].serviceRate)
+                : this.renderStars(this.state.reviews[index].service)
             }
           </td>
 
@@ -185,11 +189,11 @@ class CustomerReviewHistory extends Component {
 
                 <div className="Form-group">
                   <select className="form-conrol"
-                   id="satisfactionRate"
-                  name="satisfactionRate"
-                  value={this.state.satisfactionRate}
-                  onChange={(e) => this.handleChangeInList(e, index)}
-                   >
+                    id="satisfactionRate"
+                    name="satisfactionRate"
+                    value={this.state.satisfactionRate}
+                    onChange={(e) => this.handleChangeInList(e, index)}
+                  >
                     <option value="satisfaction1" >⭐</option>
                     <option value="satisfaction2">⭐⭐</option>
                     <option value="satisfaction3">⭐⭐⭐</option>
@@ -197,7 +201,7 @@ class CustomerReviewHistory extends Component {
                     <option value="satisfaction5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
-                : this.renderStars(this.state.reviews[index].satisfactionRate)
+                : this.renderStars(this.state.reviews[index].satisfaction)
             }
           </td>
 
@@ -221,11 +225,11 @@ class CustomerReviewHistory extends Component {
 
                 <div className="Form-group" >
                   <select className="form-conrol"
-                   id="environmentRate"
-                   name="environmentRate"
-                  value={this.state.environmentRate}
-                  onChange={(e) => this.handleChangeInList(e, index)}
-                   >
+                    id="environmentRate"
+                    name="environmentRate"
+                    value={this.state.environmentRate}
+                    onChange={(e) => this.handleChangeInList(e, index)}
+                  >
                     {/* <option value="this.state.service1" >⭐</option>
                   <option value="this.stae.service2">⭐⭐</option>
                   <option  value="this.stae.service3">⭐⭐⭐</option> */}
@@ -236,7 +240,7 @@ class CustomerReviewHistory extends Component {
                     <option value="environ5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
-                : this.renderStars(this.state.reviews[index].environmentRate)
+                : this.renderStars(this.state.reviews[index].environment)
             }
           </td>
 
