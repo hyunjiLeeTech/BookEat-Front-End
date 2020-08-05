@@ -421,6 +421,22 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
+      if (res.data.errcode === 0) {
+        $("#addDiscountText")
+          .text("Disccount is added")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#addDiscountText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
+
     }).catch((err) => {
       console.log(err);
     })
@@ -428,6 +444,21 @@ export default {
     return Axios.get(serverAddress + "/discount/getdiscounts", {
       headers: authHeader()
     }).then((res) => {
+      if (res.data.errcode === 0) {
+        $("#DiscountEditResultModalText")
+          .text("Disccount is change")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#DiscountEditResultModalText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
       return res.data;
     }).catch((err) => {
       throw (err)
@@ -437,7 +468,23 @@ export default {
     return Axios.post(serverAddress + "/discount/editdiscount", state, {
       headers: authHeader()
     }).then((res) => {
+      if (res.data.errcode === 0) {
+        $("#DiscountEditResultModalText")
+          .text("Disccount is change")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#DiscountEditResultModalText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
       return res.data;
+    
     }).catch((err) => {
       throw err;
     })
@@ -446,6 +493,21 @@ export default {
     return Axios.post(serverAddress + "/discount/deletediscount", state, {
       headers: authHeader()
     }).then((res) => {
+      if (res.data.errcode === 0) {
+        $("#DiscountDDeleteResultModalText")
+          .text("Discount is deleted")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#DiscountDDeleteResultModalText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
       return res.data;
     }).catch((err) => {
       throw err;
@@ -488,6 +550,21 @@ export default {
       { headers: authHeader() })
       .then((res) => {
         console.log(res);
+        if (res.data.errcode === 0) {
+          $("#AddReviewModalText")
+            .text("Disccount is change")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#AddReviewModalText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
       }).catch((err) => {
         throw err;
       })
