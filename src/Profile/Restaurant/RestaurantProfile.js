@@ -465,6 +465,10 @@ class RestaurantProfile extends Component {
           typeof restaurant.sunCloseTimeId != "undefined"
             ? restaurant.sunCloseTimeId.storeTimeVal
             : "",
+        resPictures:
+          typeof restaurant.pictures != "undefined"
+            ? restaurant.pictures
+            : "",
       };
     });
 
