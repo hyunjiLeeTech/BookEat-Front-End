@@ -38,7 +38,7 @@ const formValid = ({ isError, ...rest }) => {
   });
 
   Object.values(rest).forEach((val) => {
-    console.log(rest);
+    //console.log(rest);
     if (val === null) {
       isValid = false;
     } else {
@@ -95,6 +95,9 @@ class RestaurantProfile extends Component {
       sunCloseTime: "",
       description: "",
       picture: "",
+      pictures: "",
+      resPictures: [],
+      isPicture: false,
 
       //Discount
       discdescription: '',
@@ -134,19 +137,39 @@ class RestaurantProfile extends Component {
     this.onImageChange = this.onImageChange.bind(this);
     this.handleChangeInList = this.handleChangeInList.bind(this);
     this.handleDeletePicture = this.handleDeletePicture.bind(this);
-
+    this.editResProfileWithPictures = this.editResProfileWithPictures.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log('change state')
     if (prevState.picture !== this.state.picture) {
-      console.log('update!!! ', this.state.picture)
+      console.log('update!!! ', this.state.picture);
+      this.state.isPicture = true;
     }
   }
 
- handleDeletePicture() {
-   //Add backend here
- }
+  async editResProfileWithPictures(state) {
+    const formData = new FormData();
+    Array.from(state.pictures).forEach((f) => {
+      formData.append('resPictures[]', f)
+    })
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
+    let pictureIds = await ds.addResPictures(formData, config);
+    var resPictureIds = [];
+    for (var i = 0; i < pictureIds.length; i++) {
+      resPictureIds.push(pictureIds[i].filename);
+    }
+    state.resPictures = resPictureIds;
+    await ds.editRestaurantProfile(state);
+  }
+
+  handleDeletePicture() {
+    //Add backend here
+  }
 
   onImageChange = (event, index) => {
     let arrayImage = [];
@@ -158,7 +181,8 @@ class RestaurantProfile extends Component {
     if (event.target.files && event.target.files[0]) {
       this.setState({
         ...this.state,
-        picture: arrayImage
+        picture: arrayImage,
+        pictures: event.target.files
       })
     } else {
 
@@ -269,10 +293,14 @@ class RestaurantProfile extends Component {
     this.forceUpdate();
   }
 
-  handleSubmitResProfile = (e) => {
+  handleSubmitResProfile = async (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      ds.editRestaurantProfile(this.state);
+      if (this.state.isPicture) {
+        this.editResProfileWithPictures(this.state);
+      } else {
+        ds.editRestaurantProfile(this.state);
+      }
     } else {
       console.log("Form is invalid!");
     }
@@ -436,6 +464,10 @@ class RestaurantProfile extends Component {
         sunCloseTime:
           typeof restaurant.sunCloseTimeId != "undefined"
             ? restaurant.sunCloseTimeId.storeTimeVal
+            : "",
+        resPictures:
+          typeof restaurant.pictures != "undefined"
+            ? restaurant.pictures
             : "",
       };
     });
@@ -1984,7 +2016,7 @@ class RestaurantProfile extends Component {
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
                               data-target="#deletePictureModal"
-                              onClick={()=> this.handleDeletePicture()}>
+                              onClick={() => this.handleDeletePicture()}>
                               Delete
                       </button>
                           </div>
@@ -2378,7 +2410,7 @@ class RestaurantProfile extends Component {
 
 
           {/* Delete Picture */}
-          
+
           <div
             className="modal fade"
             id="deletePictureModal"
@@ -2421,7 +2453,7 @@ class RestaurantProfile extends Component {
           </div>
 
         </div>
-              
+
       </MainContainer >
     );
   }

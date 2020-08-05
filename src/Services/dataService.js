@@ -2,7 +2,7 @@ import authHeader from "./authHeader";
 // import authService from "./AuthService";
 import serverAddress from "./ServerUrl";
 import Axios from "axios";
-import $ from "jquery";
+import $, { data } from "jquery";
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -395,12 +395,16 @@ export default {
     })
   },
   editMenu(state) {
+    console.log("edit menu starts")
     return Axios.post(serverAddress + "/menu/editmenu", state, {
       headers: authHeader()
     }).then((res) => {
-      console.log(res);
+      console.log('fullfilled');
+      if (res.data.errcode === 1) throw data
+      return res.data;
     }).catch(((err) => {
       console.log(err);
+      throw data;
     }))
   },
   deleteMenu(state) {
@@ -511,5 +515,12 @@ export default {
       }).catch((err) => {
         throw err;
       })
-  }
+  },
+  async addResPictures(formData, config) {
+    console.log("add res pictures start");
+    return await Axios.post(serverAddress + "/addResPictures", formData, config).then((res) => {
+      console.log("add res pictures done");
+      return res.data.resPictures;
+    })
+  },
 };
