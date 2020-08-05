@@ -44,24 +44,12 @@ class Home extends Component {
                             <div className="col-md-12 ">
                                 <h1 className="display-3">Welcome to BookEat!</h1>
                                 <p>Find the best restaurants here</p>
-                                     <SearchBox/>
-                              
-                               
-
+                                <div className="box">
+                                      <SearchBox/>
+                                </div>
                             </div>
-
                         </header>
                     </div>
-                    {/* <header className="jumbotron my-4" id="mainHead">
-
-
-                        <h1 className="display-3">Welcome to BookEat!</h1>
-                        <p>Find the best restaurants here</p>
-                        <div className="container">
-                            <SearchBox />
-                        </div>
-
-                    </header> */}
                     <br />
                     <div className="card " >
                         <div className="card-body" >
