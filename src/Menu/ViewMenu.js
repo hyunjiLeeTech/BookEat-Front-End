@@ -47,7 +47,9 @@ class Menu extends Component {
             for (var menu of this.state.menus) {
                 rows.push(
                     <tr key={rows}>
-                        <td>{menu.menuImageId}</td>
+                        <td>  <img src={menu.menuImageId} ></img>
+                            
+                            </td>
                         <td>{menu.menuName}</td>
                          <td>{menu.menuDescript}</td>
                         <td>{menu.menuPrice}</td>
@@ -67,7 +69,7 @@ class Menu extends Component {
                         <tr>
                             <th></th>
                             <th >Name</th> 
-                            <th className="col-md-4" >Description</th>
+                            <th>Description</th>
                             <th >Price</th>
                         </tr>
                     </thead>
