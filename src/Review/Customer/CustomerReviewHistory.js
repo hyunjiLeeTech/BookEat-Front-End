@@ -41,6 +41,15 @@ class CustomerReviewHistory extends Component {
     this.state.reviews[index][e.target.id] = e.target.value; //Set state does not allow to set an object inside of an array
     this.forceUpdate(); //forcing udpate the UI
   }
+
+  handleClickEditReview() {
+
+  }
+
+  handleClickDeleteReview(id) {
+    ds.deleteReview({ _id: id });
+  }
+
   componentDidMount() {
     //Query data from the server
     //this.setState();
@@ -82,11 +91,12 @@ class CustomerReviewHistory extends Component {
   renderTable() {
     return this.state.reviews.map((review, index) => {
       const { id, date, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
+      console.log(this.state.reviews[index]);
       return (
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={id} id={'reviewrow' + index}>
           <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
-          <td defaultValue={resName}>{resName}</td>
+          <td defaultValue="..">..</td>
 
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
@@ -251,7 +261,7 @@ class CustomerReviewHistory extends Component {
                 {/* <Link to="/"> */}
                 <button
                   id='saveReviewChange'
-                  onClick={() => this.handleClickReview(index)}
+                  onClick={() => this.handleClickEditReview(index)}
                   type="button"
                   className="btn btn-primary btn-sm mr-sm-2"
                 >
@@ -268,7 +278,7 @@ class CustomerReviewHistory extends Component {
                   className="btn btn-primary btn-sm mr-sm-2"
                   data-toggle="modal"
                   data-target="#DeleteReviewResultModal"
-                // onClick={() => this.handleClickReview(index,id)}
+                  onClick={() => this.handleClickDeleteReview(this.state.reviews[index]._id)}
                 >
                   Delete
                 </button>
