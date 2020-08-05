@@ -400,7 +400,7 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log('fullfilled');
-      if(res.data.errcode === 1) throw data
+      if (res.data.errcode === 1) throw data
       return res.data;
     }).catch(((err) => {
       console.log(err);
@@ -515,5 +515,12 @@ export default {
       }).catch((err) => {
         throw err;
       })
-  }
+  },
+  async addResPictures(formData, config) {
+    console.log("add res pictures start");
+    return await Axios.post(serverAddress + "/addResPictures", formData, config).then((res) => {
+      console.log("add res pictures done");
+      return res.data.resPictures;
+    })
+  },
 };
