@@ -23,14 +23,23 @@ class CustomerReviewHistory extends Component {
         }
       ],
       // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
+      resId: "",
       disabled: true,
       contenteditable: false
     };
 
     this.handleClickReview = this.handleClickReview.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangeInList = this.handleChangeInList.bind(this);
   }
 
+  handleChangeInList(e, index) {
+    e.preventDefault();
+    const { name, value } = e.target;
+   
+    this.state.reviews[index][e.target.id] = e.target.value; //Set state does not allow to set an object inside of an array
+    this.forceUpdate(); //forcing udpate the UI
+}
   componentDidMount() {
     //Query data from the server
     //this.setState();
@@ -77,6 +86,7 @@ class CustomerReviewHistory extends Component {
          
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
+            onChange={(e) => this.handleChangeInList(e, index)}
               defaultValue={comment} className="border-none"
               disabled={(!this.state.reviews[index].contenteditable)}
             /></td>
@@ -101,14 +111,18 @@ class CustomerReviewHistory extends Component {
                 //   </div>
                 // </div>
 
-                <div className="Form-group" value={foodRate}>
-                  <select className="form-conrol" id="foodRate"
+                <div className="Form-group" >
+                  <select className="form-conrol" 
+                  id="foodRate"
+                  name="foodRate"
+                  value={this.state.foodRate}
+                  onChange={(e) => this.handleChangeInList(e, index)}
                   >
-                    <option value="this.state.food1" >⭐</option>
-                    <option value="this.state.food2">⭐⭐</option>
-                    <option value="this.state.food3">⭐⭐⭐</option>
-                    <option value="this.state.food4">⭐⭐⭐⭐</option>
-                    <option value="this.state.food5">⭐⭐⭐⭐⭐</option>
+                    <option value="food1">⭐</option>
+                    <option value="food2">⭐⭐</option>
+                    <option value="food3">⭐⭐⭐</option>
+                    <option value="food4">⭐⭐⭐⭐</option>
+                    <option value="food5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].foodRate)
@@ -134,13 +148,18 @@ class CustomerReviewHistory extends Component {
                 //     </div>
                 // </div> 
 
-                <div className="Form-group" value={serviceRate}>
-                  <select className="form-conrol" id="serviceRate" >
-                    <option value="this.state.service1" >⭐</option>
-                    <option value="this.stae.service2">⭐⭐</option>
-                    <option value="this.stae.service3">⭐⭐⭐</option>
-                    <option value="this.stae.service4">⭐⭐⭐⭐</option>
-                    <option value="this.stae.service5">⭐⭐⭐⭐⭐</option>
+                <div className="Form-group">
+                  <select className="form-conrol" 
+                  id="serviceRate"
+                  name="serviceRate"
+                  value={this.state.serviceRate}
+                  onChange={(e) => this.handleChangeInList(e, index)}
+                  >
+                    <option value="service1" >⭐</option>
+                    <option value="service2">⭐⭐</option>
+                    <option value="service3">⭐⭐⭐</option>
+                    <option value="service4">⭐⭐⭐⭐</option>
+                    <option value="service5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].serviceRate)
@@ -164,13 +183,18 @@ class CustomerReviewHistory extends Component {
                 //   </div>
                 // </div>
 
-                <div className="Form-group" value={satisfactionRate}>
-                  <select className="form-conrol" id="satisfactionRate" >
-                    <option value="this.state.satisfaction1" >⭐</option>
-                    <option value="this.stae.satisfaction2">⭐⭐</option>
-                    <option value="this.stae.satisfaction3">⭐⭐⭐</option>
-                    <option value="this.stae.satisfaction4">⭐⭐⭐⭐</option>
-                    <option value="this.stae.satisfaction5">⭐⭐⭐⭐⭐</option>
+                <div className="Form-group">
+                  <select className="form-conrol"
+                   id="satisfactionRate"
+                  name="satisfactionRate"
+                  value={this.state.satisfactionRate}
+                  onChange={(e) => this.handleChangeInList(e, index)}
+                   >
+                    <option value="satisfaction1" >⭐</option>
+                    <option value="satisfaction2">⭐⭐</option>
+                    <option value="satisfaction3">⭐⭐⭐</option>
+                    <option value="satisfaction4">⭐⭐⭐⭐</option>
+                    <option value="satisfaction5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].satisfactionRate)
@@ -195,16 +219,21 @@ class CustomerReviewHistory extends Component {
                 //   </div>
                 // </div>
 
-                <div className="Form-group" value={serviceRate}>
-                  <select className="form-conrol" id="serviceRate">
+                <div className="Form-group" >
+                  <select className="form-conrol"
+                   id="environmentRate"
+                   name="environmentRate"
+                  value={this.state.environmentRate}
+                  onChange={(e) => this.handleChangeInList(e, index)}
+                   >
                     {/* <option value="this.state.service1" >⭐</option>
                   <option value="this.stae.service2">⭐⭐</option>
                   <option  value="this.stae.service3">⭐⭐⭐</option> */}
-                    <option value="this.stae.environ1">⭐</option>
-                    <option value="this.stae.environ2">⭐⭐</option>
-                    <option value="this.stae.environ3">⭐⭐⭐</option>
-                    <option value="this.stae.environ4">⭐⭐⭐⭐</option>
-                    <option value="this.stae.environ5">⭐⭐⭐⭐⭐</option>
+                    <option value="environ1">⭐</option>
+                    <option value="environ2">⭐⭐</option>
+                    <option value="environ3">⭐⭐⭐</option>
+                    <option value="environ4">⭐⭐⭐⭐</option>
+                    <option value="environ5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].environmentRate)
