@@ -14,6 +14,7 @@ import RestaurantLayout from "../../Restaurant/RestaurantLayout";
 import FullscreenError from '../../component/Style/FullscreenError'
 import FullScrrenLoading from '../../component/Style/FullscreenLoading';
 import ViewReview from "../../Review/Restaurant/ViewReview";
+import serverAddress from '../../Services/ServerUrl';
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -182,7 +183,7 @@ class RestaurantProfile extends Component {
       this.setState({
         ...this.state,
         picture: arrayImage,
-        pictures: event.target.files
+        pictures: event.target.files[0]
       })
     } else {
 
@@ -352,7 +353,6 @@ class RestaurantProfile extends Component {
     const usr = authService.getCurrentUser();
     const restaurant = await ds.getRestaurantInformation();
     console.log(restaurant);
-    console.log(restaurant.resName);
     console.log("eating time: " + restaurant.eatingTime);
 
     // this.state = { resName: restaurant.resName };
@@ -658,23 +658,21 @@ class RestaurantProfile extends Component {
     })
   }
 
-  callModal(index) {
+  callModal() {
     this.setState(state => {
-      //   return {
-      //     discount: !state.discount
-      //   };
-      // },
-      this.setState(state =>
+      return {
+        discount: !state.discounts
+      };
+    },
+      () => {
+        if (this.state.discounts) {
+          $('#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#DiscountEditResultModal').attr('type', 'button')
+        }
+        else {
+          $('#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+        }
 
-        () => {
-          if (this.state.discount[index].contentTable) {
-            $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#DiscountEditResultModal').attr('type', 'button')
-          }
-          else {
-            $('this.state.discount[index].#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-          }
-        })
-    })
+      });
 
   }
 
@@ -683,16 +681,16 @@ class RestaurantProfile extends Component {
     return this.state.discounts.map((discount, index) => {
       const { id, discdescription, promdescription } = discount
       return (
-        <tr key={discount} id={'discountrow' + index}>
-          <td contentTable={(this.state.discounts[index].contentTable)}>
+        <tr key={index}>
+          <th contenttable={(this.state.discounts[index].contentTable)}>
 
-            <input type="text" id="discdescription" name="discdescription"
+            <input type="text" id={"discdescription" + index} name="discdescription"
               defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
               onChange={(e) => this.handleChangeInList(e, index)} />
 
 
-          </td>
-          <td contentTable={(this.state.discounts[index].contentTable)} >
+          </th>
+          <th contenttable={(this.state.discounts[index].contentTable)} >
             <textarea
               rows="5"
               id="promdescription"
@@ -703,8 +701,8 @@ class RestaurantProfile extends Component {
             ></textarea>
 
 
-          </td>
-          <td>
+          </th>
+          <th>
             <button id='save_edit_disc_btn'
               onClick={() => { this.discountEditButton(index) }
               }
@@ -713,8 +711,8 @@ class RestaurantProfile extends Component {
               {this.state.discounts[index].contentTable ? "Save Change" : "Edit"}
 
             </button>
-          </td>
-          <td>
+          </th>
+          <th>
             <button
               id='delete_btn'
               type="button"
@@ -725,12 +723,86 @@ class RestaurantProfile extends Component {
             >
               Delete
                     </button>
-          </td>
+          </th>
         </tr>
       )
     })
   }
 
+  openTime() {
+    var open = [
+      <option value="7am">7:00 AM</option>,
+      <option value="730am">7:30 AM</option>,
+      <option value="8am">8:00 AM</option>,
+      <option value="830am">8:30 AM</option>,
+      <option value="9am">9:00 AM</option>,
+      <option value="930am">9:30 AM</option>,
+      <option value="10am">10:00 AM</option>,
+      <option value="1030am">10:30 AM</option>,
+      <option value="11am">11:00 AM</option>,
+      <option value="1130am">11:30 AM</option>,
+      <option value="12pm">12:00 PM</option>,
+      <option value="1230pm">12:30 PM</option>,
+      <option value="1pm">1:00 PM</option>,
+      <option value="130pm">1:30 PM</option>,
+      <option value="2pm">2:00 PM</option>,
+      <option value="230pm">2:30 PM</option>,
+      <option value="3pm">3:00 PM</option>,
+      <option value="330pm">3:30 PM</option>,
+      <option value="4pm">4:00 PM</option>,
+      <option value="430pm">4:30 PM</option>,
+      <option value="5pm">5:00 PM</option>,
+      <option value="530pm">5:30 PM</option>,
+      <option value="6pm">6:00 PM</option>,
+      <option value="630pm">6:30 PM</option>,
+      <option value="7pm">7:00 PM</option>,
+      <option value="730pm">7:30 PM</option>,
+      <option value="8pm">8:00 PM</option>,
+      <option value="830pm">8:30 PM</option>
+    ];
+
+    return open;
+  }
+
+  closeTime() {
+    var close = [
+      <option value="9am">9:00 AM</option>,
+      <option value="930am">9:30 AM</option>,
+      <option value="10am"> 10:00 AM</option >,
+      <option value="1030am">10:30 AM</option>,
+      <option value="11am">11:00 AM</option>,
+      <option value="1130am">11:30 AM</option>,
+      <option value="12pm">12:00 PM</option>,
+      <option value="1230pm">12:30 PM</option>,
+      <option value="1pm">1:00 PM</option>,
+      <option value="130pm">1:30 PM</option>,
+      <option value="2pm">2:00 PM</option>,
+      <option value="230pm">2:30 PM</option>,
+      <option value="3pm">3:00 PM</option>,
+      <option value="330pm">3:30 PM</option>,
+      <option value="4pm">4:00 PM</option>,
+      <option value="430pm">4:30 PM</option>,
+      <option value="5pm">5:00 PM</option>,
+      <option value="530pm">5:30 PM</option>,
+      <option value="6pm">6:00 PM</option>,
+      <option value="630pm">6:30 PM</option>,
+      <option value="7pm">7:00 PM</option>,
+      <option value="730pm">7:30 PM</option>,
+      <option value="8pm">8:00 PM</option>,
+      <option value="830pm">8:30 PM</option>,
+      <option value="9pm">9:00 PM</option>,
+      <option value="930pm">9:30 PM</option>,
+      <option value="10pm">10:00 PM</option>,
+      <option value="1030pm">10:30 PM</option>,
+      <option value="11pm">11:00 PM</option>,
+      <option value="1130pm">11:30 PM</option>,
+      <option value="12am">12:00 AM</option>,
+      <option value="1230am">12:30 AM</option>,
+      <option value="1am">1:00 AM</option>,
+      <option value="130am">1:30 AM</option>,
+    ];
+    return close;
+  }
 
 
   render() {
@@ -1161,7 +1233,7 @@ class RestaurantProfile extends Component {
                         <select
                           className="custom-select col-md-5"
                           id="eatingTime"
-                          name="cuisineStyle"
+                          name="eatingTime"
                           value={this.state.eatingTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
@@ -1292,34 +1364,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Open Time</option>
-                          <option value="7am">7:00 AM</option>
-                          <option value="730am">7:30 AM</option>
-                          <option value="8am">8:00 AM</option>
-                          <option value="830am">8:30 AM</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
+                          {this.openTime()}
                         </select>
                         ~
                         <select
@@ -1331,40 +1376,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Close Time</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
-                          <option value="9pm">9:00 PM</option>
-                          <option value="930pm">9:30 PM</option>
-                          <option value="10pm">10:00 PM</option>
-                          <option value="1030pm">10:30 PM</option>
-                          <option value="11pm">11:00 PM</option>
-                          <option value="1130pm">11:30 PM</option>
-                          <option value="12am">12:00 AM</option>
-                          <option value="1230am">12:30 AM</option>
-                          <option value="1am">1:00 AM</option>
-                          <option value="130am">1:30 AM</option>
+                          {this.closeTime()}
                         </select>
                         <label className="col-sm-1 col-form-label"></label>
                         <button
@@ -1395,34 +1407,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Open Time</option>
-                          <option value="7am">7:00 AM</option>
-                          <option value="730am">7:30 AM</option>
-                          <option value="8am">8:00 AM</option>
-                          <option value="830am">8:30 AM</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
+                          {this.openTime()}
                         </select>
                         ~
                         <select
@@ -1434,40 +1419,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Close Time</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
-                          <option value="9pm">9:00 PM</option>
-                          <option value="930pm">9:30 PM</option>
-                          <option value="10pm">10:00 PM</option>
-                          <option value="1030pm">10:30 PM</option>
-                          <option value="11pm">11:00 PM</option>
-                          <option value="1130pm">11:30 PM</option>
-                          <option value="12am">12:00 AM</option>
-                          <option value="1230am">12:30 AM</option>
-                          <option value="1am">1:00 AM</option>
-                          <option value="130am">1:30 AM</option>
+                          {this.closeTime()}
                         </select>
                         <label className="col-sm-1 col-form-label"></label>
                         <button
@@ -1498,34 +1450,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Open Time</option>
-                          <option value="7am">7:00 AM</option>
-                          <option value="730am">7:30 AM</option>
-                          <option value="8am">8:00 AM</option>
-                          <option value="830am">8:30 AM</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
+                          {this.openTime()}
                         </select>
                         ~
                         <select
@@ -1537,40 +1462,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Close Time</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
-                          <option value="9pm">9:00 PM</option>
-                          <option value="930pm">9:30 PM</option>
-                          <option value="10pm">10:00 PM</option>
-                          <option value="1030pm">10:30 PM</option>
-                          <option value="11pm">11:00 PM</option>
-                          <option value="1130pm">11:30 PM</option>
-                          <option value="12am">12:00 AM</option>
-                          <option value="1230am">12:30 AM</option>
-                          <option value="1am">1:00 AM</option>
-                          <option value="130am">1:30 AM</option>
+                          {this.closeTime()}
                         </select>
                         <label className="col-sm-1 col-form-label"></label>
                         <button
@@ -1601,34 +1493,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Open Time</option>
-                          <option value="7am">7:00 AM</option>
-                          <option value="730am">7:30 AM</option>
-                          <option value="8am">8:00 AM</option>
-                          <option value="830am">8:30 AM</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
+                          {this.openTime()}
                         </select>
                         ~
                         <select
@@ -1640,40 +1505,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Close Time</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
-                          <option value="9pm">9:00 PM</option>
-                          <option value="930pm">9:30 PM</option>
-                          <option value="10pm">10:00 PM</option>
-                          <option value="1030pm">10:30 PM</option>
-                          <option value="11pm">11:00 PM</option>
-                          <option value="1130pm">11:30 PM</option>
-                          <option value="12am">12:00 AM</option>
-                          <option value="1230am">12:30 AM</option>
-                          <option value="1am">1:00 AM</option>
-                          <option value="130am">1:30 AM</option>
+                          {this.closeTime()}
                         </select>
                         <label className="col-sm-1 col-form-label"></label>
                         <button
@@ -1704,34 +1536,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Open Time</option>
-                          <option value="7am">7:00 AM</option>
-                          <option value="730am">7:30 AM</option>
-                          <option value="8am">8:00 AM</option>
-                          <option value="830am">8:30 AM</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
+                          {this.openTime()}
                         </select>
                         ~
                         <select
@@ -1743,40 +1548,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Close Time</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
-                          <option value="9pm">9:00 PM</option>
-                          <option value="930pm">9:30 PM</option>
-                          <option value="10pm">10:00 PM</option>
-                          <option value="1030pm">10:30 PM</option>
-                          <option value="11pm">11:00 PM</option>
-                          <option value="1130pm">11:30 PM</option>
-                          <option value="12am">12:00 AM</option>
-                          <option value="1230am">12:30 AM</option>
-                          <option value="1am">1:00 AM</option>
-                          <option value="130am">1:30 AM</option>
+                          {this.closeTime()}
                         </select>
                         <label className="col-sm-1 col-form-label"></label>
                         <button
@@ -1807,34 +1579,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Open Time</option>
-                          <option value="7am">7:00 AM</option>
-                          <option value="730am">7:30 AM</option>
-                          <option value="8am">8:00 AM</option>
-                          <option value="830am">8:30 AM</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
+                          {this.openTime()}
                         </select>
                         ~
                         <select
@@ -1846,40 +1591,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Close Time</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
-                          <option value="9pm">9:00 PM</option>
-                          <option value="930pm">9:30 PM</option>
-                          <option value="10pm">10:00 PM</option>
-                          <option value="1030pm">10:30 PM</option>
-                          <option value="11pm">11:00 PM</option>
-                          <option value="1130pm">11:30 PM</option>
-                          <option value="12am">12:00 AM</option>
-                          <option value="1230am">12:30 AM</option>
-                          <option value="1am">1:00 AM</option>
-                          <option value="130am">1:30 AM</option>
+                          {this.closeTime()}
                         </select>
                         <label className="col-sm-1 col-form-label"></label>
                         <button
@@ -1910,34 +1622,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Open Time</option>
-                          <option value="7am">7:00 AM</option>
-                          <option value="730am">7:30 AM</option>
-                          <option value="8am">8:00 AM</option>
-                          <option value="830am">8:30 AM</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
+                          {this.openTime()}
                         </select>
                         ~
                         <select
@@ -1949,40 +1634,7 @@ class RestaurantProfile extends Component {
                           disabled={(!this.state.disabled)}
                         >
                           <option value="">Choose Close Time</option>
-                          <option value="9am">9:00 AM</option>
-                          <option value="930am">9:30 AM</option>b
-                          <option value="10am">10:00 AM</option>
-                          <option value="1030am">10:30 AM</option>
-                          <option value="11am">11:00 AM</option>
-                          <option value="1130am">11:30 AM</option>
-                          <option value="12pm">12:00 PM</option>
-                          <option value="1230pm">12:30 PM</option>
-                          <option value="1pm">1:00 PM</option>
-                          <option value="130pm">1:30 PM</option>
-                          <option value="2pm">2:00 PM</option>
-                          <option value="230pm">2:30 PM</option>
-                          <option value="3pm">3:00 PM</option>
-                          <option value="330pm">3:30 PM</option>
-                          <option value="4pm">4:00 PM</option>
-                          <option value="430pm">4:30 PM</option>
-                          <option value="5pm">5:00 PM</option>
-                          <option value="530pm">5:30 PM</option>
-                          <option value="6pm">6:00 PM</option>
-                          <option value="630pm">6:30 PM</option>
-                          <option value="7pm">7:00 PM</option>
-                          <option value="730pm">7:30 PM</option>
-                          <option value="8pm">8:00 PM</option>
-                          <option value="830pm">8:30 PM</option>
-                          <option value="9pm">9:00 PM</option>
-                          <option value="930pm">9:30 PM</option>
-                          <option value="10pm">10:00 PM</option>
-                          <option value="1030pm">10:30 PM</option>
-                          <option value="11pm">11:00 PM</option>
-                          <option value="1130pm">11:30 PM</option>
-                          <option value="12am">12:00 AM</option>
-                          <option value="1230am">12:30 AM</option>
-                          <option value="1am">1:00 AM</option>
-                          <option value="130am">1:30 AM</option>
+                          {this.closeTime()}
                         </select>
                         <label className="col-sm-1 col-form-label"></label>
                         <button
@@ -2011,8 +1663,8 @@ class RestaurantProfile extends Component {
 
                       {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
-                          <div id="Images">
-                            <img key={index} className="previewImage" src={url} value={index} onClick={() => this.onSelectImage(index)} />
+                          <div id="Images" key={"Image" + index}>
+                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
                               data-target="#deletePictureModal"
@@ -2294,7 +1946,9 @@ class RestaurantProfile extends Component {
 
                 <button type="button"
                   onClick={this.handleAddDiscount.bind(this)}
-                  className="btn btn-primary">
+                  className="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#addDiscountResultModal">
                   Add Discount
                 </button>
                 <br />
@@ -2313,6 +1967,8 @@ class RestaurantProfile extends Component {
                   <tbody>
                     {this.renderDataDiscount()}
                   </tbody>
+
+
                 </table>
 
               </div>
@@ -2344,7 +2000,8 @@ class RestaurantProfile extends Component {
                     </button>
                   </div>
                   <div className="modal-body">
-                    <p className="alert alert-warning" id="DiscountDDeleteResultModalText">
+                    <p className="alert alert-warning" 
+                    id="DiscountDDeleteResultModalText">
                       Please Wait...
                   </p>
                   </div>
@@ -2435,7 +2092,7 @@ class RestaurantProfile extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p className="alert alert-warning" id="deletePictureModal">
+                  <p className="alert alert-warning" id="deletePictureModalText">
                     Please Wait...
                 </p>
                 </div>
@@ -2447,6 +2104,54 @@ class RestaurantProfile extends Component {
                   >
                     Close
                 </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Add Discount Modal */}
+          <div
+            className="modal fade"
+            id="addDiscountResultModal"
+            tabIndex="-1"
+            role="dialog"
+            aria-labelledby="addDiscountModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5
+                    className="modal-title"
+                    id="addDiscountModalLabel"
+                  >
+                    Discount
+                            </h5>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p
+                    className="alert alert-warning"
+                    id="addDiscountText"
+                  >
+                    Please Wait...
+                            </p>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                            </button>
                 </div>
               </div>
             </div>
