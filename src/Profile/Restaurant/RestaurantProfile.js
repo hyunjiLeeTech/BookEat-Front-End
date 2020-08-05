@@ -15,6 +15,7 @@ import FullscreenError from '../../component/Style/FullscreenError'
 import FullScrrenLoading from '../../component/Style/FullscreenLoading';
 import ViewReview from "../../Review/Restaurant/ViewReview";
 import serverAddress from '../../Services/ServerUrl';
+import Discount from '../../Restaurant/Discount';
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -101,9 +102,6 @@ class RestaurantProfile extends Component {
       isPicture: false,
 
       //Discount
-      discdescription: '',
-      promdescription: '',
-      discounts: [],
       contentTable: false,
       resultsErr: false,
       isResLoaded: false,
@@ -123,20 +121,16 @@ class RestaurantProfile extends Component {
         priceRange: "&#160;",
         description: "&#160;",
         picture: "&#160;",
-        discdescription: "&#160;",
-        promdescription: "&#160;",
         eatingTime: "&#160;"
       }
 
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleAddDiscount = this.handleAddDiscount.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSubmitResProfile = this.handleSubmitResProfile.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
-    this.handleChangeInList = this.handleChangeInList.bind(this);
     this.handleDeletePicture = this.handleDeletePicture.bind(this);
     this.editResProfileWithPictures = this.editResProfileWithPictures.bind(this);
   }
@@ -271,28 +265,6 @@ class RestaurantProfile extends Component {
     });
   }
 
-  handleChangeInList(e, index) {
-    e.preventDefault();
-    const { name, value } = e.target;
-    let isError = { ...this.state.isError };
-    switch (name) {
-      case "discdescription":
-        isError.discdescription = regExpNumbers.test(value)
-          ? "&#160;"
-          : "Please put some promotional numbers";
-        break;
-      case "promdescription":
-        isError.promdescription =
-          value.length >= 1 && value.length <= 255
-            ? "&#160;"
-            : "Atleast write something";
-        break;
-      default:
-        break;
-    }
-    this.state.discounts[index][e.target.id] = e.target.value;
-    this.forceUpdate();
-  }
 
   handleSubmitResProfile = async (e) => {
     e.preventDefault();
@@ -328,26 +300,6 @@ class RestaurantProfile extends Component {
       console.log("Form is invalid!");
     }
   };
-
-
-  componentWillMount() {
-    this.queryDiscounts();
-  }
-
-  queryDiscounts() {
-    ds.getDiscounts().then((res) => {
-      // console.log("this is discounts");
-      // console.log(res.discounts);
-      this.setState({
-        discounts: res.discounts
-      })
-      for (var discount of this.state.discounts) {
-        discount.contentTable = false;
-      }
-    }).catch(err => {
-      //TODO handling err
-    })
-  }
 
   async componentDidMount() {
     const usr = authService.getCurrentUser();
@@ -489,10 +441,6 @@ class RestaurantProfile extends Component {
     t6.onkeypress = function (e) {
       if (e.keyCode === 32) return false;
     };
-    var t3 = document.getElementById("discdescription");
-    t3.onkeypress = function (e) {
-      if (e.keyCode === 32) return false;
-    };
 
     //Disable Button
     $(document).ready(function () {
@@ -566,28 +514,6 @@ class RestaurantProfile extends Component {
         }
       });
 
-      //Restaurant Image Upload
-      // $('#upload').on('click', function () {
-      //   var file_data = $('#upload').prop('upload')[0];
-      //   var form_data = new FormData();
-      //   form_data.append('upload', file_data);
-      //   $.ajax({
-      //     url: 'http://localhost:3000/Image', // point to server-side controller method
-      //     dataType: 'text', // what to expect back from the server
-      //     cache: false,
-      //     contentType: false,
-      //     processData: false,
-      //     data: form_data,
-      //     type: 'post',
-      //     success: function (response) {
-      //       $('#msg').html(response); // display success response from the server
-      //     },
-      //     error: function (response) {
-      //       $('#msg').html(response); // display error response from the server
-      //     }
-      //   });
-      // });
-
     });
   }
 
@@ -599,12 +525,6 @@ class RestaurantProfile extends Component {
     this.setState({
       accountId: usr.user._id
     });
-
-    this.setState({
-      contentTable: !this.state.contentTable
-    })
-
-
   }
 
   //  Edit profile disable button
@@ -612,11 +532,7 @@ class RestaurantProfile extends Component {
     this.setState({
       disabled: !this.state.disabled
     });
-    this.setState({
-      contentTable: !this.state.contentTable
-    })
     this.changeText();
-
   }
 
   //Edit profile - button
@@ -632,101 +548,6 @@ class RestaurantProfile extends Component {
         $('#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
       }
     });
-  }
-
-
-  // Discount
-
-  discountEditButton(index) {
-    console.log(this.state.discounts);
-    console.log(index);
-    this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
-
-    if (!this.state.discounts[index].contenteditable) {
-      ds.editDiscount(this.state.discounts[index])
-        .then(() => {
-          this.queryDiscounts();
-        });
-    }
-
-    this.callModal();
-  }
-
-  discountDeleteButton(index) {
-    ds.deleteDiscount(this.state.discounts[index]).then(() => {
-      this.queryDiscounts();
-    })
-  }
-
-  callModal() {
-    this.setState(state => {
-      return {
-        discount: !state.discounts
-      };
-    },
-      () => {
-        if (this.state.discounts) {
-          $('#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#DiscountEditResultModal').attr('type', 'button')
-        }
-        else {
-          $('#save_edit_disc_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-        }
-
-      });
-
-  }
-
-
-  renderDataDiscount() {
-    return this.state.discounts.map((discount, index) => {
-      const { id, discdescription, promdescription } = discount
-      return (
-        <tr key={index}>
-          <th contenttable={(this.state.discounts[index].contentTable)}>
-
-            <input type="text" id={"discdescription" + index} name="discdescription"
-              defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
-              onChange={(e) => this.handleChangeInList(e, index)} />
-
-
-          </th>
-          <th contenttable={(this.state.discounts[index].contentTable)} >
-            <textarea
-              rows="5"
-              id="promdescription"
-              name="promdescription"
-              defaultValue={this.state.discounts[index].description}
-              disabled={(!this.state.discounts[index].contentTable)}
-              onChange={(e) => this.handleChangeInList(e, index)}
-            ></textarea>
-
-
-          </th>
-          <th>
-            <button id='save_edit_disc_btn'
-              onClick={() => { this.discountEditButton(index) }
-              }
-              type="button" className="btn btn-primary mr-sm-4 "
-              data-target="#DiscountEditResultModal">
-              {this.state.discounts[index].contentTable ? "Save Change" : "Edit"}
-
-            </button>
-          </th>
-          <th>
-            <button
-              id='delete_btn'
-              type="button"
-              className="btn btn-primary btn-sm mr-sm-2"
-              onClick={() => { this.discountDeleteButton(index) }}
-              data-toggle="modal"
-              data-target="#DiscountDDeleteResultModal"
-            >
-              Delete
-                    </button>
-          </th>
-        </tr>
-      )
-    })
   }
 
   openTime() {
@@ -1813,9 +1634,6 @@ class RestaurantProfile extends Component {
                       </div>
                     </div>
                   </div>
-
-                  {/* </div> */}
-                  {/* </div> */}
                 </form>
               </div>
 
@@ -1878,285 +1696,56 @@ class RestaurantProfile extends Component {
 
               {/* Start Discount */}
               <div id="discount" className="tab-pane fade" role="tabpanel" aria-labelledby="discount">
-                <br />
-                <h4>Discount Promotion</h4>
-                <hr />
-                <p>Add discounts or promotions here</p>
-                <div className="form-group row">
-                  <label
-                    htmlFor="discdescription"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Discount/Promotion
-                      </label>
-                  <div className="col-sm-2">
-                    <input
-                      className={
-                        isError.discdescription.length > 6
-                          ? "is-invalid form-control"
-                          : "form-control"
-                      }
-                      rows="1"
-                      id="discdescription"
-                      name="discdescription"
-                      value={this.state.discdescription}
-                      onChange={this.handleChange}
-
-                    ></input>
-                    <span className="invalid-feedback">
-                      {Parser(isError.discdescription)}
-                    </span>
-                  </div>
-                  <label
-                    htmlFor="discdescription"
-                    className="col-sm-2 col-form-label"
-                  >
-                    %
-                      </label>
-
-
-                </div>
-
-                <div className="form-group row">
-                  <label
-                    htmlFor="promdescription"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Discount/Promotion Description
-                      </label>
-                  <div className="col-md-10">
-                    <textarea
-                      className={
-                        isError.promdescription.length > 6
-                          ? "is-invalid form-control"
-                          : "form-control"
-                      }
-                      rows="5"
-                      id="promdescription"
-                      name="promdescription"
-                      value={this.state.promdescription}
-                      onChange={this.handleChange}
-
-                    ></textarea>
-                    <span className="invalid-feedback">
-                      {Parser(isError.promdescription)}
-                    </span>
-                  </div>
-                </div>
-
-                <button type="button"
-                  onClick={this.handleAddDiscount.bind(this)}
-                  className="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#addDiscountResultModal">
-                  Add Discount
-                </button>
-                <br />
-                <br />
-                <h4>Discount/Promotion List</h4>
-                <hr />
-                <table id="discount" className="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">%</th>
-                      <th scope="col">Description</th>
-                      <th scope="col"></th>
-                      <th scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.renderDataDiscount()}
-                  </tbody>
-
-
-                </table>
-
+                <Discount />
               </div>
-            </div>
-            {/* DeleteDiscountModal */}
-
-            <div
-              className="modal fade"
-              id="DiscountDDeleteResultModal"
-              tabIndex="-1"
-              role="dialog"
-              aria-labelledby="DiscountDDeleteResultModal"
-              aria-hidden="true"
-            >
-
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="DiscountDDeleteResultModal">
-                      Delete Discount
-                            </h5>
-                    <button
-                      type="button"
-                      className="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div className="modal-body">
-                    <p className="alert alert-warning" 
-                    id="DiscountDDeleteResultModalText">
-                      Please Wait...
-                  </p>
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                  </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Edit Discount Modal */}
-
-            <div
-              className="modal fade"
-              id="DiscountEditResultModal"
-              tabIndex="-1"
-              role="dialog"
-              aria-labelledby="DiscountEditResultModal"
-              aria-hidden="true"
-            >
-
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="DiscountEditResultModal">
-                      Edit Discount
-                            </h5>
-                    <button
-                      type="button"
-                      className="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div className="modal-body">
-                    <p className="alert alert-warning" id="DiscountEditResultModalText">
-                      Please Wait...
-                  </p>
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      data-dismiss="modal"
-                    >
-                      Close
-                  </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* End Discount */}
+              {/* End Discount */}
 
 
-          {/* Delete Picture */}
+              {/* Delete Picture */}
 
-          <div
-            className="modal fade"
-            id="deletePictureModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="ddeletePictureModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="deletePictureModalLabel">
-                    Delete Restaurant Profile
+              <div
+                className="modal fade"
+                id="deletePictureModal"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="ddeletePictureModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="deletePictureModalLabel">
+                        Delete Restaurant Profile
                 </h5>
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <p className="alert alert-warning" id="deletePictureModalText">
-                    Please Wait...
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body">
+                      <p className="alert alert-warning" id="deletePictureModalText">
+                        Please Wait...
                 </p>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                  >
-                    Close
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-dismiss="modal"
+                      >
+                        Close
                 </button>
+                    </div>
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
-
-          {/* Add Discount Modal */}
-          <div
-            className="modal fade"
-            id="addDiscountResultModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="addDiscountModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5
-                    className="modal-title"
-                    id="addDiscountModalLabel"
-                  >
-                    Discount
-                            </h5>
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <p
-                    className="alert alert-warning"
-                    id="addDiscountText"
-                  >
-                    Please Wait...
-                            </p>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                            </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
 
       </MainContainer >
