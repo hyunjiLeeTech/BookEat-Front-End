@@ -71,11 +71,11 @@ class CustomerReviewHistory extends Component {
       const { id, date, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
       return (
         // <form onSubmit={this.handleSubmit} id="rendTab" >
-        <tr key={id} id={'reviewrow' + index}>
+        <tr key={index} id={'reviewrow' + index}>
           <td defaultValue={date.toString()}> {date.toString()}</td>
           <td defaultValue={resName}>{resName}</td>
          
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
               defaultValue={comment} className="border-none"
               disabled={(!this.state.reviews[index].contenteditable)}
@@ -83,7 +83,7 @@ class CustomerReviewHistory extends Component {
 
 
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             {
               this.state.reviews[index].contenteditable ?
 
@@ -117,7 +117,7 @@ class CustomerReviewHistory extends Component {
           </td>
 
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             {
               this.state.reviews[index].contenteditable ?
                 //   <div class="dropdown">
@@ -147,7 +147,7 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             {
               this.state.reviews[index].contenteditable ?
                 // <div class="dropdown">
@@ -177,7 +177,7 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             {
 
               this.state.reviews[index].contenteditable ?
@@ -340,7 +340,7 @@ class CustomerReviewHistory extends Component {
           <div
             className="modal fade"
             id="DeleteReviewResultModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby="DeleteReviewResultModal"
             aria-hidden="true"
@@ -384,7 +384,7 @@ class CustomerReviewHistory extends Component {
           <div
             className="modal fade"
             id="EditeReviewResultModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby="EditeReviewResultModal"
             aria-hidden="true"

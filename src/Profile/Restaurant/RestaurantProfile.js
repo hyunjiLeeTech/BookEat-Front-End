@@ -1482,7 +1482,7 @@ class RestaurantProfile extends Component {
                       <input type="file" name="picture" id="picture"
                         onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple />
 
-                      {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
+                      {/* {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
                           <div id="Images" key={"Image" + index}>
                             <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
@@ -1495,7 +1495,28 @@ class RestaurantProfile extends Component {
                           </div>
 
                         )
-                      }))}
+                      }))} */}
+
+                      {this.state.picture.length > 0 ? 
+                     
+                          <img  src={this.state.resPicture} />
+                      
+                      :
+                      (this.state.picture.map((url, index) => {
+                        return (
+                          <div id="Images" key={"Image" + index}>
+                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
+                            <button type="button" className="btn mr-sm-4 btn-danger"
+                              data-toggle="modal"
+                              data-target="#deletePictureModal"
+                              onClick={() => this.handleDeletePicture()}>
+                              Delete
+                      </button>
+                          </div>
+
+                        )
+                      }))
+                      }
 
                     </div>
 

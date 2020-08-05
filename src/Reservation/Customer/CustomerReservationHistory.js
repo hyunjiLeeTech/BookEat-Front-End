@@ -40,7 +40,7 @@ class CustomerReservationHistory extends Component {
     return this.state.reservations.map((reservation, index) => {
       const { id, date, restaurantName, KindOfFood, NumOfPeople, NumOfTable } = reservation
       return (
-        <tr key={id}>
+        <tr key={index}>
           <td>{date}</td>
           <td>{restaurantName}</td>
           <td>{KindOfFood}</td>
@@ -75,7 +75,8 @@ class CustomerReservationHistory extends Component {
                   <th># of Table </th>
                 </tr>
               </thead>
-              <tbody> <tr>
+              <tbody> 
+                <tr>
                 <th value={this.state.UpDate}></th>
                 <th value={this.state.UpRestaurant}></th>
                 <th value={this.state.UpKindOfFood}></th>
@@ -145,7 +146,7 @@ class CustomerReservationHistory extends Component {
         <div
           className="modal fade"
           id="DeleteResultModal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="DeleteResultModal"
           aria-hidden="true"
