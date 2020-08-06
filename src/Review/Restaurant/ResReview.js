@@ -222,16 +222,18 @@ class ResReview extends Component {
                                 </div>
                             </div>
                             <div className="review-block-description">{review.comment}</div>
-                             {review.pictures.length > 0 && (review.pictures.map((currValue, index) => {
-                                return (
-                                    <div id="Images1">
-                                        <img key={index} className="previewImage row" src={serverAddress + '/getImage/' + currValue}  style={{ maxHeight: '50%', maxWidth: '50%' }}/>
-                                    </div>
 
-                                )
-                            }))}
-                            <hr />
                         </div>
+                        {review.pictures.length > 0 && (review.pictures.map((currValue, index) => {
+                            return (
+
+                                <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} style={{ maxHeight: '50%', maxWidth: '50%' }} />
+
+
+                            )
+                        }))}
+                        <hr />
+                        <br/>
 
                     </div>
 
@@ -343,10 +345,9 @@ class ResReview extends Component {
                             <input type="file" name="picture" id="picture"
                                 onChange={this.onImageChange} multiple />
 
-                        
                             {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                                 return (
-                                    <div id={"Images"+1}>
+                                    <div id={"Images" + 1}>
                                         <img key={index} className="previewImage" src={url} value={index} />
                                     </div>
                                 )
@@ -355,8 +356,6 @@ class ResReview extends Component {
                         </div>
                     </div>
 
-
-                    {/* <div className="row"> */}
                     <div className="col-sm-12">
                         <hr />
                         <br />
@@ -365,7 +364,7 @@ class ResReview extends Component {
                         </div>
                     </div>
                 </div>
-                {/* </div> */}
+
                 {/* Add Review Modal */}
 
                 <div
