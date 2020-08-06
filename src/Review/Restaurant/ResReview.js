@@ -48,13 +48,13 @@ class ResReview extends Component {
             disabled: true,
             contenteditable: false,
             picture: "",
-            pictures: "",
+            pictures: [],
             revPictures: [],
             isPicture: false,
             isError: {
                 comment: "&#160;"
-            }
-
+            },
+            reviewPictures: []
         };
 
 
@@ -84,8 +84,6 @@ class ResReview extends Component {
                 picture: arrayImage,
                 pictures: event.target.files
             })
-        } else {
-
         }
 
         console.log(this.state);
@@ -131,6 +129,26 @@ class ResReview extends Component {
         console.log(this.state);
     }
 
+    async addReviewWithPictures(state) {
+        var formData = new FormData();
+        Array.from(state.pictures).forEach((f) => {
+            formData.append('pictures[]', f)
+        })
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        let pictureIds = await ds.addPictures(formData, config);
+        var reviewPicturesId = [];
+        for (var i = 0; i < pictureIds.length; i++) {
+            reviewPicturesId.push(pictureIds[i].filename);
+        }
+        state.isPicture = true;
+        state.reviewPictures = reviewPicturesId;
+        await ds.addReview(state);
+    }
+
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -138,8 +156,11 @@ class ResReview extends Component {
         console.log(this.state);
 
         if (formValid(this.state)) {
-            ds.addReview(this.state);
-
+            if (this.state.isPicture) {
+                this.addReviewWithPictures(this.state);
+            } else {
+                ds.addReview(this.state);
+            }
         } else {
             console.log("Review is invalid");
         }
@@ -314,7 +335,7 @@ class ResReview extends Component {
                                 id="addReview"> Add Review</button>
 
                             <input type="file" name="picture" id="picture"
-                                onChange={this.onImageChange}  multiple />
+                                onChange={this.onImageChange} multiple />
 
                             {this.state.revPictures.length > 0 && (this.state.revPictures.map((currValue, index) => {
                                 return (

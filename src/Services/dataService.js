@@ -824,7 +824,7 @@ export default {
       })
       .catch((err) => {
         console.log(err);
-        
+
         throw err
       });
   },
@@ -892,12 +892,12 @@ export default {
         throw err;
       })
   },
-  async addResPictures(formData, config) {
-    console.log("add res pictures start");
-    return await Axios.post(serverAddress + "/addResPictures", formData, config).then((res) => {
-      console.log("add res pictures done");
-      return res.data.resPictures;
-    }).catch(err=>{
+  async addPictures(formData, config) {
+    console.log("add pictures start");
+    return await Axios.post(serverAddress + "/addPictures", formData, config).then((res) => {
+      console.log("add pictures done");
+      return res.data.pictures;
+    }).catch(err => {
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(addResPictures)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
@@ -906,8 +906,8 @@ export default {
     })
   },
   editReview(state) {
-    return Axios.post(serverAddress + "/review/editreview", state, 
-    { headers: authHeader() })
+    return Axios.post(serverAddress + "/review/editreview", state,
+      { headers: authHeader() })
       .then((res) => {
         console.log(res);
         if (res.data.errcode === 0) {
