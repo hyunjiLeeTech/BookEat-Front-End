@@ -295,12 +295,20 @@ class Menu extends Component {
 
         ds.deleteMenu(menu).then((res) => {
             this.queryMenus();
-            toast('Success', {type: 'success', autoClose: 3000})
-        }).catch(err =>{
-            toast(err.toString(), {type: 'error', autoClose: 3000})
-        }).finally(()=>{
-            console.log ('promise finished')
-        })
+            $("#DeleteResultModalText")
+            .text("Menu item is deleted")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+            toast("success")
+            
+        }).catch(
+        err => {
+            console.log(err)
+        toast("error")
+        } )
+        
     }
 
     menuItemEditButton(index) {

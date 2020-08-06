@@ -203,6 +203,8 @@ class ResReview extends Component {
 
 
         const { isError } = this.state;
+        console.log("$$$$$$$$$$$$$$$$", this.state.reviews);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.state.reviews.foodAvg);
         return (
             <div className="container">
                 <div className="row">
@@ -230,7 +232,7 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="food" name="food" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ food: e }) }
-                            } />
+                            } required/>
                         </div>
 
 
@@ -238,7 +240,7 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="service" name="service" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ service: e }) }
-                            } />
+                            } required/>
                         </div>
 
 
@@ -248,7 +250,7 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="satisfaction" name="satisfaction" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ satisfaction: e }) }
-                            } />
+                            } required/>
                         </div>
 
 
@@ -256,7 +258,7 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="enviroment" name="enviroment" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ enviroment: e }) }
-                            } />
+                            } required/>
                         </div>
                         <br />
                         <br />
