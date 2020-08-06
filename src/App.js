@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter, Route, Switch } from "react-router-dom";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import SignUp from "./component/Forms/Customer/SignUp";
 import Home from "./Home/Home";
 
@@ -43,18 +43,37 @@ import Feature from "./Home/Feature";
 
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorPage from "./RedirectPages/Error";
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      isUser: true
+    }
+  }
+  componentWillMount(){
+    var u = authService.getCurrentUser();
+    if(!u) this.state.isUser = false
+    else this.state.isUser = true
+  }
+
   queryUserInfo = async function (userType) {
     let user = null;
     try {
+      console.log('userType')
+      console.log(userType)
       if (userType == 1) {
         user = await ds.getCustomerInformation();
       } else if (userType == 2) {
         user = await ds.getRestaurantInformation();
+      } else if (userType === 3){
+        user = await ds.getManagerInformation();
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
+      console.log('getting user info error')
+      throw err
     }
     return user;
   };
@@ -75,20 +94,12 @@ class App extends Component {
         }
       }
     } catch (err) {
-      console.log(err);
-    }
-  };
-
-  queryReservation = async function (userType){
-    let user = null;
-    try{
-      if(userType === 2){
-        user = await ds.getRestaurantUpcomingReservation();
-        user = await ds.getRestaurantPastReservation()();
+      console.log(err)
+      console.log('getting user info error')
+      if (err.response && err.response.status === 401 && this.props.location.pathname ==='/') {
+        await authService.logout();
+        window.location.href = '/'
       }
-
-    }catch (err){
-      console.log(err);
     }
   };
 
@@ -99,12 +110,12 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      console.log("Route change!");
+      console.log("Route change! from " + prevProps.location.pathname +' to ' + this.props.location.pathname);
     }
   }
   render() {
     return (
-      <div style={{position:'relative', minHeight:'100vh'}}>
+      <div style={{ position: 'relative', minHeight: '100vh' }}>
         <NavBar />
         <Switch>
 
@@ -113,13 +124,19 @@ class App extends Component {
           <Route exact path="/Login" render={() => <Login />} />
           <Route path='/logout' component={Logout} />
           <Route path='/layout' component={Layout} />
-          <Route path='/customerreserve/:id' component={CustomerReserve} />
+          <Route path='/customerreserve/:id'
+            render={() => {
+              return !this.state.isUser ? <Redirect to='/login' /> : <CustomerReserve />
+            }}
+          />
           <Route path='/restaurant/:id' component={Restaurant} />
 
           <Route
             exact
             path="/ViewCustomerProfile"
-            render={() => <ViewCustomerProfile />}
+            render={() =>
+              !this.state.isUser ? <Redirect to='/login' /> :
+                <ViewCustomerProfile />}
           />
           <Route
             exact
@@ -139,13 +156,13 @@ class App extends Component {
           <Route
             exact
             path="/RestaurantProfile"
-            render={() => <RestaurantProfile />}
+            render={() => !this.state.isUser ? <Redirect to='/login' /> : <RestaurantProfile />}
           />
-          <Route exact path="/Manager" render={() => <Manager />} />
+          <Route exact path="/Manager" render={() => !this.state.isUser ? <Redirect to='/login' /> : <Manager />} />
           <Route
             exact
             path="/ManagerProfile"
-            render={() => <ManagerProfile />}
+            render={() => !this.state.isUser ? <Redirect to='/login' /> : <ManagerProfile />}
           />
           <Route
             exact
@@ -161,27 +178,32 @@ class App extends Component {
           <Route
             exact
             path="/CustomerReservationHistory"
-            render={() => <CustomerReservationHistory />}
+            render={() => !this.state.isUser ? <Redirect to='/login' /> : <CustomerReservationHistory />}
           />
           <Route
             exact
             path="/CustomerReviewHistory"
-            render={() => <CustomerReviewHistory />}
+            render={() => !this.state.isUser ? <Redirect to='/login' /> : <CustomerReviewHistory />}
           />
 
           <Route
             exact
             path="/Menu"
             render={() => <Menu />}
+          />          
+          <Route
+            exact
+            path="/error"
+            render={() => <ErrorPage />}
           />
 
           <Route
             exact
             path="/EditMenu"
-            render={() => <EditMenu />}
-          />  
+            render={() => !this.state.isUser ? <Redirect to='/login' /> : <EditMenu />}
+          />
           <Route exact path="/NotFound" render={() => <NotFound />} />
-          <Route exact path="/RestaurantReservation" render={() => <RestaurantReservation />} />
+          <Route exact path="/RestaurantReservation"  render={() => !this.state.isUser ? <Redirect to='/login' /> : <RestaurantReservation />} />
           <Route exact path="/SearchResult" render={() => <SearchResult />} />
           <Route exact path="/Daily" render={() => <Daily />} />
           <Route exact path="/Feature" render={() => <Feature />} />

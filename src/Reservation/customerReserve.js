@@ -136,17 +136,6 @@ class Reserve extends Component {
                     </div>
                     {this.renderMenuItems(this.state.menuItems)}
                     <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#signResultModal" >Next</button>
-                    {/* TODO: for testing */}
-                    <div style={{wordWrap: 'break-all', whiteSpace: 'pre-wrap'}}>
-                        <p>RestaurantID: {this.state.resId}</p>
-                        <br /><br />
-                        <p>OwnerAccountInfo: <code>{JSON.stringify(this.state.rorminfo.OwnerAccount)}</code></p><br /><br />
-                        <p>ManagersInfo: <code>{JSON.stringify(this.state.rorminfo.Managers)}</code></p>
-                    </div>
-                    <div>
-                        {JSON.stringify(this.state.menuItems)}
-                    </div>
-
                 </div>
             </form>
         )

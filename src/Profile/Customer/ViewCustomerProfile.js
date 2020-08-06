@@ -10,6 +10,7 @@ import ChangePassword from "../../component/Forms/Customer/ChangePassword"
 import CustomerReservationHistory from "../../Reservation/Customer/CustomerReservationHistory"
 import CustomerReviewHistory from "../../Review/Customer/CustomerReviewHistory"
 import FullscreenError from "../../component/Style/FullscreenError"
+import dataService from "../../Services//dataService";
 
 const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
@@ -190,7 +191,15 @@ class ViewCustomerProfile extends Component {
   render() {
     const { isError } = this.state;
     const { customer } = this.props;
-
+    //TODO: feedbacks
+    const deleteAccount = ()=>{
+      console.log('starting delete account')
+      dataService.deleteAccountCustomer().then(res=>{
+        console.log(res);
+      }).catch(err=>{
+        console.log(err)
+      })
+    }
     return (
       <MainContainer>
         {this.state.resultsErr
@@ -327,6 +336,7 @@ class ViewCustomerProfile extends Component {
                     {/* <Link to="/"> */}
                     <button type="button" className="btn btn-primary mr-sm-4 "
                       data-toggle="modal" data-target="#AccountDeleteResultModal"
+                      onClick={deleteAccount}
                     >
                       Delete
                     </button>

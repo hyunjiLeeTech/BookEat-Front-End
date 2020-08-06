@@ -69,6 +69,8 @@ class ResReview extends Component {
 
         var reviews = await ds.getReviewsRestaurantSide(resId);
 
+        console.log(reviews);
+
         var serviceAvg = 0;
         var envirAvg = 0;
         var satisAvg = 0;
@@ -179,7 +181,30 @@ class ResReview extends Component {
 
 
     render() {
+        // var foodAvg=0
+        // var serviceAvg=0
+        // var satisfactionAvg =0
+        // var environmentAvg =0
+        // for(var r of this.state.reviews){
+        //     //foodRate 
+        //     foodAvg += r.food;
+        //     serviceAvg += r.service;
+        //     satisfactionAvg += r.satisfaction
+        //     environmentAvg += r.environment
+        //     console.log(foodAvg)
+        // }
+        // if(this.state.reviews.length !== 0)
+        // {
+        //     foodAvg /= this.state.reviews.length;
+        //     serviceAvg /= this.state.reviews.length;
+        //     satisfactionAvg /= this.state.reviews.length;
+        //     environmentAvg /= this.state.reviews.length;
+        // }
+
+
         const { isError } = this.state;
+        console.log("$$$$$$$$$$$$$$$$", this.state.reviews);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.state.reviews.foodAvg);
         return (
             <div className="container">
                 <div className="row">
@@ -188,16 +213,16 @@ class ResReview extends Component {
                         <div className="rating-block">
                             <h4>Users Rating</h4>
                             <h6>Food</h6>
-                            <Star type='splitedBar' stars={this.state.reviews.foodAvg} />
+                            <Star type='splitedBar' stars={this.state.foodAvg} />
                             <br />
                             <h6>Service</h6>
-                            <Star type='splitedBar' stars={this.state.reviews.serviceAvg} />
+                            <Star type='splitedBar' stars={this.state.serviceAvg} />
                             <br />
                             <h6>Satisfaction</h6>
-                            <Star type='splitedBar' stars={this.state.reviews.satisfactionAvg} />
+                            <Star type='splitedBar' stars={this.state.satisfactionAvg} />
                             <br />
                             <h6>Environment</h6>
-                            <Star type='splitedBar' stars={this.state.reviews.environmentAvg} />
+                            <Star type='splitedBar' stars={this.state.environmentAvg} />
 
                         </div>
                     </div>
@@ -207,7 +232,7 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="food" name="food" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ food: e }) }
-                            } />
+                            } required/>
                         </div>
 
 
@@ -215,7 +240,7 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="service" name="service" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ service: e }) }
-                            } />
+                            } required/>
                         </div>
 
 
@@ -225,7 +250,7 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="satisfaction" name="satisfaction" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ satisfaction: e }) }
-                            } />
+                            } required/>
                         </div>
 
 
@@ -233,7 +258,7 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="enviroment" name="enviroment" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ enviroment: e }) }
-                            } />
+                            } required/>
                         </div>
                         <br />
                         <br />

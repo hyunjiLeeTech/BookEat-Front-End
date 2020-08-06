@@ -10,6 +10,16 @@ class Star extends Component {
             modified: false,
         }
     }
+    componentWillReceiveProps(props){
+        if(!props.isClickAble && this.props != props){
+            this.setState({
+                isClickAble: props.isClickAble,
+                type: props.type,
+                stars: Number.parseFloat(props.stars),
+            })
+        }
+    }
+
     tr = (isClickAble, type, star, clickedCallback) => {
 
         var bar = (p, width) => {
@@ -31,6 +41,7 @@ class Star extends Component {
 
         var starBtn = (isOpen, c, nonBtn, i) => {
             var cn = isOpen ? 'btn btn-xs  ' : 'btn btn-xs btn-grey '
+            cn+='mstarbtn '
             if (isOpen) {
                 if (this.state.modified) {
                     cn += 'btn-primary '
