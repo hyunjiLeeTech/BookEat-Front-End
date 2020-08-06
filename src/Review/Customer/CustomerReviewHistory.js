@@ -323,7 +323,7 @@ class CustomerReviewHistory extends Component {
     // this.forceUpdate();
     if (!this.state.reviews[index].contenteditable) {
       ds.editReview(this.state.reviews[index]);
-      // $('#EditeReviewResultModal').modal('show')
+      $('#EditeReviewResultModal').modal('show')
 
     }
 
@@ -417,7 +417,7 @@ class CustomerReviewHistory extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p className="alert alert-warning" id="DeleteResultModalText">
+                  <p className="alert alert-warning" id="DeleteReviewResultModalText">
                     Please Wait...
                   </p>
                 </div>

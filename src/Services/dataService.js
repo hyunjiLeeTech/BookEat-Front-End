@@ -616,9 +616,25 @@ export default {
     })
   },
   editReview(state) {
-    return Axios.post(serverAddress + "/review/editreview", state, { headers: authHeader() })
+    return Axios.post(serverAddress + "/review/editreview", state, 
+    { headers: authHeader() })
       .then((res) => {
         console.log(res);
+        if (res.data.errcode === 0) {
+          $("#EditeReviewResultModalText")
+            .text("Review is change")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#EditeReviewResultModalText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
       }).catch((err) => {
         throw err;
       })
@@ -628,6 +644,21 @@ export default {
     return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
       .then((res) => {
         console.log(res);
+        if (res.data.errcode === 0) {
+          $("#DeleteReviewResultModalText")
+            .text("Review is deleted")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#DeleteReviewResultModalText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
       }).catch((err) => {
         throw err;
       })
