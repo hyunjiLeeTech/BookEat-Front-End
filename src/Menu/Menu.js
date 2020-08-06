@@ -401,11 +401,11 @@ class Menu extends Component {
                     <td>
                         <div className="container-fluid">
                             <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
-                            <input type="text" id="menuName" name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
+                            <input type="text" id={"menuName"+ index} name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
                             <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
-                            <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
+                            <input type="text" id={"menuPrice"+ index} name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
                             <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
@@ -425,7 +425,7 @@ class Menu extends Component {
                             </select>
                             </div>
                             <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
-                            <textarea row="3" id="menuDescript" name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
+                            <textarea row="3" id={"menuDescript"+index} name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
                                     className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
                           
