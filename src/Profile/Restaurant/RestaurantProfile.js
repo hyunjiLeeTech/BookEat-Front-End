@@ -16,6 +16,7 @@ import FullScrrenLoading from '../../component/Style/FullscreenLoading';
 import ViewReview from "../../Review/Restaurant/ViewReview";
 import serverAddress from '../../Services/ServerUrl';
 import Discount from '../../Restaurant/Discount';
+import dataService from "../../Services/dataService";
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -629,6 +630,14 @@ class RestaurantProfile extends Component {
 
 
   render() {
+    const deleteRoAccount = () =>{
+      dataService.deleteAccountRestaurantOwner().then(res=>{
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+
     const { isError } = this.state;
     return (
       <MainContainer>
@@ -1555,7 +1564,7 @@ class RestaurantProfile extends Component {
 
                       <button type="button" className="btn btn-primary mr-sm-4 "
                         data-toggle="modal"
-                        data-target="#deleteRestaurantModal">
+                        data-target="#deleteRestaurantModal" onClick={deleteRoAccount}>
                         {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>

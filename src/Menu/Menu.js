@@ -292,7 +292,7 @@ class Menu extends Component {
             ds.deleteImage(menu.menuImageId);
         }
 
-        ds.deleteMenu(menu).then(() => {
+        ds.deleteMenu(menu).then((res) => {
             this.queryMenus();
             toast('Success', {type: 'success', autoClose: 3000})
         }).catch(err =>{

@@ -66,8 +66,10 @@ class ResReview extends Component {
     }
 
     async queryReviews(resId) {
-        
+
         var reviews = await ds.getReviewsRestaurantSide(resId);
+
+        console.log(reviews);
 
         var serviceAvg = 0;
         var envirAvg = 0;
@@ -100,14 +102,14 @@ class ResReview extends Component {
         e.preventDefault();
         console.log("saved")
         console.log(this.state);
-    
-        if(formValid(this.state)){
-              ds.addReview();
-                
-        }else{
+
+        if (formValid(this.state)) {
+            ds.addReview();
+
+        } else {
             console.log("Review is invalid");
         }
-      
+
     };
 
 
@@ -179,6 +181,27 @@ class ResReview extends Component {
 
 
     render() {
+        // var foodAvg=0
+        // var serviceAvg=0
+        // var satisfactionAvg =0
+        // var environmentAvg =0
+        // for(var r of this.state.reviews){
+        //     //foodRate 
+        //     foodAvg += r.food;
+        //     serviceAvg += r.service;
+        //     satisfactionAvg += r.satisfaction
+        //     environmentAvg += r.environment
+        //     console.log(foodAvg)
+        // }
+        // if(this.state.reviews.length !== 0)
+        // {
+        //     foodAvg /= this.state.reviews.length;
+        //     serviceAvg /= this.state.reviews.length;
+        //     satisfactionAvg /= this.state.reviews.length;
+        //     environmentAvg /= this.state.reviews.length;
+        // }
+
+
         const { isError } = this.state;
         return (
             <div className="container">
@@ -188,16 +211,16 @@ class ResReview extends Component {
                         <div className="rating-block">
                             <h4>Users Rating</h4>
                             <h6>Food</h6>
-                            <Star type='splitedBar' stars={this.state.reviews.foodAvg} />
+                            <Star type='splitedBar' stars={this.state.foodAvg} />
                             <br />
                             <h6>Service</h6>
-                            <Star type='splitedBar' stars={this.state.reviews.serviceAvg} />
+                            <Star type='splitedBar' stars={this.state.serviceAvg} />
                             <br />
                             <h6>Satisfaction</h6>
-                            <Star type='splitedBar' stars={this.state.reviews.satisfactionAvg} />
+                            <Star type='splitedBar' stars={this.state.satisfactionAvg} />
                             <br />
                             <h6>Environment</h6>
-                            <Star type='splitedBar' stars={this.state.reviews.environmentAvg} />
+                            <Star type='splitedBar' stars={this.state.environmentAvg} />
 
                         </div>
                     </div>
@@ -252,8 +275,8 @@ class ResReview extends Component {
                                 {Parser(isError.comment)}
                             </span>
 
-                            <button type="button" className="btn btn-primary float-right" 
-                            onClick={this.handleSubmit.bind(this)}
+                            <button type="button" className="btn btn-primary float-right"
+                                onClick={this.handleSubmit.bind(this)}
                                 data-target="#AddReviewModal"
                                 data-toggle="modal"
                                 id="addReview"> Add Review</button>
