@@ -882,9 +882,25 @@ export default {
     })
   },
   editReview(state) {
-    return Axios.post(serverAddress + "/review/editreview", state, { headers: authHeader() })
+    return Axios.post(serverAddress + "/review/editreview", state, 
+    { headers: authHeader() })
       .then((res) => {
         console.log(res);
+        if (res.data.errcode === 0) {
+          $("#EditeReviewResultModalText")
+            .text("Review is change")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#EditeReviewResultModalText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(editReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -898,6 +914,21 @@ export default {
     return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
       .then((res) => {
         console.log(res);
+        if (res.data.errcode === 0) {
+          $("#DeleteReviewResultModalText")
+            .text("Review is deleted")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#DeleteReviewResultModalText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(deleteReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
