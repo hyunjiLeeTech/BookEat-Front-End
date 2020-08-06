@@ -162,8 +162,10 @@ class RestaurantProfile extends Component {
     await ds.editRestaurantProfile(state);
   }
 
-  handleDeletePicture() {
+  handleDeletePicture(imageId) {
     //Add backend here
+    ds.deleteImage(imageId);
+    ds.updateResPictures({ id: imageId });
   }
 
   onImageChange = (event, index) => {
