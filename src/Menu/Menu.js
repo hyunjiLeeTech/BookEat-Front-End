@@ -42,7 +42,7 @@ class Menu extends Component {
             //Oringin
             menus: [{
             }],
-            
+
             menuPicture: "",
             menuName: "",
             menuPrice: "",
@@ -150,8 +150,8 @@ class Menu extends Component {
     }
 
     async queryMenus() {
-        this.setState({isLoading : true})
-        this.setState({menus: []})
+        this.setState({ isLoading: true })
+        this.setState({ menus: [] })
         let menuContents = await ds.getMenus();
         menuContents = menuContents.menus;
 
@@ -177,11 +177,11 @@ class Menu extends Component {
         }
         console.log("Result of query menus")
         console.log(menuContents);
-        this.setState({isLoading : false})
+        this.setState({ isLoading: false })
     }
 
     async addMenuWithImage(state) {
-        this.setState({isLoading : true})
+        this.setState({ isLoading: true })
 
         console.log(this);
         const formData = new FormData();
@@ -195,40 +195,40 @@ class Menu extends Component {
         state.menuImageId = menuImageId;
         console.log(state);
         await ds.addMenu(state).then(() => {
-            this.queryMenus();
-        }).finally(()=>{
-            this.setState({isLoading : false})
+
+        }).finally(async (res) => {
+            await this.queryMenus();
+            this.setState({ isLoading: false })
 
         })
 
     }
 
     async editMenuWithImage(state) {
-        this.setState({isLoading : true})
+        this.setState({ isLoading: true })
 
-        console.log(state);
-        if (state.isImage) {
-            await ds.deleteMenuImage();
-        }
 
-        const formData = new FormData();
-        formData.append('menuImage', state.image);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
+        if (typeof state.image !== 'undefined') {
+            ds.deleteImage(state.menuImageId);
+            var formData = new FormData();
+            formData.append('menuImage', state.image);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
             }
+            var menuImageId = await ds.editMenuImage(formData, config);
+            state.menuImageId = menuImageId;
         }
-        var menuImageId = await ds.editMenuImage(formData, config);
-        state.menuImageId = menuImageId;
-        console.log("afer ds.editmenuimage");
+
         await ds.editMenu(state).then(() => {
             console.log('edit menu fullfilled')
             this.queryMenus();
 
         }).catch(err => {
             console.log(err)
-        }).finally(()=>{
-            this.setState({isLoading : true})
+        }).finally(() => {
+            this.setState({ isLoading: true })
         })
     }
 
@@ -251,7 +251,7 @@ class Menu extends Component {
                                     className="btn btn-primary btn-sm mr-sm-2"
                                     data-toggle="modal"
                                     href="#EditMenu"
-                                    
+
                                 >
                                     Edit
                                 </button>
@@ -289,7 +289,7 @@ class Menu extends Component {
     menuItemDeleteButton(index) {
         var menu = this.state.menus[index];
         if (menu.menuPicture.isImage != false) {
-            ds.deleteMenuImage(menu.menuImageId);
+            ds.deleteImage(menu.menuImageId);
         }
 
         ds.deleteMenu(menu).then(() => {
@@ -368,14 +368,13 @@ class Menu extends Component {
                                             : null
                                     } */}
                                     {
-                                        this.state.menus[index].contenteditable ? 
-                                        
-                                        <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
-                                            : 
-                                            
+                                        this.state.menus[index].contenteditable ?
+
+                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                                            :
+
                                             <div>
-                                                sadfsadfsdf
-                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} />
+                                                <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} />
 
                                             </div>
                                     }
@@ -386,7 +385,7 @@ class Menu extends Component {
                             </container>
                         </div>
                     </td>
-               
+
                     {/* <tr>{menuName}</tr>
                     <tr>{menuPrice}</tr>
                     <tr>{menuDescript}</tr> */}
@@ -416,7 +415,7 @@ class Menu extends Component {
                                 type="button"
                                 className="btn btn-primary btn-sm mr-sm-2"
                                 onClick={() => this.menuItemEditButton(index)}
-                                //data-toggle="modal" data-target="#EditResultModal"
+                            //data-toggle="modal" data-target="#EditResultModal"
                             >
                                 {this.state.menus[index].contenteditable ? "Save Change" : "Edit"}
                             </button>
@@ -460,8 +459,8 @@ class Menu extends Component {
                     null
                 }
                 {this.state.isLoading ?
-                    FullScrrenLoading({type: 'balls', color: '#000'}) : null    
-            }
+                    FullScrrenLoading({ type: 'balls', color: '#000' }) : null
+                }
                 <form onSubmit={this.handleSubmit} id="addMenu">
                     <div className="form-inline form-group mt-sm-4">
                         <h3> Add Menu </h3>
@@ -476,7 +475,7 @@ class Menu extends Component {
                                 <container>
                                     <row>
                                         <input type="file" name="menuPicture" id="menuPicture" onChange={this.onImageChange} />
-                                        <img src={this.state.image? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+                                        <img src={this.state.image ? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} />
 
 
                                         {/* <input type="file" name="menuPicture" onChange={this.onImageChange} />
@@ -546,14 +545,14 @@ class Menu extends Component {
                     id="menuAddResultModal"
                     tabindex="-1"
                     role="dialog"
-                    aria-labelledby="menuAddResultModal"
+                    aria-labelledby="menuAddResultModalLabel"
                     aria-hidden="true"
                 >
 
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="menuAddResultModal">
+                                <h5 className="modal-title" id="menuAddResultModalLabel">
                                     Add Menu
                             </h5>
                                 <button

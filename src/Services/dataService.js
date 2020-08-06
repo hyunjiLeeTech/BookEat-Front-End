@@ -79,9 +79,9 @@ export default {
   },
   confirmEmail(accountId){
     return Axios.get(serverAddress + '/verifyEmail/' + accountId)
-      .then(res=>{
+      .then(res => {
         return (res.data)
-      }).catch(err=>{
+      }).catch(err => {
         throw err
       })
   },
@@ -445,6 +445,21 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
+      if (res.data.errcode === 0) {
+        $("#munuAddResultText")
+          .text("Menu is added")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#munuAddResultText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
     }).catch((err) => {
       console.log(err);
     })
@@ -466,7 +481,7 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log('fullfilled');
-      if(res.data.errcode === 1) throw data
+      if (res.data.errcode === 1) throw data
       return res.data;
     }).catch(((err) => {
       console.log(err);
@@ -487,6 +502,22 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
+      if (res.data.errcode === 0) {
+        $("#addDiscountText")
+          .text("Disccount is added")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#addDiscountText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
+
     }).catch((err) => {
       console.log(err);
     })
@@ -494,6 +525,21 @@ export default {
     return Axios.get(serverAddress + "/discount/getdiscounts", {
       headers: authHeader()
     }).then((res) => {
+      if (res.data.errcode === 0) {
+        $("#DiscountEditResultModalText")
+          .text("Disccount is change")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#DiscountEditResultModalText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
       return res.data;
     }).catch((err) => {
       throw (err)
@@ -503,7 +549,23 @@ export default {
     return Axios.post(serverAddress + "/discount/editdiscount", state, {
       headers: authHeader()
     }).then((res) => {
+      if (res.data.errcode === 0) {
+        $("#DiscountEditResultModalText")
+          .text("Disccount is change")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#DiscountEditResultModalText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
       return res.data;
+    
     }).catch((err) => {
       throw err;
     })
@@ -512,6 +574,21 @@ export default {
     return Axios.post(serverAddress + "/discount/deletediscount", state, {
       headers: authHeader()
     }).then((res) => {
+      if (res.data.errcode === 0) {
+        $("#DiscountDDeleteResultModalText")
+          .text("Discount is deleted")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#DiscountDDeleteResultModalText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
       return res.data;
     }).catch((err) => {
       throw err;
@@ -529,9 +606,9 @@ export default {
       return res.data.menuImage;
     })
   },
-  async deleteMenuImage(state) {
-    console.log("delete menu image start");
-    return await Axios.delete(`${serverAddress}/deleteMenuImage/${state}`)
+  async deleteImage(state) {
+    console.log("delete image start");
+    return await Axios.delete(`${serverAddress}/deleteImage/${state}`)
       .then((res) => {
         console.log(res);
         return res;
@@ -554,6 +631,21 @@ export default {
       { headers: authHeader() })
       .then((res) => {
         console.log(res);
+        if (res.data.errcode === 0) {
+          $("#AddReviewModalText")
+            .text("Disccount is change")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        } else {
+          $("#AddReviewModalText")
+            .text("Sorry, " + res.data.errmsg)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
       }).catch((err) => {
         throw err;
       })
@@ -574,4 +666,44 @@ export default {
         throw err;
       })
   },
+  getReviewsResManProfile() {
+    return Axios.get(serverAddress + "/review/getreviewsresownermanager", { headers: authHeader() })
+      .then((res) => {
+        return res.data.reviews;
+      }).catch((err) => {
+        throw err;
+      })
+  },
+  async addResPictures(formData, config) {
+    console.log("add res pictures start");
+    return await Axios.post(serverAddress + "/addResPictures", formData, config).then((res) => {
+      console.log("add res pictures done");
+      return res.data.resPictures;
+    })
+  },
+  editReview(state) {
+    return Axios.post(serverAddress + "/review/editreview", state, { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+
+  },
+  deleteReview(state) {
+    return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+  },
+  updateResPictures(state) {
+    return Axios.post(serverAddress + "/restaurant/updaterespictures", state, { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+  }
 };

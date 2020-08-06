@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import './ResReview.css'
-import Star from './../component/Style/Stars'
+import Star from '../../component/Style/Stars'
 import Parser from "html-react-parser";
-import ds from "../Services/dataService";
+import ds from "../../Services/dataService";
+import moment from 'moment';
 
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
@@ -65,6 +66,7 @@ class ResReview extends Component {
     }
 
     async queryReviews(resId) {
+        
         var reviews = await ds.getReviewsRestaurantSide(resId);
 
         var serviceAvg = 0;
@@ -98,7 +100,14 @@ class ResReview extends Component {
         e.preventDefault();
         console.log("saved")
         console.log(this.state);
-        ds.addReview(this.state);
+    
+        if(formValid(this.state)){
+              ds.addReview();
+                
+        }else{
+            console.log("Review is invalid");
+        }
+      
     };
 
 
@@ -130,7 +139,7 @@ class ResReview extends Component {
 
                         <div className="col-sm-4">
                             <div className="review-block-name">{review.customerId.firstName + " " + review.customerId.lastName}</div>
-                            <div className="review-block-date">{review.updatedAt}</div>
+                            <div className="review-block-date">{moment(review.updatedAt).format("YYYY-MM-DD")}</div>
                         </div>
                         <div className="col-sm-8">
                             <div className="review-block-rate col-sm-8">
@@ -179,16 +188,16 @@ class ResReview extends Component {
                         <div className="rating-block">
                             <h4>Users Rating</h4>
                             <h6>Food</h6>
-                            <Star type='splitedBar' stars={3.8} />
+                            <Star type='splitedBar' stars={this.state.reviews.foodAvg} />
                             <br />
                             <h6>Service</h6>
-                            <Star type='splitedBar' stars={3.8} />
+                            <Star type='splitedBar' stars={this.state.reviews.serviceAvg} />
                             <br />
                             <h6>Satisfaction</h6>
-                            <Star type='splitedBar' stars={3.8} />
+                            <Star type='splitedBar' stars={this.state.reviews.satisfactionAvg} />
                             <br />
                             <h6>Environment</h6>
-                            <Star type='splitedBar' stars={3.8} />
+                            <Star type='splitedBar' stars={this.state.reviews.environmentAvg} />
 
                         </div>
                     </div>
@@ -243,9 +252,11 @@ class ResReview extends Component {
                                 {Parser(isError.comment)}
                             </span>
 
-                            <button type="submit" className="btn btn-primary float-right" onClick={this.handleSubmit}
+                            <button type="button" className="btn btn-primary float-right" 
+                            onClick={this.handleSubmit.bind(this)}
+                                data-target="#AddReviewModal"
                                 data-toggle="modal"
-                                data-target="#AddReviewModal"> Add Review</button>
+                                id="addReview"> Add Review</button>
 
                         </div>
                     </div>
@@ -268,14 +279,14 @@ class ResReview extends Component {
                     id="AddReviewModal"
                     tabIndex="-1"
                     role="dialog"
-                    aria-labelledby="AddReviewModal"
+                    aria-labelledby="AddReviewModalLabel"
                     aria-hidden="true"
                 >
 
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="AddReviewModal">
+                                <h5 className="modal-title" id="AddReviewModalLabel">
                                     Add Review
                             </h5>
                                 <button
