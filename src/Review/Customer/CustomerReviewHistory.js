@@ -102,7 +102,7 @@ class CustomerReviewHistory extends Component {
       console.log(this.state.reviews[index].resName);
       return (
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
-        <tr key={id} id={'reviewrow' + index}>
+        <tr key={index} id={'reviewrow' + index}>
           <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
           <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
 
@@ -288,7 +288,7 @@ class CustomerReviewHistory extends Component {
                 <button
                   id='delete_btn'
                   type="button"
-                  className="btn btn-primary btn-sm mr-sm-2"
+                  className="btn btn-danger btn-sm mr-sm-2"
                   data-toggle="modal"
                   data-target="#DeleteReviewResultModal"
                   onClick={() => this.handleClickDeleteReview(this.state.reviews[index]._id)}
