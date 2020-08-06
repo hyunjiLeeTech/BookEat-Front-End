@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import ds from "../Services/dataService";
 import Parser from "html-react-parser";
 import $ from "jquery";
+import MainContainer from "../component/Style/MainContainer";
+import FullscreenError from '../component/Style/FullscreenError'
+import FullScrrenLoading from '../component/Style/FullscreenLoading';
 
 const regExpNumbers = RegExp(/^[0-9]*$/);
 
@@ -36,6 +39,7 @@ class Discount extends Component {
             contentTable: false,
             resultsErr: false,
             isResLoaded: false,
+            isLoading: false,
             isError: {
                 discdescription: "&#160;",
                 promdescription: "&#160;"
@@ -219,107 +223,119 @@ class Discount extends Component {
     render() {
         const { isError } = this.state;
         return (
+            <MainContainer>
+                {this.state.resultsErr
+                    ?
+                    FullscreenError("An error occured, please try again later")
+                    :
+                    null
+                }
+                {this.state.isLoading ?
+                    FullScrrenLoading({ type: 'balls', color: '#000' }) : null
+                }
 
-            <div className="container">
-                <div>
-                    <br />
-                    <h4>Discount Promotion</h4>
-                    <hr />
-                    <p>Add discounts or promotions here</p>
-                    <div className="form-group row">
-                        <label
-                            htmlFor="discdescription"
-                            className="col-sm-2 col-form-label"
-                        >
-                            Discount/Promotion
+
+
+                <div className="container">
+                    <div>
+                        <br />
+                        <h4>Discount Promotion</h4>
+                        <hr />
+                        <p>Add discounts or promotions here</p>
+                        <div className="form-group row">
+                            <label
+                                htmlFor="discdescription"
+                                className="col-sm-3 col-form-label"
+                            >
+                                Discount/Promotion
                       </label>
-                        <div className="col-sm-2">
-                            <input
-                                className={
-                                    isError.discdescription.length > 6
-                                        ? "is-invalid form-control"
-                                        : "form-control"
-                                }
-                                rows="1"
-                                id="discdescription"
-                                name="discdescription"
-                                value={this.state.discdescription}
-                                onChange={this.handleChange}
+                            <div className="col-sm-2">
+                                <input
+                                    className={
+                                        isError.discdescription.length > 6
+                                            ? "is-invalid form-control"
+                                            : "form-control"
+                                    }
+                                    rows="1"
+                                    id="discdescription"
+                                    name="discdescription"
+                                    value={this.state.discdescription}
+                                    onChange={this.handleChange}
 
-                            ></input>
-                            <span className="invalid-feedback">
-                                {Parser(isError.discdescription)}
-                            </span>
+                                ></input>
+                                <span className="invalid-feedback">
+                                    {Parser(isError.discdescription)}
+                                </span>
+                            </div>
+                            <label
+                                htmlFor="discdescription"
+                                className="col-sm-2 col-form-label"
+                            >
+                                %
+                      </label>
                         </div>
-                        <label
-                            htmlFor="discdescription"
-                            className="col-sm-2 col-form-label"
-                        >
-                            %
-                      </label>
-                    </div>
 
-                    <div className="form-group row">
-                        <label
-                            htmlFor="promdescription"
-                            className="col-sm-2 col-form-label"
-                        >
-                            Discount/Promotion Description
+                        <div className="form-group row">
+                            <label
+                                htmlFor="promdescription"
+                                className="col-sm-3 col-form-label"
+                            >
+                                Discount/Promotion Description
                       </label>
-                        <div className="col-md-10">
-                            <textarea
-                                className={
-                                    isError.promdescription.length > 6
-                                        ? "is-invalid form-control"
-                                        : "form-control"
-                                }
-                                rows="5"
-                                id="promdescription"
-                                name="promdescription"
-                                value={this.state.promdescription}
-                                onChange={this.handleChange}
+                            <div className="col-md-8">
+                                <textarea
+                                    className={
+                                        isError.promdescription.length > 6
+                                            ? "is-invalid form-control"
+                                            : "form-control"
+                                    }
+                                    rows="5"
+                                    id="promdescription"
+                                    name="promdescription"
+                                    value={this.state.promdescription}
+                                    onChange={this.handleChange}
 
-                            ></textarea>
-                            <span className="invalid-feedback">
-                                {Parser(isError.promdescription)}
-                            </span>
+                                ></textarea>
+                                <span className="invalid-feedback">
+                                    {Parser(isError.promdescription)}
+                                </span>
+                            </div>
                         </div>
-                    </div>
 
-                    <button type="button"
-                        onClick={this.handleAddDiscount.bind(this)}
-                        className="btn btn-primary"
-                        data-toggle="modal"
-                        data-target="#addDiscountResultModal">
-                        Add Discount
+                        <button type="button"
+                            onClick={this.handleAddDiscount.bind(this)}
+                            className="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#addDiscountResultModal">
+                            Add Discount
                     </button>
 
-                </div>
+                    </div>
 
-                <br />
-                <br />
-                <div>
-                    <h4>Discount/Promotion List</h4>
-                    <hr />
-                    <table id="discount" className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">%</th>
-                                <th scope="col">Description</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.renderDataDiscount()}
-                        </tbody>
+                    <br />
+                    <br />
+                    <div>
+                        <h4>Discount/Promotion List</h4>
+                        <hr />
+                        <table id="discount" className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">%</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderDataDiscount()}
+                            </tbody>
 
 
-                    </table>
+                        </table>
 
-                </div>
+                    </div>
 
-                <div
+                    <div
                         className="modal fade"
                         id="addDiscountResultModal"
                         tabIndex="-1"
@@ -368,96 +384,96 @@ class Discount extends Component {
 
 
 
-                <div
-                    className="modal fade"
-                    id="DiscountDDeleteResultModal"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="DiscountDDeleteResultModal"
-                    aria-hidden="true"
-                >
+                    <div
+                        className="modal fade"
+                        id="DiscountDDeleteResultModal"
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-labelledby="DiscountDDeleteResultModal"
+                        aria-hidden="true"
+                    >
 
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="DiscountDDeleteResultModal">
-                                    Delete Discount
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="DiscountDDeleteResultModal">
+                                        Delete Discount
                             </h5>
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="alert alert-warning"
-                                    id="DiscountDDeleteResultModalText">
-                                    Please Wait...
+                                    <button
+                                        type="button"
+                                        className="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
+                                    >
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <p className="alert alert-warning"
+                                        id="DiscountDDeleteResultModalText">
+                                        Please Wait...
                   </p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-dismiss="modal"
-                                >
-                                    Close
+                                </div>
+                                <div className="modal-footer">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        data-dismiss="modal"
+                                    >
+                                        Close
                   </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div
-                    className="modal fade"
-                    id="DiscountEditResultModal"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="DiscountEditResultModal"
-                    aria-hidden="true"
-                >
-
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="DiscountEditResultModal">
-                                    Edit Discount
-                            </h5>
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="alert alert-warning" id="DiscountEditResultModalText">
-                                    Please Wait...
-                  </p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-dismiss="modal"
-                                >
-                                    Close
-                  </button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
 
-                </div>
-            </div>
 
+                    <div
+                        className="modal fade"
+                        id="DiscountEditResultModal"
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-labelledby="DiscountEditResultModal"
+                        aria-hidden="true"
+                    >
+
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="DiscountEditResultModal">
+                                        Edit Discount
+                            </h5>
+                                    <button
+                                        type="button"
+                                        className="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
+                                    >
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <p className="alert alert-warning" id="DiscountEditResultModalText">
+                                        Please Wait...
+                  </p>
+                                </div>
+                                <div className="modal-footer">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary"
+                                        data-dismiss="modal"
+                                    >
+                                        Close
+                  </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </MainContainer>
         )
     }
 
