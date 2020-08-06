@@ -49,7 +49,6 @@ class ResReview extends Component {
             contenteditable: false,
             picture: "",
             pictures: [],
-            revPictures: [],
             isPicture: false,
             isError: {
                 comment: "&#160;"
@@ -223,7 +222,14 @@ class ResReview extends Component {
                                 </div>
                             </div>
                             <div className="review-block-description">{review.comment}</div>
-                            <div> <img src={serverAddress + '/getImage/' + review.revImageId} style={{ maxHeight: '50%', maxWidth: '50%' }} ></img></div>
+                             {review.pictures.length > 0 && (review.pictures.map((currValue, index) => {
+                                return (
+                                    <div id="Images1">
+                                        <img key={index} className="previewImage row" src={serverAddress + '/getImage/' + currValue}  style={{ maxHeight: '50%', maxWidth: '50%' }}/>
+                                    </div>
+
+                                )
+                            }))}
                             <hr />
                         </div>
 
@@ -337,17 +343,10 @@ class ResReview extends Component {
                             <input type="file" name="picture" id="picture"
                                 onChange={this.onImageChange} multiple />
 
-                            {this.state.revPictures.length > 0 && (this.state.revPictures.map((currValue, index) => {
-                                return (
-                                    <div id="Images1">
-                                        <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} />
-                                    </div>
-
-                                )
-                            }))}
+                        
                             {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                                 return (
-                                    <div id="Images">
+                                    <div id={"Images"+1}>
                                         <img key={index} className="previewImage" src={url} value={index} />
                                     </div>
                                 )
