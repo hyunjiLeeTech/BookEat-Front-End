@@ -4,23 +4,53 @@ import Daily from './Daily';
 import Feature from './Feature';
 import Favorite from './Favorite';
 import SearchBox from './SearchBox';
+import $ from 'jquery';
 // import FullscreenError from '../component/Style/FullscreenError'
+import CAFE from '../Image/CAFE.jpg';
+import BAR from '../Image/BAR.jpg';
+import RES from '../Image/RES.jpg';
+import './Home.css';
 
 
 class Home extends Component {
+
+    componentDidMount() {
+        $('#myCarousel').carousel({
+            pause: 'none'
+        })
+    }
 
     render() {
         return (
             <MainContainer>
                 <div className="container">
-                    <header className="jumbotron my-4">
-                        <h1 className="display-3">Welcome to BookEat!</h1>
-                        <p>Find the best restaurants here</p>
-                        <div className="container">
-                            <SearchBox />
+                    <br />
+                    <div id="carouselExampleSlidesOnly" className="carousel slide" data-ride="carousel">
+                        <div className="carousel-inner">
+                            <div className="carousel-item active">
+                                <img className="d-block" src={CAFE} alt="First slide" />
+                            </div>
+                            <div className="carousel-item">
+                                <img className="d-block" src={BAR} alt="Second slide" />
+                            </div>
+                            <div className="carousel-item">
+                                <img className="d-block" src={RES} alt="Third slide" />
+                            </div>
                         </div>
+                    </div>
 
-                    </header>
+                    <div className="mainText">
+                        <header className="my-4">
+                            <div className="col-md-12 ">
+                                <h1 className="display-3">Welcome to BookEat!</h1>
+                                <p>Find the best restaurants here</p>
+                                <div className="box">
+                                      <SearchBox/>
+                                </div>
+                            </div>
+                        </header>
+                    </div>
+                    <br />
                     <div className="card " >
                         <div className="card-body" >
                             <h5>Daily Pick Up Restaurant</h5>

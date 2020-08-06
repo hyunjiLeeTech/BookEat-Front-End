@@ -337,22 +337,22 @@ class ViewCustomerProfile extends Component {
             </div>
 
             <div id="password" className=" tab-pane card-body">
-              <form onSubmit={this.handleSubmit} noValidate>
-                < ChangePassword />
-              </form>
+
+              < ChangePassword />
+
             </div>
 
             <div id="myReservation"
               className="container tab-pane fade ">
-              <form onSubmit={this.handleSubmit} noValidate>
-                <CustomerReservationHistory />
-              </form>
+
+              <CustomerReservationHistory />
+
             </div>
 
             <div id="myReview" className="container tab-pane fade">
-              <form onSubmit={this.handleSubmit} noValidate>
-                <CustomerReviewHistory />
-              </form>
+
+              <CustomerReviewHistory />
+
             </div>
           </div>
 

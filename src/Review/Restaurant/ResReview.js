@@ -66,6 +66,7 @@ class ResReview extends Component {
     }
 
     async queryReviews(resId) {
+        
         var reviews = await ds.getReviewsRestaurantSide(resId);
 
         var serviceAvg = 0;
@@ -99,7 +100,14 @@ class ResReview extends Component {
         e.preventDefault();
         console.log("saved")
         console.log(this.state);
-        ds.addReview(this.state);
+    
+        if(formValid(this.state)){
+              ds.addReview();
+                
+        }else{
+            console.log("Review is invalid");
+        }
+      
     };
 
 
@@ -244,9 +252,11 @@ class ResReview extends Component {
                                 {Parser(isError.comment)}
                             </span>
 
-                            <button type="submit" className="btn btn-primary float-right" onClick={this.handleSubmit}
+                            <button type="button" className="btn btn-primary float-right" 
+                            onClick={this.handleSubmit.bind(this)}
+                                data-target="#AddReviewModal"
                                 data-toggle="modal"
-                                data-target="#AddReviewModal"> Add Review</button>
+                                id="addReview"> Add Review</button>
 
                         </div>
                     </div>
@@ -269,14 +279,14 @@ class ResReview extends Component {
                     id="AddReviewModal"
                     tabIndex="-1"
                     role="dialog"
-                    aria-labelledby="AddReviewModal"
+                    aria-labelledby="AddReviewModalLabel"
                     aria-hidden="true"
                 >
 
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="AddReviewModal">
+                                <h5 className="modal-title" id="AddReviewModalLabel">
                                     Add Review
                             </h5>
                                 <button
