@@ -99,12 +99,13 @@ class CustomerReviewHistory extends Component {
   renderTable() {
     return this.state.reviews.map((review, index) => {
       const { id, date, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
-      console.log(this.state.reviews[index]);
+      console.log(this.state.reviews[index].resName);
       return (
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={id} id={'reviewrow' + index}>
           <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
-          <td defaultValue={resName}>..</td>
+          <td defaultValue={this.state.reviews[index].resName}>..</td>
+        
 
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
@@ -139,6 +140,7 @@ class CustomerReviewHistory extends Component {
                     name="foodRate"
                     value={this.state.foodRate}
                     onChange={(e) => this.handleChangeInList(e, index)}
+                    required
                   >
                     <option value="food1">⭐</option>
                     <option value="food2">⭐⭐</option>
@@ -176,6 +178,7 @@ class CustomerReviewHistory extends Component {
                     name="serviceRate"
                     value={this.state.serviceRate}
                     onChange={(e) => this.handleChangeInList(e, index)}
+                    required
                   >
                     <option value="service1" >⭐</option>
                     <option value="service2">⭐⭐</option>
@@ -211,6 +214,7 @@ class CustomerReviewHistory extends Component {
                     name="satisfactionRate"
                     value={this.state.satisfactionRate}
                     onChange={(e) => this.handleChangeInList(e, index)}
+                    required
                   >
                     <option value="satisfaction1" >⭐</option>
                     <option value="satisfaction2">⭐⭐</option>
@@ -247,6 +251,7 @@ class CustomerReviewHistory extends Component {
                     name="environmentRate"
                     value={this.state.environmentRate}
                     onChange={(e) => this.handleChangeInList(e, index)}
+                    required
                   >
                     {/* <option value="this.state.service1" >⭐</option>
                   <option value="this.stae.service2">⭐⭐</option>
