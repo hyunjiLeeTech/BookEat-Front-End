@@ -137,7 +137,6 @@ class RestaurantProfile extends Component {
     this.onClick = this.onClick.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
     this.handleChangeInList = this.handleChangeInList.bind(this);
-    this.handleDeletePicture = this.handleDeletePicture.bind(this);
     this.editResProfileWithPictures = this.editResProfileWithPictures.bind(this);
   }
 
@@ -168,8 +167,10 @@ class RestaurantProfile extends Component {
     await ds.editRestaurantProfile(state);
   }
 
-  handleDeletePicture() {
+  handleDeletePicture(imageId) {
     //Add backend here
+    ds.deleteImage(imageId);
+    ds.updateResPictures({ id: imageId });
   }
 
   onImageChange = (event, index) => {
