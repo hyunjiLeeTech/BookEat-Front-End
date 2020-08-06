@@ -20,14 +20,14 @@ class CustomerReviewHistory extends Component {
     this.state = {
       reviews: [
         {
-          id: "", date: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
+          id: "", date: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restaurantId: { reaName: "" }, reservation: { menuItem: [] }
         },
 
       ],
       // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
       resId: "",
       disabled: true,
-      contenteditable: false
+      contenteditable: false,
     };
 
     this.handleClickEditReview = this.handleClickEditReview.bind(this);
