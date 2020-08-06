@@ -9,6 +9,10 @@ import { IconContext } from "react-icons"
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import ds from "../../Services/dataService";
 import moment from 'moment';
+import FullscreenError from '../../component/Style/FullscreenError'
+import serverAddress from '../../Services/ServerUrl';
+import FullScrrenLoading from '../../component/Style/FullscreenLoading';
+
 
 class CustomerReviewHistory extends Component {
   constructor(props) {
@@ -18,10 +22,7 @@ class CustomerReviewHistory extends Component {
         {
           id: "", date: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
         },
-        //  For testing
-        {
-          id: "", date: "2020/05/05", resName: "bookEat", comment: "good", foodRate: 1, serviceRate: 3, satisfactionRate: 3, environmentRate: 2, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
-        }
+        
       ],
       // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
       resId: "",
@@ -29,7 +30,7 @@ class CustomerReviewHistory extends Component {
       contenteditable: false
     };
 
-    this.handleClickReview = this.handleClickReview.bind(this);
+    this.handleClickEditReview = this.handleClickEditReview.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeInList = this.handleChangeInList.bind(this);
   }
@@ -42,8 +43,15 @@ class CustomerReviewHistory extends Component {
     this.forceUpdate(); //forcing udpate the UI
   }
 
-  handleClickEditReview() {
+   
+  async editReview(state){
+    this.setState({isLoding: true})
+    await ds.editCustomerProfile(state).then(() =>{
 
+    }).finally(async (res) => {
+      await this.queryReviews();
+      this.setState({isLoding: false})
+    })
   }
 
   handleClickDeleteReview(id) {
@@ -96,7 +104,7 @@ class CustomerReviewHistory extends Component {
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={id} id={'reviewrow' + index}>
           <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
-          <td defaultValue="..">..</td>
+          <td defaultValue={resName}>..</td>
 
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
@@ -107,7 +115,7 @@ class CustomerReviewHistory extends Component {
 
 
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             {
               this.state.reviews[index].contenteditable ?
 
@@ -145,7 +153,7 @@ class CustomerReviewHistory extends Component {
           </td>
 
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             {
               this.state.reviews[index].contenteditable ?
                 //   <div class="dropdown">
@@ -180,7 +188,7 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             {
               this.state.reviews[index].contenteditable ?
                 // <div class="dropdown">
@@ -215,7 +223,7 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td contentEditable={(this.state.reviews[index].contenteditable)}>
             {
 
               this.state.reviews[index].contenteditable ?
@@ -292,31 +300,36 @@ class CustomerReviewHistory extends Component {
     })
   }
 
+  queryEdits() {
+    ds.editReview.then((res) => {
+        // console.log("this is discounts");
+        // console.log(res.discounts);
+        this.setState({
+            reviews: res.reviews
+        })
+        for (var review of this.state.reviews) {
+            review.contentEditable = false;
+        }
+    }).catch(err => {
+        //TODO handling err
+    })
+}
 
-
-  handleClickReview(index) {
-    // sample
-    // if (this.state.reviews[index].contenteditable) {
-    //   //This is updating
-    //   //call server API to update database
-    //   //Show UI feedback
-
-    //   console.log("Showing toast")
-    //   //communicating with server
-    //   var t = toast("Updating, please wait", { type: toast.TYPE.INFO, autoClose: false, })
-
-    //   setTimeout(() => { //get the feedback from server
-    //     toast.update(t, { render: "Saved!", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
-    //   }, 1000)
-
-    // }
-
-
+  handleClickEditReview(index) {
+    console.log(this.state.reviews);
+    console.log(index);
     this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
     // this.forceUpdate();
-    this.forceUpdate();
-    if (!this.state.reviews[index].contenteditable)
-      $('#EditeReviewResultModal').modal('show')
+    if (!this.state.reviews[index].contenteditable) {
+      ds.editReview(this.state.reviews[index]).then(() => {
+        this.queryEdits();
+      }); 
+      // $('#EditeReviewResultModal').modal('show')
+
+    }
+     
+      this.forceUpdate();
+
 
     // this.setState.reviews[index]({contenteditable: !this.state.contenteditable})
 
@@ -324,7 +337,7 @@ class CustomerReviewHistory extends Component {
     //  $('#saveReviewChange').modal('show')
     //this.setState({});
 
-    // this.callModalReview(index);
+    this.callModalReview(index);
   }
 
 
@@ -336,10 +349,10 @@ class CustomerReviewHistory extends Component {
 
     }, () => {
       if (this.state.reviews[index].contenteditable) {
-        $('#save_editReview_btn').attr("data-toggle", 'modal').attr("data-target", '#EditeReviewResultModal').attr('type', 'button')
+        $('#saveReviewChange').attr("data-toggle", 'modal').attr("data-target", '#EditeReviewResultModal').attr('type', 'button')
       }
       else {
-        $('#save_editReview_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+        $('#saveReviewChange').attr("data-toggle", '').attr("data-target", '').attr("type", '')
       }
     });
   }
@@ -383,7 +396,7 @@ class CustomerReviewHistory extends Component {
           <div
             className="modal fade"
             id="DeleteReviewResultModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby="DeleteReviewResultModal"
             aria-hidden="true"
@@ -427,7 +440,7 @@ class CustomerReviewHistory extends Component {
           <div
             className="modal fade"
             id="EditeReviewResultModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby="EditeReviewResultModal"
             aria-hidden="true"
