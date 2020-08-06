@@ -3,6 +3,8 @@ import MainContainer from "../component/Style/MainContainer";
 import "./EditMenu.js"
 import ds from "../Services/dataService"
 
+import serverAddress from '../Services/ServerUrl';
+
 
 
 class Menu extends Component {
@@ -47,7 +49,7 @@ class Menu extends Component {
             for (var menu of this.state.menus) {
                 rows.push(
                     <tr key={rows}>
-                        <td>  <img src={menu.menuImageId} ></img>
+                        <td>  <img src={serverAddress + '/getImage/' +menu.menuImageId} ></img>
                             
                             </td>
                         <td>{menu.menuName}</td>
