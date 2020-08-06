@@ -20,14 +20,14 @@ class CustomerReviewHistory extends Component {
     this.state = {
       reviews: [
         {
-          id: "", date: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
+          id: "", date: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restaurantId: { reaName: "" }, reservation: { menuItem: [] }
         },
 
       ],
       // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
       resId: "",
       disabled: true,
-      contenteditable: false
+      contenteditable: false,
     };
 
     this.handleClickEditReview = this.handleClickEditReview.bind(this);
@@ -99,12 +99,11 @@ class CustomerReviewHistory extends Component {
   renderTable() {
     return this.state.reviews.map((review, index) => {
       const { id, date, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
-      console.log(this.state.reviews[index]);
       return (
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={id} id={'reviewrow' + index}>
           <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
-          <td defaultValue={resName}>..</td>
+          <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
 
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
