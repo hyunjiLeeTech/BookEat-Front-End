@@ -144,7 +144,7 @@ class RestaurantProfile extends Component {
   }
 
   async editResProfileWithPictures(state) {
-    const formData = new FormData();
+    var formData = new FormData();
     Array.from(state.pictures).forEach((f) => {
       formData.append('resPictures[]', f)
     })
@@ -158,6 +158,7 @@ class RestaurantProfile extends Component {
     for (var i = 0; i < pictureIds.length; i++) {
       resPictureIds.push(pictureIds[i].filename);
     }
+    state.isPicture = true;
     state.resPictures = resPictureIds;
     await ds.editRestaurantProfile(state);
   }
@@ -179,11 +180,13 @@ class RestaurantProfile extends Component {
       this.setState({
         ...this.state,
         picture: arrayImage,
-        pictures: event.target.files[0]
+        pictures: event.target.files
       })
     } else {
 
     }
+
+    console.log(this.state);
   };
 
 
