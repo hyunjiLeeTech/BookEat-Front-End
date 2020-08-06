@@ -8,6 +8,7 @@ import Axios from 'axios';
 import authHeader from '../Services/authHeader';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+//TODO: not attend button
 
 class RestaurantReservation extends Component {
 
@@ -26,6 +27,7 @@ class RestaurantReservation extends Component {
         this.renderPast = this.renderPast.bind(this);
         this.queryPresent = this.queryPresent.bind(this);
         this.renderPresent = this.renderPresent.bind(this);
+        this.viewFoodOrder = this.viewFoodOrder.bind(this);
     }
 
     cancelReservation(reservationId) {
@@ -59,12 +61,12 @@ class RestaurantReservation extends Component {
 
     viewFoodOrder(foodOrderId) {
         //TODO: Add the food order component 
+        console.log(foodOrderId)
         this.setState({ isModalShow: true, modalText: "Loading", modalTitle: 'Food order details' })
-        Axios.get('http://localhost:5000/restaurant/getfoodorder/' + foodOrderId, { headers: authHeader() }).then((res) => {
-            console.log(res);
+        dataService.getFoodOrder(foodOrderId).then((res) => {
             var tr = [];
             var totalPrice = 0;
-            for (var i of res.data.menus) {
+            for (var i of res.menus) {
                 tr.push(<p>
                     {i.menuName} -
                     ${i.menuPrice}
@@ -80,67 +82,64 @@ class RestaurantReservation extends Component {
     }
 
     renderPresent() {
-        var rows = [];
-        for (var ro of this.state.upcoming) {
-            console.log("RO")
-            console.log(ro)
-            rows.push(
-                <tr key={rows} id={ro._id}>
-                    <td >
-                        {ro.customer.firstName + " " + ro.customer.lastName}
-                    </td>
+        var rows = this.state.upcoming.map((ro, index) =>
+            <tr key={rows} id={ro._id}>
+                <td >
+                    {ro.customer.firstName + " " + ro.customer.lastName}
+                </td>
 
-                    <td >
-                        {ro.table.rid}
-                    </td>
+                <td >
+                    {ro.table.rid}
+                </td>
 
-                    <td >
-                        {ro.dateTime}
-                    </td>
+                <td >
+                    {ro.dateTime}
+                </td>
 
-                    <td >
-                        {ro.numOfPeople}
-                    </td>
-                
-                    <td >
-                        {ro.comments}
-                    </td>
+                <td >
+                    {ro.numOfPeople}
+                </td>
 
-                    <td>
-                        {
-                            ro.FoodOrder ?
+                <td >
+                    {ro.comments}
+                </td>
 
-                                <button type="button" className="btn btn-primary btn-sm"
-                                    id={ro._id + 'btn'}
-                                    onClick={() => this.viewFoodOrder(ro.FoodOrder)}>
-                                    {/* TODO:Change onClick to foodorder */}
+                <td>
+                    {
+                        ro.FoodOrder ?
+
+                            <button type="button" className="btn btn-primary btn-sm"
+                                id={ro._id + 'btn'}
+                                value={ro.FoodOrder}
+                                onClick={() => this.viewFoodOrder(this.state.upcoming[index].FoodOrder)}>
+                                {/* TODO:Change onClick to foodorder */}
                                     View Order
                                 </button> : null
-                        }
+                    }
 
 
 
-                    </td>
+                </td>
 
-                    <td>
-                        <button type="button" className="btn btn-success btn-sm"
-                            id={ro._id + 'btn'}
-                            onClick={() => this.confirmAttandance(ro._id)}>
-                            Confirm Attandance
+                <td>
+                    <button type="button" className="btn btn-success btn-sm"
+                        id={ro._id + 'btn'}
+                        onClick={() => this.confirmAttandance(this.state.upcoming[index]._id)}>
+                        Confirm Attandance
                         </button>
-                    </td>
+                </td>
 
-                    <td>
-                        <button type="button" className="btn btn-danger btn-sm"
-                            id={ro._id + 'btn'}
-                            onClick={() => this.cancelReservation(ro._id)}
-                        >
-                            Cancel Reservation </button>
+                <td>
+                    <button type="button" className="btn btn-danger btn-sm"
+                        id={ro._id + 'btn'}
+                        onClick={() => this.cancelReservation(this.state.upcoming[index]._id)}
+                    >
+                        Cancel Reservation </button>
 
 
-                        {/* Cancel Modal */}
-                        {/* This results in mutiple modals in the page. do not put this into a loop */}
-                        {/* <div
+                    {/* Cancel Modal */}
+                    {/* This results in mutiple modals in the page. do not put this into a loop */}
+                    {/* <div
                             className="modal fade"
                             id="cancelModal"
                             tabindex="-1"
@@ -180,11 +179,11 @@ class RestaurantReservation extends Component {
                                 </div>
                             </div>
                         </div> */}
-                    </td>
+                </td>
 
-                </tr>
-            )
-        }
+            </tr>
+        )
+
         return rows;
     }
 
@@ -198,45 +197,40 @@ class RestaurantReservation extends Component {
     }
 
     renderPast() { //TODO: display reservation status
-        var row = [];
-        for (var r of this.state.past) {
-            row.push(
-                <tr key={row}>
-                    <td >
-                        {r.customer.firstName + " " + r.customer.lastName}
-                    </td>
+        var row = this.state.past.map((r, index) => <tr key={row}>
+            <td >
+                {r.customer.firstName + " " + r.customer.lastName}
+            </td>
 
-                    <td >
-                        {r.table.rid}
-                    </td>
+            <td >
+                {r.table.rid}
+            </td>
 
-                    <td >
-                        {r.dateTime}
-                    </td>
+            <td >
+                {r.dateTime}
+            </td>
 
-                    <td >
-                        {r.numOfPeople}
-                    </td>
+            <td >
+                {r.numOfPeople}
+            </td>
 
-                    <td >
-                        {r.comments}
-                    </td>
-                    <td>
-                    {
+            <td >
+                {r.comments}
+            </td>
+            <td>
+                {
 
 
-                        r.FoodOrder ?
+                    r.FoodOrder ?
 
-                            <button type="button" className="btn btn-primary btn-sm"
-                                id={r._id + 'btn'}
-                                onClick={() => this.viewFoodOrder(r.FoodOrder)}>
-                                {/* TODO:Change onClick to foodorder */}
-        View Order
-    </button> : null
-                    }</td>
-                </tr>
-            )
-        }
+                        <button type="button" className="btn btn-primary btn-sm"
+                            id={r._id + 'btn'}
+                            onClick={() => this.viewFoodOrder(this.state.past[index].FoodOrder)}>
+                            {/* TODO:Change onClick to foodorder */}
+                    View Order
+                </button> : null
+                }</td>
+        </tr>)
         return row;
     }
 
