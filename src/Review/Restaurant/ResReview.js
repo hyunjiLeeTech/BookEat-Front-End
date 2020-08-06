@@ -66,7 +66,7 @@ class ResReview extends Component {
     }
 
     async queryReviews(resId) {
-        
+
         var reviews = await ds.getReviewsRestaurantSide(resId);
 
         var serviceAvg = 0;
@@ -100,14 +100,14 @@ class ResReview extends Component {
         e.preventDefault();
         console.log("saved")
         console.log(this.state);
-    
-        if(formValid(this.state)){
-              ds.addReview();
-                
-        }else{
+
+        if (formValid(this.state)) {
+            ds.addReview(this.state);
+
+        } else {
             console.log("Review is invalid");
         }
-      
+
     };
 
 
@@ -252,8 +252,8 @@ class ResReview extends Component {
                                 {Parser(isError.comment)}
                             </span>
 
-                            <button type="button" className="btn btn-primary float-right" 
-                            onClick={this.handleSubmit.bind(this)}
+                            <button type="button" className="btn btn-primary float-right"
+                                onClick={this.handleSubmit.bind(this)}
                                 data-target="#AddReviewModal"
                                 data-toggle="modal"
                                 id="addReview"> Add Review</button>
