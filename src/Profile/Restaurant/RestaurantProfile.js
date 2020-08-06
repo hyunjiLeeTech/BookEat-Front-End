@@ -144,7 +144,7 @@ class RestaurantProfile extends Component {
   }
 
   async editResProfileWithPictures(state) {
-    const formData = new FormData();
+    var formData = new FormData();
     Array.from(state.pictures).forEach((f) => {
       formData.append('resPictures[]', f)
     })
@@ -158,6 +158,7 @@ class RestaurantProfile extends Component {
     for (var i = 0; i < pictureIds.length; i++) {
       resPictureIds.push(pictureIds[i].filename);
     }
+    state.isPicture = true;
     state.resPictures = resPictureIds;
     await ds.editRestaurantProfile(state);
   }
@@ -179,11 +180,13 @@ class RestaurantProfile extends Component {
       this.setState({
         ...this.state,
         picture: arrayImage,
-        pictures: event.target.files[0]
+        pictures: event.target.files
       })
     } else {
 
     }
+
+    console.log(this.state);
   };
 
 
@@ -1500,8 +1503,8 @@ class RestaurantProfile extends Component {
                       }))}
                       {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
-                          <div id="Images" key={"Image" + index}>
-                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
+                          <div id="Images">
+                            <img key={index} className="previewImage" src={url} value={index} onClick={() => this.onSelectImage(index)} />
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
                               data-target="#deletePictureModal"
