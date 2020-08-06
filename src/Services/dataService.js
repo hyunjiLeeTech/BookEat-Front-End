@@ -835,7 +835,7 @@ export default {
         console.log(res);
         if (res.data.errcode === 0) {
           $("#AddReviewModalText")
-            .text("Disccount is change")
+            .text("Your review is added")
             .removeClass("alert-warning")
             .removeClass("alert-danger")
             .removeClass("alert-success")
