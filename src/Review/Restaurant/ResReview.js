@@ -4,6 +4,7 @@ import Star from '../../component/Style/Stars'
 import Parser from "html-react-parser";
 import ds from "../../Services/dataService";
 import moment from 'moment';
+import serverAddress from '../../Services/ServerUrl';
 
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
@@ -46,6 +47,10 @@ class ResReview extends Component {
             resId: props.resId,
             disabled: true,
             contenteditable: false,
+            picture: "",
+            pictures: "",
+            revPictures: [],
+            isPicture: false,
             isError: {
                 comment: "&#160;"
             }
@@ -55,7 +60,36 @@ class ResReview extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.onImageChange = this.onImageChange.bind(this);
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('change state')
+        if (prevState.picture !== this.state.picture) {
+            console.log('update!!! ', this.state.picture);
+            this.state.isPicture = true;
+        }
+    }
+
+    onImageChange = (event, index) => {
+        let arrayImage = [];
+        Array.from(event.target.files).forEach((data) => {
+            let url = URL.createObjectURL(data)
+            arrayImage.push(url);
+        }
+        )
+        if (event.target.files && event.target.files[0]) {
+            this.setState({
+                ...this.state,
+                picture: arrayImage,
+                pictures: event.target.files
+            })
+        } else {
+
+        }
+
+        console.log(this.state);
+    };
 
     async componentWillMount() {
         var resId = this.state.resId;
@@ -168,6 +202,7 @@ class ResReview extends Component {
                                 </div>
                             </div>
                             <div className="review-block-description">{review.comment}</div>
+                            <div> <img src={serverAddress + '/getImage/' + review.revImageId} style={{ maxHeight: '50%', maxWidth: '50%' }} ></img></div>
                             <hr />
                         </div>
 
@@ -204,7 +239,7 @@ class ResReview extends Component {
 
         const { isError } = this.state;
         console.log("$$$$$$$$$$$$$$$$", this.state.reviews);
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.state.reviews.foodAvg);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", this.state.reviews.foodAvg);
         return (
             <div className="container">
                 <div className="row">
@@ -232,33 +267,28 @@ class ResReview extends Component {
                         <div className="col-sm-6">
                             <Star id="food" name="food" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ food: e }) }
-                            } required/>
+                            } required />
                         </div>
-
 
                         <label className="col-sm-4 col-form-label">Service</label>
                         <div className="col-sm-6">
                             <Star id="service" name="service" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ service: e }) }
-                            } required/>
+                            } required />
                         </div>
-
-
-
 
                         <label className="col-sm-4 col-form-label">Satisfaction</label>
                         <div className="col-sm-6">
                             <Star id="satisfaction" name="satisfaction" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ satisfaction: e }) }
-                            } required/>
+                            } required />
                         </div>
-
 
                         <label className="col-sm-4 col-form-label">Environment</label>
                         <div className="col-sm-6">
                             <Star id="enviroment" name="enviroment" isClickAble={true} type='star' onChange={this.handleChange} callback={
                                 (e) => { this.setState({ enviroment: e }) }
-                            } required/>
+                            } required />
                         </div>
                         <br />
                         <br />
@@ -277,12 +307,31 @@ class ResReview extends Component {
                                 {Parser(isError.comment)}
                             </span>
 
-                            <button type="button" className="btn btn-primary float-right"
+                            <button type="button" className="btn btn-info float-right"
                                 onClick={this.handleSubmit.bind(this)}
                                 data-target="#AddReviewModal"
                                 data-toggle="modal"
                                 id="addReview"> Add Review</button>
 
+                            <input type="file" name="picture" id="picture"
+                                onChange={this.onImageChange}  multiple />
+
+                            {this.state.revPictures.length > 0 && (this.state.revPictures.map((currValue, index) => {
+                                return (
+                                    <div id="Images1">
+                                        <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} />
+                                    </div>
+
+                                )
+                            }))}
+                            {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
+                                return (
+                                    <div id="Images">
+                                        <img key={index} className="previewImage" src={url} value={index} />
+                                    </div>
+                                )
+                            }))
+                            }
                         </div>
                     </div>
 
