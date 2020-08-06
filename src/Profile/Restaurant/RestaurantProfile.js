@@ -14,12 +14,8 @@ import RestaurantLayout from "../../Restaurant/RestaurantLayout";
 import FullscreenError from '../../component/Style/FullscreenError'
 import FullScrrenLoading from '../../component/Style/FullscreenLoading';
 import ViewReview from "../../Review/Restaurant/ViewReview";
-<<<<<<< HEAD
 import serverAddress from '../../Services/ServerUrl';
 import Discount from '../../Restaurant/Discount';
-=======
-import serverAddress from "../../Services/ServerUrl"
->>>>>>> origin/lee
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -1500,7 +1496,7 @@ class RestaurantProfile extends Component {
 
                         )
                       }))}
-                      {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
+                      {/* {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
                           <div id="Images" key={"Image" + index}>
                             <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
@@ -1514,7 +1510,7 @@ class RestaurantProfile extends Component {
 
                         )
                       }))
-                      }
+                      } */}
 
                     </div>
 

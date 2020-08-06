@@ -195,16 +195,10 @@ class Menu extends Component {
         console.log(state);
         await ds.addMenu(state).then(() => {
 
-<<<<<<< HEAD
-        }).finally(async () => {
-            await this.queryMenus();
-            this.setState({ isLoading: false })
-=======
         }).finally(async (res) => {
             await this.queryMenus();
             this.setState({ isLoading: false })
 
->>>>>>> origin/lee
         })
 
     }
