@@ -359,9 +359,9 @@ class Menu extends Component {
         return this.state.menus.map((menu, index) => {
             const { id, MenuPicture, menuName, menuPrice, menuType, menuDescript } = menu
             return (
-                <tr key={id} id={'menurow' + index}>
+                <tr key={index} id={'menurow' + index}>
                     {/* <td>{MenuPicture}</td> */}
-                    <td contenteditable={(this.state.contenteditable)} >
+                    <td contentEditable={(this.state.contenteditable)} >
                         <div>
                             {/* <row> 
                 <input type="file" name="menuPicture" disabled={(this.state.disabled)}
@@ -399,18 +399,16 @@ class Menu extends Component {
                     <tr>{menuPrice}</tr>
                     <tr>{menuDescript}</tr> */}
                     <td>
-                        <tr contenteditable={(this.state.menus[index].contenteditable)} >
+                        <div className="container-fluid">
+                            <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
                             <input type="text" id="menuName" name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
-                        </tr>
-
-                        <tr contenteditable={(this.state.menus[index].contenteditable)}>
+                            </div>
+                            <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
                             <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
-                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
-
-                        <tr contenteditable={(this.state.menus[index].contenteditable)}>
-                            {/* <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
-                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr> */}
+                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
+                            </div>
+                            <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
                             <select className="form-conrol"
                                 id="menuType"
                                 name="menuType"
@@ -425,16 +423,13 @@ class Menu extends Component {
                                 <option value="Desert"> Desert</option>
                                 <option value="Drint"> Drink</option>
                             </select>
-                        </tr>
-
-
-                        <div className="form-group" >
-                            <tr contenteditable={(this.state.menus[index].contenteditable)}>
-                                <textarea row="3" id="menuDescript" name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
+                            </div>
+                            <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
+                            <textarea row="3" id="menuDescript" name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
                                     className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />
-                            </tr>
+                            </div>
+                          
                         </div>
-
                     </td>
                     <td >
                         <div className="form-group row">
