@@ -590,7 +590,7 @@ class Menu extends Component {
                 <div
                     className="modal fade"
                     id="menuAddResultModal"
-                    tabindex="-1"
+                    tabIndex="-1"
                     role="dialog"
                     aria-labelledby="menuAddResultModalLabel"
                     aria-hidden="true"
@@ -634,7 +634,7 @@ class Menu extends Component {
                 <div
                     className="modal fade"
                     id="EditResultModal"
-                    tabindex="-1"
+                    tabIndex="-1"
                     role="dialog"
                     aria-labelledby="EditResultModal"
                     aria-hidden="true"
@@ -678,7 +678,7 @@ class Menu extends Component {
                 <div
                     className="modal fade"
                     id="DeleteResultModal"
-                    tabindex="-1"
+                    tabIndex="-1"
                     role="dialog"
                     aria-labelledby="DeleteResultModal"
                     aria-hidden="true"
