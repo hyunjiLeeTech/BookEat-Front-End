@@ -7,6 +7,7 @@ import $ from "jquery";
 import FullscreenError from '../component/Style/FullscreenError'
 import serverAddress from '../Services/ServerUrl';
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
+import { toast } from 'react-toastify';
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
@@ -293,6 +294,11 @@ class Menu extends Component {
 
         ds.deleteMenu(menu).then(() => {
             this.queryMenus();
+            toast('Success', {type: 'success', autoClose: 3000})
+        }).catch(err =>{
+            toast(err.toString(), {type: 'error', autoClose: 3000})
+        }).finally(()=>{
+            console.log ('promise finished')
         })
     }
 
