@@ -180,6 +180,8 @@ class ResReview extends Component {
 
     render() {
         const { isError } = this.state;
+        console.log("$$$$$$$$$$$$$$$$", this.state.reviews);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",this.state.reviews.foodAvg);
         return (
             <div className="container">
                 <div className="row">

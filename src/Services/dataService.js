@@ -404,6 +404,21 @@ export default {
     }).then((res) => {
       console.log("ds get menu")
       console.log(res.data);
+      if (res.data.errcode === 0) {
+        $("#munuAddResultText")
+          .text("Menu is added")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#munuAddResultText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
       return res.data
     }).catch((err) => {
       console.log(err)
@@ -427,6 +442,21 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
+      if (res.data.errcode === 0) {
+        $("#DeleteResultModalText")
+          .text("Menu item is deleted")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } else {
+        $("#DeleteResultModalText")
+          .text("Sorry, " + res.data.errmsg)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
     }).catch((err) => {
       console.log(err);
     })
