@@ -147,14 +147,14 @@ class RestaurantProfile extends Component {
   async editResProfileWithPictures(state) {
     var formData = new FormData();
     Array.from(state.pictures).forEach((f) => {
-      formData.append('resPictures[]', f)
+      formData.append('pictures[]', f)
     })
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-    let pictureIds = await ds.addResPictures(formData, config);
+    let pictureIds = await ds.addPictures(formData, config);
     var resPictureIds = [];
     for (var i = 0; i < pictureIds.length; i++) {
       resPictureIds.push(pictureIds[i].filename);
@@ -633,8 +633,8 @@ class RestaurantProfile extends Component {
 
 
   render() {
-    const deleteRoAccount = () =>{
-      dataService.deleteAccountRestaurantOwner().then(res=>{
+    const deleteRoAccount = () => {
+      dataService.deleteAccountRestaurantOwner().then(res => {
         console.log(res)
       }).catch(err => {
         console.log(err)
