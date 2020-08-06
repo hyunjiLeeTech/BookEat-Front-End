@@ -358,74 +358,62 @@ class Menu extends Component {
         return this.state.menus.map((menu, index) => {
             const { id, MenuPicture, menuName, menuPrice, menuDescript } = menu
             return (
-                <tr key={index} id={'menurow' + index}>
+                <tr key={id} id={'menurow' + index}>
                     {/* <td>{MenuPicture}</td> */}
-                    <td contentEditable={(this.state.contenteditable)} >
-
-                        {/* <row> 
+                    <td contenteditable={(this.state.contenteditable)} >
+                        <div>
+                            {/* <row> 
                 <input type="file" name="menuPicture" disabled={(this.state.disabled)}
                   onChange={this.onImageChange} />
                 <img src={this.state.image} />
                  </row>   */}
-                        <container>
-                            <row>
-                                <input type="file" name="MenuPicture" id="MenuPicture" defaultValue={MenuPicture}
-                                    onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
-                                {/* {
+                            <container>
+                                <row>
+                                    <input type="file" name="MenuPicture" id="MenuPicture" defaultValue={MenuPicture}
+                                        onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
+                                    {/* {
                                         !this.state.menus[index].contenteditable ? <img id={"menuImage" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={"http://localhost:5000/getimage/" + this.state.menus[index].menuImageId} />
                                             : null
                                     } */}
-                                {
-                                    this.state.menus[index].contenteditable ?
+                                    {
+                                        this.state.menus[index].contenteditable ?
 
-                                        <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
-                                        :
+                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                                            :
 
                                             <div>
                                                 <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} />
 
-                                        </div>
-                                }
+                                            </div>
+                                    }
 
 
 
-                            </row>
-                        </container>
-
+                                </row>
+                            </container>
+                        </div>
                     </td>
 
                     {/* <tr>{menuName}</tr>
                     <tr>{menuPrice}</tr>
                     <tr>{menuDescript}</tr> */}
                     <td>
-                        <div className="col container-fluid">
-                            {/* <td contentEditable={(this.state.menus[index].contenteditable)} > */}
-                            <div className="form-inline">
-                                <input type="text" id={"menuName"+index} name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
-                                    className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
-                            </div>
+                        <tr contenteditable={(this.state.menus[index].contenteditable)} >
+                            <input type="text" id="menuName" name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
+                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
+                        </tr>
 
-                            {/* </td> */}
+                        <tr contenteditable={(this.state.menus[index].contenteditable)}>
+                            <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
+                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
 
-                            {/* <td contentEditable={(this.state.menus[index].contenteditable)}> */}
-                            <div className="form-inline">
-                                <input type="text" id={"menuPrice"+index} name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
-                                    className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
-                            </div>
-
-                            {/* </td> */}
-
-                            {/* <div className="form-group" > */}
-                            {/* <td contentEditable={(this.state.menus[index].contenteditable)}> */}
-                            <div className="form-inline">
-                                <textarea row="3" id={"menuDescript"+index} name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
+                        <div className="form-group" >
+                            <tr contenteditable={(this.state.menus[index].contenteditable)}>
+                                <textarea row="3" id="menuDescript" name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
                                     className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />
-                            </div>
-
-                            {/* </td> */}
-                            {/* </div> */}
-
+                            </tr>
                         </div>
+
                     </td>
                     <td >
                         <div className="form-group row">
@@ -537,9 +525,9 @@ class Menu extends Component {
                     <thead>
                         <tr>
                             <th >Image</th>
-                            <th className="col-md-2">Menu Detail</th>
-                            <th ></th>
-                            <th></th>
+                            <th className="col-md-5" >Menu Detail</th>
+                            <th >Edit</th>
+                            <th>Delete</th>
 
                             {/* <th className="col-md-3">Image</th>
                 <th className="col-md-5" >Menu Detail</th>
@@ -563,7 +551,7 @@ class Menu extends Component {
                 <div
                     className="modal fade"
                     id="menuAddResultModal"
-                    tabIndex="-1"
+                    tabindex="-1"
                     role="dialog"
                     aria-labelledby="menuAddResultModalLabel"
                     aria-hidden="true"
@@ -607,7 +595,7 @@ class Menu extends Component {
                 <div
                     className="modal fade"
                     id="EditResultModal"
-                    tabIndex="-1"
+                    tabindex="-1"
                     role="dialog"
                     aria-labelledby="EditResultModal"
                     aria-hidden="true"
@@ -651,7 +639,7 @@ class Menu extends Component {
                 <div
                     className="modal fade"
                     id="DeleteResultModal"
-                    tabIndex="-1"
+                    tabindex="-1"
                     role="dialog"
                     aria-labelledby="DeleteResultModal"
                     aria-hidden="true"

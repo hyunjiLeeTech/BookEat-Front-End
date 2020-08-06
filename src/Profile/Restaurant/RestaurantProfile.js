@@ -1500,8 +1500,8 @@ class RestaurantProfile extends Component {
                       }))}
                       {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
-                          <div id="Images" key={"Image" + index}>
-                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
+                          <div id="Images">
+                            <img key={index} className="previewImage" src={url} value={index} onClick={() => this.onSelectImage(index)} />
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
                               data-target="#deletePictureModal"

@@ -9,6 +9,10 @@ import { IconContext } from "react-icons"
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import ds from "../../Services/dataService";
 import moment from 'moment';
+import FullscreenError from '../../component/Style/FullscreenError'
+import serverAddress from '../../Services/ServerUrl';
+import FullScrrenLoading from '../../component/Style/FullscreenLoading';
+
 
 class CustomerReviewHistory extends Component {
   constructor(props) {
@@ -16,20 +20,17 @@ class CustomerReviewHistory extends Component {
     this.state = {
       reviews: [
         {
-          id: "", date: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
+          id: "", date: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restaurantId: { reaName: "" }, reservation: { menuItem: [] }
         },
-        //  For testing
-        {
-          id: "", date: "2020/05/05", resName: "bookEat", comment: "good", foodRate: 1, serviceRate: 3, satisfactionRate: 3, environmentRate: 2, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
-        }
+
       ],
       // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
       resId: "",
       disabled: true,
-      contenteditable: false
+      contenteditable: false,
     };
 
-    this.handleClickReview = this.handleClickReview.bind(this);
+    this.handleClickEditReview = this.handleClickEditReview.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeInList = this.handleChangeInList.bind(this);
   }
@@ -42,9 +43,16 @@ class CustomerReviewHistory extends Component {
     this.forceUpdate(); //forcing udpate the UI
   }
 
-  handleClickEditReview() {
 
-  }
+  // async editReview(state) {
+  //   this.setState({ isLoding: true })
+  //   await ds.editCustomerProfile(state).then(() => {
+
+  //   }).finally(async (res) => {
+  //     await this.queryReviews();
+  //     this.setState({ isLoding: false })
+  //   })
+  // }
 
   handleClickDeleteReview(id) {
     ds.deleteReview({ _id: id });
@@ -91,14 +99,13 @@ class CustomerReviewHistory extends Component {
   renderTable() {
     return this.state.reviews.map((review, index) => {
       const { id, date, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
-      console.log(this.state.reviews[index]);
       return (
-        // <form onSubmit={this.handleSubmit} id="rendTab" >
-        <tr key={index} id={'reviewrow' + index}>
-          <td defaultValue={date.toString()}> {date.toString()}</td>
-          <td defaultValue={resName}>{resName}</td>
-         
-          <td contentEditable={(this.state.reviews[index].contenteditable)}>
+        //  <form onSubmit={this.handleSubmit} id="rendTab" >
+        <tr key={id} id={'reviewrow' + index}>
+          <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
+          <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
+
+          <td contenteditable={(this.state.reviews[index].contenteditable)}>
             <textarea row="2" type="text" id="comment" name="comment"
               onChange={(e) => this.handleChangeInList(e, index)}
               defaultValue={comment} className="border-none"
@@ -132,11 +139,11 @@ class CustomerReviewHistory extends Component {
                     value={this.state.foodRate}
                     onChange={(e) => this.handleChangeInList(e, index)}
                   >
-                    <option value="food1">⭐</option>
-                    <option value="food2">⭐⭐</option>
-                    <option value="food3">⭐⭐⭐</option>
-                    <option value="food4">⭐⭐⭐⭐</option>
-                    <option value="food5">⭐⭐⭐⭐⭐</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].food)
@@ -169,11 +176,11 @@ class CustomerReviewHistory extends Component {
                     value={this.state.serviceRate}
                     onChange={(e) => this.handleChangeInList(e, index)}
                   >
-                    <option value="service1" >⭐</option>
-                    <option value="service2">⭐⭐</option>
-                    <option value="service3">⭐⭐⭐</option>
-                    <option value="service4">⭐⭐⭐⭐</option>
-                    <option value="service5">⭐⭐⭐⭐⭐</option>
+                    <option value="1" >⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].service)
@@ -204,11 +211,11 @@ class CustomerReviewHistory extends Component {
                     value={this.state.satisfactionRate}
                     onChange={(e) => this.handleChangeInList(e, index)}
                   >
-                    <option value="satisfaction1" >⭐</option>
-                    <option value="satisfaction2">⭐⭐</option>
-                    <option value="satisfaction3">⭐⭐⭐</option>
-                    <option value="satisfaction4">⭐⭐⭐⭐</option>
-                    <option value="satisfaction5">⭐⭐⭐⭐⭐</option>
+                    <option value="1" >⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].satisfaction)
@@ -243,11 +250,11 @@ class CustomerReviewHistory extends Component {
                     {/* <option value="this.state.service1" >⭐</option>
                   <option value="this.stae.service2">⭐⭐</option>
                   <option  value="this.stae.service3">⭐⭐⭐</option> */}
-                    <option value="environ1">⭐</option>
-                    <option value="environ2">⭐⭐</option>
-                    <option value="environ3">⭐⭐⭐</option>
-                    <option value="environ4">⭐⭐⭐⭐</option>
-                    <option value="environ5">⭐⭐⭐⭐⭐</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].environment)
@@ -292,31 +299,30 @@ class CustomerReviewHistory extends Component {
     })
   }
 
+  // queryEdits(state) {
+  //   ds.editReview(state).then((res) => {
+  //     this.setState({
+  //       reviews: res.reviews
+  //     })
+  //     for (var review of this.state.reviews) {
+  //       review.contentEditable = false;
+  //     }
+  //   }).catch(err => {
+  //     //TODO handling err
+  //   })
+  // }
 
-
-  handleClickReview(index) {
-    // sample
-    // if (this.state.reviews[index].contenteditable) {
-    //   //This is updating
-    //   //call server API to update database
-    //   //Show UI feedback
-
-    //   console.log("Showing toast")
-    //   //communicating with server
-    //   var t = toast("Updating, please wait", { type: toast.TYPE.INFO, autoClose: false, })
-
-    //   setTimeout(() => { //get the feedback from server
-    //     toast.update(t, { render: "Saved!", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
-    //   }, 1000)
-
-    // }
-
-
+  handleClickEditReview(index) {
     this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
     // this.forceUpdate();
+    if (!this.state.reviews[index].contenteditable) {
+      ds.editReview(this.state.reviews[index]);
+      // $('#EditeReviewResultModal').modal('show')
+
+    }
+
     this.forceUpdate();
-    if (!this.state.reviews[index].contenteditable)
-      $('#EditeReviewResultModal').modal('show')
+
 
     // this.setState.reviews[index]({contenteditable: !this.state.contenteditable})
 
@@ -324,7 +330,7 @@ class CustomerReviewHistory extends Component {
     //  $('#saveReviewChange').modal('show')
     //this.setState({});
 
-    // this.callModalReview(index);
+    this.callModalReview(index);
   }
 
 
@@ -336,10 +342,10 @@ class CustomerReviewHistory extends Component {
 
     }, () => {
       if (this.state.reviews[index].contenteditable) {
-        $('#save_editReview_btn').attr("data-toggle", 'modal').attr("data-target", '#EditeReviewResultModal').attr('type', 'button')
+        $('#saveReviewChange').attr("data-toggle", 'modal').attr("data-target", '#EditeReviewResultModal').attr('type', 'button')
       }
       else {
-        $('#save_editReview_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+        $('#saveReviewChange').attr("data-toggle", '').attr("data-target", '').attr("type", '')
       }
     });
   }
