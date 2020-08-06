@@ -46,6 +46,7 @@ class Menu extends Component {
             menuName: "",
             menuPrice: "",
             menuDescript: "",
+            menuType: "",
             disabled: true,
             contenteditable: false,
 
@@ -342,7 +343,7 @@ class Menu extends Component {
     renderTableData() {
         console.log(this.state.menus);
         return this.state.menus.map((menu, index) => {
-            const { id, MenuPicture, menuName, menuPrice, menuDescript } = menu
+            const { id, MenuPicture, menuName, menuPrice, menuType, menuDescript } = menu
             return (
                 <tr key={id} id={'menurow' + index}>
                     {/* <td>{MenuPicture}</td> */}
@@ -392,6 +393,24 @@ class Menu extends Component {
                         <tr contenteditable={(this.state.menus[index].contenteditable)}>
                             <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr>
+
+                        <tr contenteditable={(this.state.menus[index].contenteditable)}>
+                            {/* <input type="text" id="menuPrice" name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
+                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} /></tr> */}
+                            <select className="form-conrol"
+                                id="menuType"
+                                name="menuType"
+                                defaultValue={menuType}
+                                onChange={(e) => this.handleChangeInList(e, index)}
+                                disabled={(!this.state.menus[index].contenteditable)}
+                                required
+                            >
+                                <option value="1"> Main </option>
+                                <option value="2"> Desert</option>
+                                <option value="3"> Drink</option>
+                            </select>
+                        </tr>
+
 
                         <div className="form-group" >
                             <tr contenteditable={(this.state.menus[index].contenteditable)}>
@@ -479,16 +498,32 @@ class Menu extends Component {
                             </div>
                             <div className="col-sm-9 border">
                                 <div className="col container-fluid">
-                                    <div className="form-inline">
+                                    <div className="form-inline mb-2" >
                                         <label htmlFor="menuName" className="col-sm-2 border-0">Name </label>
                                         <input type="text" id="menuName" name="menuName" className="form-control col-smd-10 mt-sm-2" value={this.state.menuName}
                                             className={isError.menuName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                                         />
                                     </div>
-                                    <div className=" form-inline">
+                                    <div className=" form-inline mb-2">
                                         <label htmlFor="menuPrice" className="col-sm-2 border-0">Price</label>
                                         <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" placeholder="price format: 12.30" value={this.state.menuPrice}
                                             className={isError.menuPrice.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
+                                    </div>
+                                    <div className=" form-inline mb-2">
+                                        <label htmlFor="menuType" className="col-sm-2 border-0">Menu Type</label>
+                                        <select className="form-conrol"
+                                            id="menuType"
+                                            name="menuType"
+                                            value={this.state.menuType}
+                                            onChange={this.handleChange}
+                                            required
+                                        >
+                                            <option value="1"> Main </option>
+                                            <option value="2"> Desert</option>
+                                            <option value="3"> Drink</option>
+                                        </select>
+                                        {/* <input type="text" id="menuType" name="menuType" className="form-control col-sm-10 mt-sm-2" value={this.state.menuPrice}
+                                            onChange={this.handleChange} required /> */}
                                     </div>
                                     <div className="form-inline">
                                         <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
