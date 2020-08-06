@@ -337,25 +337,27 @@ class ViewCustomerProfile extends Component {
             </div>
 
             <div id="password" className=" tab-pane card-body">
-
-              < ChangePassword />
-
+            
+                < ChangePassword />
+            
             </div>
 
             <div id="myReservation"
               className="container tab-pane fade ">
-
-              <CustomerReservationHistory />
-
+            
+                <CustomerReservationHistory />
+             
             </div>
 
             <div id="myReview" className="container tab-pane fade">
-
-              <CustomerReviewHistory />
-
+            
+                <CustomerReviewHistory />
+             
             </div>
           </div>
 
+
+    {/* edit modal */}
           <div
             className="modal fade"
             id="signResultModal"
@@ -398,7 +400,7 @@ class ViewCustomerProfile extends Component {
           </div>
         </div>
 
-        {/* DeleteMenuModal */}
+        {/* DeleteProfileModal */}
 
         <div
           className="modal fade"

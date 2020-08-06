@@ -101,21 +101,12 @@ class CustomerReviewHistory extends Component {
       const { id, date, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
       console.log(this.state.reviews[index]);
       return (
-<<<<<<< HEAD
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={id} id={'reviewrow' + index}>
           <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
           <td defaultValue={resName}>..</td>
 
           <td contenteditable={(this.state.reviews[index].contenteditable)}>
-=======
-        // <form onSubmit={this.handleSubmit} id="rendTab" >
-        <tr key={index} id={'reviewrow' + index}>
-          <td defaultValue={date.toString()}> {date.toString()}</td>
-          <td defaultValue={resName}>{resName}</td>
-         
-          <td contentEditable={(this.state.reviews[index].contenteditable)}>
->>>>>>> eng
             <textarea row="2" type="text" id="comment" name="comment"
               onChange={(e) => this.handleChangeInList(e, index)}
               defaultValue={comment} className="border-none"
@@ -309,31 +300,34 @@ class CustomerReviewHistory extends Component {
     })
   }
 
-
+  queryEdits() {
+    ds.editReview.then((res) => {
+        // console.log("this is discounts");
+        // console.log(res.discounts);
+        this.setState({
+            reviews: res.reviews
+        })
+        for (var review of this.state.reviews) {
+            review.contentEditable = false;
+        }
+    }).catch(err => {
+        //TODO handling err
+    })
+}
 
   handleClickEditReview(index) {
-    // sample
-    // if (this.state.reviews[index].contenteditable) {
-    //   //This is updating
-    //   //call server API to update database
-    //   //Show UI feedback
-
-    //   console.log("Showing toast")
-    //   //communicating with server
-    //   var t = toast("Updating, please wait", { type: toast.TYPE.INFO, autoClose: false, })
-
-    //   setTimeout(() => { //get the feedback from server
-    //     toast.update(t, { render: "Saved!", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
-    //   }, 1000)
-
-    // }
-
-
+    console.log(this.state.reviews);
+    console.log(index);
     this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
     // this.forceUpdate();
-    if (!this.state.reviews[index].contenteditable)
-      $('#EditeReviewResultModal').modal('show')
+    if (!this.state.reviews[index].contenteditable) {
+      ds.editReview(this.state.reviews[index]).then(() => {
+        this.queryEdits();
+      }); 
+      // $('#EditeReviewResultModal').modal('show')
 
+    }
+     
       this.forceUpdate();
 
 
