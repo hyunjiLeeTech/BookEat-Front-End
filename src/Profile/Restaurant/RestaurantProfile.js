@@ -1060,6 +1060,7 @@ class RestaurantProfile extends Component {
                           value={this.state.eatingTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Max Eating Time</option>
                           <option value="1">1 hour</option>
@@ -1086,6 +1087,7 @@ class RestaurantProfile extends Component {
                           value={this.state.cuisineStyle}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Style</option>
                           <option value="american">American</option>
@@ -1127,6 +1129,7 @@ class RestaurantProfile extends Component {
                           value={this.state.category}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Category</option>
                           <option value="ethinic">Ethinic</option>
@@ -1155,6 +1158,7 @@ class RestaurantProfile extends Component {
                           value={this.state.priceRange}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Range</option>
                           <option value="low">$0-$50</option>
@@ -1185,6 +1189,7 @@ class RestaurantProfile extends Component {
                           value={this.state.monOpenTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Open Time</option>
                           {this.openTime()}
@@ -1197,6 +1202,7 @@ class RestaurantProfile extends Component {
                           value={this.state.monCloseTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Close Time</option>
                           {this.closeTime()}
@@ -1228,6 +1234,7 @@ class RestaurantProfile extends Component {
                           value={this.state.tuesOpenTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Open Time</option>
                           {this.openTime()}
@@ -1240,6 +1247,7 @@ class RestaurantProfile extends Component {
                           value={this.state.tueCloseTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Close Time</option>
                           {this.closeTime()}
@@ -1271,6 +1279,7 @@ class RestaurantProfile extends Component {
                           value={this.state.wedOpenTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Open Time</option>
                           {this.openTime()}
@@ -1283,6 +1292,7 @@ class RestaurantProfile extends Component {
                           value={this.state.wedCloseTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Close Time</option>
                           {this.closeTime()}
@@ -1314,6 +1324,7 @@ class RestaurantProfile extends Component {
                           value={this.state.thuOpenTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Open Time</option>
                           {this.openTime()}
@@ -1326,6 +1337,7 @@ class RestaurantProfile extends Component {
                           value={this.state.thuCloseTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Close Time</option>
                           {this.closeTime()}
@@ -1357,6 +1369,7 @@ class RestaurantProfile extends Component {
                           value={this.state.friOpenTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Open Time</option>
                           {this.openTime()}
@@ -1369,6 +1382,7 @@ class RestaurantProfile extends Component {
                           value={this.state.friCloseTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Close Time</option>
                           {this.closeTime()}
@@ -1400,6 +1414,7 @@ class RestaurantProfile extends Component {
                           value={this.state.satOpenTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Open Time</option>
                           {this.openTime()}
@@ -1412,6 +1427,7 @@ class RestaurantProfile extends Component {
                           value={this.state.satCloseTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Close Time</option>
                           {this.closeTime()}
@@ -1443,6 +1459,7 @@ class RestaurantProfile extends Component {
                           value={this.state.sunOpenTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Open Time</option>
                           {this.openTime()}
@@ -1455,6 +1472,7 @@ class RestaurantProfile extends Component {
                           value={this.state.sunCloseTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
+                          required
                         >
                           <option value="">Choose Close Time</option>
                           {this.closeTime()}
