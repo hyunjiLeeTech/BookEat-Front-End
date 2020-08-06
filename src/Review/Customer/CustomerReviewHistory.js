@@ -461,7 +461,7 @@ class CustomerReviewHistory extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p className="alert alert-warning" id="EditeResultModalText">
+                  <p className="alert alert-warning" id="EditeReviewResultModalText">
                     Please Wait...
                   </p>
                 </div>
