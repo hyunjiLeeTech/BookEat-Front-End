@@ -1578,7 +1578,7 @@ class RestaurantProfile extends Component {
                     </div>
                     <div className="form-group text-center ">
 
-                      <button type="button" className="btn btn-primary mr-sm-4 "
+                      <button type="button" className="btn btn-danger mr-sm-4 "
                         data-toggle="modal"
                         data-target="#deleteRestaurantModal" onClick={deleteRoAccount}>
                         {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}

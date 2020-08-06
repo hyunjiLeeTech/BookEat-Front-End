@@ -451,7 +451,7 @@ class Menu extends Component {
                             <button
                                 button id='delete_btn'
                                 type="button"
-                                className="btn btn-primary btn-sm mr-sm-2"
+                                className="btn btn-danger btn-sm mr-sm-2"
                                 onClick={() => this.menuItemDeleteButton(index)}
                                 data-toggle="modal" data-target="#DeleteResultModal"
                             >
@@ -488,7 +488,7 @@ class Menu extends Component {
                 <form onSubmit={this.handleSubmit} id="addMenu">
                     <div className="form-inline form-group mt-sm-4">
                         <h3> Add Menu </h3>
-                        <button type="submit" className="btn btn-primary ml-sm-5"
+                        <button type="submit" className="btn btn-info ml-sm-5"
                             data-toggle="modal" data-target="#menuAddResultModal"> Save </button>
                     </div>
 
@@ -554,7 +554,6 @@ class Menu extends Component {
                 {/* Menu List */}
                 <h3><br />
                     <br />Menu List</h3>
-                {/* <div className="col-md-12"> */}
                 <table id='menus' className="table table-striped col-md-12">
                     <thead>
                         <tr>
@@ -562,20 +561,9 @@ class Menu extends Component {
                             <th className="col-md-5" >Menu Detail</th>
                             <th >Edit</th>
                             <th>Delete</th>
-
-                            {/* <th className="col-md-3">Image</th>
-                <th className="col-md-5" >Menu Detail</th>
-                <th className="col-md-2">Edit</th>
-                <th className="col-md-2">Delete</th> */}
-
-                            {/* <th scope="col.sm.3" class="col-sm-3">Image</th>
-                <th scope="col">Menu Detail</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th> */}
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {this.renderMenuInfo()} */}
                         {this.renderTableData()}
                     </tbody>
                 </table>

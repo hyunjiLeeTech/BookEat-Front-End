@@ -208,7 +208,7 @@ class Discount extends Component {
                         <button
                             id='delete_btn'
                             type="button"
-                            className="btn btn-primary btn-sm mr-sm-2"
+                            className="btn btn-danger btn-sm mr-sm-2"
                             onClick={() => { this.discountDeleteButton(index) }}
                             data-toggle="modal"
                             data-target="#DiscountDDeleteResultModal"
@@ -305,7 +305,7 @@ class Discount extends Component {
 
                         <button type="button"
                             onClick={this.handleAddDiscount.bind(this)}
-                            className="btn btn-primary"
+                            className="btn btn-info"
                             data-toggle="modal"
                             data-target="#addDiscountResultModal">
                             Add Discount
