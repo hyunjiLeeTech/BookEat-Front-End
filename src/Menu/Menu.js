@@ -288,7 +288,7 @@ class Menu extends Component {
     menuItemDeleteButton(index) {
         var menu = this.state.menus[index];
         if (menu.menuPicture.isImage != false) {
-            ds.deleteMenuImage(menu.menuImageId);
+            ds.deleteImage(menu.menuImageId);
         }
 
         ds.deleteMenu(menu).then(() => {
