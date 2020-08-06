@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import MainContainer from "../../component/Style/MainContainer";
 import Parser from "html-react-parser";
 import $ from "jquery";
-import Axios from "axios";
 import sha256 from "crypto-js/sha256";
-import serverAddress from "../../Services/ServerUrl";
 import authService from "../../Services/AuthService";
 import ds from "../../Services/dataService";
 
@@ -311,7 +308,7 @@ class RestaurantProfile extends Component {
         </div>
 
         <button
-          className="btn btn-danger"
+          className="btn btn-info"
           data-toggle="modal"
           data-target="#signResultModal"
         >
@@ -321,7 +318,7 @@ class RestaurantProfile extends Component {
         <div
           className="modal fade"
           id="signResultModal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="signResultModalLabel"
           aria-hidden="true"
@@ -399,11 +396,45 @@ class RestaurantProfile extends Component {
         </thead>
         <tbody>
           {this.renderManagerInfo()}
-          {/* Delete Modal */}
-          <div
+         </tbody>
+         </table>
+         
+    );
+  }
+
+  renderManager() {
+    if (this.state.createManager) {
+      return this.renderForm();
+    } else if (this.state.viewManager) {
+      return this.renderView();
+    } else {
+      return null;
+    }
+  }
+
+  render() {
+    return (
+      <MainContainer>
+        <div className="panel-footer row ">
+          <div className="col-sm-6 text-left">
+            <button className="btn btn-primary" id="createManagerBtn">
+              Create New Manager
+            </button>
+          </div>
+
+          <div className="col-sm-6 text-right">
+            <button className="btn btn-primary" id="viewManagerBtn">
+              View Manager
+            </button>
+          </div>
+        </div>
+        <br />
+        {this.renderManager()}
+         {/* Delete Modal */}
+         <div
             className="modal fade"
             id="deleteManagerModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby="deleteManagerLabel"
             aria-hidden="true"
@@ -440,44 +471,6 @@ class RestaurantProfile extends Component {
               </div>
             </div>
           </div>
-        </tbody>
-      </table>
-    );
-  }
-
-  renderManager() {
-    if (this.state.createManager) {
-      return this.renderForm();
-    } else if (this.state.viewManager) {
-      return this.renderView();
-    } else {
-      return null;
-    }
-  }
-
-  render() {
-    const { showForm } = this.state;
-    return (
-      <MainContainer>
-        <div className="panel-footer row ">
-          <div className="col-sm-6 text-left">
-            <button className="btn btn-primary" id="createManagerBtn">
-              Create New Manager
-            </button>
-          </div>
-
-          <div className="col-sm-6 text-right">
-            <button className="btn btn-primary" id="viewManagerBtn">
-              View Manager
-            </button>
-          </div>
-        </div>
-        <br />
-        {this.renderManager()}
-
-        {/* {
-                    $('#create').click ? showForm && this.renderForm() : showForm && this.renderView()
-                } */}
       </MainContainer>
     );
   }
