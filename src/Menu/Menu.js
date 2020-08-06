@@ -405,6 +405,7 @@ class Menu extends Component {
                                 disabled={(!this.state.menus[index].contenteditable)}
                                 required
                             >
+                                <option value="">Please select the food type</option>
                                 <option value="Appetizer">Appetizer</option>
                                 <option value="Main"> Main Dish </option>
                                 <option value="Desert"> Desert</option>
@@ -519,6 +520,7 @@ class Menu extends Component {
                                             onChange={this.handleChange}
                                             required
                                         >
+                                            <option value="">Please select the food type</option>
                                             <option value="Appetizer">Appetizer</option>
                                             <option value="Main"> Main Dish </option>
                                             <option value="Desert"> Desert</option>
