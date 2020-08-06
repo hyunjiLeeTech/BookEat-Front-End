@@ -14,8 +14,12 @@ import RestaurantLayout from "../../Restaurant/RestaurantLayout";
 import FullscreenError from '../../component/Style/FullscreenError'
 import FullScrrenLoading from '../../component/Style/FullscreenLoading';
 import ViewReview from "../../Review/Restaurant/ViewReview";
+<<<<<<< HEAD
 import serverAddress from '../../Services/ServerUrl';
 import Discount from '../../Restaurant/Discount';
+=======
+import serverAddress from "../../Services/ServerUrl"
+>>>>>>> origin/lee
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -1482,27 +1486,21 @@ class RestaurantProfile extends Component {
                       <input type="file" name="picture" id="picture"
                         onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple />
 
-                      {/* {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
+                      {this.state.resPictures.length > 0 && (this.state.resPictures.map((currValue, index, array) => {
                         return (
-                          <div id="Images" key={"Image" + index}>
-                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
+                          <div id="Images">
+                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} />
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
                               data-target="#deletePictureModal"
-                              onClick={() => this.handleDeletePicture()}>
+                              onClick={() => this.handleDeletePicture(currValue)}>
                               Delete
                       </button>
                           </div>
 
                         )
-                      }))} */}
-
-                      {this.state.picture.length > 0 ? 
-                     
-                          <img  src={this.state.resPicture} />
-                      
-                      :
-                      (this.state.picture.map((url, index) => {
+                      }))}
+                      {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
                           <div id="Images" key={"Image" + index}>
                             <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />

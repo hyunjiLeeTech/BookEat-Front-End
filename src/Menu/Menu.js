@@ -195,9 +195,16 @@ class Menu extends Component {
         console.log(state);
         await ds.addMenu(state).then(() => {
 
+<<<<<<< HEAD
         }).finally(async () => {
             await this.queryMenus();
             this.setState({ isLoading: false })
+=======
+        }).finally(async (res) => {
+            await this.queryMenus();
+            this.setState({ isLoading: false })
+
+>>>>>>> origin/lee
         })
 
     }
@@ -552,14 +559,14 @@ class Menu extends Component {
                     id="menuAddResultModal"
                     tabIndex="-1"
                     role="dialog"
-                    aria-labelledby="menuAddResultModal"
+                    aria-labelledby="menuAddResultModalLabel"
                     aria-hidden="true"
                 >
 
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="menuAddResultModal">
+                                <h5 className="modal-title" id="menuAddResultModalLabel">
                                     Add Menu
                             </h5>
                                 <button
