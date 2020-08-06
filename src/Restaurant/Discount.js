@@ -48,6 +48,7 @@ class Discount extends Component {
         this.handleAddDiscount = this.handleAddDiscount.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeInList = this.handleChangeInList.bind(this);
+        this.discountEditButton = this.discountEditButton.bind(this);
     }
 
     handleChange(e) {
@@ -137,11 +138,11 @@ class Discount extends Component {
         if (!this.state.discounts[index].contenteditable) {
             ds.editDiscount(this.state.discounts[index])
                 .then(() => {
-                    this.queryDiscounts();
+                    this.queryDiscounts(this.state.discounts[index]);
                 });
         }
 
-        this.callModal();
+        this.callModal(index);
     }
 
     discountDeleteButton(index) {
@@ -170,12 +171,12 @@ class Discount extends Component {
 
     renderDataDiscount() {
         return this.state.discounts.map((discount, index) => {
-            const { id, discdescription, promdescription } = discount
+            const {discdescription, promdescription } = discount;
             return (
                 <tr key={index}>
                     <th contenttable={(this.state.discounts[index].contentTable)}>
 
-                        <input type="text" id={"discdescription" + index} name="discdescription"
+                        <input type="text" id={"discdescription" + index} name="discdescription" 
                             defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
                             onChange={(e) => this.handleChangeInList(e, index)} />
 
