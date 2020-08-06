@@ -31,6 +31,7 @@ class Star extends Component {
 
         var starBtn = (isOpen, c, nonBtn, i) => {
             var cn = isOpen ? 'btn btn-xs  ' : 'btn btn-xs btn-grey '
+            cn+='mstarbtn '
             if (isOpen) {
                 if (this.state.modified) {
                     cn += 'btn-primary '
