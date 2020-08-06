@@ -10,6 +10,16 @@ class Star extends Component {
             modified: false,
         }
     }
+    componentWillReceiveProps(props){
+        if(!props.isClickAble && this.props != props){
+            this.setState({
+                isClickAble: props.isClickAble,
+                type: props.type,
+                stars: Number.parseFloat(props.stars),
+            })
+        }
+    }
+
     tr = (isClickAble, type, star, clickedCallback) => {
 
         var bar = (p, width) => {
