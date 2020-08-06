@@ -206,21 +206,20 @@ class Menu extends Component {
     async editMenuWithImage(state) {
         this.setState({ isLoading: true })
 
-        console.log(state);
-        if (state.isImage) {
-            await ds.deleteMenuImage();
+
+        if (typeof state.image !== 'undefined') {
+            ds.deleteImage(state.menuImageId);
+            var formData = new FormData();
+            formData.append('menuImage', state.image);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
+            var menuImageId = await ds.editMenuImage(formData, config);
+            state.menuImageId = menuImageId;
         }
 
-        const formData = new FormData();
-        formData.append('menuImage', state.image);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
-        var menuImageId = await ds.editMenuImage(formData, config);
-        state.menuImageId = menuImageId;
-        console.log("afer ds.editmenuimage");
         await ds.editMenu(state).then(() => {
             console.log('edit menu fullfilled')
             this.queryMenus();
@@ -289,7 +288,7 @@ class Menu extends Component {
     menuItemDeleteButton(index) {
         var menu = this.state.menus[index];
         if (menu.menuPicture.isImage != false) {
-            ds.deleteMenuImage(menu.menuImageId);
+            ds.deleteImage(menu.menuImageId);
         }
 
         ds.deleteMenu(menu).then(() => {
@@ -368,9 +367,8 @@ class Menu extends Component {
                                         <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
                                         :
 
-                                        <div>
-                                            sadfsadfsdf
-                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} />
+                                            <div>
+                                                <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} />
 
                                         </div>
                                 }
