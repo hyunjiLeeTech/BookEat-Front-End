@@ -1498,7 +1498,7 @@ class RestaurantProfile extends Component {
 
                         )
                       }))}
-                      {/* {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
+                      {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
                           <div id="Images" key={"Image" + index}>
                             <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
@@ -1512,7 +1512,7 @@ class RestaurantProfile extends Component {
 
                         )
                       }))
-                      } */}
+                      }
 
                     </div>
 

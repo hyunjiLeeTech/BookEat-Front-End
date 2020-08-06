@@ -7,6 +7,7 @@ import $ from "jquery";
 import FullscreenError from '../component/Style/FullscreenError'
 import serverAddress from '../Services/ServerUrl';
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
+import { toast } from 'react-toastify';
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
@@ -293,7 +294,20 @@ class Menu extends Component {
 
         ds.deleteMenu(menu).then(() => {
             this.queryMenus();
-        })
+            $("#DeleteResultModalText")
+            .text("Menu item is deleted")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+            toast("success")
+            
+        }).catch(
+        err => {
+            console.log(err)
+        toast("error")
+        } )
+        
     }
 
     menuItemEditButton(index) {

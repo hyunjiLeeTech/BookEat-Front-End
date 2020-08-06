@@ -509,12 +509,7 @@ export default {
     }).then((res) => {
       console.log(res);
       if (res.data.errcode === 0) {
-        $("#DeleteResultModalText")
-          .text("Menu item is deleted")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
+       
       } else {
         $("#DeleteResultModalText")
           .text("Sorry, " + res.data.errmsg)

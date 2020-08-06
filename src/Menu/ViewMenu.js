@@ -19,12 +19,12 @@ class Menu extends Component {
             menuName: "",
             menuPrice: "",
             menuDescript: "",
-           
+
 
         };
-   
+
         this.renderMenuInfo = this.renderMenuInfo.bind(this);
-    
+
     }
 
 
@@ -49,13 +49,12 @@ class Menu extends Component {
             for (var menu of this.state.menus) {
                 rows.push(
                     <tr key={rows}>
-                        <td>  <img src={serverAddress + '/getImage/' +menu.menuImageId} ></img>
-                            
-                            </td>
+                            <td>  <img src={serverAddress + '/getImage/' + menu.menuImageId} style={{ maxHeight: '50%', maxWidth: '50%' }}/></td>
                         <td>{menu.menuName}</td>
-                         <td>{menu.menuDescript}</td>
+                        <td></td>
+                        <td>{menu.menuDescript}</td>
                         <td>{menu.menuPrice}</td>
-                       
+
                     </tr>
                 )
             }
@@ -70,7 +69,8 @@ class Menu extends Component {
                     <thead>
                         <tr>
                             <th></th>
-                            <th >Name</th> 
+                            <th >Name</th>
+                            <th>Type</th>
                             <th>Description</th>
                             <th >Price</th>
                         </tr>
