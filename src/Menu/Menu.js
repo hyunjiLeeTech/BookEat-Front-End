@@ -414,14 +414,16 @@ class Menu extends Component {
                             <select className="form-conrol"
                                 id="menuType"
                                 name="menuType"
-                                defaultValue={menuType}
+                                defaultValue={this.state.menus[index].foodType}
                                 onChange={(e) => this.handleChangeInList(e, index)}
                                 disabled={(!this.state.menus[index].contenteditable)}
                                 required
                             >
-                                <option value="1"> Main </option>
-                                <option value="2"> Desert</option>
-                                <option value="3"> Drink</option>
+                                <option value="">Please select the food type</option>
+                                <option value="Appetizer">Appetizer</option>
+                                <option value="Main"> Main Dish </option>
+                                <option value="Desert"> Desert</option>
+                                <option value="Drint"> Drink</option>
                             </select>
                         </tr>
 
@@ -532,9 +534,11 @@ class Menu extends Component {
                                             onChange={this.handleChange}
                                             required
                                         >
-                                            <option value="1"> Main </option>
-                                            <option value="2"> Desert</option>
-                                            <option value="3"> Drink</option>
+                                            <option value="">Please select the food type</option>
+                                            <option value="Appetizer">Appetizer</option>
+                                            <option value="Main"> Main Dish </option>
+                                            <option value="Desert"> Desert</option>
+                                            <option value="Drint"> Drink</option>
                                         </select>
                                         {/* <input type="text" id="menuType" name="menuType" className="form-control col-sm-10 mt-sm-2" value={this.state.menuPrice}
                                             onChange={this.handleChange} required /> */}

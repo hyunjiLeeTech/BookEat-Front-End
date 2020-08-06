@@ -104,7 +104,7 @@ class ResReview extends Component {
         console.log(this.state);
 
         if (formValid(this.state)) {
-            ds.addReview();
+            ds.addReview(this.state);
 
         } else {
             console.log("Review is invalid");
