@@ -22,7 +22,7 @@ class CustomerReviewHistory extends Component {
         {
           id: "", date: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restauarnt: {}, reservation: { menuItem: [] }
         },
-        
+
       ],
       // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
       resId: "",
@@ -43,16 +43,16 @@ class CustomerReviewHistory extends Component {
     this.forceUpdate(); //forcing udpate the UI
   }
 
-   
-  async editReview(state){
-    this.setState({isLoding: true})
-    await ds.editCustomerProfile(state).then(() =>{
 
-    }).finally(async (res) => {
-      await this.queryReviews();
-      this.setState({isLoding: false})
-    })
-  }
+  // async editReview(state) {
+  //   this.setState({ isLoding: true })
+  //   await ds.editCustomerProfile(state).then(() => {
+
+  //   }).finally(async (res) => {
+  //     await this.queryReviews();
+  //     this.setState({ isLoding: false })
+  //   })
+  // }
 
   handleClickDeleteReview(id) {
     ds.deleteReview({ _id: id });
@@ -142,11 +142,11 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                    <option value="food1">⭐</option>
-                    <option value="food2">⭐⭐</option>
-                    <option value="food3">⭐⭐⭐</option>
-                    <option value="food4">⭐⭐⭐⭐</option>
-                    <option value="food5">⭐⭐⭐⭐⭐</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].food)
@@ -180,11 +180,11 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                    <option value="service1" >⭐</option>
-                    <option value="service2">⭐⭐</option>
-                    <option value="service3">⭐⭐⭐</option>
-                    <option value="service4">⭐⭐⭐⭐</option>
-                    <option value="service5">⭐⭐⭐⭐⭐</option>
+                    <option value="1" >⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].service)
@@ -216,11 +216,11 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                    <option value="satisfaction1" >⭐</option>
-                    <option value="satisfaction2">⭐⭐</option>
-                    <option value="satisfaction3">⭐⭐⭐</option>
-                    <option value="satisfaction4">⭐⭐⭐⭐</option>
-                    <option value="satisfaction5">⭐⭐⭐⭐⭐</option>
+                    <option value="1" >⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].satisfaction)
@@ -256,11 +256,11 @@ class CustomerReviewHistory extends Component {
                     {/* <option value="this.state.service1" >⭐</option>
                   <option value="this.stae.service2">⭐⭐</option>
                   <option  value="this.stae.service3">⭐⭐⭐</option> */}
-                    <option value="environ1">⭐</option>
-                    <option value="environ2">⭐⭐</option>
-                    <option value="environ3">⭐⭐⭐</option>
-                    <option value="environ4">⭐⭐⭐⭐</option>
-                    <option value="environ5">⭐⭐⭐⭐⭐</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].environment)
@@ -305,35 +305,29 @@ class CustomerReviewHistory extends Component {
     })
   }
 
-  queryEdits() {
-    ds.editReview.then((res) => {
-        // console.log("this is discounts");
-        // console.log(res.discounts);
-        this.setState({
-            reviews: res.reviews
-        })
-        for (var review of this.state.reviews) {
-            review.contentEditable = false;
-        }
-    }).catch(err => {
-        //TODO handling err
-    })
-}
+  // queryEdits(state) {
+  //   ds.editReview(state).then((res) => {
+  //     this.setState({
+  //       reviews: res.reviews
+  //     })
+  //     for (var review of this.state.reviews) {
+  //       review.contentEditable = false;
+  //     }
+  //   }).catch(err => {
+  //     //TODO handling err
+  //   })
+  // }
 
   handleClickEditReview(index) {
-    console.log(this.state.reviews);
-    console.log(index);
     this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
     // this.forceUpdate();
     if (!this.state.reviews[index].contenteditable) {
-      ds.editReview(this.state.reviews[index]).then(() => {
-        this.queryEdits();
-      }); 
+      ds.editReview(this.state.reviews[index]);
       // $('#EditeReviewResultModal').modal('show')
 
     }
-     
-      this.forceUpdate();
+
+    this.forceUpdate();
 
 
     // this.setState.reviews[index]({contenteditable: !this.state.contenteditable})

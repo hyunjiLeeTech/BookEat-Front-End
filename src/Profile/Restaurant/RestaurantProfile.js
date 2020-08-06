@@ -162,8 +162,10 @@ class RestaurantProfile extends Component {
     await ds.editRestaurantProfile(state);
   }
 
-  handleDeletePicture() {
+  handleDeletePicture(imageId) {
     //Add backend here
+    ds.deleteImage(imageId);
+    ds.updateResPictures({ id: imageId });
   }
 
   onImageChange = (event, index) => {
@@ -1482,27 +1484,21 @@ class RestaurantProfile extends Component {
                       <input type="file" name="picture" id="picture"
                         onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple />
 
-                      {/* {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
+                      {this.state.resPictures.length > 0 && (this.state.resPictures.map((currValue, index, array) => {
                         return (
-                          <div id="Images" key={"Image" + index}>
-                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />
+                          <div id="Images">
+                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} />
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
                               data-target="#deletePictureModal"
-                              onClick={() => this.handleDeletePicture()}>
+                              onClick={() => this.handleDeletePicture(currValue)}>
                               Delete
                       </button>
                           </div>
 
                         )
-                      }))} */}
-
-                      {this.state.picture.length > 0 ? 
-                     
-                          <img  src={this.state.resPicture} />
-                      
-                      :
-                      (this.state.picture.map((url, index) => {
+                      }))}
+                      {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
                           <div id="Images" key={"Image" + index}>
                             <img key={index} className="previewImage" src={serverAddress + '/getImage/' + this.state.resPictures[url]} onClick={() => this.onSelectImage(index)} />

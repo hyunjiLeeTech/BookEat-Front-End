@@ -540,9 +540,9 @@ export default {
       return res.data.menuImage;
     })
   },
-  async deleteMenuImage(state) {
-    console.log("delete menu image start");
-    return await Axios.delete(`${serverAddress}/deleteMenuImage/${state}`)
+  async deleteImage(state) {
+    console.log("delete image start");
+    return await Axios.delete(`${serverAddress}/deleteImage/${state}`)
       .then((res) => {
         console.log(res);
         return res;
@@ -626,6 +626,14 @@ export default {
   },
   deleteReview(state) {
     return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
+      .then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        throw err;
+      })
+  },
+  updateResPictures(state) {
+    return Axios.post(serverAddress + "/restaurant/updaterespictures", state, { headers: authHeader() })
       .then((res) => {
         console.log(res);
       }).catch((err) => {
