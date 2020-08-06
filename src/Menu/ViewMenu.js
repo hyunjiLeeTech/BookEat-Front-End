@@ -19,6 +19,7 @@ class Menu extends Component {
             menuName: "",
             menuPrice: "",
             menuDescript: "",
+            foodType: "",
 
 
         };
@@ -51,7 +52,7 @@ class Menu extends Component {
                     <tr key={rows}>
                             <td>  <img src={serverAddress + '/getImage/' + menu.menuImageId} style={{ maxHeight: '50%', maxWidth: '50%' }}/></td>
                         <td>{menu.menuName}</td>
-                        <td></td>
+                        <td> {menu.foodType}</td>
                         <td>{menu.menuDescript}</td>
                         <td>{menu.menuPrice}</td>
 
