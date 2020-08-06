@@ -14,6 +14,7 @@ import RestaurantLayout from "../../Restaurant/RestaurantLayout";
 import FullscreenError from '../../component/Style/FullscreenError'
 import FullScrrenLoading from '../../component/Style/FullscreenLoading';
 import ViewReview from "../../Review/Restaurant/ViewReview";
+import serverAddress from "../../Services/ServerUrl"
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -2009,6 +2010,20 @@ class RestaurantProfile extends Component {
                       <input type="file" name="picture" id="picture"
                         onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple />
 
+                      {this.state.resPictures.length > 0 && (this.state.resPictures.map((currValue, index, array) => {
+                        return (
+                          <div id="Images">
+                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} />
+                            <button type="button" className="btn mr-sm-4 btn-danger"
+                              data-toggle="modal"
+                              data-target="#deletePictureModal"
+                              onClick={() => this.handleDeletePicture(currValue)}>
+                              Delete
+                      </button>
+                          </div>
+
+                        )
+                      }))}
                       {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
                           <div id="Images">
