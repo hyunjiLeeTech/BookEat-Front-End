@@ -11,6 +11,72 @@ function sleep(ms) {
 }
 
 export default {
+  deleteAccountCustomer(){
+    return Axios.get(serverAddress + '/customers/delete', {headers: authHeader()})
+    .then(res=>{
+      if(res.data.errcode !== 0) throw res.data
+      return res.data
+    }).catch(err=>{
+      throw err;
+    })
+  },
+  getFoodOrder(foodOrderId){
+    return Axios.get(serverAddress + '/restaurant/getfoodorder/' + foodOrderId, {headers: authHeader()})
+    .then(res => {
+      if(res.data.errcode !== 0) throw res.data;
+      return res.data
+    }).catch(err =>{
+      throw err
+    })
+  },
+  getCustomerReservations(){
+    return Axios.get(serverAddress + '/customers/reservationsofpast60days', {headers: authHeader()})
+    .then((res)=>{
+      if(res.data.errcode !== 0) throw res.data;
+      return res.data;
+    }).catch(err=>{
+      throw err
+    })
+  },
+  addTable(info){
+    return Axios.post(serverAddress + '/restaurant/addtable', info, { headers: authHeader() })
+    .then(res => {
+      if (res.data.errcode !== 0) {
+        throw res.data;
+      }
+      return res.data
+    }).catch(err => {
+      console.log(err);
+      throw (err);
+      //TODO: errhandling
+    })
+  },
+  updateTable(info){
+    return Axios.post(serverAddress + '/restaurant/updatetable', info, { headers: authHeader() })
+    .then(res => {
+      if (res.data.errcode !== 0) {
+        throw res.data;
+      }
+      return res.data
+    }).catch(err => {
+      console.log(err);
+      throw (err);
+      //TODO: errhandling
+    })
+  },
+  deleteTable(tableId){
+    return Axios.post(serverAddress + '/restaurant/deletetable', { tableId: tableId }, { headers: authHeader() })
+      .then(res => {
+        if (res.data.errcode !== 0) {
+          throw res.data;
+        }
+        return res.data
+      }).catch(err => {
+        console.log(err);
+        throw (err);
+        //TODO: errhandling
+      })
+  },
   confirmEmail(accountId){
     return Axios.get(serverAddress + '/verifyEmail/' + accountId)
       .then(res=>{
@@ -104,7 +170,7 @@ export default {
       })
   },
   customerCancelReservation(reservationId) {
-    return Axios.post(serverAddress + '/customer/cancelreservation', { reservationId: reservationId }, { headers: authHeader() })
+    return Axios.post(serverAddress + '/customers/cancelreservation', { reservationId: reservationId }, { headers: authHeader() })
       .then(res => {
         if (res.data.errcode !== 0) {
           throw res.data;
