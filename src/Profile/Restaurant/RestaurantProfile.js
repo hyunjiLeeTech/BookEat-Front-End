@@ -1035,7 +1035,7 @@ class RestaurantProfile extends Component {
                               : "form-control"
                           }
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)}
+                          disabled={true}
                           required
                         />
                         <span className="invalid-feedback">
