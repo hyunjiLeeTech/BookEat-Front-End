@@ -118,7 +118,7 @@ class RestaurantLayout extends Component {
 
         tr = tables.map((table, index, tables) => {
             var trr =
-                <tr >
+                <tr key={index}>
                     <td>{tables[index].rid}</td>
                     <td><input type='checkbox' name='open' onClick={(e) => btnClick(e, tables[index])} checked={tables[index].status ? 'checked' : ''}></input></td>
                     <td><input type='number' name='size' onChange={(e) => btnClick(e, tables[index])} value={tables[index].size} /></td>
@@ -129,7 +129,7 @@ class RestaurantLayout extends Component {
                                 <Button disabled className='btn btn-warning'>Please Wait</Button>
                             </td> :
                             <td>
-                                <Button name='update' onClick={(e) => btnClick(e, tables[index])} value={tables[index]._id} className={tables[index].isEdited ? "btn btn-warning":'btn btn-primary'} disabled={tables[index].buttonDisabled ? "disabled" : ''}>{tables[index].buttonDisabled ? 'Please Wait' : 'Update'}</Button> | <Button name='delete' onClick={(e) => btnClick(e, tables[index])} value={tables[index]._id} className="btn btn-danger" disabled={tables[index].buttonDisabled ? "disabled" : ''}>{tables[index].buttonDisabled ? 'Please Wait' : 'Delete'}</Button>
+                                <Button name='update' onClick={(e) => btnClick(e, tables[index])} value={tables[index]._id} className={tables[index].isEdited ? "btn btn-warning" : 'btn btn-primary'} disabled={tables[index].buttonDisabled ? "disabled" : ''}>{tables[index].buttonDisabled ? 'Please Wait' : 'Update'}</Button> | <Button name='delete' onClick={(e) => btnClick(e, tables[index])} value={tables[index]._id} className="btn btn-danger" disabled={tables[index].buttonDisabled ? "disabled" : ''}>{tables[index].buttonDisabled ? 'Please Wait' : 'Delete'}</Button>
                             </td>
                     }
                 </tr>
@@ -192,31 +192,24 @@ class RestaurantLayout extends Component {
 
                 <p> Insert layout here
                 <Layout tables={this.state.tables} selectedTableId={id => console.log(id)} />
-                    {JSON.stringify(this.state.tables)}
+                    {/* {JSON.stringify(this.state.tables)}
                     <button onClick={this.addTable} >add</button>
-                    <button onClick={this.delTable} >del</button>
+                    <button onClick={this.delTable} >del</button> */}
                 </p>
 
                 <table className="table table table-striped">
                     <thead>
-                        <td>Id</td>
-                        <td>Is Open</td>
-                        <td>Table Size</td>
-                        <td>Near Window</td>
-                        <td>Operation</td>
+                        <tr>
+                            <th>Id</th>
+                            <th>Is Open</th>
+                            <th>Table Size</th>
+                            <th>Near Window</th>
+                            <th>Operation</th>
+                        </tr>
                     </thead>
                     <tbody>
 
                         {this.renderTablesTable(this.state.tables)}
-                        <tr>
-                            <td>                        <hr />
-                            </td>                            <td>                        <hr />
-                            </td>                            <td>                        <hr />
-                            </td>                            <td>                        <hr />
-                            </td><td>                        <hr />
-                            </td>
-
-                        </tr>
 
                         <tr>
                             <td>-</td>
