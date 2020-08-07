@@ -847,7 +847,7 @@ export default {
       })
   },
   getReviewsWithoutSignup(id) {
-    return Axios.get(serverAddress + "/getReviewsResSide", { params: { resId: id } })
+    return Axios.get(serverAddress + "/getReviewsWithoutSignUp", { params: { resId: id } })
       .then((res) => {
         console.log(res.data);
       })
