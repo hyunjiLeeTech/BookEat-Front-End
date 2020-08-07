@@ -95,7 +95,7 @@ class ResReview extends Component {
 
     async queryReviews(resId) {
 
-        var reviews = await ds.getReviewsRestaurantSide(resId);
+        var reviews = await ds.getReviewsWithoutSignup(resId);
 
         var serviceAvg = 0;
         var envirAvg = 0;
