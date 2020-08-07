@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import MainContainer from '../component/Style/MainContainer';
-// import $ from 'jquery';
 import Axios from 'axios';
 import { withRouter } from "react-router";
 import CAFE from '../Image/CAFE.jpg';
@@ -37,12 +36,10 @@ class Restaurant extends Component {
                         isResLoaded: true,
                         discount: res.data.discount
                     })
-                console.log(this.state.res)
             })
     }
 
     render() {
-        console.log("!!!!!!!!!!",this.state.discount)
         return (
 
             <MainContainer>
@@ -61,8 +58,6 @@ class Restaurant extends Component {
                     :
                     null
                 }
-
-
 
                 <div className="card mb-3">
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
@@ -99,8 +94,6 @@ class Restaurant extends Component {
                                 <h5>Reviews</h5>
                                 <hr />
                                 <ResReview resId={this.state.id} />
-
-
 
                             </div>
                             <div className="col-sm-4">
