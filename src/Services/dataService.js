@@ -533,21 +533,6 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
-      if (res.data.errcode === 0) {
-        $("#munuAddResultText")
-          .text("Menu is added")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#munuAddResultText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
@@ -560,24 +545,7 @@ export default {
   async getMenus() {
     return await Axios.get(serverAddress + "/menu/getmenus", {
       headers: authHeader()
-    }).then((res) => {
-      console.log("ds get menu")
-      console.log(res.data);
-      if (res.data.errcode === 0) {
-        $("#munuAddResultText")
-          .text("Menu is added")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#munuAddResultText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
+    }).then((res) => { 
       return res.data
     }).catch((err) => {
       console.log(err)
@@ -589,11 +557,9 @@ export default {
     })
   },
   editMenu(state) {
-    console.log("edit menu starts")
     return Axios.post(serverAddress + "/menu/editmenu", state, {
       headers: authHeader()
     }).then((res) => {
-      console.log('fullfilled');
       if (res.data.errcode === 1) throw data
       return res.data;
     }).catch(((err) => {
