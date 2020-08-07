@@ -3,8 +3,6 @@ import MainContainer from '../component/Style/MainContainer'
 import SearchBox from './SearchBox';
 import './SearchResult.css'
 import dataService from '../Services/dataService';
-// import { data, type } from 'jquery';
-// import ReactLoading from 'react-loading';
 import FullscreenLoading from '../component/Style/FullscreenLoading'
 import { Link } from 'react-router-dom';
 import FullscreenError from '../component/Style/FullscreenError'
