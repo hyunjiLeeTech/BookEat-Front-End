@@ -85,7 +85,7 @@ class RestaurantProfile extends Component {
       monIsClose: false,
       tueIsClose: false,
       wedIsClose: false,
-      thrIsClose: false,
+      thuIsClose: false,
       friIsClose: false,
       satIsClose: false,
       sunIsClose: false,
@@ -285,6 +285,7 @@ class RestaurantProfile extends Component {
 
   handleSubmitResProfile = async (e) => {
     e.preventDefault();
+    console.log(this.state);
     if (formValid(this.state)) {
       if (this.state.isPicture) {
         this.editResProfileWithPictures(this.state);
@@ -643,102 +644,51 @@ class RestaurantProfile extends Component {
     return close;
   }
 
-  handleNotOpen(e) {
-    e.preventDefault();
-    console.log("not close click");
-    $(document).ready(function () {
-      $("#mondisablebutton").click(function () {
-        if ($("#monOpenTime").prop("isClose")) {
-          $("#monOpenTime").prop("isClose", false);
-          $("#monCloseTime").prop("isClose", false);
-        } else {
-          $("#monOpenTime").prop("isClose", true);
-          $("#monCloseTime").prop("isClose", true);
-          this.setState = {
-            monIsClose: true
-          };
-        }
-      });
-
-      $("#tuedisablebutton").click(function () {
-        if ($("#tueOpenTime").prop("isClose")) {
-          $("#tueOpenTime").prop("isClose", false);
-          $("#tueCloseTime").prop("isClose", false);
-        } else {
-          $("#tueOpenTime").prop("isClose", true);
-          $("#tueCloseTime").prop("isClose", true);
-          this.setState = {
-            tueIsClose: true
-          };
-        }
-      });
-
-      $("#weddisablebutton").click(function () {
-        if ($("#wedOpenTime").prop("isClose")) {
-          $("#wedOpenTime").prop("isClose", false);
-          $("#wedCloseTime").prop("isClose", false);
-        } else {
-          $("#wedOpenTime").prop("isClose", true);
-          $("#wedCloseTime").prop("isClose", true);
-          this.setState = {
-            wedIsClose: true
-          };
-        }
-      });
-
-      $("#thudisablebutton").click(function () {
-        if ($("#thuOpenTime").prop("isClose")) {
-          $("#thuOpenTime").prop("isClose", false);
-          $("#thuCloseTime").prop("isClose", false);
-        } else {
-          $("#thuOpenTime").prop("isClose", true);
-          $("#thuCloseTime").prop("isClose", true);
-          this.setState = {
-            thuIsClose: true
-          };
-        }
-      });
-
-      $("#fridisablebutton").click(function () {
-        if ($("#friOpenTime").prop("isClose")) {
-          $("#friOpenTime").prop("isClose", false);
-          $("#friCloseTime").prop("isClose", false);
-        } else {
-          $("#friOpenTime").prop("isClose", true);
-          $("#friCloseTime").prop("isClose", true);
-          this.setState = {
-            friIsClose: true
-          };
-        }
-      });
-
-      $("#satdisablebutton").click(function () {
-        if ($("#satOpenTime").prop("isClose")) {
-          $("#satOpenTime").prop("isClose", false);
-          $("#satCloseTime").prop("isClose", false);
-        } else {
-          $("#satOpenTime").prop("isClose", true);
-          $("#satCloseTime").prop("isClose", true);
-          this.setState = {
-            satIsClose: true
-          };
-        }
-      });
-
-      $("#sundisablebutton").click(function () {
-        if ($("#sunOpenTime").prop("isClose")) {
-          $("#sunOpenTime").prop("isClose", false);
-          $("#sunCloseTime").prop("isClose", false);
-        } else {
-          $("#sunOpenTime").prop("isClose", true);
-          $("#sunCloseTime").prop("isClose", true);
-          this.setState = {
-            sunIsClose: true
-          };
-        }
-      });
-
-    });
+  handleNotOpen = (day) => {
+    console.log(day);
+    if (day === "mon") {
+      // if (this.state.monIsClose == true) {
+      // this.state.monIsClose = false;
+      // } else {
+      this.state.monIsClose = true;
+      // }
+    } else if (day === "tue") {
+      // if (this.state.monIsClose == true) {
+      // this.state.monIsClose = false;
+      // } else {
+      this.state.monIsClose = true;
+      // }
+    } else if (day === "wed") {
+      // if (this.state.monIsClose == true) {
+      // this.state.monIsClose = false;
+      // } else {
+      this.state.monIsClose = true;
+      // }
+    } else if (day === "thu") {
+      // if (this.state.monIsClose == true) {
+      // this.state.monIsClose = false;
+      // } else {
+      this.state.monIsClose = true;
+      // }
+    } else if (day === "fri") {
+      // if (this.state.monIsClose == true) {
+      // this.state.monIsClose = false;
+      // } else {
+      this.state.monIsClose = true;
+      // }
+    } else if (day === "sat") {
+      // if (this.state.monIsClose == true) {
+      // this.state.monIsClose = false;
+      // } else {
+      this.state.monIsClose = true;
+      // }
+    } else if (day === "sun") {
+      // if (this.state.monIsClose == true) {
+      // this.state.monIsClose = false;
+      // } else {
+      this.state.monIsClose = true;
+      // }
+    }
 
   }
 
@@ -1336,7 +1286,7 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="mondisablebutton"
                           disabled={(!this.state.disabled)}
-                          onClick={this.handleNotOpen.bind(this)}
+                          onClick={() => this.handleNotOpen("mon")}
                           value={this.state.isClose}
                         >
                           {" "}
@@ -1383,7 +1333,7 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="tuedisablebutton"
                           disabled={(!this.state.disabled)}
-                          onClick={this.handleNotOpen.bind(this)}
+                          onClick={() => this.handleNotOpen("tue")}
                           value={this.state.isClose}
                         >
                           {" "}
@@ -1430,7 +1380,7 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="weddisablebutton"
                           disabled={(!this.state.disabled)}
-                          onClick={this.handleNotOpen.bind(this)}
+                          onClick={() => this.handleNotOpen("wed")}
                           value={this.state.isClose}
                         >
                           {" "}
@@ -1477,7 +1427,7 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="thudisablebutton"
                           disabled={(!this.state.disabled)}
-                          onClick={this.handleNotOpen.bind(this)}
+                          onClick={() => this.handleNotOpen("thu")}
                           value={this.state.isClose}
                         >
                           {" "}
@@ -1524,7 +1474,7 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="fridisablebutton"
                           disabled={(!this.state.disabled)}
-                          onClick={this.handleNotOpen.bind(this)}
+                          onClick={() => this.handleNotOpen("fri")}
                           value={this.state.isClose}
                         >
                           {" "}
@@ -1571,7 +1521,7 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="satdisablebutton"
                           disabled={(!this.state.disabled)}
-                          onClick={this.handleNotOpen.bind(this)}
+                          onClick={() => this.handleNotOpen("sat")}
                           value={this.state.isClose}
                         >
                           {" "}
@@ -1618,7 +1568,7 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="sundisablebutton"
                           disabled={(!this.state.disabled)}
-                          onClick={this.handleNotOpen.bind(this)}
+                          onClick={() => this.handleNotOpen("sun")}
                           value={this.state.isClose}
                         >
                           {" "}
