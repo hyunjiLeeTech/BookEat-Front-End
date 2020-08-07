@@ -5,7 +5,7 @@ import $ from "jquery";
 import FullscreenError from '../component/Style/FullscreenError'
 import serverAddress from '../Services/ServerUrl';
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
-import { toast } from 'react-toastify';
+
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
