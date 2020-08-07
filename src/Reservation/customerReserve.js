@@ -27,6 +27,8 @@ class Reserve extends Component {
                 OwnerAccount: "",
                 Managers: ""
             },
+            isReservationSuccess: false,
+            reservefailMessage:'',
             menuItems: [],
             selectedMenuItems: new Set(),
         }
@@ -170,21 +172,44 @@ class Reserve extends Component {
                 console.log(res)
                 this.setState({
                     tableIsVisible: false,
+                    isReservationSuccess: true,
                     tablestatus: false,
                 })
-
-
-
                 setTimeout(() => {
                     this.setState({
                         resultIsVisible: true,
                         result: res.reservation,
                     })
                 }, 500)
+            }else{
+                console.log('err in then')
+                console.log(res)
+                this.setState({
+                    tableIsVisible: false,
+                    tablestatus: false,
+                    isReservationSuccess: false,
+                    reservefailMessage: res.errmsg
+                })
+                setTimeout(() => {
+                    this.setState({
+                        resultIsVisible: true,
+                    })
+                }, 500)
             }
-
         }).catch(err => {
+            console.log('err in catch')
             console.log(err)
+            this.setState({
+                tableIsVisible: false,
+                tablestatus: false,
+                isReservationSuccess: false,
+                reservefailMessage: err.errmsg
+            })
+            setTimeout(() => {
+                this.setState({
+                    resultIsVisible: true,
+                })
+            }, 500)
         })
     }
 
@@ -261,13 +286,19 @@ class Reserve extends Component {
                         </div> : null}
                     {this.state.resultIsVisible ?
                             <div className="page-header text-left" style={{ marginTop: '5%' }}>
-                                <h3>Thanks for reserving</h3>
+                                {this.state.isReservationSuccess? 
+                                <div>
+                                    <h3>Thanks for reserving</h3>
                                 <h4>This is your reservation:</h4>
                                 <p>Customer Name: {this.state.result.customer.firstName + " " + this.state.result.customer.lastName}</p>
                                 <p>Time: {new Date(this.state.result.dateTime).toString()}</p>
                                 <p>Restaurant: {this.state.result.restaurant.resName}</p>
                                 <p>Number of People: {this.state.result.numOfPeople}</p>
                                 <p>Restaurant Phone Number: {this.state.result.restaurant.businessNum}</p>
+                                </div>: <div><h3>Reservation failed</h3>
+                                    
+                                <p>{this.state.reservefailMessage}</p>
+                                </div>}
                             </div>
                          : null}
 
