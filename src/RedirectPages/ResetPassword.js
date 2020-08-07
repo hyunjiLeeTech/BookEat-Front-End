@@ -3,6 +3,9 @@ import MainContainer from "../component/Style/MainContainer"
 import Parser from "html-react-parser";
 import sha256 from "crypto-js/sha256";
 import FullscreenError from '../component/Style/FullscreenError';
+import { withRouter } from "react-router-dom";
+import dataService from "../Services/dataService";
+import { toast } from "react-toastify";
 
 
 const regExpPassword = RegExp(
@@ -42,7 +45,9 @@ class ResetPassword extends Component {
                 newPassword: "&#160;",
                 confirmpw: "&#160;"
             },
-            resultsErr: false
+            resultsErr: false,
+            accountId: this.props.match.params.id,
+            timestamp: this.props.match.params.timestamp,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -81,6 +86,17 @@ class ResetPassword extends Component {
         if (formValid(this.state)) {
             this.state.password = sha256(this.state.password).toString(); //hashing password
             this.state.newPassword = sha256(this.state.newPassword).toString();
+            dataService.resetPasswordWithTimeStamp({
+                accountId: this.state.accountId,
+                timestamp: this.state.timestamp,
+                newPassword: this.state.newPassword,
+            }).then(res=>{
+                toast('Password reset, please login', {type: 'success', autoClose: 5000})
+            }).catch(err=>{
+                var errmsg = 'error'
+                if(err.errmsg) errmsg = err.errmsg;
+                toast(errmsg, {type: 'error', autoClose: false})
+            })
 
             //   const infoToast = toast("We are updating your password, Please wait", { type: toast.TYPE.INFO, autoClose: false, });
             //   dataService.changeAccountPassword(this.state.password, this.state.newPassword).then((res) => {
@@ -114,7 +130,6 @@ class ResetPassword extends Component {
 
     render() {
         const { isError } = this.state;
-
         return (
             <MainContainer>
                 {this.state.resultsErr
@@ -200,4 +215,4 @@ class ResetPassword extends Component {
 
 }
 
-export default ResetPassword;
+export default withRouter(ResetPassword);

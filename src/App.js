@@ -209,7 +209,7 @@ class App extends Component {
           <Route exact path="/Daily" render={() => <Daily />} />
           <Route exact path="/Feature" render={() => <Feature />} />
           <Route exact path="/Favorite" render={() => <Favorite />} />
-          <Route exact path="/ResetPassword" render={() => <ResetPassword />} />
+          <Route exact path="/ResetPassword/:id/:timestamp" render={() => <ResetPassword />} />
         </Switch>
         <div className="footer-padding">
         </div>
