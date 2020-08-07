@@ -220,11 +220,8 @@ class ManagerProfile extends Component {
           <div className="card-header">
             <ul className="nav nav-tabs card-header-tabs">
               <li className="nav-item">
-                {/* <Link to='#restaurantProfile'>
-                                    <button className="nav-link active" data-toggle="tab">  My Profile</button>
-                                </Link> */}
                 <a
-                  class="nav-link active"
+                  className="nav-link active"
                   data-toggle="tab"
                   role="tab"
                   href="#managerProfile"
@@ -235,11 +232,8 @@ class ManagerProfile extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                {/* <Link to='/'>
-                                    <button className="nav-link" data-toggle="tab">Menu</button>
-                                </Link> */}
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   data-toggle="tab"
                   role="tab"
                   href="#menu"
@@ -250,11 +244,8 @@ class ManagerProfile extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                {/* <Link to='#managerAccount'>
-                                    <button className="nav-link" data-toggle="tab">Manager</button>
-                                </Link> */}
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   data-toggle="tab"
                   role="tab"
                   href="#reservation"
@@ -265,11 +256,8 @@ class ManagerProfile extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                {/* <Link to='#managerAccount'>
-                                    <button className="nav-link" data-toggle="tab">Manager</button>
-                                </Link> */}
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   data-toggle="tab"
                   role="tab"
                   href="#manReview"
@@ -280,11 +268,8 @@ class ManagerProfile extends Component {
                 </a>
               </li>
               <li className="nav-item">
-                {/* <Link to='/ChangePassword'>
-                                    <button className="nav-link" data-toggle="tab">Password</button>
-                                </Link> */}
                 <a
-                  class="nav-link"
+                  className="nav-link"
                   data-toggle="tab"
                   role="tab"
                   href="#changePassword"
