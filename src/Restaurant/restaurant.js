@@ -24,6 +24,7 @@ class Restaurant extends Component {
             res: [],
             resultsErr: false,
             isResLoaded: false,
+            discount: {},
         }
     }
 
@@ -33,14 +34,15 @@ class Restaurant extends Component {
                 if (res.data.errcode === 0)
                     this.setState({
                         res: res.data.restaurant,
-                        isResLoaded: true
+                        isResLoaded: true,
+                        discount: res.data.discount
                     })
                 console.log(this.state.res)
             })
     }
 
     render() {
-        console.log("!!!!!!!!!!",this.state.res.discounts)
+        console.log("!!!!!!!!!!",this.state.discount)
         return (
 
             <MainContainer>
@@ -137,7 +139,7 @@ class Restaurant extends Component {
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
                                 <h5>Promotions</h5>
-                                <p>{this.state.isResLoaded ? this.state.res.discounts: null}</p>
+                                <p>{this.state.isResLoaded ? this.state.discount.percent: null}% Off Call for more information!</p>
 
                             </div>
                         </div>
