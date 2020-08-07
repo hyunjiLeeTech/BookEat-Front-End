@@ -457,9 +457,11 @@ class RestaurantProfile extends Component {
         if ($("#monOpenTime").prop("disabled")) {
           $("#monOpenTime").prop("disabled", false);
           $("#monCloseTime").prop("disabled", false);
+          console.log("click 2");
         } else {
           $("#monOpenTime").prop("disabled", true);
           $("#monCloseTime").prop("disabled", true);
+          console.log("click 3")
         }
       });
 
@@ -1326,7 +1328,7 @@ class RestaurantProfile extends Component {
                           className="custom-select col-md-3"
                           id="tueOpenTime"
                           name="tueOpenTime"
-                          value={this.state.tuesOpenTime}
+                          value={this.state.tueOpenTime}
                           onChange={this.handleChange}
                           disabled={(!this.state.disabled)}
                           required
