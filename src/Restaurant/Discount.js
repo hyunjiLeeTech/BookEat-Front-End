@@ -129,38 +129,45 @@ class Discount extends Component {
     }
 
     queryDiscounts() {
+        this.setState({
+            isLoading: true
+        })
         ds.getDiscounts().then((res) => {
-            // console.log("this is discounts");
-            // console.log(res.discounts);
-            $("#DiscountEditResultModalText")
-                        .text("Disccount is change")
-                        .removeClass("alert-warning")
-                        .removeClass("alert-danger")
-                        .removeClass("alert-success")
-                        .addClass("alert-success");
+            
             this.setState({
                 discounts: res.discounts
             })
             for (var discount of this.state.discounts) {
                 discount.contentTable = false;
             }
+            $("#DiscountEditResultModalText")
+                .text("Disccount is change")
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-success");
         }).catch(err => {
             //TODO handling err
             $("#DiscountEditResultModalText")
-            .text("Sorry, " + err)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
+                .text("Sorry, " + err)
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-danger");
+        })
+
+        this.setState({
+            isLoading:false
         })
     }
 
     discountEditButton(index) {
         this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
-
         if (!this.state.discounts[index].contentTable) {
             ds.editDiscount(this.state.discounts[index]);
+        
         }
+  
 
         this.callModal(index);
     }
@@ -207,7 +214,7 @@ class Discount extends Component {
             const { id, discdescription, promdescription } = discount;
             return (
                 <tr key={index}>
-                    <th contenttable={(this.state.discounts[index].contentTable)}>
+                    <th>
 
                         <input type="text" id={"discdescription" + index} name="discdescription"
                             defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
@@ -215,7 +222,7 @@ class Discount extends Component {
 
 
                     </th>
-                    <th contenttable={(this.state.discounts[index].contentTable)} >
+                    <th>
                         <textarea
                             rows="5"
                             id="promdescription"
