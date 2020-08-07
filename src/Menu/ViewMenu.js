@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import MainContainer from "../component/Style/MainContainer";
-import "./EditMenu.js"
 import ds from "../Services/dataService"
 import serverAddress from '../Services/ServerUrl';
 

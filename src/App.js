@@ -18,11 +18,9 @@ import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import Logout from './component/Forms/Logout';
 import Layout from './component/RestaurantLayout/Layout';
-// import CustomerReservation from './Reservation/Customer/CustomerReservation';
 import CustomerReservationHistory from './Reservation/Customer/CustomerReservationHistory'
 import CustomerReviewHistory from './Review/Customer/CustomerReviewHistory'
 import Menu from './Menu/Menu'
-import EditMenu from './Menu/EditMenu'
 
 import $ from 'jquery'
 
@@ -170,12 +168,6 @@ class App extends Component {
             path="/EmailConfirmation/:id"
             render={() => <EmailConfirmation />}
           />
-          {/* <Route
-            exact
-            path="/CustomerReservation"
-            render={() => <CustomerReservation />}
-          /> */}
-
           <Route
             exact
             path="/CustomerReservationHistory"
@@ -198,11 +190,6 @@ class App extends Component {
             render={() => <ErrorPage />}
           />
 
-          <Route
-            exact
-            path="/EditMenu"
-            render={() => !this.state.isUser ? <Redirect to='/login' /> : <EditMenu />}
-          />
           <Route exact path="/NotFound" render={() => <NotFound />} />
           <Route exact path="/RestaurantReservation"  render={() => !this.state.isUser ? <Redirect to='/login' /> : <RestaurantReservation />} />
           <Route exact path="/SearchResult" render={() => <SearchResult />} />
