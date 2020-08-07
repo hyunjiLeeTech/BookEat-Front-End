@@ -424,8 +424,7 @@ export default {
     Axios.post(serverAddress + "/updatecustomerinfo", state, {
       headers: authHeader(),
     }).then((res) => {
-      console.log(res);
-
+      return res.data;
     }).catch(err => {
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(updateCustomerInformation)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
