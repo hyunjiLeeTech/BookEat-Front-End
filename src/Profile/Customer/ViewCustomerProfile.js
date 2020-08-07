@@ -94,7 +94,21 @@ class ViewCustomerProfile extends Component {
     e.preventDefault();
     console.log("submit customer profile")
     if (formValid(this.state)) {
-      ds.editCustomerProfile(this.state);
+      ds.editCustomerProfile(this.state).then(() => {
+        $("#customerProfileResultText")
+            .text("Customer profile is edited")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+      }).catch((err) => {
+        $("#customerProfileResultText")
+            .text("Sorry, " + err)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+      })
     } else {
       console.log("Form is invalid!");
     }

@@ -5,6 +5,7 @@ import Parser from "html-react-parser";
 import ds from "../../Services/dataService";
 import moment from 'moment';
 import serverAddress from '../../Services/ServerUrl';
+import $ from "jquery";
 
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
@@ -146,6 +147,21 @@ class ResReview extends Component {
         state.isPicture = true;
         state.reviewPictures = reviewPicturesId;
         await ds.addReview(state);
+        try{
+            $("#AddReviewModalText")
+                .text("Your review is added")
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-success");
+        }catch(err){
+            $("#AddReviewModalText")
+            .text("Sorry, " + err)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
     }
 
 
@@ -157,8 +173,6 @@ class ResReview extends Component {
         if (formValid(this.state)) {
             if (this.state.isPicture) {
                 this.addReviewWithPictures(this.state);
-            } else {
-                ds.addReview(this.state);
             }
         } else {
             console.log("Review is invalid");
