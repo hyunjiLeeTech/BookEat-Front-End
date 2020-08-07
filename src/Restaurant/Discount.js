@@ -158,24 +158,8 @@ class Discount extends Component {
     discountEditButton(index) {
         this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
 
-        if (!this.state.discounts[index].contenteTable) {
-            ds.editDiscount(this.state.discounts[index])
-                .then(() => {
-                    this.queryDiscounts(this.state.discounts[index]);
-                    $("#DiscountEditResultModalText")
-                        .text("Disccount is change")
-                        .removeClass("alert-warning")
-                        .removeClass("alert-danger")
-                        .removeClass("alert-success")
-                        .addClass("alert-success");
-                }).catch((err) => {
-                    $("#DiscountEditResultModalText")
-                    .text("Sorry, " + err)
-                    .removeClass("alert-warning")
-                    .removeClass("alert-danger")
-                    .removeClass("alert-success")
-                    .addClass("alert-danger");
-                });
+        if (!this.state.discounts[index].contentTable) {
+            ds.editDiscount(this.state.discounts[index]);
         }
 
         this.callModal(index);
