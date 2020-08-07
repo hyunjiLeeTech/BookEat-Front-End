@@ -613,16 +613,6 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
-      if (res.data.errcode === 0) {
-        //FIXME: Move to component 
-      } else {
-        $("#DeleteResultModalText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
