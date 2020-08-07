@@ -637,6 +637,79 @@ class RestaurantProfile extends Component {
   handleNotOpen(e){
     e.preventDefault();
     console.log("not close click");
+    $(document).ready(function () {
+      $("#mondisablebutton").click(function () {
+        if ($("#monOpenTime").prop("isClose")) {
+          $("#monOpenTime").prop("isClose", false);
+          $("#monCloseTime").prop("isClose", false);
+        } else {
+          $("#monOpenTime").prop("isClose", true);
+          $("#monCloseTime").prop("isClose", true);
+        }
+      });
+
+      $("#tuedisablebutton").click(function () {
+        if ($("#tueOpenTime").prop("isClose")) {
+          $("#tueOpenTime").prop("isClose", false);
+          $("#tueCloseTime").prop("isClose", false);
+        } else {
+          $("#tueOpenTime").prop("isClose", true);
+          $("#tueCloseTime").prop("isClose", true);
+        }
+      });
+
+      $("#weddisablebutton").click(function () {
+        if ($("#wedOpenTime").prop("isClose")) {
+          $("#wedOpenTime").prop("isClose", false);
+          $("#wedCloseTime").prop("isClose", false);
+        } else {
+          $("#wedOpenTime").prop("isClose", true);
+          $("#wedCloseTime").prop("isClose", true);
+        }
+      });
+
+      $("#thudisablebutton").click(function () {
+        if ($("#thuOpenTime").prop("isClose")) {
+          $("#thuOpenTime").prop("isClose", false);
+          $("#thuCloseTime").prop("isClose", false);
+        } else {
+          $("#thuOpenTime").prop("isClose", true);
+          $("#thuCloseTime").prop("isClose", true);
+        }
+      });
+
+      $("#fridisablebutton").click(function () {
+        if ($("#friOpenTime").prop("isClose")) {
+          $("#friOpenTime").prop("isClose", false);
+          $("#friCloseTime").prop("isClose", false);
+        } else {
+          $("#friOpenTime").prop("isClose", true);
+          $("#friCloseTime").prop("isClose", true);
+        }
+      });
+
+      $("#satdisablebutton").click(function () {
+        if ($("#satOpenTime").prop("isClose")) {
+          $("#satOpenTime").prop("isClose", false);
+          $("#satCloseTime").prop("isClose", false);
+        } else {
+          $("#satOpenTime").prop("isClose", true);
+          $("#satCloseTime").prop("isClose", true);
+        }
+      });
+
+      $("#sundisablebutton").click(function () {
+        if ($("#sunOpenTime").prop("isClose")) {
+          $("#sunOpenTime").prop("isClose", false);
+          $("#sunCloseTime").prop("isClose", false);
+        } else {
+          $("#sunOpenTime").prop("isClose", true);
+          $("#sunCloseTime").prop("isClose", true);
+        }
+      });
+
+    });
+
   }
 
 
