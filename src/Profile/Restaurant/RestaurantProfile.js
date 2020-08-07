@@ -647,48 +647,50 @@ class RestaurantProfile extends Component {
   handleNotOpen = (day) => {
     console.log(day);
     if (day === "mon") {
-      // if (this.state.monIsClose == true) {
-      // this.state.monIsClose = false;
-      // } else {
-      this.state.monIsClose = true;
-      // }
+      if (this.state.monIsClose == true) {
+        this.state.monIsClose = false;
+      } else {
+        this.state.monIsClose = true;
+      }
     } else if (day === "tue") {
-      // if (this.state.monIsClose == true) {
-      // this.state.monIsClose = false;
-      // } else {
-      this.state.monIsClose = true;
-      // }
+      if (this.state.monIsClose == true) {
+        this.state.monIsClose = false;
+      } else {
+        this.state.tueIsClose = true;
+      }
     } else if (day === "wed") {
-      // if (this.state.monIsClose == true) {
-      // this.state.monIsClose = false;
-      // } else {
-      this.state.monIsClose = true;
-      // }
+      if (this.state.monIsClose == true) {
+        this.state.monIsClose = false;
+      } else {
+        this.state.wedIsClose = true;
+      }
     } else if (day === "thu") {
-      // if (this.state.monIsClose == true) {
-      // this.state.monIsClose = false;
-      // } else {
-      this.state.monIsClose = true;
-      // }
+      if (this.state.monIsClose == true) {
+        this.state.monIsClose = false;
+      } else {
+        this.state.thuIsClose = true;
+      }
     } else if (day === "fri") {
-      // if (this.state.monIsClose == true) {
-      // this.state.monIsClose = false;
-      // } else {
-      this.state.monIsClose = true;
-      // }
+      if (this.state.monIsClose == true) {
+        this.state.monIsClose = false;
+      } else {
+        this.state.friIsClose = true;
+      }
     } else if (day === "sat") {
-      // if (this.state.monIsClose == true) {
-      // this.state.monIsClose = false;
-      // } else {
-      this.state.monIsClose = true;
-      // }
+      if (this.state.monIsClose == true) {
+        this.state.monIsClose = false;
+      } else {
+        this.state.satIsClose = true;
+      }
     } else if (day === "sun") {
-      // if (this.state.monIsClose == true) {
-      // this.state.monIsClose = false;
-      // } else {
-      this.state.monIsClose = true;
-      // }
+      if (this.state.monIsClose == true) {
+        this.state.monIsClose = false;
+      } else {
+        this.state.sunIsClose = true;
+      }
     }
+
+    console.log(this.state);
 
   }
 
