@@ -27,15 +27,11 @@ class ViewReview extends Component {
 
     async componentWillMount() {
         var resId = this.state.resId;
-
         await this.queryReviews(resId);
-        console.log("after get reviews");
-        console.log(this.state);
     }
 
     async queryReviews(resId) {
         var reviews = await ds.getReviewsResManProfile(resId);
-
         this.setState({
             reviews: reviews
         })
@@ -46,11 +42,10 @@ class ViewReview extends Component {
         e.preventDefault();
     }
 
+
     renderReviewList() {
         var rows = [];
-        console.log("this state reviews: " + this.state.reviews);
         if (typeof this.state.reviews != "undefined") {
-
             for (var review of this.state.reviews) {
                 rows.push(
 
@@ -96,20 +91,19 @@ class ViewReview extends Component {
             <div className="container">
                 <div className="row">
 
-
                     <h3>Reviews</h3>
                     <br />
                     <hr />
                     <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Food</th>
-                                <th scope="col">Service</th>
-                                <th scope="col">Satisfaction</th>
-                                <th scope="col">Environment</th>
-                                <th scope="col">Comment</th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Food</th>
+                                <th>Service</th>
+                                <th>Satisfaction</th>
+                                <th>Environment</th>
+                                <th>Comment</th>
 
                             </tr>
                         </thead>
@@ -119,12 +113,7 @@ class ViewReview extends Component {
                         </tbody>
                     </table>
 
-
-
                 </div>
-
-
-
             </div>
 
         )
