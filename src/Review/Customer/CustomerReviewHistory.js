@@ -56,7 +56,10 @@ class CustomerReviewHistory extends Component {
   //   })
   // }
 
-  handleClickDeleteReview(id) {
+  handleClickDeleteReview(id, reviewPictures) {
+    if (reviewPictures.length > 0) {
+      ds.deleteImages({ pictures: reviewPictures });
+    }
     ds.deleteReview({ _id: id }).then(() => {
       this.queryReviews();
       $("#DeleteReviewResultModalText")
@@ -311,7 +314,7 @@ class CustomerReviewHistory extends Component {
                     className="btn btn-danger btn-sm mr-sm-2"
                     data-toggle="modal"
                     data-target="#DeleteReviewResultModal"
-                    onClick={() => this.handleClickDeleteReview(this.state.reviews[index]._id)}
+                    onClick={() => this.handleClickDeleteReview(this.state.reviews[index]._id, this.state.reviews[index].pictures)}
                   >
                     Delete
                 </button>
@@ -323,7 +326,7 @@ class CustomerReviewHistory extends Component {
 
           <tr>
             <td colspan="2">
-            <input type="file" name="picture1" id="picture1" defaultValue={this.state.picture1}
+              <input type="file" name="picture1" id="picture1" defaultValue={this.state.picture1}
                 onChange={(e) => this.onImageChangepic1(e, index)} disabled={(!this.state.reviews[index].contenteditable)} />
 
               {
@@ -337,7 +340,7 @@ class CustomerReviewHistory extends Component {
 
                   </div>
               }
-              
+
             </td>
             <td colspan="2 ">
               <input type="file" name="picture2" id="picture2" defaultValue={this.state.picture2}
@@ -366,44 +369,44 @@ class CustomerReviewHistory extends Component {
 
   onImageChangepic1 = (event, index) => {
     if (event.target.files && event.target.files[0]) {
-        let img = event.target.files[0];
-        // this.setState({
-        //   image: URL.createObjectURL(img)
-        // });
-        if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
-            this.state.menus[index].picture1 = URL.createObjectURL(img)
-            this.state.menus[index].image = img
-            this.forceUpdate();
-        } else {
-            this.setState({
-                // image: URL.createObjectURL(img),
-                image: event.target.files[0]
-            })
-        }
-
-    }
-};
-
-onImageChangepic2 = (event, index) => {
-  if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       // this.setState({
       //   image: URL.createObjectURL(img)
       // });
       if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
-          this.state.menus[index].picture1 = URL.createObjectURL(img)
-          this.state.menus[index].image = img
-          this.forceUpdate();
+        this.state.menus[index].picture1 = URL.createObjectURL(img)
+        this.state.menus[index].image = img
+        this.forceUpdate();
       } else {
-          this.setState({
-              // image: URL.createObjectURL(img),
-              image: event.target.files[0]
-          })
+        this.setState({
+          // image: URL.createObjectURL(img),
+          image: event.target.files[0]
+        })
       }
 
-  }
-};
- 
+    }
+  };
+
+  onImageChangepic2 = (event, index) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      // this.setState({
+      //   image: URL.createObjectURL(img)
+      // });
+      if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
+        this.state.menus[index].picture1 = URL.createObjectURL(img)
+        this.state.menus[index].image = img
+        this.forceUpdate();
+      } else {
+        this.setState({
+          // image: URL.createObjectURL(img),
+          image: event.target.files[0]
+        })
+      }
+
+    }
+  };
+
 
   handleClickEditReview(index) {
     this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
