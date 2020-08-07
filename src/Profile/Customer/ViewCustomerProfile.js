@@ -96,18 +96,18 @@ class ViewCustomerProfile extends Component {
     if (formValid(this.state)) {
       ds.editCustomerProfile(this.state).then(() => {
         $("#customerProfileResultText")
-            .text("Customer profile is edited")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
+          .text("Customer profile is edited")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
       }).catch((err) => {
         $("#customerProfileResultText")
-            .text("Sorry, " + err)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
+          .text("Sorry, " + err)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
       })
     } else {
       console.log("Form is invalid!");
@@ -118,9 +118,8 @@ class ViewCustomerProfile extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      Axios.post(serverAddress + "/updatecustomerinfo", this.state).then(
-        (customer) => {
-          console.log(customer);
+      ds.updateCustomerInformation(this.state)
+        .then((customer) => {
           if (customer.data.errcode === 0) {
             $("#updateResultText")
               .text("Profile update is finished.")
@@ -135,8 +134,7 @@ class ViewCustomerProfile extends Component {
               .removeClass("alert-danger")
               .removeClass("alert-success");
           }
-        }
-      );
+        });
       console.log(this.state);
     } else {
       console.log("Form is invalid!");
@@ -206,11 +204,11 @@ class ViewCustomerProfile extends Component {
     const { isError } = this.state;
     const { customer } = this.props;
     //TODO: feedbacks
-    const deleteAccount = ()=>{
+    const deleteAccount = () => {
       console.log('starting delete account')
-      dataService.deleteAccountCustomer().then(res=>{
+      dataService.deleteAccountCustomer().then(res => {
         console.log(res);
-      }).catch(err=>{
+      }).catch(err => {
         console.log(err)
       })
     }
@@ -361,27 +359,27 @@ class ViewCustomerProfile extends Component {
             </div>
 
             <div id="password" className=" tab-pane card-body">
-            
-                < ChangePassword />
-            
+
+              < ChangePassword />
+
             </div>
 
             <div id="myReservation"
               className="container tab-pane fade ">
-            
-                <CustomerReservationHistory />
-             
+
+              <CustomerReservationHistory />
+
             </div>
 
             <div id="myReview" className="container tab-pane fade">
-            
-                <CustomerReviewHistory />
-             
+
+              <CustomerReviewHistory />
+
             </div>
           </div>
 
 
-    {/* edit modal */}
+          {/* edit modal */}
           <div
             className="modal fade"
             id="signResultModal"

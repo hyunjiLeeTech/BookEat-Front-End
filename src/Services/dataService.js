@@ -424,8 +424,7 @@ export default {
     Axios.post(serverAddress + "/updatecustomerinfo", state, {
       headers: authHeader(),
     }).then((res) => {
-      console.log(res);
-  
+      return res.data;
     }).catch(err => {
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(updateCustomerInformation)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -627,7 +626,7 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
-   
+
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
@@ -828,6 +827,18 @@ export default {
           return;
         }
         throw err;
+      })
+  },
+  deleteImages(state) {
+    return Axios.delete(serverAddress + "/deleteimages", { params: { pictures: state } })
+      .then((res) => {
+        console.log(res.data);
+      })
+  },
+  getReviewsWithoutSignup(id) {
+    return Axios.get(serverAddress + "/getReviewsWithoutSignUp", { params: { resId: id } })
+      .then((res) => {
+        console.log(res.data);
       })
   }
 };
