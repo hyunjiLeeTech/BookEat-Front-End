@@ -81,6 +81,15 @@ class RestaurantProfile extends Component {
       // eating time
       eatingTime: "",
 
+      // open or close
+      monIsClose: false,
+      tueIsClose: false,
+      wedIsClose: false,
+      thrIsClose: false,
+      friIsClose: false,
+      satIsClose: false,
+      sunIsClose: false,
+
       // open and close time
       monOpenTime: "",
       monCloseTime: "",
@@ -281,7 +290,7 @@ class RestaurantProfile extends Component {
         this.editResProfileWithPictures(this.state);
       } else {
         ds.editRestaurantProfile(this.state);
-         
+
       }
     } else {
       console.log("Form is invalid!");
@@ -634,7 +643,7 @@ class RestaurantProfile extends Component {
     return close;
   }
 
-  handleNotOpen(e){
+  handleNotOpen(e) {
     e.preventDefault();
     console.log("not close click");
     $(document).ready(function () {
@@ -645,6 +654,9 @@ class RestaurantProfile extends Component {
         } else {
           $("#monOpenTime").prop("isClose", true);
           $("#monCloseTime").prop("isClose", true);
+          this.setState = {
+            monIsClose: true
+          };
         }
       });
 
@@ -655,6 +667,9 @@ class RestaurantProfile extends Component {
         } else {
           $("#tueOpenTime").prop("isClose", true);
           $("#tueCloseTime").prop("isClose", true);
+          this.setState = {
+            tueIsClose: true
+          };
         }
       });
 
@@ -665,6 +680,9 @@ class RestaurantProfile extends Component {
         } else {
           $("#wedOpenTime").prop("isClose", true);
           $("#wedCloseTime").prop("isClose", true);
+          this.setState = {
+            wedIsClose: true
+          };
         }
       });
 
@@ -675,6 +693,9 @@ class RestaurantProfile extends Component {
         } else {
           $("#thuOpenTime").prop("isClose", true);
           $("#thuCloseTime").prop("isClose", true);
+          this.setState = {
+            thuIsClose: true
+          };
         }
       });
 
@@ -685,6 +706,9 @@ class RestaurantProfile extends Component {
         } else {
           $("#friOpenTime").prop("isClose", true);
           $("#friCloseTime").prop("isClose", true);
+          this.setState = {
+            friIsClose: true
+          };
         }
       });
 
@@ -695,6 +719,9 @@ class RestaurantProfile extends Component {
         } else {
           $("#satOpenTime").prop("isClose", true);
           $("#satCloseTime").prop("isClose", true);
+          this.setState = {
+            satIsClose: true
+          };
         }
       });
 
@@ -705,6 +732,9 @@ class RestaurantProfile extends Component {
         } else {
           $("#sunOpenTime").prop("isClose", true);
           $("#sunCloseTime").prop("isClose", true);
+          this.setState = {
+            sunIsClose: true
+          };
         }
       });
 
