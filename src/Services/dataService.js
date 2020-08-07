@@ -2,8 +2,7 @@ import authHeader from "./authHeader";
 // import authService from "./AuthService";
 import serverAddress from "./ServerUrl";
 import Axios from "axios";
-import $, { data } from "jquery";
-import { toast } from "react-toastify";
+import { data } from "jquery";
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -360,23 +359,7 @@ export default {
     })
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#resProfileResultText")
-            .text("Profiled is edited")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-          return res.data
-        } else {
-          $("#resProfileResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-          throw res.data
-        }
+        return res.data
       })
       .catch((err) => {
         console.log(err);
@@ -393,21 +376,6 @@ export default {
     })
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#signResultText")
-            .text("Profiled is edited")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#signResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       })
       .catch((err) => {
         console.log(err);
@@ -434,24 +402,9 @@ export default {
   createManagerAccount(state) {
     Axios.post(serverAddress + "/managersignup", state, {
       headers: authHeader(),
-    }) // TODO: need to move jquery
+    }) 
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#manSignResultText")
-            .text("Manager account is created")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#manSignResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       })
       .catch((err) => {
         console.log(err);
@@ -484,24 +437,9 @@ export default {
       {
         headers: authHeader(),
       }
-    ) // TODO: move jquery
+    ) 
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#deleteResultText")
-            .text("Manager account is deleted")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#deleteResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       })
       .catch((err) => {
         console.log(err);

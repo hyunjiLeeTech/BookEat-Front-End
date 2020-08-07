@@ -103,6 +103,22 @@ class ManagerProfile extends Component {
     } else {
       console.log("Form is invalid!");
     }
+    try{
+      $("#manProfileResultText")
+      .text("Profiled is edited")
+      .removeClass("alert-warning")
+      .removeClass("alert-danger")
+      .removeClass("alert-success")
+      .addClass("alert-success");
+    }catch(err){
+      $("#manProfileResultText")
+      .text("Sorry, " + err)
+      .removeClass("alert-warning")
+      .removeClass("alert-danger")
+      .removeClass("alert-success")
+      .addClass("alert-danger");
+
+    }
   };
 
   async componentDidMount() {
@@ -178,7 +194,7 @@ class ManagerProfile extends Component {
         if (this.state.edit) {
           $("#save_edit_btn")
             .attr("data-toggle", "modal")
-            .attr("data-target", "#resProfileResultModal")
+            .attr("data-target", "#manProfileResultModal")
             .attr("type", "button");
         } else {
           $("#save_edit_btn")
@@ -426,10 +442,10 @@ class ManagerProfile extends Component {
                   {/* Restaurant profile result Modal */}
                   <div
                     className="modal fade"
-                    id="resProfileResultModal"
-                    tabindex="-1"
+                    id="manProfileResultModal"
+                    tabIndex="-1"
                     role="dialog"
-                    aria-labelledby="resProfileResultModalLabel"
+                    aria-labelledby="manProfileResultModalLabel"
                     aria-hidden="true"
                   >
                     <div className="modal-dialog" role="document">
@@ -437,7 +453,7 @@ class ManagerProfile extends Component {
                         <div className="modal-header">
                           <h5
                             className="modal-title"
-                            id="resProfileResultModalLabel"
+                            id="manProfileResultModalLabel"
                           >
                             Manager Profile
                           </h5>
@@ -453,7 +469,7 @@ class ManagerProfile extends Component {
                         <div className="modal-body">
                           <p
                             className="alert alert-warning"
-                            id="resProfileResultText"
+                            id="manProfileResultText"
                           >
                             Please Wait...
                           </p>

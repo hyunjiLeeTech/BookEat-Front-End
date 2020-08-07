@@ -295,6 +295,21 @@ class RestaurantProfile extends Component {
     } else {
       console.log("Form is invalid!");
     }
+    try{
+      $("#resProfileResultText")
+      .text("Profiled is edited")
+      .removeClass("alert-warning")
+      .removeClass("alert-danger")
+      .removeClass("alert-success")
+      .addClass("alert-success");
+    }catch(err){
+      $("#resProfileResultText")
+      .text("Sorry, " + err)
+      .removeClass("alert-warning")
+      .removeClass("alert-danger")
+      .removeClass("alert-success")
+      .addClass("alert-danger");
+    }
   };
 
   handleAddDiscount = (e) => {
