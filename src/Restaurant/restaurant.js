@@ -11,6 +11,10 @@ import ViewMenu from '../Menu/ViewMenu';
 import FullscreenError from '../component/Style/FullscreenError'
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
 import ds from "../Services/dataService";
+import { GiKnifeFork } from "react-icons/gi";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { AiOutlineShop, AiOutlinePhone } from "react-icons/ai";
+import { RiTimeLine, RiMapPin2Line } from "react-icons/ri";
 
 class Restaurant extends Component {
     constructor(props) {
@@ -18,7 +22,6 @@ class Restaurant extends Component {
         this.state = {
             id: this.props.match.params.id,
             res: [],
-            reviews: [],
             resultsErr: false,
             isResLoaded: false,
         }
@@ -34,30 +37,12 @@ class Restaurant extends Component {
                     })
                 console.log(this.state.res)
             })
-        // var resId = this.state.id;
-
-        // await this.queryReviews(resId);
-        // console.log("after get reviews");
-        // console.log(this.state);
     }
-
-    // async queryReviews(resId) {
-    //     var reviews = await ds.getReviewsRestaurantSide(resId);
-
-    //     this.setState({
-    //         reviews: reviews
-    //     })
-    // }
-
-    componentDidMount() {
-        console.log(this.state.res)
-    }
-
-
 
     render() {
+        console.log("!!!!!!!!!!",this.state.res.discounts)
         return (
-           
+
             <MainContainer>
 
                 {this.state.resultsErr
@@ -125,15 +110,15 @@ class Restaurant extends Component {
                                 <br />
                                 <h5>Restaurant Information</h5>
                                 <hr />
-                                <h6>Address</h6>
+                                <h6><RiMapPin2Line />  Address</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.addressId.streetNum : null} {this.state.isResLoaded ? this.state.res.addressId.streetName : null}
                                     {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null}
                                     {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
                                 <hr />
-                                <h6>Phone Number</h6>
+                                <h6><AiOutlinePhone /> Phone Number</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.phoneNumber : null}</p>
                                 <hr />
-                                <h6>Store Time</h6>
+                                <h6><RiTimeLine />  Store Time</h6>
                                 <p>Monday {this.state.isResLoaded ? this.state.res.monOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.monCloseTimeId.storeTimeName : null}</p>
                                 <p>Tuesday {this.state.isResLoaded ? this.state.res.tueOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.tueCloseTimeId.storeTimeName : null}</p>
                                 <p>Wednesday {this.state.isResLoaded ? this.state.res.wedOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.wedCloseTimeId.storeTimeName : null}</p>
@@ -142,14 +127,17 @@ class Restaurant extends Component {
                                 <p>Saturday {this.state.isResLoaded ? this.state.res.satOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.satCloseTimeId.storeTimeName : null}</p>
                                 <p>Sunday {this.state.isResLoaded ? this.state.res.sunOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.sunCloseTimeId.storeTimeName : null}</p>
                                 <hr />
-                                <h6>Cuisine Style</h6>
+                                <h6><GiKnifeFork />  Cuisine Style</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.cuisineStyleId.cuisineName : null}</p>
                                 <hr />
-                                <h6>Category</h6>
+                                <h6><AiOutlineShop />  Category</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.categoryId.categoryName : null}</p>
                                 <hr />
-                                <h6>Price Range</h6>
+                                <h6><FaRegMoneyBillAlt />  Price Range</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
+                                <hr />
+                                <h5>Promotions</h5>
+                                <p>{this.state.isResLoaded ? this.state.res.discounts: null}</p>
 
                             </div>
                         </div>

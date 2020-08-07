@@ -489,7 +489,7 @@ class SignUp extends Component {
 
 
 
-            <div className="modal fade" id="signResultModal" tabindex="-1" role="dialog" aria-labelledby="signResultModalLabel" aria-hidden="true">
+            <div className="modal fade" id="signResultModal" tabIndex="-1" role="dialog" aria-labelledby="signResultModalLabel" aria-hidden="true">
               <div className="modal-dialog" role="document">
                 <div className="modal-content">
                   <div className="modal-header">

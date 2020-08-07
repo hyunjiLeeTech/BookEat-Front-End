@@ -48,6 +48,7 @@ class Discount extends Component {
         this.handleAddDiscount = this.handleAddDiscount.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeInList = this.handleChangeInList.bind(this);
+        this.discountEditButton = this.discountEditButton.bind(this);
     }
 
     handleChange(e) {
@@ -104,9 +105,22 @@ class Discount extends Component {
             descript: this.state.promdescription
         }
 
-        ds.addDiscount(discount).then((res) => {
+        ds.addDiscount(discount).then(() => {
             this.queryDiscounts();
             console.log("add discount success")
+            $("#addDiscountText")
+                .text("Disccount is added")
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-success");
+        }).catch((err) => {
+            $("#addDiscountText")
+                .text("Sorry, " + err)
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-danger");
         });
     }
 
@@ -118,6 +132,12 @@ class Discount extends Component {
         ds.getDiscounts().then((res) => {
             // console.log("this is discounts");
             // console.log(res.discounts);
+            $("#DiscountEditResultModalText")
+                        .text("Disccount is change")
+                        .removeClass("alert-warning")
+                        .removeClass("alert-danger")
+                        .removeClass("alert-success")
+                        .addClass("alert-success");
             this.setState({
                 discounts: res.discounts
             })
@@ -126,38 +146,68 @@ class Discount extends Component {
             }
         }).catch(err => {
             //TODO handling err
+            $("#DiscountEditResultModalText")
+            .text("Sorry, " + err)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
         })
     }
 
     discountEditButton(index) {
-        console.log(this.state.discounts);
-        console.log(index);
         this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
 
-        if (!this.state.discounts[index].contenteditable) {
+        if (!this.state.discounts[index].contenteTable) {
             ds.editDiscount(this.state.discounts[index])
                 .then(() => {
-                    this.queryDiscounts();
+                    this.queryDiscounts(this.state.discounts[index]);
+                    $("#DiscountEditResultModalText")
+                        .text("Disccount is change")
+                        .removeClass("alert-warning")
+                        .removeClass("alert-danger")
+                        .removeClass("alert-success")
+                        .addClass("alert-success");
+                }).catch((err) => {
+                    $("#DiscountEditResultModalText")
+                    .text("Sorry, " + err)
+                    .removeClass("alert-warning")
+                    .removeClass("alert-danger")
+                    .removeClass("alert-success")
+                    .addClass("alert-danger");
                 });
         }
 
-        this.callModal();
+        this.callModal(index);
     }
 
     discountDeleteButton(index) {
         ds.deleteDiscount(this.state.discounts[index]).then(() => {
             this.queryDiscounts();
+            $("#DiscountDDeleteResultModalText")
+                .text("Discount is deleted")
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-success");
+        }).catch((err) => {
+            $("#DiscountDDeleteResultModalText")
+                .text("Sorry, " + err)
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-danger");
         })
     }
 
-    callModal() {
+    callModal(index) {
         this.setState(state => {
             return {
                 discount: !state.discounts
             };
         },
             () => {
-                if (this.state.discounts) {
+                if (this.state.discounts[index].contentTable) {
                     $('#save_edit_disc_btn').attr("data-toggle", 'modal').attr("data-target", '#DiscountEditResultModal').attr('type', 'button')
                 }
                 else {
@@ -170,7 +220,7 @@ class Discount extends Component {
 
     renderDataDiscount() {
         return this.state.discounts.map((discount, index) => {
-            const { id, discdescription, promdescription } = discount
+            const { id, discdescription, promdescription } = discount;
             return (
                 <tr key={index}>
                     <th contenttable={(this.state.discounts[index].contentTable)}>
@@ -207,7 +257,7 @@ class Discount extends Component {
                         <button
                             id='delete_btn'
                             type="button"
-                            className="btn btn-primary btn-sm mr-sm-2"
+                            className="btn btn-danger btn-sm mr-sm-2"
                             onClick={() => { this.discountDeleteButton(index) }}
                             data-toggle="modal"
                             data-target="#DiscountDDeleteResultModal"
@@ -304,7 +354,7 @@ class Discount extends Component {
 
                         <button type="button"
                             onClick={this.handleAddDiscount.bind(this)}
-                            className="btn btn-primary"
+                            className="btn btn-info"
                             data-toggle="modal"
                             data-target="#addDiscountResultModal">
                             Add Discount

@@ -166,7 +166,7 @@ class RestaurantSignUp extends Component {
           console.log(res);
           if (res.data.errcode === 0) {
             $("#signResultText")
-              .text("Congrats, You can now log into BookEat using your account")
+              .text("Congrats, Confirm your email address and start advertising your business")
               .removeClass("alert-warning")
               .removeClass("alert-danger")
               .removeClass("alert-success")
@@ -527,7 +527,7 @@ class RestaurantSignUp extends Component {
           <div
             className="modal fade"
             id="signResultModal"
-            tabindex="-1"
+            tabIndex="-1"
             role="dialog"
             aria-labelledby="signResultModalLabel"
             aria-hidden="true"

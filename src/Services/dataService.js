@@ -435,20 +435,7 @@ export default {
       headers: authHeader(),
     }).then((res) => {
       console.log(res);
-      if (res.data.errcode === 0) {
-        $("#updateResultText")
-          .text("Profile update is finished.")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#updateResultText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success");
-      }
+  
     }).catch(err => {
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(updateCustomerInformation)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -544,21 +531,6 @@ export default {
     })
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#customerProfileResultText")
-            .text("Customer profile is edited")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#customerProfileResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       })
       .catch((err) => {
         console.log(err);
@@ -675,22 +647,7 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
-      if (res.data.errcode === 0) {
-        $("#addDiscountText")
-          .text("Disccount is added")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#addDiscountText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
-
+   
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
@@ -703,21 +660,6 @@ export default {
     return Axios.get(serverAddress + "/discount/getdiscounts", {
       headers: authHeader()
     }).then((res) => {
-      if (res.data.errcode === 0) {
-        $("#DiscountEditResultModalText")
-          .text("Disccount is change")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#DiscountEditResultModalText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
       return res.data;
     }).catch((err) => {
       if (err.response && err.response.status === 401) {
@@ -731,21 +673,6 @@ export default {
     return Axios.post(serverAddress + "/discount/editdiscount", state, {
       headers: authHeader()
     }).then((res) => {
-      if (res.data.errcode === 0) {
-        $("#DiscountEditResultModalText")
-          .text("Disccount is change")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#DiscountEditResultModalText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
       return res.data;
     }).catch((err) => {
       if (err.response && err.response.status === 401) {
@@ -759,21 +686,6 @@ export default {
     return Axios.post(serverAddress + "/discount/deletediscount", state, {
       headers: authHeader()
     }).then((res) => {
-      if (res.data.errcode === 0) {
-        $("#DiscountDDeleteResultModalText")
-          .text("Discount is deleted")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#DiscountDDeleteResultModalText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
       return res.data;
     }).catch((err) => {
       if (err.response && err.response.status === 401) {
@@ -834,7 +746,7 @@ export default {
       })
       .catch((err) => {
         console.log(err);
-        
+
         throw err
       });
   },
@@ -843,21 +755,6 @@ export default {
       { headers: authHeader() })
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#AddReviewModalText")
-            .text("Disccount is change")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#AddReviewModalText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(addReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -902,12 +799,12 @@ export default {
         throw err;
       })
   },
-  async addResPictures(formData, config) {
-    console.log("add res pictures start");
-    return await Axios.post(serverAddress + "/addResPictures", formData, config).then((res) => {
-      console.log("add res pictures done");
-      return res.data.resPictures;
-    }).catch(err=>{
+  async addPictures(formData, config) {
+    console.log("add pictures start");
+    return await Axios.post(serverAddress + "/addPictures", formData, config).then((res) => {
+      console.log("add pictures done");
+      return res.data.pictures;
+    }).catch(err => {
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(addResPictures)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
@@ -916,25 +813,10 @@ export default {
     })
   },
   editReview(state) {
-    return Axios.post(serverAddress + "/review/editreview", state, 
-    { headers: authHeader() })
+    return Axios.post(serverAddress + "/review/editreview", state,
+      { headers: authHeader() })
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#EditeReviewResultModalText")
-            .text("Review is change")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#EditeReviewResultModalText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(editReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -948,21 +830,6 @@ export default {
     return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#DeleteReviewResultModalText")
-            .text("Review is deleted")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#DeleteReviewResultModalText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(deleteReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
