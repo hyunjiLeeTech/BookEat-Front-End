@@ -115,7 +115,6 @@ class RestaurantProfile extends Component {
       contentTable: false,
       resultsErr: false,
       isResLoaded: false,
-      isClose: true,
 
       isError: {
         resname: "&#160;",
@@ -467,11 +466,9 @@ class RestaurantProfile extends Component {
         if ($("#monOpenTime").prop("disabled")) {
           $("#monOpenTime").prop("disabled", false);
           $("#monCloseTime").prop("disabled", false);
-          console.log("click 2");
         } else {
           $("#monOpenTime").prop("disabled", true);
           $("#monCloseTime").prop("disabled", true);
-          console.log("click 3")
         }
       });
 
@@ -1291,7 +1288,7 @@ class RestaurantProfile extends Component {
                           id="mondisablebutton"
                           disabled={(!this.state.disabled)}
                           onClick={() => this.handleNotOpen("mon")}
-                          value={this.state.isClose}
+                          value={this.state.monIsClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1338,7 +1335,7 @@ class RestaurantProfile extends Component {
                           id="tuedisablebutton"
                           disabled={(!this.state.disabled)}
                           onClick={() => this.handleNotOpen("tue")}
-                          value={this.state.isClose}
+                          value={this.state.tueIsClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1385,7 +1382,7 @@ class RestaurantProfile extends Component {
                           id="weddisablebutton"
                           disabled={(!this.state.disabled)}
                           onClick={() => this.handleNotOpen("wed")}
-                          value={this.state.isClose}
+                          value={this.state.wedIsClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1432,7 +1429,7 @@ class RestaurantProfile extends Component {
                           id="thudisablebutton"
                           disabled={(!this.state.disabled)}
                           onClick={() => this.handleNotOpen("thu")}
-                          value={this.state.isClose}
+                          value={this.state.thuIsClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1479,7 +1476,7 @@ class RestaurantProfile extends Component {
                           id="fridisablebutton"
                           disabled={(!this.state.disabled)}
                           onClick={() => this.handleNotOpen("fri")}
-                          value={this.state.isClose}
+                          value={this.state.friIsClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1526,7 +1523,7 @@ class RestaurantProfile extends Component {
                           id="satdisablebutton"
                           disabled={(!this.state.disabled)}
                           onClick={() => this.handleNotOpen("sat")}
-                          value={this.state.isClose}
+                          value={this.state.satIsClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1573,7 +1570,7 @@ class RestaurantProfile extends Component {
                           id="sundisablebutton"
                           disabled={(!this.state.disabled)}
                           onClick={() => this.handleNotOpen("sun")}
-                          value={this.state.isClose}
+                          value={this.state.sunIsClose}
                         >
                           {" "}
                           Not Open{" "}
