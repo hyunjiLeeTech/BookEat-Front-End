@@ -106,6 +106,7 @@ class RestaurantProfile extends Component {
       contentTable: false,
       resultsErr: false,
       isResLoaded: false,
+      isClose: true,
 
       isError: {
         resname: "&#160;",
@@ -134,6 +135,7 @@ class RestaurantProfile extends Component {
     this.onImageChange = this.onImageChange.bind(this);
     this.handleDeletePicture = this.handleDeletePicture.bind(this);
     this.editResProfileWithPictures = this.editResProfileWithPictures.bind(this);
+    this.handleNotOpen = this.handleNotOpen.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -279,6 +281,7 @@ class RestaurantProfile extends Component {
         this.editResProfileWithPictures(this.state);
       } else {
         ds.editRestaurantProfile(this.state);
+         
       }
     } else {
       console.log("Form is invalid!");
@@ -629,6 +632,11 @@ class RestaurantProfile extends Component {
       <option value="130am">1:30 AM</option>,
     ];
     return close;
+  }
+
+  handleNotOpen(e){
+    e.preventDefault();
+    console.log("not close click");
   }
 
 
@@ -1225,6 +1233,8 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="mondisablebutton"
                           disabled={(!this.state.disabled)}
+                          onClick={this.handleNotOpen.bind(this)}
+                          value={this.state.isClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1270,6 +1280,8 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="tuedisablebutton"
                           disabled={(!this.state.disabled)}
+                          onClick={this.handleNotOpen.bind(this)}
+                          value={this.state.isClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1315,6 +1327,8 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="weddisablebutton"
                           disabled={(!this.state.disabled)}
+                          onClick={this.handleNotOpen.bind(this)}
+                          value={this.state.isClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1360,6 +1374,8 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="thudisablebutton"
                           disabled={(!this.state.disabled)}
+                          onClick={this.handleNotOpen.bind(this)}
+                          value={this.state.isClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1405,6 +1421,8 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="fridisablebutton"
                           disabled={(!this.state.disabled)}
+                          onClick={this.handleNotOpen.bind(this)}
+                          value={this.state.isClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1450,6 +1468,8 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="satdisablebutton"
                           disabled={(!this.state.disabled)}
+                          onClick={this.handleNotOpen.bind(this)}
+                          value={this.state.isClose}
                         >
                           {" "}
                           Not Open{" "}
@@ -1495,6 +1515,8 @@ class RestaurantProfile extends Component {
                           className="btn btn-outline-dark col-sm-2"
                           id="sundisablebutton"
                           disabled={(!this.state.disabled)}
+                          onClick={this.handleNotOpen.bind(this)}
+                          value={this.state.isClose}
                         >
                           {" "}
                           Not Open{" "}
