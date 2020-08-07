@@ -291,12 +291,10 @@ export default {
       }); //TODO: err handling needs to be finished
   },
   getCustomerInformation() {
-    console.log('/customers/getcustomerinfo')
     return Axios.get(serverAddress + "/customers/getcustomerinfo", {
       headers: authHeader(), //set auth header
     })
       .then(function (res) {
-        console.log(res);
         return res.data;
       })
       .catch((err) => {
@@ -838,7 +836,6 @@ export default {
   getReviewsWithoutSignup(id) {
     return Axios.get(serverAddress + "/getReviewsWithoutSignUp", { params: { resId: id } })
       .then((res) => {
-        console.log(res.data);
         return res.data.reviews;
       })
   }
