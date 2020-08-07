@@ -44,6 +44,7 @@ import Feature from "./Home/Feature";
 import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorPage from "./RedirectPages/Error";
+import ResetPassword from "./RedirectPages/ResetPassword";
 
 class App extends Component {
   constructor(props){
@@ -208,6 +209,7 @@ class App extends Component {
           <Route exact path="/Daily" render={() => <Daily />} />
           <Route exact path="/Feature" render={() => <Feature />} />
           <Route exact path="/Favorite" render={() => <Favorite />} />
+          <Route exact path="/ResetPassword" render={() => <ResetPassword />} />
         </Switch>
         <div className="footer-padding">
         </div>
