@@ -3,9 +3,7 @@ import MainContainer from "../../component/Style/MainContainer";
 import Parser from "html-react-parser";
 import $ from "jquery";
 import "./ViewCustomerProfile.css";
-import serverAddress from "../../Services/ServerUrl";
 import ds from "../../Services//dataService";
-import Axios from "axios";
 import ChangePassword from "../../component/Forms/Customer/ChangePassword"
 import CustomerReservationHistory from "../../Reservation/Customer/CustomerReservationHistory"
 import CustomerReviewHistory from "../../Review/Customer/CustomerReviewHistory"
@@ -53,13 +51,12 @@ class ViewCustomerProfile extends Component {
         phonenumber: "&#160;",
       },
       disabled: true,
-      resultsErr: false
+      resultsErr: false,
+      isResLoaded: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
     this.handleSubmitCustomerProfile = this.handleSubmitCustomerProfile.bind(this);
-    // this.onClick = this.onClick.bind(this);
   }
 
   handleChange = (e) => {
@@ -143,7 +140,6 @@ class ViewCustomerProfile extends Component {
 
   async componentDidMount() {
     const customer = await ds.getCustomerInformation();
-
     if (customer) {
       this.setState((state, props) => {
         return {
@@ -163,25 +159,15 @@ class ViewCustomerProfile extends Component {
       });
     }
     // Avoid spacing on the form
-    // var t4 = document.getElementById("firstname");
-    // t4.onkeypress = function (event) {
-    //   if (event.keyCode === 32) return false;
-    // };
-
-    // var t5 = document.getElementById("lastname");
-    // t5.onkeypress = function (event) {
-    //   if (event.keyCode === 32) return false;
-    // };
-
-    // Accept term and condition click link
-    $("#conditionbtn").on("click", () => {
-      $("#accept-terms").removeAttr("disabled");
-    });
+    var t4 = document.getElementById("firstname");
+    t4.onkeypress = function (event) {
+      if (event.keyCode === 32) return false;
+    };
   }
+
   // Edit profile - disable
   handleClick() {
     this.setState({ disabled: !this.state.disabled })
-
     this.changeText();
   }
 
@@ -202,7 +188,6 @@ class ViewCustomerProfile extends Component {
 
   render() {
     const { isError } = this.state;
-    const { customer } = this.props;
     //TODO: feedbacks
     const deleteAccount = () => {
       console.log('starting delete account')
@@ -220,14 +205,6 @@ class ViewCustomerProfile extends Component {
           :
           null
         }
-
-
-
-
-
-
-
-
         <div className="container mt-3">
           <div className="card">
             <ul className="nav nav-tabs">
@@ -352,32 +329,24 @@ class ViewCustomerProfile extends Component {
                     >
                       Delete
                     </button>
-                    {/* </Link> */}
                   </div>
                 </div>
               </form>
             </div>
 
             <div id="password" className=" tab-pane card-body">
-
               < ChangePassword />
-
             </div>
 
             <div id="myReservation"
               className="container tab-pane fade ">
-
               <CustomerReservationHistory />
-
             </div>
 
             <div id="myReview" className="container tab-pane fade">
-
               <CustomerReviewHistory />
-
             </div>
           </div>
-
 
           {/* edit modal */}
           <div
