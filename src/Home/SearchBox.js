@@ -19,7 +19,6 @@ class SearchBox extends Component {
     handleChange(e) {
         e.preventDefault();
         const { name, value } = e.target;
-        let isError = { ...this.state.isError };
         switch (name) {
             case 'date':
                 this.setState({ date: value })
@@ -32,13 +31,13 @@ class SearchBox extends Component {
                 break;
             case 'keyword':
                 this.setState({ keyword: value })
+            default:
+                break;
         }
     }
 
     handleSubmit(e) {
-        var react = this;
         e.preventDefault();
-        console.log("submit")
         var numofpeople = this.state.numberOfPeople;
         var date = $('#date').val();
         var time = $('#time').val();
@@ -52,17 +51,17 @@ class SearchBox extends Component {
             dateTime: dateTime,
             numofpeople: numofpeople
         })
-        window.location.href = '/searchResult?dateTime=' + dateTime + '&numOfPeople=' + numofpeople + "&keyword="+this.state.keyword;
+        window.location.href = '/searchResult?dateTime=' + dateTime + '&numOfPeople=' + numofpeople + "&keyword=" + this.state.keyword;
     }
 
     componentDidMount() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         var keyword = urlParams.get('keyword')
-        this.setState({keyword: keyword});
+        this.setState({ keyword: keyword });
         //this.state.keyword = keyword;
         //console.log(this.state.keyword)
-        if(urlParams.get('dateTime') != null && urlParams.get('numOfPeople') != null){
+        if (urlParams.get('dateTime') != null && urlParams.get('numOfPeople') != null) {
             var date = new Date(urlParams.get('dateTime'))
             var numOfPeople = urlParams.get('numOfPeople');
             if (numOfPeople !== 'undefined') this.setState({ numberOfPeople: numOfPeople })
@@ -76,12 +75,13 @@ class SearchBox extends Component {
             } else {
                 // not a date
             }
-    
+
         }
 
     }
 
     renderTimeOption(date) {
+     
         var options = [
             <option {...(new Date(date + ' 0:00') < new Date() ? { disabled: true } : {})} value="00:00">12:00 AM</option>,
             <option {...(new Date(date + ' 0:30') < new Date() ? { disabled: true } : {})} value="00:30">12:30 AM</option>,
@@ -131,8 +131,7 @@ class SearchBox extends Component {
         //         console.log(new Date(date + ' ' + o.props['value']).toString() + ' disabled')
         //     }
         // }
-        console.log(options[0].props.value)
-
+    
         return (
             <select
                 className="custom-select"
@@ -201,7 +200,7 @@ class SearchBox extends Component {
 
                 </div>
                 <div className="col-sm-2">
-                    <button type="button" className="btn btn-primary mr-sm-4"  onClick={this.handleSubmit}> Find</button>
+                    <button type="button" className="btn btn-primary mr-sm-4" onClick={this.handleSubmit}> Find</button>
                 </div>
 
             </div>
