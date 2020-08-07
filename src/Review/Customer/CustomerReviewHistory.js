@@ -55,7 +55,22 @@ class CustomerReviewHistory extends Component {
   // }
 
   handleClickDeleteReview(id) {
-    ds.deleteReview({ _id: id });
+    ds.deleteReview({ _id: id }).then(() => {
+      this.queryReviews();
+      $("#DeleteReviewResultModalText")
+      .text("Review is deleted")
+      .removeClass("alert-warning")
+      .removeClass("alert-danger")
+      .removeClass("alert-success")
+      .addClass("alert-success");
+    }).catch((err) => {
+      $("#DeleteReviewResultModalText")
+            .text("Sorry, " + err)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+    });
   }
 
   componentDidMount() {
@@ -102,12 +117,12 @@ class CustomerReviewHistory extends Component {
       console.log(this.state.reviews[index].resName);
       return (
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
-        <tr key={id} id={'reviewrow' + index}>
+        <tr key={index} id={'reviewrow' + index}>
           <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
           <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
 
 
-          <td contenteditable={(this.state.reviews[index].contenteditable)}>
+          <td>
             <textarea row="2" type="text" id="comment" name="comment"
               onChange={(e) => this.handleChangeInList(e, index)}
               defaultValue={comment} className="border-none"
@@ -116,7 +131,7 @@ class CustomerReviewHistory extends Component {
 
 
 
-          <td contentEditable={(this.state.reviews[index].contenteditable)}>
+          <td>
             {
               this.state.reviews[index].contenteditable ?
 
@@ -155,7 +170,7 @@ class CustomerReviewHistory extends Component {
           </td>
 
 
-          <td contentEditable={(this.state.reviews[index].contenteditable)}>
+          <td>
             {
               this.state.reviews[index].contenteditable ?
                 //   <div class="dropdown">
@@ -191,7 +206,7 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
-          <td contentEditable={(this.state.reviews[index].contenteditable)}>
+          <td>
             {
               this.state.reviews[index].contenteditable ?
                 // <div class="dropdown">
@@ -227,7 +242,7 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
-          <td contentEditable={(this.state.reviews[index].contenteditable)}>
+          <td>
             {
 
               this.state.reviews[index].contenteditable ?
@@ -288,7 +303,7 @@ class CustomerReviewHistory extends Component {
                 <button
                   id='delete_btn'
                   type="button"
-                  className="btn btn-primary btn-sm mr-sm-2"
+                  className="btn btn-danger btn-sm mr-sm-2"
                   data-toggle="modal"
                   data-target="#DeleteReviewResultModal"
                   onClick={() => this.handleClickDeleteReview(this.state.reviews[index]._id)}
@@ -322,13 +337,24 @@ class CustomerReviewHistory extends Component {
     this.state.reviews[index].contenteditable = !this.state.reviews[index].contenteditable;
     // this.forceUpdate();
     if (!this.state.reviews[index].contenteditable) {
-      ds.editReview(this.state.reviews[index]);
-      $('#EditeReviewResultModal').modal('show')
-
+      ds.editReview(this.state.reviews[index]).then(() => {
+        $("#EditeReviewResultModalText")
+        .text("Review is change")
+        .removeClass("alert-warning")
+        .removeClass("alert-danger")
+        .removeClass("alert-success")
+        .addClass("alert-success");
+      }).catch((err) => {
+        $("#EditeReviewResultModalText")
+            .text("Sorry, " + err)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+      });
     }
 
     this.forceUpdate();
-
 
     // this.setState.reviews[index]({contenteditable: !this.state.contenteditable})
 

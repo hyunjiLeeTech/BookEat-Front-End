@@ -2,16 +2,12 @@ import React, { Component } from 'react'
 import MainContainer from "../component/Style/MainContainer";
 import "./EditMenu.js"
 import ds from "../Services/dataService"
-
 import serverAddress from '../Services/ServerUrl';
-
-
 
 class Menu extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            //Oringin
             menus: [{
             }],
             resId: props.resId,
@@ -19,14 +15,10 @@ class Menu extends Component {
             menuName: "",
             menuPrice: "",
             menuDescript: "",
-
-
+            foodType: "",
         };
-
         this.renderMenuInfo = this.renderMenuInfo.bind(this);
-
     }
-
 
     componentWillMount() {
         this.queryMenus();
@@ -34,7 +26,6 @@ class Menu extends Component {
 
     queryMenus() {
         ds.getMenusCustomer(this.state.resId).then((res) => {
-            console.log(res.menus);
             this.setState({
                 menus: res.menus
             })
@@ -43,18 +34,15 @@ class Menu extends Component {
 
     renderMenuInfo() {
         var rows = [];
-        console.log("this is state menu: " + this.state.menus);
         if (typeof this.state.menus != "undefined") {
-
             for (var menu of this.state.menus) {
                 rows.push(
                     <tr key={rows}>
-                            <td>  <img src={serverAddress + '/getImage/' + menu.menuImageId} style={{ maxHeight: '50%', maxWidth: '50%' }}/></td>
+                        <td>  <img src={serverAddress + '/getImage/' + menu.menuImageId} style={{ maxHeight: '50%', maxWidth: '50%' }}/></td>
                         <td>{menu.menuName}</td>
-                        <td></td>
+                        <td> {menu.foodType}</td>
                         <td>{menu.menuDescript}</td>
                         <td>{menu.menuPrice}</td>
-
                     </tr>
                 )
             }
@@ -85,8 +73,4 @@ class Menu extends Component {
     }
 }
 
-
-
-
 export default Menu;
-

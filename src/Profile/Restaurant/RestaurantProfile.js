@@ -147,14 +147,14 @@ class RestaurantProfile extends Component {
   async editResProfileWithPictures(state) {
     var formData = new FormData();
     Array.from(state.pictures).forEach((f) => {
-      formData.append('resPictures[]', f)
+      formData.append('pictures[]', f)
     })
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-    let pictureIds = await ds.addResPictures(formData, config);
+    let pictureIds = await ds.addPictures(formData, config);
     var resPictureIds = [];
     for (var i = 0; i < pictureIds.length; i++) {
       resPictureIds.push(pictureIds[i].filename);
@@ -633,8 +633,8 @@ class RestaurantProfile extends Component {
 
 
   render() {
-    const deleteRoAccount = () =>{
-      dataService.deleteAccountRestaurantOwner().then(res=>{
+    const deleteRoAccount = () => {
+      dataService.deleteAccountRestaurantOwner().then(res => {
         console.log(res)
       }).catch(err => {
         console.log(err)
@@ -1578,7 +1578,7 @@ class RestaurantProfile extends Component {
                     </div>
                     <div className="form-group text-center ">
 
-                      <button type="button" className="btn btn-primary mr-sm-4 "
+                      <button type="button" className="btn btn-danger mr-sm-4 "
                         data-toggle="modal"
                         data-target="#deleteRestaurantModal" onClick={deleteRoAccount}>
                         {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}

@@ -7,8 +7,11 @@ import dataService from '../Services/dataService';
 // import ReactLoading from 'react-loading';
 import FullscreenLoading from '../component/Style/FullscreenLoading'
 import { Link } from 'react-router-dom';
-
 import FullscreenError from '../component/Style/FullscreenError'
+import { GiKnifeFork } from "react-icons/gi";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { AiOutlineShop } from "react-icons/ai";
+
 
 class SearchResult extends Component {
 
@@ -308,7 +311,7 @@ class SearchResult extends Component {
                         <div className="col-md-6">
                             <div className="card-block">
                                 <Link to={'/restaurant/' + r._id}><h6 className="card-title">{r.resName ? r.resName : 'unknown'}</h6> </Link>
-                                <p className="card-text">Starts {this.getPriceRnageById(r.priceRangeId)} {this.getCuisineNameById(r.cuisineStyleId)} {this.getCategoryNameById(r.categoryId)}</p>
+                                <p className="card-text">{this.getPriceRnageById(r.priceRangeId)} {this.getCuisineNameById(r.cuisineStyleId)} {this.getCategoryNameById(r.categoryId)}</p>
                                 <p className="card-text">{r.restaurantDescription}</p>
                                 <Link to={'/customerreserve/' + r._id} className="btn btn-primary">Reserve</Link>
                             </div>
@@ -356,7 +359,7 @@ class SearchResult extends Component {
                         <div className="col-sm-4">
                             <div >
                                 <br />
-                                <p>Price Range</p>
+                                <p><FaRegMoneyBillAlt/>  Price Range</p>
                                 <hr />
                                 {this.state.priceRangesReady ? this.renderPriceRange(this.priceRanges) : null}
 
@@ -364,7 +367,7 @@ class SearchResult extends Component {
 
                             <div>
                                 <br />
-                                <p>Cuisine Style</p>
+                                <p><GiKnifeFork/>  Cuisine Style</p>
                                 <hr />
                                 {this.state.cuisinesReady ? this.renderCuisineFirst5(this.cuisines) : null}
 
@@ -380,7 +383,7 @@ class SearchResult extends Component {
 
                             <div>
                                 <br />
-                                <p>Category</p>
+                                <p><AiOutlineShop/>  Category</p>
                                 <hr />
                                 {this.state.categoriesReady ? this.renderCategory(this.categories) : null}
                             </div>
