@@ -69,10 +69,6 @@ class CustomerReviewHistory extends Component {
     });
   }
 
-  componentDidMount() {
-    //Query data from the server
-    //this.setState();
-  }
 
   componentWillMount() {
     this.queryReviews()
@@ -88,7 +84,6 @@ class CustomerReviewHistory extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("saved")
     // if (formValid(this.state)) {
     //   console.log(this.state)
     //   // ds.reviewHistory(this.state);
@@ -111,9 +106,8 @@ class CustomerReviewHistory extends Component {
     console.log(this.state.reviews);
     return this.state.reviews.map((review, index) => {
       console.log(review);
-      const { id, date, picture1, picture2, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
+      const {  comment } = review
       return (
-        //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={index} id={'reviewrow' + index}>
           
             <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
@@ -230,24 +224,24 @@ class CustomerReviewHistory extends Component {
 
             
           
-            <td colspan="2">
+            <td colSpan="2">
               <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
                 // onChange={(e) => this.onImageChangepic1(e, index)} 
                 // disabled={(!this.state.reviews[index].contenteditable)}
                 disabled="flase"
-                class="border-0"
+                className="border-0"
               />
 
               {
                 this.state.reviews[index].contenteditable ?
 
-                  <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} />
+                  <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} alt="Review"/>
                   :
 
                   typeof this.state.reviews[index].pictures[0] !== 'undefined' ?
 
                     <div>
-                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} />
+                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} alt="Review"/>
 
                     </div>
                     :
@@ -255,24 +249,17 @@ class CustomerReviewHistory extends Component {
               }
 
             </td>
-            <td colspan="2 ">
-              <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
-                // onChange={(e) => this.onImageChangepic2(e, index)} 
-                // disabled={(!this.state.reviews[index].contenteditable)} 
-                disabled="false"
-                class="border-0"
-              />
-
+            <td colSpan="2 ">
               {
                 this.state.reviews[index].contenteditable ?
 
-                  <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} />
+                  <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} alt="Review"/>
                   :
 
                   typeof this.state.reviews[index].pictures[1] !== 'undefined' ?
 
                     <div>
-                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} />
+                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} alt="Review"/>
 
                     </div>
                     :
@@ -285,7 +272,6 @@ class CustomerReviewHistory extends Component {
               {" "}
               <div className="form-inline">
                 <div className="form-group">
-                  {/* <Link to="/"> */}
                   <button
                     id='saveReviewChange'
                     onClick={() => this.handleClickEditReview(index)}
@@ -295,10 +281,8 @@ class CustomerReviewHistory extends Component {
                     {this.state.reviews[index].contenteditable ? "Save Change" : "Edit"}
 
                   </button>
-                  {/* </Link> */}
                 </div>
                 <div className="form-group">
-                  {/* <Link to="/"> */}
                   <button
                     id='delete_btn'
                     type="button"
@@ -309,7 +293,6 @@ class CustomerReviewHistory extends Component {
                   >
                     Delete
                 </button>
-                  {/* </Link> */}
                 </div>
               </div>
             </td>
@@ -388,10 +371,6 @@ class CustomerReviewHistory extends Component {
 
     // this.setState.reviews[index]({contenteditable: !this.state.contenteditable})
 
-
-    //  $('#saveReviewChange').modal('show')
-    //this.setState({});
-
     this.callModalReview(index);
   }
 
@@ -418,8 +397,6 @@ class CustomerReviewHistory extends Component {
   }
 
   render() {
-    const { isError } = this.state;
-    const { customer } = this.props;
     return (
       <Maincontainer>
         <form onSubmit={this.handleSubmit} id="reviewHistory">
@@ -430,9 +407,8 @@ class CustomerReviewHistory extends Component {
             <h3> My Review List</h3>
 
             <table id='reivews' className="table table-striped col-md-12">
-              {/* <thead> */}
+              <thead>
                 <tr>
-                  {/* <tr> */}
                     <th>Date</th>
                     <th>Restaurant</th>
                     <th>Review</th>
@@ -443,9 +419,8 @@ class CustomerReviewHistory extends Component {
                     <th>Picture</th>
                     <th></th>
                     <th></th>
-                  {/* </tr> */}
                   </tr>
-              {/* </thead> */}
+              </thead>
               <tbody>
                 {this.renderTable()}
               </tbody>
