@@ -15,6 +15,7 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineShop, AiOutlinePhone } from "react-icons/ai";
 import { RiTimeLine, RiMapPin2Line } from "react-icons/ri";
 import serverAddress from '../Services/ServerUrl';
+import dataService from '../Services/dataService';
 
 class Restaurant extends Component {
     constructor(props) {
@@ -34,14 +35,13 @@ class Restaurant extends Component {
 
 
     async componentWillMount() {
-        Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
+        dataService.getRestaurantWithoutAuth(this.state.id)//TODO: remove if production
             .then(res => {
-                if (res.data.errcode === 0)
-                    this.setState({
-                        res: res.data.restaurant,
-                        isResLoaded: true,
-                        discount: res.data.discount
-                    })
+                this.setState({
+                    res: res.restaurant,
+                    isResLoaded: true,
+                    discount: res.discount
+                })
             })
     }
 
@@ -68,8 +68,8 @@ class Restaurant extends Component {
 
                 <div className="card mb-3">
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                        <ol className="carousel-indicators" style={{background: '#777777'}}>
-                            {this.state.res.pictures ?  this.state.res.pictures.map((v, i, array) => {
+                        <ol className="carousel-indicators" style={{ background: '#777777' }}>
+                            {this.state.res.pictures ? this.state.res.pictures.map((v, i, array) => {
                                 return <li data-target="#carouselExampleIndicators" data-slide-to={i.toString()} className={i === 0 ? 'active' : ''}></li>
                             }) : null}
 
@@ -82,7 +82,7 @@ class Restaurant extends Component {
                         <div className="carousel-inner" id="carousel_pictures">
                             {this.state.res.pictures ? this.state.res.pictures.map((v, i, array) => {
                                 return <div className={i === 0 ? 'active carousel-item' : 'carousel-item'}>
-                                    <img style={{maxWidth: '100%', maxHeight: '100%'}} className="d-inline-block" src={serverAddress + '/getImage/' + v} alt="First slide" />
+                                    <img style={{ maxWidth: '100%', maxHeight: '100%' }} className="d-inline-block" src={serverAddress + '/getImage/' + v} alt="First slide" />
                                 </div>
                             }) : null}
                             {/* <div className="carousel-item active">
@@ -119,11 +119,11 @@ class Restaurant extends Component {
                                 <h5>Make a reservation</h5>
                                 <hr />
                                 <p>Click the button to make a reservation</p>
-                                <Link to={()=>{
+                                <Link to={() => {
                                     var tr = '/customerreserve/' + this.state.id
-                                    if(this.state.date) tr += ('/' + this.state.date)
-                                    if(this.state.time) tr += ('/' + this.state.time)
-                                    if(this.state.numOfPeople) tr += ('/' + this.state.numOfPeople)
+                                    if (this.state.date) tr += ('/' + this.state.date)
+                                    if (this.state.time) tr += ('/' + this.state.time)
+                                    if (this.state.numOfPeople) tr += ('/' + this.state.numOfPeople)
                                     return tr;
                                 }} className="btn btn-primary">Reserve Here</Link>
                                 <br />

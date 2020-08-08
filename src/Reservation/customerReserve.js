@@ -42,6 +42,8 @@ class Reserve extends Component {
             isLoading: false,
             seletcedMenuItemsFromReservation: [],
             allowModifyMenuItems: true,
+            restaurant: {},
+            discount: {},
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.back = this.back.bind(this);
@@ -55,25 +57,33 @@ class Reserve extends Component {
     }
 
     componentWillMount() {
-        if (this.state.isUpdate) {
-            this.setState({ isLoading: true });
-            dataService.getReservationById(this.state.reservationId).then(res => {
-                this.selectedtableId = res.reservation.table;
-                dataService.getFoodOrder(res.reservation.FoodOrder).then(res => {
-                    this.setState({ seletcedMenuItemsFromReservation: res.menus })
+        this.setState({ isLoading: true });
+        dataService.getRestaurantWithoutAuth(this.state.resId).then(resp =>{
+            this.setState({restaurant: resp.restaurant, discount: resp.discount})
+            console.log(this.state);
+            if (this.state.isUpdate) {
+                dataService.getReservationById(this.state.reservationId).then(res => {
+                    this.selectedtableId = res.reservation.table;
+                    dataService.getFoodOrder(res.reservation.FoodOrder).then(res => {
+                        this.setState({ seletcedMenuItemsFromReservation: res.menus })
+                    }).catch(err => {
+                        console.log(err)
+                        toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
+                    }).finally(() => {
+                        this.setState({ isLoading: false });
+                    })
                 }).catch(err => {
                     console.log(err)
                     toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
-                }).finally(() => {
                     this.setState({ isLoading: false });
                 })
-            }).catch(err => {
-                console.log(err)
-                toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
-            }).finally(() => {
+            }else{
                 this.setState({ isLoading: false });
-            })
-        }
+            }
+        }).catch(err=>{
+            toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
+            this.setState({ isLoading: false });
+        })
     }
 
     setTableId(id) {
