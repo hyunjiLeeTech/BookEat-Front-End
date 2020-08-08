@@ -1,18 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Parser from "html-react-parser";
 import $ from "jquery";
-import { Tab } from "bootstrap";
 import Maincontainer from "../../component/Style/MainContainer"
-import { FaThumbsUp } from 'react-icons/fa'
-import { IconContext } from "react-icons"
-import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import ds from "../../Services/dataService";
 import moment from 'moment';
-import FullscreenError from '../../component/Style/FullscreenError'
 import serverAddress from '../../Services/ServerUrl';
-import FullScrrenLoading from '../../component/Style/FullscreenLoading';
-
 
 class CustomerReviewHistory extends Component {
   constructor(props) {
