@@ -147,7 +147,7 @@ class Restaurant extends Component {
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
                                 <h5>Promotions</h5>
-                                {/* <p>{this.state.isResLoaded ? this.state.discount.percent: null}% Off Call for more information!</p> */}
+                                <p>{this.state.isResLoaded ? this.state.discount.percent: null}% Off Call for more information!</p>
 
                             </div>
                         </div>

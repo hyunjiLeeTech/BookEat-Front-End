@@ -442,13 +442,13 @@ class RestaurantProfile extends Component {
         monIsClose:
            restaurant.monIsClose ? false : true,
         tueIsClose:
-           restaurant.tueIsClose ? false : true,
+           restaurant.tueIsClose  ? false : true,
         wedIsClose:
-          restaurant.wedIsClose ? false : true,
+          restaurant.wedIsClose  ? false : true,
         thuIsClose:
            restaurant.thuIsClose ? false : true,
         friIsClose:
-           restaurant.friIsClose ? false : true,
+           restaurant.friIsClose? false : true,
         satIsClose:
            restaurant.satIsClose ? false : true,
         sunIsClose:
@@ -675,8 +675,8 @@ class RestaurantProfile extends Component {
         $("#monCloseTime").prop("disabled", true);
       }
     } else if (day === "tue") {
-      if (this.state.monIsClose == true) {
-        this.state.monIsClose = false;
+      if (this.state.tueIsClose == true) {
+        this.state.tuenIsClose = false;
         $("#tueOpenTime").prop("disabled", false);
         $("#tueCloseTime").prop("disabled", false);
       } else {
@@ -685,8 +685,8 @@ class RestaurantProfile extends Component {
         $("#tueCloseTime").prop("disabled", true);
       }
     } else if (day === "wed") {
-      if (this.state.monIsClose == true) {
-        this.state.monIsClose = false;
+      if (this.state.wedIsClose == true) {
+        this.state.wedIsClose = false;
         $("#wedOpenTime").prop("disabled", false);
         $("#wedCloseTime").prop("disabled", false);
       } else {
@@ -695,8 +695,8 @@ class RestaurantProfile extends Component {
         $("#wedCloseTime").prop("disabled", true);
       }
     } else if (day === "thu") {
-      if (this.state.monIsClose == true) {
-        this.state.monIsClose = false;
+      if (this.state.thuIsClose == true) {
+        this.state.thuIsClose = false;
         $("#thuOpenTime").prop("disabled", false);
         $("#thuCloseTime").prop("disabled", false);
       } else {
@@ -705,8 +705,8 @@ class RestaurantProfile extends Component {
         $("#thuCloseTime").prop("disabled", true);
       }
     } else if (day === "fri") {
-      if (this.state.monIsClose == true) {
-        this.state.monIsClose = false;
+      if (this.state.friIsClose == true) {
+        this.state.friIsClose = false;
         $("#friOpenTime").prop("disabled", false);
         $("#friCloseTime").prop("disabled", false);
       } else {
@@ -715,8 +715,8 @@ class RestaurantProfile extends Component {
         $("#friCloseTime").prop("disabled", true);
       }
     } else if (day === "sat") {
-      if (this.state.monIsClose == true) {
-        this.state.monIsClose = false;
+      if (this.state.satIsClose == true) {
+        this.state.satIsClose = false;
         $("#satOpenTime").prop("disabled", false);
         $("#satCloseTime").prop("disabled", false);
       } else {
@@ -725,8 +725,8 @@ class RestaurantProfile extends Component {
         $("#satCloseTime").prop("disabled", true);
       }
     } else if (day === "sun") {
-      if (this.state.monIsClose == true) {
-        this.state.monIsClose = false;
+      if (this.state.sunIsClose == true) {
+        this.state.sunIsClose = false;
         $("#sunOpenTime").prop("disabled", false);
         $("#sunCloseTime").prop("disabled", false);
       } else {
@@ -735,6 +735,7 @@ class RestaurantProfile extends Component {
         $("#sunCloseTime").prop("disabled", true);
       }
     }
+
     console.log(this.state);
 
   }
@@ -1284,7 +1285,7 @@ class RestaurantProfile extends Component {
                           name="monOpenTime"
                           value={this.state.monOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled) || (this.state.monIsClose)}
+                          disabled={(!this.state.disabled) || (!this.state.monIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1297,7 +1298,7 @@ class RestaurantProfile extends Component {
                           name="monCloseTime"
                           value={this.state.monCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.monIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.monIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1331,7 +1332,7 @@ class RestaurantProfile extends Component {
                           name="tueOpenTime"
                           value={this.state.tueOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.tueIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.tueIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1344,7 +1345,7 @@ class RestaurantProfile extends Component {
                           name="tueCloseTime"
                           value={this.state.tueCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.tueIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.tueIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1378,7 +1379,7 @@ class RestaurantProfile extends Component {
                           name="wedOpenTime"
                           value={this.state.wedOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.wedIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.wedIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1391,7 +1392,7 @@ class RestaurantProfile extends Component {
                           name="wedCloseTime"
                           value={this.state.wedCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.wedIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.wedIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1425,7 +1426,7 @@ class RestaurantProfile extends Component {
                           name="thuOpenTime"
                           value={this.state.thuOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.thuIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.thuIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1438,7 +1439,7 @@ class RestaurantProfile extends Component {
                           name="thuCloseTime"
                           value={this.state.thuCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.thuIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.thuIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1472,7 +1473,7 @@ class RestaurantProfile extends Component {
                           name="friOpenTime"
                           value={this.state.friOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.friIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.friIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1485,7 +1486,7 @@ class RestaurantProfile extends Component {
                           name="friCloseTime"
                           value={this.state.friCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.friIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.friIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1519,7 +1520,7 @@ class RestaurantProfile extends Component {
                           name="satOpenTime"
                           value={this.state.satOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.satIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.satIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1532,7 +1533,7 @@ class RestaurantProfile extends Component {
                           name="satCloseTime"
                           value={this.state.satCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.satIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.satIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1566,7 +1567,7 @@ class RestaurantProfile extends Component {
                           name="sunOpenTime"
                           value={this.state.sunOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.sunIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.sunIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1579,7 +1580,7 @@ class RestaurantProfile extends Component {
                           name="sunCloseTime"
                           value={this.state.sunCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.sunIsClose)}
+                          disabled={(!this.state.disabled)|| (!this.state.sunIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
