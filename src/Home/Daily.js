@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 // import CAFE from '../Image/CAFE.jpg'
 import Star from '../component/Style/Stars'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
+import dataService from '../Services/dataService';
+import restaurant from '../Restaurant/restaurant';
+import { toast } from 'react-toastify';
 
 // import dailycss from './Daily.css'
 
@@ -14,34 +17,14 @@ class Daily extends Component {
         super(props)
         this.state = {
             rastaurants: [
-                { id: "", resName: "Book2", resPicture: "", starAverage: 3.8 },
-                // for testing              
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
             ]
         }
-
+        dataService.getDaily().then(res=>{
+            this.setState({restaurants: res.restaurants})
+            console.log(this.state);
+        }).catch(err=>{
+            toast('error', {type: 'error'})
+        })
     }
 
 
