@@ -9,6 +9,7 @@ import FullscreenError from '../component/Style/FullscreenError'
 import { GiKnifeFork } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineShop } from "react-icons/ai";
+import serverAddress from '../Services/ServerUrl';
 
 
 class SearchResult extends Component {
@@ -316,6 +317,7 @@ class SearchResult extends Component {
                         </div>
                         <div className="col-md-6">
                             <div className="card-img-bottom">
+                                <img style={{maxHeight: '100%', maxWidth:'100%'}} src={serverAddress + '/getimage/'+r.pictures[0].toString()} />
                             </div>
                         </div>
                     </div>
