@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import MainContainer from "../component/Style/MainContainer";
 import ds from "../Services/dataService"
 import serverAddress from '../Services/ServerUrl';
+import $ from "jquery";
+import DataTable from 'datatables.net';
+$.DataTable = DataTable
 
 class Menu extends Component {
     constructor(props) {
@@ -17,6 +20,16 @@ class Menu extends Component {
             foodType: "",
         };
         this.renderMenuInfo = this.renderMenuInfo.bind(this);
+    }
+
+    componentDidMount() {
+        $(document).ready(function(){
+            $('#menus').DataTable( {
+                "scrollY":        "200px",
+                "scrollCollapse": true,
+                "paging":         false
+            } );
+        });
     }
 
     componentWillMount() {
@@ -55,7 +68,7 @@ class Menu extends Component {
                 <table id='menus' className="table table-striped col-md-12">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>Picture</th>
                             <th >Name</th>
                             <th>Type</th>
                             <th>Description</th>
