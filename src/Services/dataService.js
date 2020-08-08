@@ -11,13 +11,38 @@ function sleep(ms) {
 }
 
 export default {
+  getDaily() {
+    return Axios.get(serverAddress + '/daily').then(res => {
+      if (res.data.errcode !== 0) throw res.data
+      console.log(res.data)
+      return res.data;
+    }).catch(err => {
+      throw err
+    })
+  }, getFeatured() {
+    return Axios.get(serverAddress + '/featured').then(res => {
+      if (res.data.errcode !== 0) throw res.data
+      console.log(res.data)
+      return res.data;
+    }).catch(err => {
+      throw err
+    })
+  }, getFavorite() {
+    return Axios.get(serverAddress + '/favorite').then(res => {
+      if (res.data.errcode !== 0) throw res.data
+      console.log(res.data)
+      return res.data;
+    }).catch(err => {
+      throw err
+    })
+  },
   getRestaurantWithoutAuth(restaurantId) {
-    return Axios.get("http://localhost:5000/restaurants/" + restaurantId)//TODO: remove if production
+    return Axios.get(serverAddress + "/restaurants/" + restaurantId)//TODO: remove if production
       .then(res => {
         if (res.data.errcode !== 0) throw res.data
         console.log(res.data)
         return res.data;
-      }).catch(err=>{
+      }).catch(err => {
         throw err
       })
   },

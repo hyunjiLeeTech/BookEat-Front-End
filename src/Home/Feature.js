@@ -12,34 +12,14 @@ class Feature extends Component {
         super(props)
         this.state = {
             rastaurants: [
-                { id: "", resName: "Book2", resPicture: "", starAverage: 0.0 },
-                // for testing              
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 5.0 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 4.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.0 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 3.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: .5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
             ]
         }
-
+        dataService.getFeatured().then(res=>{
+            this.setState({restaurants: res.restaurants})
+            console.log(this.state)
+        }).catch(err=>{
+            toast('error', {type: 'error'})
+        })
     }
 
 
