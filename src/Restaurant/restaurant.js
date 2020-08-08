@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import MainContainer from '../component/Style/MainContainer';
-import Axios from 'axios';
 import { withRouter } from "react-router";
 import './RestaurantDetails.css'
 import ResReview from '../Review/Restaurant/ResReview';
@@ -11,7 +10,7 @@ import FullScrrenLoading from '../component/Style/FullscreenLoading';
 import { GiKnifeFork } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineShop, AiOutlinePhone } from "react-icons/ai";
-import { RiTimeLine, RiMapPin2Line } from "react-icons/ri";
+import { RiTimeLine, RiMapPin2Line, RiPercentLine } from "react-icons/ri";
 import serverAddress from '../Services/ServerUrl';
 import dataService from '../Services/dataService';
 
@@ -138,7 +137,7 @@ class Restaurant extends Component {
                                 <h6><FaRegMoneyBillAlt />  Price Range</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
-                                <h5>Promotions</h5>
+                                <h5><RiPercentLine/>  Promotions</h5>
                                 <p>{this.state.isResLoaded ? this.state.discount.percent: null}% Off Call for more information!</p>
 
                             </div>
