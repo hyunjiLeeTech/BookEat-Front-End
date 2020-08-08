@@ -490,7 +490,7 @@ class Reserve extends Component {
 
                             <div className='col-md-4'>
                                 <br/>
-                                <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" />
+                                <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" alt="Restaurant"/>
                                 <br />
                                 <h4 className="text-center">{this.state.restaurant.resName}</h4>
                                 <p>{this.state.restaurant.restaurantDescription}</p>
