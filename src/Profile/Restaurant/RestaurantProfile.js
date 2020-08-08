@@ -144,12 +144,11 @@ class RestaurantProfile extends Component {
     this.handleDeletePicture = this.handleDeletePicture.bind(this);
     this.editResProfileWithPictures = this.editResProfileWithPictures.bind(this);
     this.handleNotOpen = this.handleNotOpen.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('change state')
     if (prevState.picture !== this.state.picture) {
-      console.log('update!!! ', this.state.picture);
       this.state.isPicture = true;
     }
   }
@@ -175,7 +174,6 @@ class RestaurantProfile extends Component {
   }
 
   handleDeletePicture(imageId) {
-    //Add backend here
     ds.deleteImage(imageId);
     ds.updateResPictures({ id: imageId });
   }
@@ -312,18 +310,6 @@ class RestaurantProfile extends Component {
     }
   };
 
-  handleAddDiscount = (e) => {
-    e.preventDefault();
-    var discount = {
-      percent: this.state.discdescription,
-      descript: this.state.promdescription
-    }
-
-    ds.addDiscount(discount).then((res) => {
-      this.queryDiscounts();
-      console.log("add discount success")
-    });
-  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -338,7 +324,6 @@ class RestaurantProfile extends Component {
     const usr = authService.getCurrentUser();
     const restaurant = await ds.getRestaurantInformation();
     console.log(restaurant);
-    console.log("eating time: " + restaurant.eatingTime);
 
     // this.state = { resName: restaurant.resName };
     this.setState((state, props) => {
@@ -479,14 +464,20 @@ class RestaurantProfile extends Component {
     $(document).ready(function () {
       $("#mondisablebutton").click(function () {
         if ($("#monOpenTime").prop("disabled")) {
-          $("#monOpenTime").prop("disabled", false);
+          
+             $("#monOpenTime").prop("disabled", false);
           $("#monCloseTime").prop("disabled", false);
+     
+         
         } else {
-          $("#monOpenTime").prop("disabled", true);
+         
+              $("#monOpenTime").prop("disabled", true);
           $("#monCloseTime").prop("disabled", true);
+        
+        
+
         }
       });
-
       $("#tuedisablebutton").click(function () {
         if ($("#tueOpenTime").prop("disabled")) {
           $("#tueOpenTime").prop("disabled", false);
@@ -562,10 +553,12 @@ class RestaurantProfile extends Component {
 
   //  Edit profile disable button
   handleEdit() {
+    console.log("click disable");
     this.setState({
-      disabled: !this.state.disabled
+      disabled: !this.state.disabled,
     });
     this.changeText();
+ 
   }
 
   //Edit profile - button
@@ -660,12 +653,14 @@ class RestaurantProfile extends Component {
 
   handleNotOpen = (day) => {
     console.log(day);
+   // var bt = document.getElementById('mondisablebutton');
     if (day === "mon") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
+
       } else {
         this.state.monIsClose = true;
-      }
+      } 
     } else if (day === "tue") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
@@ -702,6 +697,12 @@ class RestaurantProfile extends Component {
       } else {
         this.state.sunIsClose = true;
       }
+    }
+
+    if (this.state.monIsClose == true){
+      this.state.disabled = false;
+    }else{
+      this.state.disable = true;
     }
 
     console.log(this.state);
