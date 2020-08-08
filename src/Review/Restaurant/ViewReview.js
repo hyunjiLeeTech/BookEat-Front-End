@@ -51,7 +51,7 @@ class ViewReview extends Component {
 
                     <tr key={rows} className="tableReview">
                         <td>
-                            {moment(review.updatedAt).format("YYYY-MM-DD")}
+                            {moment(review.updatedAt).format("YYYY-MM-DD hh:mm")}
                         </td>
                         <td >
                             {review.customerId.firstName + " " + review.customerId.lastName}

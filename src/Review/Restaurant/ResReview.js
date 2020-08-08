@@ -140,27 +140,27 @@ class ResReview extends Component {
         state.isPicture = true;
         state.reviewPictures = reviewPicturesId;
         await ds.addReview(state);
-        try{
+        try {
             $("#AddReviewModalText")
                 .text("Your review is added")
                 .removeClass("alert-warning")
                 .removeClass("alert-danger")
                 .removeClass("alert-success")
                 .addClass("alert-success");
-        }catch(err){
+        } catch (err) {
             $("#AddReviewModalText")
-            .text("Sorry, " + err)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
+                .text("Sorry, " + err)
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-danger");
         }
     }
 
 
     handleSubmit = (e) => {
         e.preventDefault();
-     
+
         if (formValid(this.state)) {
             if (this.state.isPicture) {
                 this.addReviewWithPictures(this.state);
@@ -199,7 +199,7 @@ class ResReview extends Component {
 
                         <div className="col-sm-4">
                             <div className="review-block-name">{review.customerId.firstName + " " + review.customerId.lastName}</div>
-                            <div className="review-block-date">{moment(review.updatedAt).format("YYYY-MM-DD")}</div>
+                            <div className="review-block-date">{moment(review.updatedAt).format("YYYY-MM-DD hh:mm")}</div>
                         </div>
                         <div className="col-sm-8">
                             <div className="review-block-rate col-sm-8">
@@ -237,7 +237,7 @@ class ResReview extends Component {
                             )
                         }))}
                         <hr />
-                        <br/>
+                        <br />
 
                     </div>
 

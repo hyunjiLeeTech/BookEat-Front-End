@@ -1,18 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Parser from "html-react-parser";
 import $ from "jquery";
-import { Tab } from "bootstrap";
 import Maincontainer from "../../component/Style/MainContainer"
-import { FaThumbsUp } from 'react-icons/fa'
-import { IconContext } from "react-icons"
-import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import ds from "../../Services/dataService";
 import moment from 'moment';
-import FullscreenError from '../../component/Style/FullscreenError'
 import serverAddress from '../../Services/ServerUrl';
-import FullScrrenLoading from '../../component/Style/FullscreenLoading';
-
 
 class CustomerReviewHistory extends Component {
   constructor(props) {
@@ -20,7 +11,7 @@ class CustomerReviewHistory extends Component {
     this.state = {
       reviews: [
         {
-          id: "", date: "", picture1: "", picture2: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restaurantId: { resName: "" }, reservation: { menuItem: [] }
+          id: "", date: "", picture1: "", picture2: "", resName: "", comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 0, customer: {}, restaurantId: { resName: "" }, pictures: [], reservation: { menuItem: [] }
         },
 
       ],
@@ -117,14 +108,15 @@ class CustomerReviewHistory extends Component {
   }
 
   renderTable() {
+    console.log(this.state.reviews);
     return this.state.reviews.map((review, index) => {
+      console.log(review);
       const { id, date, picture1, picture2, resName, comment, foodRate, serviceRate, satisfactionRate, environmentRate } = review
-      console.log(this.state.reviews[index].resName);
       return (
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={index} id={'reviewrow' + index}>
           <tr>
-            <td rowspan="2">{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
+            <td rowspan="2">{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD hh:mm")}</td>
             <td rowspan="2" defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
 
 
@@ -335,10 +327,14 @@ class CustomerReviewHistory extends Component {
                   <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} />
                   :
 
-                  <div>
-                    <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].picture1Id} />
+                  typeof this.state.reviews[index].pictures[0] !== 'undefined' ?
 
-                  </div>
+                    <div>
+                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} />
+
+                    </div>
+                    :
+                    ''
               }
 
             </td>
@@ -352,10 +348,14 @@ class CustomerReviewHistory extends Component {
                   <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} />
                   :
 
-                  <div>
-                    <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].picture2Id} />
+                  typeof this.state.reviews[index].pictures[1] !== 'undefined' ?
 
-                  </div>
+                    <div>
+                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} />
+
+                    </div>
+                    :
+                    ''
               }
 
             </td>
