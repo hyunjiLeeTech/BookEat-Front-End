@@ -70,15 +70,12 @@ class SearchResult extends Component {
         //TODO: filter information from url
 
         if (!isNaN(Number.parseInt(numberOfPeople))) {
-            console.log('settting number of people')
             this.state.numberOfPeople = Number.parseInt(numberOfPeople)
         } else {
-            console.log("setting error")
             this.state.resultsErr = true
             this.forceUpdate();
         }
 
-        console.log(this.state)
         if (!this.state.resultsErr) {
             dataService.getCategories().then(res => {
                 this.categories = res;
@@ -103,7 +100,6 @@ class SearchResult extends Component {
         this.setState({
             resultsReady: false
         })
-        console.log(this.state.keyword);
         dataService.search({
             numberOfPeople: this.state.numberOfPeople,
             dateTime: this.state.dateTime,
@@ -115,7 +111,6 @@ class SearchResult extends Component {
             keyword: this.state.keyword,
         })
             .then(res => {
-                console.log(res.restaurants)
                 this.setState({
                     restaurants: res.restaurants,
                     resultsReady: true
@@ -316,9 +311,7 @@ class SearchResult extends Component {
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <div className="card-img-bottom">
-                                <img style={{maxHeight: '100%', maxWidth:'100%'}} src={serverAddress + '/getimage/'+r.pictures[0].toString()} />
-                            </div>
+                            <img className="card-img-bottom" src={serverAddress + '/getimage/' + r.pictures[0].toString()} alt="Restaurant"/>
                         </div>
                     </div>
                 </div>
@@ -359,7 +352,7 @@ class SearchResult extends Component {
                         <div className="col-sm-4">
                             <div >
                                 <br />
-                                <p><FaRegMoneyBillAlt/>  Price Range</p>
+                                <p><FaRegMoneyBillAlt />  Price Range</p>
                                 <hr />
                                 {this.state.priceRangesReady ? this.renderPriceRange(this.priceRanges) : null}
 
@@ -367,7 +360,7 @@ class SearchResult extends Component {
 
                             <div>
                                 <br />
-                                <p><GiKnifeFork/>  Cuisine Style</p>
+                                <p><GiKnifeFork />  Cuisine Style</p>
                                 <hr />
                                 {this.state.cuisinesReady ? this.renderCuisineFirst5(this.cuisines) : null}
 
@@ -383,7 +376,7 @@ class SearchResult extends Component {
 
                             <div>
                                 <br />
-                                <p><AiOutlineShop/>  Category</p>
+                                <p><AiOutlineShop />  Category</p>
                                 <hr />
                                 {this.state.categoriesReady ? this.renderCategory(this.categories) : null}
                             </div>
