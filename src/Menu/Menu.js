@@ -248,7 +248,7 @@ class Menu extends Component {
 
     menuItemDeleteButton(index) {
         var menu = this.state.menus[index];
-        if (menu.menuPicture.isImage != false) {
+        if (menu.menuPicture.isImage !== false) {
             ds.deleteImage(menu.menuImageId);
         }
 
@@ -301,7 +301,7 @@ class Menu extends Component {
 
     renderTableData() {
         return this.state.menus.map((menu, index) => {
-            const { id, MenuPicture, menuName, menuPrice, menuType, menuDescript } = menu
+            const { MenuPicture, menuName, menuPrice, menuDescript } = menu
             return (
                 <tr key={index} id={'menurow' + index}>
                    
@@ -316,11 +316,11 @@ class Menu extends Component {
                                     {
                                         this.state.menus[index].contenteditable ?
 
-                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} />
+                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} alt="Menu"/>
                                             :
 
                                             <div>
-                                                <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} />
+                                                <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} alt="Menu" />
 
                                             </div>
                                     }
@@ -429,7 +429,7 @@ class Menu extends Component {
                                 <div className="container">
                                     <div className="row">
                                         <input type="file" name="menuPicture" id="menuPicture" onChange={this.onImageChange} />
-                                        <img src={this.state.image ? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} />
+                                        <img src={this.state.image ? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Menu"/>
 
                                     </div>
                                 </div>

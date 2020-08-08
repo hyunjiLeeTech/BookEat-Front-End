@@ -9,7 +9,8 @@ import FullscreenError from '../component/Style/FullscreenError'
 import { GiKnifeFork } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineShop } from "react-icons/ai";
-
+import serverAddress from '../Services/ServerUrl';
+import moment from 'moment'
 
 class SearchResult extends Component {
 
@@ -69,15 +70,12 @@ class SearchResult extends Component {
         //TODO: filter information from url
 
         if (!isNaN(Number.parseInt(numberOfPeople))) {
-            console.log('settting number of people')
             this.state.numberOfPeople = Number.parseInt(numberOfPeople)
         } else {
-            console.log("setting error")
             this.state.resultsErr = true
             this.forceUpdate();
         }
 
-        console.log(this.state)
         if (!this.state.resultsErr) {
             dataService.getCategories().then(res => {
                 this.categories = res;
@@ -102,7 +100,6 @@ class SearchResult extends Component {
         this.setState({
             resultsReady: false
         })
-        console.log(this.state.keyword);
         dataService.search({
             numberOfPeople: this.state.numberOfPeople,
             dateTime: this.state.dateTime,
@@ -114,7 +111,6 @@ class SearchResult extends Component {
             keyword: this.state.keyword,
         })
             .then(res => {
-                console.log(res.restaurants)
                 this.setState({
                     restaurants: res.restaurants,
                     resultsReady: true
@@ -308,15 +304,14 @@ class SearchResult extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="card-block">
-                                <Link to={'/restaurant/' + r._id}><h6 className="card-title">{r.resName ? r.resName : 'unknown'}</h6> </Link>
+                                <Link to={'/restaurant/' + r._id + '/' + moment(new Date(this.state.dateTime)).format('YYYY-MM-DD/HH:mm')+'/'+this.state.numberOfPeople}><h6 className="card-title">{r.resName ? r.resName : 'unknown'}</h6> </Link>
                                 <p className="card-text">{this.getPriceRnageById(r.priceRangeId)} {this.getCuisineNameById(r.cuisineStyleId)} {this.getCategoryNameById(r.categoryId)}</p>
                                 <p className="card-text">{r.restaurantDescription}</p>
-                                <Link to={'/customerreserve/' + r._id} className="btn btn-primary">Reserve</Link>
+                                <Link to={'/customerreserve/' + r._id + '/' + moment(new Date(this.state.dateTime)).format('YYYY-MM-DD/HH:mm')+'/'+this.state.numberOfPeople} className="btn btn-primary">Reserve</Link>
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <div className="card-img-bottom">
-                            </div>
+                            <img className="card-img-bottom" src={serverAddress + '/getimage/' + r.pictures[0].toString()} alt="Restaurant"/>
                         </div>
                     </div>
                 </div>
@@ -357,7 +352,7 @@ class SearchResult extends Component {
                         <div className="col-sm-4">
                             <div >
                                 <br />
-                                <p><FaRegMoneyBillAlt/>  Price Range</p>
+                                <p><FaRegMoneyBillAlt />  Price Range</p>
                                 <hr />
                                 {this.state.priceRangesReady ? this.renderPriceRange(this.priceRanges) : null}
 
@@ -365,7 +360,7 @@ class SearchResult extends Component {
 
                             <div>
                                 <br />
-                                <p><GiKnifeFork/>  Cuisine Style</p>
+                                <p><GiKnifeFork />  Cuisine Style</p>
                                 <hr />
                                 {this.state.cuisinesReady ? this.renderCuisineFirst5(this.cuisines) : null}
 
@@ -381,7 +376,7 @@ class SearchResult extends Component {
 
                             <div>
                                 <br />
-                                <p><AiOutlineShop/>  Category</p>
+                                <p><AiOutlineShop />  Category</p>
                                 <hr />
                                 {this.state.categoriesReady ? this.renderCategory(this.categories) : null}
                             </div>

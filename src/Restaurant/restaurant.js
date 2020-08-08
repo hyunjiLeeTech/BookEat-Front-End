@@ -1,41 +1,44 @@
 import React, { Component } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import MainContainer from '../component/Style/MainContainer';
-import Axios from 'axios';
 import { withRouter } from "react-router";
-import CAFE from '../Image/CAFE.jpg';
 import './RestaurantDetails.css'
 import ResReview from '../Review/Restaurant/ResReview';
 import ViewMenu from '../Menu/ViewMenu';
 import FullscreenError from '../component/Style/FullscreenError'
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
-import ds from "../Services/dataService";
 import { GiKnifeFork } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineShop, AiOutlinePhone } from "react-icons/ai";
-import { RiTimeLine, RiMapPin2Line } from "react-icons/ri";
+import { RiTimeLine, RiMapPin2Line, RiPercentLine } from "react-icons/ri";
+import serverAddress from '../Services/ServerUrl';
+import dataService from '../Services/dataService';
 
 class Restaurant extends Component {
     constructor(props) {
         super(props)
         this.state = {
             id: this.props.match.params.id,
+            date: this.props.match.params.date,
+            time: this.props.match.params.time,
+            numOfPeople: this.props.match.params.numOfPeople,
             res: [],
             resultsErr: false,
             isResLoaded: false,
             discount: {},
         }
+        console.log(this.state);
     }
 
+
     async componentWillMount() {
-        Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
+        dataService.getRestaurantWithoutAuth(this.state.id)//TODO: remove if production
             .then(res => {
-                if (res.data.errcode === 0)
-                    this.setState({
-                        res: res.data.restaurant,
-                        isResLoaded: true,
-                        discount: res.data.discount
-                    })
+                this.setState({
+                    res: res.restaurant,
+                    isResLoaded: true,
+                    discount: res.discount
+                })
             })
     }
 
@@ -61,24 +64,21 @@ class Restaurant extends Component {
 
                 <div className="card mb-3">
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                        <ol className="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <ol className="carousel-indicators" id="indicator">
+                            {this.state.res.pictures ?  this.state.res.pictures.map((v, i, array) => {
+                                return <li key={v} data-target="#carouselExampleIndicators" data-slide-to={i.toString()} className={i === 0 ? 'active' : ''}></li>
+                            }) : null}
                         </ol>
-                        <div className="carousel-inner" id="carousel_pictures">
-                            <div className="carousel-item active">
-                                <img className="d-inline-block" src={CAFE} alt="First slide" />
-                            </div>
-                            <div className="carousel-item">
-                                <img className="d-inline-block" src={CAFE} alt="Second slide" />
-                            </div>
-                            <div className="carousel-item">
-                                <img className="d-inline-block" src={CAFE} alt="Third slide" />
-                            </div>
-
+                        <div className="carousel-inner">
+                            {this.state.res.pictures ? this.state.res.pictures.map((v, i, array) => {
+                                return <div key={v} className={i === 0 ? 'active carousel-item' : 'carousel-item'}>
+                                    <img id="carousel_pictures" className="d-inline-block" src={serverAddress + '/getImage/' + v} alt="Restaurant" />
+                                </div>
+                            }) : null}
                         </div>
                     </div>
+
+
                     <div className="card-body">
                         <h5 className="card-title">{this.state.res.resName}</h5>
                         <hr />
@@ -100,7 +100,13 @@ class Restaurant extends Component {
                                 <h5>Make a reservation</h5>
                                 <hr />
                                 <p>Click the button to make a reservation</p>
-                                <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
+                                <Link to={() => {
+                                    var tr = '/customerreserve/' + this.state.id
+                                    if (this.state.date) tr += ('/' + this.state.date)
+                                    if (this.state.time) tr += ('/' + this.state.time)
+                                    if (this.state.numOfPeople) tr += ('/' + this.state.numOfPeople)
+                                    return tr;
+                                }} className="btn btn-primary">Reserve Here</Link>
                                 <br />
                                 <br />
                                 <h5>Restaurant Information</h5>
@@ -131,7 +137,7 @@ class Restaurant extends Component {
                                 <h6><FaRegMoneyBillAlt />  Price Range</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
-                                <h5>Promotions</h5>
+                                <h5><RiPercentLine/>  Promotions</h5>
                                 <p>{this.state.isResLoaded ? this.state.discount.percent: null}% Off Call for more information!</p>
 
                             </div>

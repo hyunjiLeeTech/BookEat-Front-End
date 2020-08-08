@@ -6,10 +6,11 @@ class SearchBox extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            numberOfPeople: '',
+            numberOfPeople: '4',
             dateTime: new Date(),
             //resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
-            date: '',
+            date: moment().add(1, 'd').format('YYYY-MM-DD'),
+            time: '12:30',
             keyword: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,6 +32,7 @@ class SearchBox extends Component {
                 break;
             case 'keyword':
                 this.setState({ keyword: value })
+                break;
             default:
                 break;
         }
@@ -51,6 +53,7 @@ class SearchBox extends Component {
             dateTime: dateTime,
             numofpeople: numofpeople
         })
+        if(this.state.keyword === null) this.state.keyword = ''
         window.location.href = '/searchResult?dateTime=' + dateTime + '&numOfPeople=' + numofpeople + "&keyword=" + this.state.keyword;
     }
 
@@ -172,7 +175,6 @@ class SearchBox extends Component {
                         name="numberOfPeople"
                         onChange={this.handleChange}
                         value={this.state.numberOfPeople}
-                        onChange={this.handleChange}
                         required
                     >
                         <option value=""># Of People</option>
