@@ -48,6 +48,7 @@ class Reserve extends Component {
             allowModifyMenuItems: true,
             restaurant: {},
             discount: {},
+            isRestaurantLoaded: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.back = this.back.bind(this);
@@ -488,14 +489,14 @@ class Reserve extends Component {
                             {this.state.isRestaurantLoaded ? 
 
                             <div className='col-md-4'>
+                                <br/>
                                 <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" />
                                 <br />
                                 <h4 className="text-center">{this.state.restaurant.resName}</h4>
                                 <p>{this.state.restaurant.restaurantDescription}</p>
                                 <hr />
                                 <h6><RiMapPin2Line />  Address</h6>
-                                <p>{this.state.restaurant.addressId?.streetNum } {this.state.restaurant.addressId?.streetName}
-                    {this.state.restaurant.addressId?.city} {this.state.restaurant.addressId?.province} {this.state.restaurant.addressId?.postalCode}</p>
+                                <p>{this.state.restaurant.addressId?.streetNum } {this.state.restaurant.addressId?.streetName} {this.state.restaurant.addressId?.city} {this.state.restaurant.addressId?.province} {this.state.restaurant.addressId?.postalCode}</p>
                                 <hr />
                                 <h6><AiOutlinePhone /> Phone Number</h6>
                                 <p>{this.state.restaurant.phoneNumber}</p>
