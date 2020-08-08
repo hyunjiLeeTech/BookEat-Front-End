@@ -64,7 +64,6 @@ class ResReview extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('change state')
         if (prevState.picture !== this.state.picture) {
             console.log('update!!! ', this.state.picture);
             this.state.isPicture = true;
@@ -91,17 +90,12 @@ class ResReview extends Component {
 
     async componentWillMount() {
         var resId = this.state.resId;
-
         await this.queryReviews(resId);
-        console.log("after get reviews");
-        console.log(this.state);
     }
 
     async queryReviews(resId) {
 
-        var reviews = await ds.getReviewsRestaurantSide(resId);
-
-        console.log(reviews);
+        var reviews = await ds.getReviewsWithoutSignup(resId);
 
         var serviceAvg = 0;
         var envirAvg = 0;
@@ -126,7 +120,6 @@ class ResReview extends Component {
             satisfactionAvg: satisAvg / reviews.length,
         })
 
-        console.log(this.state);
     }
 
     async addReviewWithPictures(state) {
@@ -147,28 +140,26 @@ class ResReview extends Component {
         state.isPicture = true;
         state.reviewPictures = reviewPicturesId;
         await ds.addReview(state);
-        try{
+        try {
             $("#AddReviewModalText")
                 .text("Your review is added")
                 .removeClass("alert-warning")
                 .removeClass("alert-danger")
                 .removeClass("alert-success")
                 .addClass("alert-success");
-        }catch(err){
+        } catch (err) {
             $("#AddReviewModalText")
-            .text("Sorry, " + err)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
+                .text("Sorry, " + err)
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-danger");
         }
     }
 
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log("saved")
-        console.log(this.state);
 
         if (formValid(this.state)) {
             if (this.state.isPicture) {
@@ -201,7 +192,6 @@ class ResReview extends Component {
 
     queryReviewList() {
         var rows = [];
-        console.log("this state reviews: " + this.state.reviews);
         if (typeof this.state.reviews != "undefined") {
             for (var review of this.state.reviews) {
                 rows.push(
@@ -209,7 +199,7 @@ class ResReview extends Component {
 
                         <div className="col-sm-4">
                             <div className="review-block-name">{review.customerId.firstName + " " + review.customerId.lastName}</div>
-                            <div className="review-block-date">{moment(review.updatedAt).format("YYYY-MM-DD")}</div>
+                            <div className="review-block-date">{moment(review.updatedAt).format("YYYY-MM-DD hh:mm")}</div>
                         </div>
                         <div className="col-sm-8">
                             <div className="review-block-rate col-sm-8">
@@ -247,7 +237,7 @@ class ResReview extends Component {
                             )
                         }))}
                         <hr />
-                        <br/>
+                        <br />
 
                     </div>
 
@@ -259,30 +249,7 @@ class ResReview extends Component {
 
 
     render() {
-        // var foodAvg=0
-        // var serviceAvg=0
-        // var satisfactionAvg =0
-        // var environmentAvg =0
-        // for(var r of this.state.reviews){
-        //     //foodRate 
-        //     foodAvg += r.food;
-        //     serviceAvg += r.service;
-        //     satisfactionAvg += r.satisfaction
-        //     environmentAvg += r.environment
-        //     console.log(foodAvg)
-        // }
-        // if(this.state.reviews.length !== 0)
-        // {
-        //     foodAvg /= this.state.reviews.length;
-        //     serviceAvg /= this.state.reviews.length;
-        //     satisfactionAvg /= this.state.reviews.length;
-        //     environmentAvg /= this.state.reviews.length;
-        // }
-
-
         const { isError } = this.state;
-        console.log("$$$$$$$$$$$$$$$$", this.state.reviews);
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", this.state.reviews.foodAvg);
         return (
             <div className="container">
                 <div className="row">
@@ -344,7 +311,6 @@ class ResReview extends Component {
                                 name="comment"
                                 value={this.state.comment}
                                 onChange={this.handleChange}
-                            //   disabled={(!this.state.disabled)}
                             ></textarea>
                             <span className="invalid-feedback">
                                 {Parser(isError.comment)}

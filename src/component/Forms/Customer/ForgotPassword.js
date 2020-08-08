@@ -125,20 +125,18 @@ class ForgotPassword extends Component {
           </div>
         </div>
 
-        <form onSubmit={this.handleSubmit} noValidate>
+        <form onSubmit={this.handleSubmit} className="text-center" noValidate>
           <div className="form-group row">
-            <div className="col-sm-1"></div>
             <label htmlFor="email" className="col-sm-2 col-form-label">
-              {" "}
-              Email{" "}
+              Email
             </label>
-            <div className="col-sm-6">
+            <div className="col-sm-8">
               <input
                 type="email"
                 name="email"
                 id="email"
                 className={
-                  isError.email.length > 0
+                  isError.email.length > 6
                     ? "is-invalid form-control"
                     : "form-control"
                 }
@@ -147,15 +145,12 @@ class ForgotPassword extends Component {
                 onChange={this.handleChange}
                 required
               />
-              {isError.email.length > 0 && (
-                <span className="invalid-feedback">
+               <span className="invalid-feedback">
                   {Parser(isError.email)}
                 </span>
-              )}
             </div>
           </div>
 
-          <div className="form-group "></div>
           <div className="text-center">
             <button type="submit" className="btn btn-primary" onClick={getResetPasswordEmail}>
               Send reset link

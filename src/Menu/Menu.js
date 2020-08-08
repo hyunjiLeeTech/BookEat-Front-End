@@ -5,7 +5,7 @@ import $ from "jquery";
 import FullscreenError from '../component/Style/FullscreenError'
 import serverAddress from '../Services/ServerUrl';
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
-import { toast } from 'react-toastify';
+
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
@@ -115,7 +115,6 @@ class Menu extends Component {
     }
 
     handleChange = (e) => {
-        console.log(this.state)
         e.preventDefault();
         const { name, value } = e.target;
         let isError = { ...this.state.isError };
@@ -135,8 +134,6 @@ class Menu extends Component {
             default:
                 break;
         }
-        console.log([e.target.id]);
-        console.log([e.target.value]);
         this.setState({
             isError,
             [e.target.id]: e.target.value,
@@ -153,14 +150,28 @@ class Menu extends Component {
         let menuContents = await ds.getMenus();
         menuContents = menuContents.menus;
 
+        try{
+            $("#munuAddResultText")
+            .text("Menu is added")
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-success");
+        }catch(err){
+            $("#munuAddResultText")
+            .text("Sorry, " + err)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
+        }
+
         if (typeof menuContents !== 'undefined') {
 
             for (var i = 0; i < menuContents.length; i++) {
                 if (typeof menuContents[i].menuImageId !== 'undefined') {
-                    console.log(menuContents[i].menuImageId);
                     var imageId = { imageId: menuContents[i].menuImageId };
                     menuContents[i].menuPicture = await ds.getImage(imageId);
-                    console.log("get image success");
                 } else {
                     menuContents[i].menuPicture = {
                         isImage: false,
@@ -173,15 +184,12 @@ class Menu extends Component {
                 menus: menuContents
             });
         }
-        console.log("Result of query menus")
-        console.log(menuContents);
+
         this.setState({ isLoading: false })
     }
 
     async addMenuWithImage(state) {
         this.setState({ isLoading: true })
-
-        console.log(this);
         const formData = new FormData();
         formData.append('menuImage', state.image);
         const config = {
@@ -191,7 +199,6 @@ class Menu extends Component {
         }
         var menuImageId = await ds.addMenuImage(formData, config);
         state.menuImageId = menuImageId;
-        console.log(state);
         await ds.addMenu(state).then(() => {
 
         }).finally(async (res) => {
@@ -220,9 +227,7 @@ class Menu extends Component {
         }
 
         await ds.editMenu(state).then(() => {
-            console.log('edit menu fullfilled')
             this.queryMenus();
-
         }).catch(err => {
             console.log(err)
         }).finally(() => {
@@ -233,9 +238,7 @@ class Menu extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("saved")
         if (formValid(this.state)) {
-            console.log(this.state)
             this.addMenuWithImage(this.state);
 
         } else {
@@ -271,34 +274,18 @@ class Menu extends Component {
     }
 
     menuItemEditButton(index) {
-        //console.log(this.state.menus);
-        console.log(this.state.menus[index])
-
         this.state.menus[index].contenteditable = !this.state.menus[index].contenteditable;
-
         if (!this.state.menus[index].contenteditable) {
-            //this.editMenuWithImage(this.state.menus[index]); // contain the back-end logic for edit menu with image. need to be tested after the front-end side of issue fixed
-            //ds.editMenu(this.state.menus[index]);
-            //console.log('call edit menu')
             this.editMenuWithImage(this.state.menus[index])
-            //$('#EditResultModal').modal('show') //Show the modal 
         }
-        // this.forceUpdate();
-        //this.setState({});
+ 
         this.callModal(index);
     }
 
-    //this.state.menus[index]
     //Edit profile - button
     callModal(index) {
-        this.setState(state => {
             this.setState(state =>
-                //     {
-                //     return {
-                //         // edit: !state.edit
-                //     };
-                // },
-
+            
                 () => {
                     if (this.state.menus[index].contenteditable) {
                         $('this.state.menus[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
@@ -307,14 +294,12 @@ class Menu extends Component {
                         $('this.state.menus[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
                     }
                 });
-        })
     }
 
 
 
 
     renderTableData() {
-        console.log(this.state.menus);
         return this.state.menus.map((menu, index) => {
             const { id, MenuPicture, menuName, menuPrice, menuType, menuDescript } = menu
             return (
@@ -323,8 +308,8 @@ class Menu extends Component {
                     <td contentEditable={(this.state.contenteditable)} >
                         <div>
                        
-                            <container>
-                                <row>
+                            <div className="container">
+                                <div className="row">
                                     <input type="file" name="MenuPicture" id="MenuPicture" defaultValue={MenuPicture}
                                         onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
                                  
@@ -339,25 +324,22 @@ class Menu extends Component {
 
                                             </div>
                                     }
-
-
-
-                                </row>
-                            </container>
+                                </div>
+                            </div>
                         </div>
                     </td>
 
                     <td>
                         <div className="container-fluid">
-                            <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
+                            <div className="form-inline">
                             <input type="text" id={"menuName"+ index} name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
-                            <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
+                            <div className="form-inline">
                             <input type="text" id={"menuPrice"+ index} name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
                                 className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
-                            <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
+                            <div className="form-inline" >
                             <select className="form-conrol"
                                 id="menuType"
                                 name="menuType"
@@ -373,7 +355,7 @@ class Menu extends Component {
                                 <option value="Drint"> Drink</option>
                             </select>
                             </div>
-                            <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
+                            <div className="form-inline">
                             <textarea row="3" id={"menuDescript"+index} name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
                                     className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
@@ -384,7 +366,7 @@ class Menu extends Component {
                         <div className="form-group row">
                           
                             <button
-                                button id='save_edit_btn'
+                                id='save_edit_btn'
                                 type="button"
                                 className="btn btn-primary btn-sm mr-sm-2"
                                 onClick={() => this.menuItemEditButton(index)}
@@ -397,7 +379,7 @@ class Menu extends Component {
                     <td >
                         <div className="form-group row">
                             <button
-                                button id='delete_btn'
+                                id='delete_btn'
                                 type="button"
                                 className="btn btn-danger btn-sm mr-sm-2"
                                 onClick={() => this.menuItemDeleteButton(index)}
@@ -444,13 +426,13 @@ class Menu extends Component {
                     <div id="menu">
                         <div className="row">
                             <div className="col-sm-3 border">
-                                <container>
-                                    <row>
+                                <div className="container">
+                                    <div className="row">
                                         <input type="file" name="menuPicture" id="menuPicture" onChange={this.onImageChange} />
                                         <img src={this.state.image ? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} />
 
-                                    </row>
-                                </container>
+                                    </div>
+                                </div>
                             </div>
                             <div className="col-sm-9 border">
                                 <div className="col container-fluid">
@@ -511,7 +493,6 @@ class Menu extends Component {
                         {this.renderTableData()}
                     </tbody>
                 </table>
-                {/* </div> */}
 
                 {/* addMenuModal */}
                 <div
@@ -606,7 +587,4 @@ class Menu extends Component {
 }
 
 
-
-
 export default Menu;
-

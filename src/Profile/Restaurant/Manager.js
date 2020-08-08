@@ -121,11 +121,45 @@ class RestaurantProfile extends Component {
     } else {
       console.log("Form is invalid!");
     }
+    try{
+      $("#manSignResultText")
+      .text("Manager account is created")
+      .removeClass("alert-warning")
+      .removeClass("alert-danger")
+      .removeClass("alert-success")
+      .addClass("alert-success");
+
+    }catch(err){
+      $("#manSignResultText")
+      .text("Sorry, " + err)
+      .removeClass("alert-warning")
+      .removeClass("alert-danger")
+      .removeClass("alert-success")
+      .addClass("alert-danger");
+
+    }
   };
 
   handleDeleteManager = (manId) => {
     this.state.deleteManId = manId;
     ds.deleteManagerAccount(this.state);
+    try{
+      $("#deleteResultText")
+          .text("Manager account is deleted")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+    }catch(err){
+
+      $("#deleteResultText")
+          .text("Sorry, " + err)
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+
+    }
   };
 
   onClick() {

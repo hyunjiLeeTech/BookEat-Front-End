@@ -2,8 +2,7 @@ import authHeader from "./authHeader";
 // import authService from "./AuthService";
 import serverAddress from "./ServerUrl";
 import Axios from "axios";
-import $, { data } from "jquery";
-import { toast } from "react-toastify";
+import { data } from "jquery";
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -335,12 +334,10 @@ export default {
       }); //TODO: err handling needs to be finished
   },
   getCustomerInformation() {
-    console.log('/customers/getcustomerinfo')
     return Axios.get(serverAddress + "/customers/getcustomerinfo", {
       headers: authHeader(), //set auth header
     })
       .then(function (res) {
-        console.log(res);
         return res.data;
       })
       .catch((err) => {
@@ -406,23 +403,7 @@ export default {
     })
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#resProfileResultText")
-            .text("Profiled is edited")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-          return res.data
-        } else {
-          $("#resProfileResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-          throw res.data
-        }
+        return res.data
       })
       .catch((err) => {
         console.log(err);
@@ -439,21 +420,6 @@ export default {
     })
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#signResultText")
-            .text("Profiled is edited")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#signResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       })
       .catch((err) => {
         console.log(err);
@@ -468,8 +434,7 @@ export default {
     Axios.post(serverAddress + "/updatecustomerinfo", state, {
       headers: authHeader(),
     }).then((res) => {
-      console.log(res);
-  
+      return res.data;
     }).catch(err => {
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(updateCustomerInformation)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -481,24 +446,9 @@ export default {
   createManagerAccount(state) {
     Axios.post(serverAddress + "/managersignup", state, {
       headers: authHeader(),
-    }) // TODO: need to move jquery
+    }) 
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#manSignResultText")
-            .text("Manager account is created")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#manSignResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       })
       .catch((err) => {
         console.log(err);
@@ -531,24 +481,9 @@ export default {
       {
         headers: authHeader(),
       }
-    ) // TODO: move jquery
+    ) 
       .then((res) => {
         console.log(res);
-        if (res.data.errcode === 0) {
-          $("#deleteResultText")
-            .text("Manager account is deleted")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#deleteResultText")
-            .text("Sorry, " + res.data.errmsg)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        }
       })
       .catch((err) => {
         console.log(err);
@@ -580,21 +515,6 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
-      if (res.data.errcode === 0) {
-        $("#munuAddResultText")
-          .text("Menu is added")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#munuAddResultText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
@@ -607,24 +527,7 @@ export default {
   async getMenus() {
     return await Axios.get(serverAddress + "/menu/getmenus", {
       headers: authHeader()
-    }).then((res) => {
-      console.log("ds get menu")
-      console.log(res.data);
-      if (res.data.errcode === 0) {
-        $("#munuAddResultText")
-          .text("Menu is added")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-      } else {
-        $("#munuAddResultText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
+    }).then((res) => { 
       return res.data
     }).catch((err) => {
       console.log(err)
@@ -636,11 +539,9 @@ export default {
     })
   },
   editMenu(state) {
-    console.log("edit menu starts")
     return Axios.post(serverAddress + "/menu/editmenu", state, {
       headers: authHeader()
     }).then((res) => {
-      console.log('fullfilled');
       if (res.data.errcode === 1) throw data
       return res.data;
     }).catch(((err) => {
@@ -657,16 +558,6 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
-      if (res.data.errcode === 0) {
-        //FIXME: Move to component 
-      } else {
-        $("#DeleteResultModalText")
-          .text("Sorry, " + res.data.errmsg)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
-      }
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
@@ -681,7 +572,7 @@ export default {
       headers: authHeader()
     }).then((res) => {
       console.log(res);
-   
+
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
@@ -882,6 +773,18 @@ export default {
           return;
         }
         throw err;
+      })
+  },
+  deleteImages(state) {
+    return Axios.delete(serverAddress + "/deleteimages", { params: { pictures: state } })
+      .then((res) => {
+        console.log(res.data);
+      })
+  },
+  getReviewsWithoutSignup(id) {
+    return Axios.get(serverAddress + "/getReviewsWithoutSignUp", { params: { resId: id } })
+      .then((res) => {
+        return res.data.reviews;
       })
   }
 };

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-// import Parser from 'html-react-parser'
 import $ from "jquery";
 import dataService from '../Services/dataService';
 import { toast } from 'react-toastify';
-// import { ToastContainer, toast, cssTransition } from 'react-toastify';
 import Axios from 'axios';
 import authHeader from '../Services/authHeader';
 import Modal from 'react-bootstrap/Modal'
@@ -135,50 +133,6 @@ class RestaurantReservation extends Component {
                         onClick={() => this.cancelReservation(this.state.upcoming[index]._id)}
                     >
                         Cancel Reservation </button>
-
-
-                    {/* Cancel Modal */}
-                    {/* This results in mutiple modals in the page. do not put this into a loop */}
-                    {/* <div
-                            className="modal fade"
-                            id="cancelModal"
-                            tabindex="-1"
-                            role="dialog"
-                            aria-labelledby="cancelLabel"
-                            aria-hidden="true"
-                        >
-                            <div className="modal-dialog" role="document">
-                                <div className="modal-content">
-                                    <div className="modal-header">
-                                        <h5 className="modal-title" id="cancelModalLabel">
-                                            Cancel Reservation
-                                        </h5>
-                                        <button
-                                            type="button"
-                                            className="close"
-                                            data-dismiss="modal"
-                                            aria-label="Close"
-                                        >
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div className="modal-body">
-                                        <p className="alert alert-warning" id="signResultText">
-                                            Please Wait...
-                                        </p>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary"
-                                            data-dismiss="modal"
-                                        >
-                                            Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                 </td>
 
             </tr>
@@ -189,7 +143,6 @@ class RestaurantReservation extends Component {
 
     queryPresent() {
         dataService.getRestaurantUpcomingReservation().then(res => {
-            console.log(res.reservations);
             this.setState({
                 upcoming: res.reservations,
             })
