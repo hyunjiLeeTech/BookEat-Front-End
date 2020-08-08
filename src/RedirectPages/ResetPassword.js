@@ -100,20 +100,6 @@ class ResetPassword extends Component {
                 toast(errmsg, {type: 'error', autoClose: false})
             })
 
-            //   const infoToast = toast("We are updating your password, Please wait", { type: toast.TYPE.INFO, autoClose: false, });
-            //   dataService.changeAccountPassword(this.state.password, this.state.newPassword).then((res) => {
-            //     toast.update(infoToast, { render: "Password Updated", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
-            //   }).catch(err => {
-            //     console.log(err)
-            //     toast.update(infoToast, { render: "Error Occured", type: toast.TYPE.ERROR, autoClose: 5000 })
-            //   }).finally(() => {
-            //     this.setState({
-            //       newPassword: '',
-            //       password: '',
-            //       confirmpw: '',
-            //     })
-            //   })
-
         } else {
             console.log("Form is invalid!");
         }
