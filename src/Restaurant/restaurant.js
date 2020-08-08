@@ -64,13 +64,24 @@ class Restaurant extends Component {
 
                 <div className="card mb-3">
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                        <ol className="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
+                        <ol className="carousel-indicators" style={{background: '#777777'}}>
+                            {this.state.res.pictures ?  this.state.res.pictures.map((v, i, array) => {
+                                return <li data-target="#carouselExampleIndicators" data-slide-to={i.toString()} className={i === 0 ? 'active' : ''}></li>
+                            }) : null}
+
+
+
+                            {/* <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
                             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> */}
                         </ol>
                         <div className="carousel-inner" id="carousel_pictures">
-                            <div className="carousel-item active">
+                            {this.state.res.pictures ? this.state.res.pictures.map((v, i, array) => {
+                                return <div className={i === 0 ? 'active carousel-item' : 'carousel-item'}>
+                                    <img style={{maxWidth: '100%', maxHeight: '100%'}} className="d-inline-block" src={serverAddress + '/getImage/' + v} alt="First slide" />
+                                </div>
+                            }) : null}
+                            {/* <div className="carousel-item active">
                                 <img className="d-inline-block" src={CAFE} alt="First slide" />
                             </div>
                             <div className="carousel-item">
@@ -78,14 +89,9 @@ class Restaurant extends Component {
                             </div>
                             <div className="carousel-item">
                                 <img className="d-inline-block" src={CAFE} alt="Third slide" />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
-
-
-
-                    <img className="previewImage" src={serverAddress + '/getImage/' + this.state.res.pictures} style={{ maxHeight: '50%', maxWidth: '50%' }} />
-
 
 
                     <div className="card-body">
