@@ -106,197 +106,203 @@ class CustomerReviewHistory extends Component {
     console.log(this.state.reviews);
     return this.state.reviews.map((review, index) => {
       console.log(review);
-      const {  comment } = review
+      const { comment } = review
       return (
         <tr key={index} id={'reviewrow' + index}>
-          
-            <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
-            <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
+
+          <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
+          <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
 
 
-            <td>
-              <textarea type="text" id="comment" name="comment"
-                onChange={(e) => this.handleChangeInList(e, index)}
-                defaultValue={comment} className="border-none"
-                disabled={(!this.state.reviews[index].contenteditable)}
-              /></td>
-
-
-
-            <td >
-              {
-                this.state.reviews[index].contenteditable ?
-
-                  <div className="Form-group" >
-                    <select className="form-conrol"
-                      id="foodRate"
-                      name="foodRate"
-                      value={this.state.foodRate}
-                      onChange={(e) => this.handleChangeInList(e, index)}
-                      required
-                    >
-                      <option value="1">⭐</option>
-                      <option value="2">⭐⭐</option>
-                      <option value="3">⭐⭐⭐</option>
-                      <option value="4">⭐⭐⭐⭐</option>
-                      <option value="5">⭐⭐⭐⭐⭐</option>
-                    </select>
-                  </div>
-                  : this.renderStars(this.state.reviews[index].food)
-
-              }
-            </td>
-
-
-            <td >
-              {
-                this.state.reviews[index].contenteditable ?
-               
-
-                  <div className="Form-group">
-                    <select className="form-conrol"
-                      id="serviceRate"
-                      name="serviceRate"
-                      value={this.state.serviceRate}
-                      onChange={(e) => this.handleChangeInList(e, index)}
-                      required
-                    >
-                      <option value="1" >⭐</option>
-                      <option value="2">⭐⭐</option>
-                      <option value="3">⭐⭐⭐</option>
-                      <option value="4">⭐⭐⭐⭐</option>
-                      <option value="5">⭐⭐⭐⭐⭐</option>
-                    </select>
-                  </div>
-                  : this.renderStars(this.state.reviews[index].service)
-              }
-            </td>
-
-            <td >
-              {
-                this.state.reviews[index].contenteditable ?
-                  
-                  <div className="Form-group">
-                    <select className="form-conrol"
-                      id="satisfactionRate"
-                      name="satisfactionRate"
-                      value={this.state.satisfactionRate}
-                      onChange={(e) => this.handleChangeInList(e, index)}
-                      required
-                    >
-                      <option value="1" >⭐</option>
-                      <option value="2">⭐⭐</option>
-                      <option value="3">⭐⭐⭐</option>
-                      <option value="4">⭐⭐⭐⭐</option>
-                      <option value="5">⭐⭐⭐⭐⭐</option>
-                    </select>
-                  </div>
-                  : this.renderStars(this.state.reviews[index].satisfaction)
-              }
-            </td>
-
-            <td >
-              {
-
-                this.state.reviews[index].contenteditable ?
-                 
-                  <div className="Form-group" >
-                    <select className="form-conrol"
-                      id="environmentRate"
-                      name="environmentRate"
-                      value={this.state.environmentRate}
-                      onChange={(e) => this.handleChangeInList(e, index)}
-                      required
-                    >
-                   
-                      <option value="1">⭐</option>
-                      <option value="2">⭐⭐</option>
-                      <option value="3">⭐⭐⭐</option>
-                      <option value="4">⭐⭐⭐⭐</option>
-                      <option value="5">⭐⭐⭐⭐⭐</option>
-                    </select>
-                  </div>
-                  : this.renderStars(this.state.reviews[index].environment)
-              }
-            </td>
+          <td>
+            <textarea type="text" id="comment" name="comment"
+              onChange={(e) => this.handleChangeInList(e, index)}
+              defaultValue={comment} className="border-none"
+              disabled={(!this.state.reviews[index].contenteditable)}
+            /></td>
 
 
 
-            
-          
-            <td colSpan="2">
-              <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
-                // onChange={(e) => this.onImageChangepic1(e, index)} 
-                // disabled={(!this.state.reviews[index].contenteditable)}
-                disabled="flase"
-                className="border-0"
-              />
+          <td >
+            {
+              this.state.reviews[index].contenteditable ?
 
-              {
-                this.state.reviews[index].contenteditable ?
-
-                  <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} alt="Review"/>
-                  :
-
-                  typeof this.state.reviews[index].pictures[0] !== 'undefined' ?
-
-                    <div>
-                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} alt="Review"/>
-
-                    </div>
-                    :
-                    ''
-              }
-
-            </td>
-            <td colSpan="2 ">
-              {
-                this.state.reviews[index].contenteditable ?
-
-                  <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} alt="Review"/>
-                  :
-
-                  typeof this.state.reviews[index].pictures[1] !== 'undefined' ?
-
-                    <div>
-                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} alt="Review"/>
-
-                    </div>
-                    :
-                    ''
-              }
-
-            </td>
-
-            <td >
-              {" "}
-              <div className="form-inline">
-                <div className="form-group">
-                  <button
-                    id='saveReviewChange'
-                    onClick={() => this.handleClickEditReview(index)}
-                    type="button"
-                    className="btn btn-primary btn-sm mr-sm-2"
+                <div className="Form-group" >
+                  <select className="form-conrol"
+                    id="foodRate"
+                    name="foodRate"
+                    value={this.state.foodRate}
+                    onChange={(e) => this.handleChangeInList(e, index)}
+                    required
                   >
-                    {this.state.reviews[index].contenteditable ? "Save Change" : "Edit"}
-
-                  </button>
+                    <option value="1"><span role="img" aria-label="star">⭐</span></option>
+                    <option value="2"><span role="img" aria-label="star">⭐⭐</span></option>
+                    <option value="3"><span role="img" aria-label="star">⭐⭐⭐</span></option>
+                    <option value="4"><span role="img" aria-label="star">⭐⭐⭐⭐</span></option>
+                    <option value="5"><span role="img" aria-label="star">⭐⭐⭐⭐⭐</span></option>
+                  </select>
                 </div>
-                <div className="form-group">
-                  <button
-                    id='delete_btn'
-                    type="button"
-                    className="btn btn-danger btn-sm mr-sm-2"
-                    data-toggle="modal"
-                    data-target="#DeleteReviewResultModal"
-                    onClick={() => this.handleClickDeleteReview(this.state.reviews[index]._id, this.state.reviews[index].pictures)}
+                : this.renderStars(this.state.reviews[index].food)
+
+            }
+          </td>
+
+
+          <td >
+            {
+              this.state.reviews[index].contenteditable ?
+
+
+                <div className="Form-group">
+                  <select className="form-conrol"
+                    id="serviceRate"
+                    name="serviceRate"
+                    value={this.state.serviceRate}
+                    onChange={(e) => this.handleChangeInList(e, index)}
+                    required
                   >
-                    Delete
+                    <option value="1"><span role="img" aria-label="star">⭐</span></option>
+                    <option value="2"><span role="img" aria-label="star">⭐⭐</span></option>
+                    <option value="3"><span role="img" aria-label="star">⭐⭐⭐</span></option>
+                    <option value="4"><span role="img" aria-label="star">⭐⭐⭐⭐</span></option>
+                    <option value="5"><span role="img" aria-label="star">⭐⭐⭐⭐⭐</span></option>
+                  </select>
+                </div>
+                : this.renderStars(this.state.reviews[index].service)
+            }
+          </td>
+
+          <td >
+            {
+              this.state.reviews[index].contenteditable ?
+
+                <div className="Form-group">
+                  <select className="form-conrol"
+                    id="satisfactionRate"
+                    name="satisfactionRate"
+                    value={this.state.satisfactionRate}
+                    onChange={(e) => this.handleChangeInList(e, index)}
+                    required
+                  >
+                    <option value="1"><span role="img" aria-label="star">⭐</span></option>
+                    <option value="2"><span role="img" aria-label="star">⭐⭐</span></option>
+                    <option value="3"><span role="img" aria-label="star">⭐⭐⭐</span></option>
+                    <option value="4"><span role="img" aria-label="star">⭐⭐⭐⭐</span></option>
+                    <option value="5"><span role="img" aria-label="star">⭐⭐⭐⭐⭐</span></option>
+                  </select>
+                </div>
+                : this.renderStars(this.state.reviews[index].satisfaction)
+            }
+          </td>
+
+          <td >
+            {
+
+              this.state.reviews[index].contenteditable ?
+
+                <div className="Form-group" >
+                  <select className="form-conrol"
+                    id="environmentRate"
+                    name="environmentRate"
+                    value={this.state.environmentRate}
+                    onChange={(e) => this.handleChangeInList(e, index)}
+                    required
+                  >
+
+                    <option value="1"><span role="img" aria-label="star">⭐</span></option>
+                    <option value="2"><span role="img" aria-label="star">⭐⭐</span></option>
+                    <option value="3"><span role="img" aria-label="star">⭐⭐⭐</span></option>
+                    <option value="4"><span role="img" aria-label="star">⭐⭐⭐⭐</span></option>
+                    <option value="5"><span role="img" aria-label="star">⭐⭐⭐⭐⭐</span></option>
+                  </select>
+                </div>
+                : this.renderStars(this.state.reviews[index].environment)
+            }
+          </td>
+
+
+
+
+
+          <td colSpan="2">
+            <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
+              // onChange={(e) => this.onImageChangepic1(e, index)} 
+              // disabled={(!this.state.reviews[index].contenteditable)}
+              disabled="flase"
+              className="border-0"
+            />
+
+            {
+              this.state.reviews[index].contenteditable ?
+
+                <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} alt="Review" />
+                :
+
+                typeof this.state.reviews[index].pictures[0] !== 'undefined' ?
+
+                  <div>
+                    <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} alt="Review" />
+
+                  </div>
+                  :
+                  ''
+            }
+
+          </td>
+          <td colSpan="2 ">
+            <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
+              // onChange={(e) => this.onImageChangepic2(e, index)} 
+              // disabled={(!this.state.reviews[index].contenteditable)} 
+              disabled="false"
+              className="border-0"
+            />
+            {
+              this.state.reviews[index].contenteditable ?
+
+                <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} alt="Review" />
+                :
+
+                typeof this.state.reviews[index].pictures[1] !== 'undefined' ?
+
+                  <div>
+                    <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} alt="Review" />
+
+                  </div>
+                  :
+                  ''
+            }
+
+          </td>
+
+          <td >
+            {" "}
+            <div className="form-inline">
+              <div className="form-group">
+                <button
+                  id='saveReviewChange'
+                  onClick={() => this.handleClickEditReview(index)}
+                  type="button"
+                  className="btn btn-primary btn-sm mr-sm-2"
+                >
+                  {this.state.reviews[index].contenteditable ? "Save Change" : "Edit"}
+
                 </button>
-                </div>
               </div>
-            </td>
-          
+              <div className="form-group">
+                <button
+                  id='delete_btn'
+                  type="button"
+                  className="btn btn-danger btn-sm mr-sm-2"
+                  data-toggle="modal"
+                  data-target="#DeleteReviewResultModal"
+                  onClick={() => this.handleClickDeleteReview(this.state.reviews[index]._id, this.state.reviews[index].pictures)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </td>
+
         </tr>
 
         // </form>
@@ -409,17 +415,17 @@ class CustomerReviewHistory extends Component {
             <table id='reivews' className="table table-striped col-md-12">
               <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Restaurant</th>
-                    <th>Review</th>
-                    <th>Food Rate</th>    
-                    <th>Service Rate</th>
-                    <th>Satisfaction Rate</th>
-                    <th>Environment Rate</th>
-                    <th>Picture</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
+                  <th>Date</th>
+                  <th>Restaurant</th>
+                  <th>Review</th>
+                  <th>Food Rate</th>
+                  <th>Service Rate</th>
+                  <th>Satisfaction Rate</th>
+                  <th>Environment Rate</th>
+                  <th>Picture</th>
+                  <th></th>
+                  <th></th>
+                </tr>
               </thead>
               <tbody>
                 {this.renderTable()}
