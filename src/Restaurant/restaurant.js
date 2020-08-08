@@ -61,12 +61,12 @@ class Restaurant extends Component {
 
                 <div className="card mb-3">
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
-                        <ol className="carousel-indicators" style={{background: '#777777'}}>
+                        <ol className="carousel-indicators">
                             {this.state.res.pictures ?  this.state.res.pictures.map((v, i, array) => {
                                 return <li key={v} data-target="#carouselExampleIndicators" data-slide-to={i.toString()} className={i === 0 ? 'active' : ''}></li>
                             }) : null}
                         </ol>
-                        <div className="carousel-inner" id="carousel_pictures">
+                        <div className="carousel-inner">
                             {this.state.res.pictures ? this.state.res.pictures.map((v, i, array) => {
                                 return <div key={v} className={i === 0 ? 'active carousel-item' : 'carousel-item'}>
                                     <img id="carousel_pictures" className="d-inline-block" src={serverAddress + '/getImage/' + v} alt="Restaurant" />
