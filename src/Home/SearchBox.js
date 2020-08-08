@@ -32,6 +32,7 @@ class SearchBox extends Component {
                 break;
             case 'keyword':
                 this.setState({ keyword: value })
+                break;
             default:
                 break;
         }
@@ -174,7 +175,6 @@ class SearchBox extends Component {
                         name="numberOfPeople"
                         onChange={this.handleChange}
                         value={this.state.numberOfPeople}
-                        onChange={this.handleChange}
                         required
                     >
                         <option value=""># Of People</option>
