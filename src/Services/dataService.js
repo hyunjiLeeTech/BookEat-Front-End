@@ -15,6 +15,7 @@ export default {
     return Axios.get("http://localhost:5000/restaurants/" + restaurantId)//TODO: remove if production
       .then(res => {
         if (res.data.errcode !== 0) throw res.data
+        console.log(res.data)
         return res.data;
       }).catch(err=>{
         throw err

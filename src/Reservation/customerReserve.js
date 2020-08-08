@@ -63,8 +63,8 @@ class Reserve extends Component {
     componentWillMount() {
         this.setState({ isLoading: true });
         dataService.getRestaurantWithoutAuth(this.state.resId).then(resp => {
-            this.setState({ restaurant: resp.restaurant, discount: resp.discount })
-            console.log(this.state);
+            this.setState({ restaurant: resp.restaurant, discount: resp.discount, isRestaurantLoaded: true})
+            
             if (this.state.isUpdate) {
                 dataService.getReservationById(this.state.reservationId).then(res => {
                     this.selectedtableId = res.reservation.table;
@@ -485,15 +485,17 @@ class Reserve extends Component {
                             <div className='col-md-8'>
                                 {this.renderForm()}
                             </div>
+                            {this.state.isRestaurantLoaded ? 
+
                             <div className='col-md-4'>
-                                {/* <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" /> */}
+                                <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" />
                                 <br />
                                 <h4 className="text-center">{this.state.restaurant.resName}</h4>
                                 <p>{this.state.restaurant.restaurantDescription}</p>
                                 <hr />
                                 <h6><RiMapPin2Line />  Address</h6>
-                                {/* <p>{this.state.restaurant.addressId.streetNum } {this.state.restaurant.addressId.streetName}
-                    {this.state.restaurant.addressId.city} {this.state.restaurant.addressId.province} {this.state.restaurant.addressId.postalCode}</p> */}
+                                <p>{this.state.restaurant.addressId?.streetNum } {this.state.restaurant.addressId?.streetName}
+                    {this.state.restaurant.addressId?.city} {this.state.restaurant.addressId?.province} {this.state.restaurant.addressId?.postalCode}</p>
                                 <hr />
                                 <h6><AiOutlinePhone /> Phone Number</h6>
                                 <p>{this.state.restaurant.phoneNumber}</p>
@@ -502,15 +504,16 @@ class Reserve extends Component {
                                 <p>{this.state.discount.percent} % Off Call for more information!</p>
                                 <hr />
                                 <h6><RiTimeLine />  Store Time</h6>
-                                {/* <p>Monday { this.state.restaurant.monOpenTimeId.storeTimeName } - {this.state.restaurant.monCloseTimeId.storeTimeName}</p>
+                                <p>Monday { this.state.restaurant.monOpenTimeId.storeTimeName } - {this.state.restaurant.monCloseTimeId.storeTimeName}</p>
                                 <p>Tuesday { this.state.restaurant.tueOpenTimeId.storeTimeName } - {this.state.restaurant.tueCloseTimeId.storeTimeName}</p>
                                 <p>Wednesday { this.state.restaurant.wedOpenTimeId.storeTimeName } - { this.state.restaurant.wedCloseTimeId.storeTimeName}</p>
                                 <p>Thursday { this.state.restaurant.thuOpenTimeId.storeTimeName } - { this.state.restaurant.thuCloseTimeId.storeTimeName}</p>
                                 <p>Friday { this.state.restaurant.friOpenTimeId.storeTimeName } - { this.state.restaurant.friCloseTimeId.storeTimeName }</p>
                                 <p>Saturday { this.state.restaurant.satOpenTimeId.storeTimeName } - {this.state.restaurant.satCloseTimeId.storeTimeName}</p>
-                                <p>Sunday { this.state.restaurant.sunOpenTimeId.storeTimeName } - { this.state.restaurant.sunCloseTimeId.storeTimeName}</p> */}
+                                <p>Sunday { this.state.restaurant.sunOpenTimeId.storeTimeName } - { this.state.restaurant.sunCloseTimeId.storeTimeName}</p>
 
-                            </div>
+                            </div> : <div className='col-md-4'></div>}
+
                         </div>
                         : null}
 
