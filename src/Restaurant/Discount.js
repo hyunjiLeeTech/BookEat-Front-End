@@ -158,7 +158,7 @@ class Discount extends Component {
     discountEditButton(index) {
         this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
 
-        if (!this.state.discounts[index].contenteTable) {
+        if (!this.state.discounts[index].contentTable) {
             ds.editDiscount(this.state.discounts[index])
                 .then(() => {
                     this.queryDiscounts(this.state.discounts[index]);

@@ -24,6 +24,7 @@ class Restaurant extends Component {
             res: [],
             resultsErr: false,
             isResLoaded: false,
+            discount: {},
         }
     }
 
@@ -33,7 +34,8 @@ class Restaurant extends Component {
                 if (res.data.errcode === 0)
                     this.setState({
                         res: res.data.restaurant,
-                        isResLoaded: true
+                        isResLoaded: true,
+                        discount: res.data.discount
                     })
                 console.log(this.state.res)
             })
