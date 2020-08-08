@@ -165,9 +165,7 @@ class Discount extends Component {
         this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
         if (!this.state.discounts[index].contentTable) {
             ds.editDiscount(this.state.discounts[index]);
-        
         }
-  
 
         this.callModal(index);
     }

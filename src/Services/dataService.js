@@ -11,6 +11,23 @@ function sleep(ms) {
 }
 
 export default {
+  resetPasswordWithTimeStamp(info){
+    return Axios.post(serverAddress + '/resetPasswordWithTimestamp', info).then(res=>{
+      if(res.data.errcode !== 0) throw res.data;
+      return res.data
+    }).catch(err =>{
+      throw err
+    })
+  },
+  getResetPasswordEmail(info){
+    return Axios.post(serverAddress + '/requestResetPasswordEmail', info)
+    .then(res =>{
+      if(res.data.errcode !==0) throw res.data;
+      return res.data;
+    }).catch(err=>{
+      throw err;
+    })
+  },
   deleteAccountRestaurantOwner() {
     return Axios.get(serverAddress + '/restaurantOwners/deleteAccount', { headers: authHeader() })
       .then(res => {
@@ -261,6 +278,7 @@ export default {
       headers: authHeader(),
     })
       .then(function (req) {
+        if(req.data.errcode !== 0) throw req.data
         return req.data;
       })
       .catch((err) => {

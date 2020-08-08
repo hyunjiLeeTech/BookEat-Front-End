@@ -123,7 +123,7 @@ class App extends Component {
           <Route exact path="/Login" render={() => <Login />} />
           <Route path='/logout' component={Logout} />
           <Route path='/layout' component={Layout} />
-          <Route path='/customerreserve/:id'
+          <Route path='/customerreserve/:id/:date?/:time?/:numOfPeople?/:isUpdate?/:reservationId?'
             render={() => {
               return !this.state.isUser ? <Redirect to='/login' /> : <CustomerReserve />
             }}
@@ -196,7 +196,7 @@ class App extends Component {
           <Route exact path="/Daily" render={() => <Daily />} />
           <Route exact path="/Feature" render={() => <Feature />} />
           <Route exact path="/Favorite" render={() => <Favorite />} />
-          <Route exact path="/ResetPassword" render={() => <ResetPassword />} />
+          <Route exact path="/ResetPassword/:id/:timestamp" render={() => <ResetPassword />} />
         </Switch>
         <div className="footer-padding">
         </div>

@@ -132,7 +132,7 @@ class CustomerReservationHistory extends Component {
           delay={{ show: 0, hide: 1000 }}
           overlay={renderTooltip}
         >
-          <Button className='btn btn-grey disabled' onClick={() => btnCancel(resv)} aria-disabled="true">Cancel</Button>
+          <Button className='btn btn-grey disabled' aria-disabled="true">Cancel</Button>
         </OverlayTrigger>
         : <Button className='btn btn-danger' onClick={() => btnCancel(resv)} >Cancel</Button>
 
@@ -162,7 +162,11 @@ class CustomerReservationHistory extends Component {
               <td>
 
                 {renderCancelButton(reservations[index])}
-                &nbsp;
+                {reservations[index].status === 2 ? <span>&nbsp;</span> : null}
+                {reservations[index].status === 2 ? <Link className='btn btn-warning' to={'customerreserve/' + restaurant._id + '/' + 
+                moment(dateTime).format('YYYY-MM-DD') + '/' + moment(dateTime).format('HH:mm') + '/' + numOfPeople +'/true/' + _id 
+              }>Edit</Link> : null}
+                <span>&nbsp;</span>
                 {
                   reservations[index].FoodOrder ?
                     <Button className='btn btn-primary' onClick={() => btnclick(reservations[index].FoodOrder)} >View Food Order</Button>
@@ -204,14 +208,14 @@ class CustomerReservationHistory extends Component {
                   <th># of Table </th>
                 </tr>
               </thead>
-              <tbody> 
+              <tbody>
                 <tr>
-                <th value={this.state.UpDate}></th>
-                <th value={this.state.UpRestaurant}></th>
-                <th value={this.state.UpKindOfFood}></th>
-                <th value={this.state.UpNumOfPeople}></th>
-                <th value={this.state.NumOfTable}> </th>
-              </tr>
+                  <th value={this.state.UpDate}></th>
+                  <th value={this.state.UpRestaurant}></th>
+                  <th value={this.state.UpKindOfFood}></th>
+                  <th value={this.state.UpNumOfPeople}></th>
+                  <th value={this.state.NumOfTable}> </th>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -269,6 +273,7 @@ class CustomerReservationHistory extends Component {
             </table>
           </div>
         </form>
+        
         <Modal show={this.state.isModalShow} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.modalTitle} </Modal.Title>

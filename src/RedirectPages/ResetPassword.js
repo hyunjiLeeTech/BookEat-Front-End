@@ -3,6 +3,10 @@ import MainContainer from "../component/Style/MainContainer"
 import Parser from "html-react-parser";
 import sha256 from "crypto-js/sha256";
 import FullscreenError from '../component/Style/FullscreenError';
+import FullScrrenLoading from '../component/Style/FullscreenLoading';
+import { withRouter } from "react-router-dom";
+import dataService from "../Services/dataService";
+import { toast } from "react-toastify";
 
 
 const regExpPassword = RegExp(
@@ -42,7 +46,10 @@ class ResetPassword extends Component {
                 newPassword: "&#160;",
                 confirmpw: "&#160;"
             },
-            resultsErr: false
+            resultsErr: false,
+            isLoading: false,
+            accountId: this.props.match.params.id,
+            timestamp: this.props.match.params.timestamp,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -81,20 +88,17 @@ class ResetPassword extends Component {
         if (formValid(this.state)) {
             this.state.password = sha256(this.state.password).toString(); //hashing password
             this.state.newPassword = sha256(this.state.newPassword).toString();
-
-            //   const infoToast = toast("We are updating your password, Please wait", { type: toast.TYPE.INFO, autoClose: false, });
-            //   dataService.changeAccountPassword(this.state.password, this.state.newPassword).then((res) => {
-            //     toast.update(infoToast, { render: "Password Updated", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
-            //   }).catch(err => {
-            //     console.log(err)
-            //     toast.update(infoToast, { render: "Error Occured", type: toast.TYPE.ERROR, autoClose: 5000 })
-            //   }).finally(() => {
-            //     this.setState({
-            //       newPassword: '',
-            //       password: '',
-            //       confirmpw: '',
-            //     })
-            //   })
+            dataService.resetPasswordWithTimeStamp({
+                accountId: this.state.accountId,
+                timestamp: this.state.timestamp,
+                newPassword: this.state.newPassword,
+            }).then(res=>{
+                toast('Password reset, please login', {type: 'success', autoClose: 5000})
+            }).catch(err=>{
+                var errmsg = 'error'
+                if(err.errmsg) errmsg = err.errmsg;
+                toast(errmsg, {type: 'error', autoClose: false})
+            })
 
         } else {
             console.log("Form is invalid!");
@@ -114,7 +118,6 @@ class ResetPassword extends Component {
 
     render() {
         const { isError } = this.state;
-
         return (
             <MainContainer>
                 {this.state.resultsErr
@@ -123,10 +126,14 @@ class ResetPassword extends Component {
                     :
                     null
                 }
+
+                {this.state.isLoading ?
+                    FullScrrenLoading({ type: 'balls', color: '#000' }) : null
+                }
                 <div className="container">
                     <div className="page-header text-center">
                         <br />
-                        <br/>
+                        <br />
                         <h3>Reset password</h3>
                         <br />
 
@@ -134,7 +141,7 @@ class ResetPassword extends Component {
                 </div>
 
                 <form onSubmit={this.handleSubmit} noValidate>
-                  
+
                     <div className="text-center">
                         <div className="form-group row">
                             <label
@@ -181,8 +188,8 @@ class ResetPassword extends Component {
                                 <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
                             </div>
                         </div>
-                        
-                        <br/>
+
+                        <br />
 
                         <div className="form-group ">
                             <div className="text-center">
@@ -200,4 +207,4 @@ class ResetPassword extends Component {
 
 }
 
-export default ResetPassword;
+export default withRouter(ResetPassword);
