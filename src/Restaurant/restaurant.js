@@ -14,6 +14,7 @@ import { GiKnifeFork } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineShop, AiOutlinePhone } from "react-icons/ai";
 import { RiTimeLine, RiMapPin2Line } from "react-icons/ri";
+import serverAddress from '../Services/ServerUrl';
 
 class Restaurant extends Component {
     constructor(props) {
@@ -26,6 +27,7 @@ class Restaurant extends Component {
             discount: {},
         }
     }
+
 
     async componentWillMount() {
         Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
@@ -40,6 +42,7 @@ class Restaurant extends Component {
     }
 
     render() {
+        console.log("picture!!!!!!!!!!", this.state.res.pictures);
         return (
 
             <MainContainer>
@@ -76,9 +79,15 @@ class Restaurant extends Component {
                             <div className="carousel-item">
                                 <img className="d-inline-block" src={CAFE} alt="Third slide" />
                             </div>
-
                         </div>
                     </div>
+
+
+
+                    <img className="previewImage" src={serverAddress + '/getImage/' + this.state.res.pictures} style={{ maxHeight: '50%', maxWidth: '50%' }} />
+
+
+
                     <div className="card-body">
                         <h5 className="card-title">{this.state.res.resName}</h5>
                         <hr />
@@ -132,7 +141,7 @@ class Restaurant extends Component {
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
                                 <h5>Promotions</h5>
-                                <p>{this.state.isResLoaded ? this.state.discount.percent: null}% Off Call for more information!</p>
+                                {/* <p>{this.state.isResLoaded ? this.state.discount.percent: null}% Off Call for more information!</p> */}
 
                             </div>
                         </div>
