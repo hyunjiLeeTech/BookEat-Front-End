@@ -21,11 +21,15 @@ class Restaurant extends Component {
         super(props)
         this.state = {
             id: this.props.match.params.id,
+            date: this.props.match.params.date,
+            time: this.props.match.params.time,
+            numOfPeople: this.props.match.params.numOfPeople,
             res: [],
             resultsErr: false,
             isResLoaded: false,
             discount: {},
         }
+        console.log(this.state);
     }
 
 
@@ -115,7 +119,13 @@ class Restaurant extends Component {
                                 <h5>Make a reservation</h5>
                                 <hr />
                                 <p>Click the button to make a reservation</p>
-                                <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
+                                <Link to={()=>{
+                                    var tr = '/customerreserve/' + this.state.id
+                                    if(this.state.date) tr += ('/' + this.state.date)
+                                    if(this.state.time) tr += ('/' + this.state.time)
+                                    if(this.state.numOfPeople) tr += ('/' + this.state.numOfPeople)
+                                    return tr;
+                                }} className="btn btn-primary">Reserve Here</Link>
                                 <br />
                                 <br />
                                 <h5>Restaurant Information</h5>
