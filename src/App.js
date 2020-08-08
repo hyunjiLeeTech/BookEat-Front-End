@@ -128,7 +128,7 @@ class App extends Component {
               return !this.state.isUser ? <Redirect to='/login' /> : <CustomerReserve />
             }}
           />
-          <Route path='/restaurant/:id' component={Restaurant} />
+          <Route path='/restaurant/:id/:date?/:time?/:numOfPeople?' component={Restaurant} />
 
           <Route
             exact

@@ -18,7 +18,6 @@ const formValid = ({ isError, ...rest }) => {
     });
 
     Object.values(rest).forEach((val) => {
-        console.log(rest);
         if (val === null) {
             isValid = false;
         } else {
@@ -65,7 +64,6 @@ class ResReview extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.picture !== this.state.picture) {
-            console.log('update!!! ', this.state.picture);
             this.state.isPicture = true;
         }
     }
@@ -84,8 +82,6 @@ class ResReview extends Component {
                 pictures: event.target.files
             })
         }
-
-        console.log(this.state);
     };
 
     async componentWillMount() {
@@ -176,7 +172,6 @@ class ResReview extends Component {
         e.preventDefault();
         const { name, value } = e.target;
         let isError = { ...this.state.isError };
-        console.log(e.target.value);
         switch (name) {
             case "comment":
                 isError.comment =
@@ -231,7 +226,7 @@ class ResReview extends Component {
                         {review.pictures.length > 0 && (review.pictures.map((currValue, index) => {
                             return (
 
-                                <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} style={{ maxHeight: '50%', maxWidth: '50%' }} />
+                                <img key={index} id="previewImage"  src={serverAddress + '/getImage/' + currValue}   alt="Review"/>
 
 
                             )
@@ -311,6 +306,7 @@ class ResReview extends Component {
                                 name="comment"
                                 value={this.state.comment}
                                 onChange={this.handleChange}
+                                required
                             ></textarea>
                             <span className="invalid-feedback">
                                 {Parser(isError.comment)}
@@ -323,12 +319,12 @@ class ResReview extends Component {
                                 id="addReview"> Add Review</button>
 
                             <input type="file" name="picture" id="picture"
-                                onChange={this.onImageChange} multiple />
+                                onChange={this.onImageChange} multiple required />
 
                             {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                                 return (
-                                    <div id={"Images" + 1}>
-                                        <img key={index} className="previewImage" src={url} value={index} />
+                                    <div  key={index.toString()} id={"Images" + 1}>
+                                        <img key={index} src={url} value={index} alt="Review" />
                                     </div>
                                 )
                             }))
