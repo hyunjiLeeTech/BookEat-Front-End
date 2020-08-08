@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import MainContainer from "../component/Style/MainContainer";
-import "./EditMenu.js"
 import ds from "../Services/dataService"
-// import { Link } from 'react-router-dom'
 import $ from "jquery";
 import FullscreenError from '../component/Style/FullscreenError'
 import serverAddress from '../Services/ServerUrl';
@@ -66,7 +64,6 @@ class Menu extends Component {
         this.renderTableData = this.renderTableData.bind(this);
         this.addMenuWithImage = this.addMenuWithImage.bind(this);
         this.editMenuWithImage = this.editMenuWithImage.bind(this);
-        this.renderMenuInfo = this.renderMenuInfo.bind(this);
         this.menuItemEditButton = this.menuItemEditButton.bind(this);
         this.menuItemDeleteButton = this.menuItemDeleteButton.bind(this);
         this.handleChangeInList = this.handleChangeInList.bind(this);
@@ -233,47 +230,6 @@ class Menu extends Component {
         })
     }
 
-    renderMenuInfo() {
-        var rows = [];
-        console.log("this is state menu: " + this.state.menus);
-        if (typeof this.state.menus != "undefined") {
-
-            for (var menu of this.state.menus) {
-                rows.push(
-                    <tr key={rows}>
-                        <td>{menu.menuName}</td>
-                        <td>{menu.menuPrice}</td>
-                        <td>{menu.menuDescript}</td>
-                        <td >
-                            <div className="form-group row">
-                                {/* <Link to="/EditMenu"> */}
-                                <button
-                                    type="button"
-                                    className="btn btn-primary btn-sm mr-sm-2"
-                                    data-toggle="modal"
-                                    href="#EditMenu"
-
-                                >
-                                    Edit
-                                </button>
-                                {/* </Link> */}
-                            </div>
-                        </td>
-                        <td >
-                            <div className="form-group row">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary btn-sm mr-sm-2"
-                                >
-                                    Delete
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                )
-            }
-        }
-    }
 
     handleSubmit = async (e) => {
         e.preventDefault();
@@ -301,12 +257,15 @@ class Menu extends Component {
             .removeClass("alert-danger")
             .removeClass("alert-success")
             .addClass("alert-success");
-            toast("success")
             
         }).catch(
         err => {
-            console.log(err)
-        toast("error")
+            $("#DeleteResultModalText")
+            .text("Sorry, " + err)
+            .removeClass("alert-warning")
+            .removeClass("alert-danger")
+            .removeClass("alert-success")
+            .addClass("alert-danger");
         } )
         
     }
@@ -360,22 +319,15 @@ class Menu extends Component {
             const { id, MenuPicture, menuName, menuPrice, menuType, menuDescript } = menu
             return (
                 <tr key={index} id={'menurow' + index}>
-                    {/* <td>{MenuPicture}</td> */}
+                   
                     <td contentEditable={(this.state.contenteditable)} >
                         <div>
-                            {/* <row> 
-                <input type="file" name="menuPicture" disabled={(this.state.disabled)}
-                  onChange={this.onImageChange} />
-                <img src={this.state.image} />
-                 </row>   */}
+                       
                             <container>
                                 <row>
                                     <input type="file" name="MenuPicture" id="MenuPicture" defaultValue={MenuPicture}
                                         onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
-                                    {/* {
-                                        !this.state.menus[index].contenteditable ? <img id={"menuImage" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={"http://localhost:5000/getimage/" + this.state.menus[index].menuImageId} />
-                                            : null
-                                    } */}
+                                 
                                     {
                                         this.state.menus[index].contenteditable ?
 
@@ -395,9 +347,6 @@ class Menu extends Component {
                         </div>
                     </td>
 
-                    {/* <tr>{menuName}</tr>
-                    <tr>{menuPrice}</tr>
-                    <tr>{menuDescript}</tr> */}
                     <td>
                         <div className="container-fluid">
                             <div className="form-inline" contentditable={(this.state.menus[index].contenteditable)}>
@@ -433,17 +382,16 @@ class Menu extends Component {
                     </td>
                     <td >
                         <div className="form-group row">
-                            {/* <Link to="/EditMenu"> */}
+                          
                             <button
                                 button id='save_edit_btn'
                                 type="button"
                                 className="btn btn-primary btn-sm mr-sm-2"
                                 onClick={() => this.menuItemEditButton(index)}
-                            //data-toggle="modal" data-target="#EditResultModal"
                             >
                                 {this.state.menus[index].contenteditable ? "Save Change" : "Edit"}
                             </button>
-                            {/* </Link> */}
+                           
                         </div>
                     </td>
                     <td >
@@ -501,9 +449,6 @@ class Menu extends Component {
                                         <input type="file" name="menuPicture" id="menuPicture" onChange={this.onImageChange} />
                                         <img src={this.state.image ? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} />
 
-
-                                        {/* <input type="file" name="menuPicture" onChange={this.onImageChange} />
-                                        <img src={this.state.image} style={{ maxHeight: '100%', maxWidth: '100%' }} /> */}
                                     </row>
                                 </container>
                             </div>
@@ -535,8 +480,7 @@ class Menu extends Component {
                                             <option value="Desert"> Desert</option>
                                             <option value="Drint"> Drink</option>
                                         </select>
-                                        {/* <input type="text" id="menuType" name="menuType" className="form-control col-sm-10 mt-sm-2" value={this.state.menuPrice}
-                                            onChange={this.handleChange} required /> */}
+                                       
                                     </div>
                                     <div className="form-inline">
                                         <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
@@ -612,50 +556,7 @@ class Menu extends Component {
                     </div>
                 </div>
 
-                {/* EditMenuModal */}
-
-                <div
-                    className="modal fade"
-                    id="EditResultModal"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="EditResultModal"
-                    aria-hidden="true"
-                >
-
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="EditResultModal">
-                                    Edit Menu
-                            </h5>
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="alert alert-warning" id="EditResultModalText">
-                                    Please Wait...
-                  </p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-dismiss="modal"
-                                >
-                                    Close
-                  </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+         
                 {/* DeleteMenuModal */}
 
                 <div
