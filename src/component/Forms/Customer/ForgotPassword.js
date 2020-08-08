@@ -5,6 +5,8 @@ import "./SignUp.js";
 import Parser from "html-react-parser";
 import $ from "jquery";
 import FullscreenError from '../../Style/FullscreenError'
+import dataService from "../../../Services/dataService";
+import { toast } from "react-toastify";
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -90,6 +92,15 @@ class ForgotPassword extends Component {
 
   render() {
     const { isError } = this.state;
+    const getResetPasswordEmail = () =>{
+      dataService.getResetPasswordEmail({email: this.state.email}).then((res)=>{
+        toast("Reset password email sent. Please check your Email inbox", {type: 'success', autoClose: 5000})
+      }).catch(err=>{
+        let errmsg = 'Erro occcured'
+        if(err.errmsg) errmsg = err.errmsg;
+        toast(errmsg, {type: 'error', autoClose: false})
+      })
+    }
 
     return (
       <MainContainer>
@@ -141,7 +152,7 @@ class ForgotPassword extends Component {
           </div>
 
           <div className="text-center">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" onClick={getResetPasswordEmail}>
               Send reset link
             </button>
           </div>
