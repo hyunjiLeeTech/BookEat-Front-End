@@ -12,6 +12,10 @@ import moment from 'moment'
 import { FaLessThanEqual } from 'react-icons/fa';
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
 import { toast } from 'react-toastify';
+import { AiOutlinePhone } from "react-icons/ai";
+import { RiTimeLine, RiMapPin2Line, RiPercentLine } from "react-icons/ri";
+import serverAddress from "../Services/ServerUrl";
+
 class Reserve extends Component {
     constructor(props) {
         super(props)
@@ -58,8 +62,8 @@ class Reserve extends Component {
 
     componentWillMount() {
         this.setState({ isLoading: true });
-        dataService.getRestaurantWithoutAuth(this.state.resId).then(resp =>{
-            this.setState({restaurant: resp.restaurant, discount: resp.discount})
+        dataService.getRestaurantWithoutAuth(this.state.resId).then(resp => {
+            this.setState({ restaurant: resp.restaurant, discount: resp.discount })
             console.log(this.state);
             if (this.state.isUpdate) {
                 dataService.getReservationById(this.state.reservationId).then(res => {
@@ -77,10 +81,10 @@ class Reserve extends Component {
                     toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
                     this.setState({ isLoading: false });
                 })
-            }else{
+            } else {
                 this.setState({ isLoading: false });
             }
-        }).catch(err=>{
+        }).catch(err => {
             toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
             this.setState({ isLoading: false });
         })
@@ -167,28 +171,48 @@ class Reserve extends Component {
                 <div className="col-xs-12 col-md-12 ">
 
                     <div className="form-group row">
-                        <label htmlFor="numofpeople" className="col-sm-2 col-form-label" > Number of people </label>
+                        <label htmlFor="numofpeople" className="col-sm-3 col-form-label" > Number of people </label>
                         <div className="col-sm-6">
-                            <input type="number" id="numofpeople" name="numofpeople" placeholder="Number of People"
-                                className='form-control' required value={this.state.numofpeople} onChange={numofpeopleChange} />
-                            {/* <span className="valid-feedback"></span> */}
+                            {/* <input type="number" id="numofpeople" name="numofpeople" placeholder="Number of People"
+                                className='form-control' required value={this.state.numofpeople} onChange={numofpeopleChange} /> */}
+                            <select
+                                className="custom-select"
+                                id="numofpeople"
+                                name="numofpeople"
+                                onChange={numofpeopleChange}
+                                value={this.state.numofpeople}
+                                required
+                            >
+                                <option value=""># Of People</option>
+                                <option value="1">1 People</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5">5 People</option>
+                                <option value="6">6 People</option>
+                                <option value="7">7 People</option>
+                                <option value="8">8 People</option>
+                                <option value="9">9 People</option>
+                                <option value="10">10 People</option>
+                                <option value="11">11 People</option>
+                                <option value="12">12 People</option>
+                                <option value="13">13 People</option>
+                                <option value="14">14 People</option>
+                            </select>
+
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label htmlFor="date" className="col-sm-2 col-form-label" > Date </label>
+                        <label htmlFor="date" className="col-sm-3 col-form-label" > Date </label>
                         <div className="col-sm-6">
                             <input type="date" id="date" name="date" placeholder="date"
                                 value={this.state.date} onChange={dateChange} className='form-control' required />
-                            {/* <span className="valid-feedback"></span> */}
                         </div>
                     </div>
 
                     <div className="form-group row">
-                        <label htmlFor="time" className="col-sm-2 col-form-label" > Time </label>
+                        <label htmlFor="time" className="col-sm-3 col-form-label" > Time </label>
                         <div className="col-sm-6">
-                            {/* <input type="text" id="time" name="time" placeholder="time"
-                                className='form-control' required />
-                            <span className="valid-feedback"></span> */}
                             {this.renderTimeOption(this.state.date)}
                         </div>
                     </div>
@@ -462,9 +486,30 @@ class Reserve extends Component {
                                 {this.renderForm()}
                             </div>
                             <div className='col-md-4'>
-                                <img src="https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?cs=srgb&dl=table-in-vintage-restaurant-6267.jpg&fm=jpg" style={{ marginTop: '5%' }} className="col-md-12" />
-                                <h4 style={{ marginLeft: '5%' }}>Test Restaurant</h4>
-                                <p style={{ marginLeft: '10%' }}>Restaurant Decription goes here</p>
+                                {/* <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" /> */}
+                                <br />
+                                <h4 className="text-center">{this.state.restaurant.resName}</h4>
+                                <p>{this.state.restaurant.restaurantDescription}</p>
+                                <hr />
+                                <h6><RiMapPin2Line />  Address</h6>
+                                {/* <p>{this.state.restaurant.addressId.streetNum } {this.state.restaurant.addressId.streetName}
+                    {this.state.restaurant.addressId.city} {this.state.restaurant.addressId.province} {this.state.restaurant.addressId.postalCode}</p> */}
+                                <hr />
+                                <h6><AiOutlinePhone /> Phone Number</h6>
+                                <p>{this.state.restaurant.phoneNumber}</p>
+                                <hr />
+                                <h6><RiPercentLine />  Promotions</h6>
+                                <p>{this.state.discount.percent} % Off Call for more information!</p>
+                                <hr />
+                                <h6><RiTimeLine />  Store Time</h6>
+                                {/* <p>Monday { this.state.restaurant.monOpenTimeId.storeTimeName } - {this.state.restaurant.monCloseTimeId.storeTimeName}</p>
+                                <p>Tuesday { this.state.restaurant.tueOpenTimeId.storeTimeName } - {this.state.restaurant.tueCloseTimeId.storeTimeName}</p>
+                                <p>Wednesday { this.state.restaurant.wedOpenTimeId.storeTimeName } - { this.state.restaurant.wedCloseTimeId.storeTimeName}</p>
+                                <p>Thursday { this.state.restaurant.thuOpenTimeId.storeTimeName } - { this.state.restaurant.thuCloseTimeId.storeTimeName}</p>
+                                <p>Friday { this.state.restaurant.friOpenTimeId.storeTimeName } - { this.state.restaurant.friCloseTimeId.storeTimeName }</p>
+                                <p>Saturday { this.state.restaurant.satOpenTimeId.storeTimeName } - {this.state.restaurant.satCloseTimeId.storeTimeName}</p>
+                                <p>Sunday { this.state.restaurant.sunOpenTimeId.storeTimeName } - { this.state.restaurant.sunCloseTimeId.storeTimeName}</p> */}
+
                             </div>
                         </div>
                         : null}
