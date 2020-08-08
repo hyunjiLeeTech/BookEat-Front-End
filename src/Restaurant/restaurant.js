@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import MainContainer from '../component/Style/MainContainer';
 import Axios from 'axios';
 import { withRouter } from "react-router";
-import CAFE from '../Image/CAFE.jpg';
 import './RestaurantDetails.css'
 import ResReview from '../Review/Restaurant/ResReview';
 import ViewMenu from '../Menu/ViewMenu';
 import FullscreenError from '../component/Style/FullscreenError'
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
-import ds from "../Services/dataService";
 import { GiKnifeFork } from "react-icons/gi";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineShop, AiOutlinePhone } from "react-icons/ai";
@@ -42,7 +40,6 @@ class Restaurant extends Component {
     }
 
     render() {
-        console.log("picture!!!!!!!!!!", this.state.res.pictures);
         return (
 
             <MainContainer>
@@ -66,30 +63,15 @@ class Restaurant extends Component {
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                         <ol className="carousel-indicators" style={{background: '#777777'}}>
                             {this.state.res.pictures ?  this.state.res.pictures.map((v, i, array) => {
-                                return <li data-target="#carouselExampleIndicators" data-slide-to={i.toString()} className={i === 0 ? 'active' : ''}></li>
+                                return <li key={v} data-target="#carouselExampleIndicators" data-slide-to={i.toString()} className={i === 0 ? 'active' : ''}></li>
                             }) : null}
-
-
-
-                            {/* <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li> */}
                         </ol>
                         <div className="carousel-inner" id="carousel_pictures">
                             {this.state.res.pictures ? this.state.res.pictures.map((v, i, array) => {
-                                return <div className={i === 0 ? 'active carousel-item' : 'carousel-item'}>
-                                    <img style={{maxWidth: '100%', maxHeight: '100%'}} className="d-inline-block" src={serverAddress + '/getImage/' + v} alt="First slide" />
+                                return <div key={v} className={i === 0 ? 'active carousel-item' : 'carousel-item'}>
+                                    <img id="carousel_pictures" className="d-inline-block" src={serverAddress + '/getImage/' + v} alt="Restaurant" />
                                 </div>
                             }) : null}
-                            {/* <div className="carousel-item active">
-                                <img className="d-inline-block" src={CAFE} alt="First slide" />
-                            </div>
-                            <div className="carousel-item">
-                                <img className="d-inline-block" src={CAFE} alt="Second slide" />
-                            </div>
-                            <div className="carousel-item">
-                                <img className="d-inline-block" src={CAFE} alt="Third slide" />
-                            </div> */}
                         </div>
                     </div>
 
