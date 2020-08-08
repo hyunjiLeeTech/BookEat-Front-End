@@ -464,11 +464,8 @@ class RestaurantProfile extends Component {
     $(document).ready(function () {
       $("#mondisablebutton").click(function () {
         if ($("#monOpenTime").prop("disabled")) {
-          
              $("#monOpenTime").prop("disabled", false);
           $("#monCloseTime").prop("disabled", false);
-     
-         
         } else {
          
               $("#monOpenTime").prop("disabled", true);
@@ -657,54 +654,75 @@ class RestaurantProfile extends Component {
     if (day === "mon") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
+            $("#monOpenTime").prop("disabled", false);
+        $("#monCloseTime").prop("disabled", false);
 
       } else {
         this.state.monIsClose = true;
+        $("#monOpenTime").prop("disabled", true);
+        $("#monCloseTime").prop("disabled", true);
       } 
     } else if (day === "tue") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
+        $("#tueOpenTime").prop("disabled", false);
+          $("#tueCloseTime").prop("disabled", false);
       } else {
         this.state.tueIsClose = true;
+        $("#tueOpenTime").prop("disabled", true);
+        $("#tueCloseTime").prop("disabled", true);
       }
     } else if (day === "wed") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
+        $("#wedOpenTime").prop("disabled", false);
+        $("#wedCloseTime").prop("disabled", false);
       } else {
         this.state.wedIsClose = true;
+        $("#wedOpenTime").prop("disabled", true);
+        $("#wedCloseTime").prop("disabled", true);
       }
     } else if (day === "thu") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
+        $("#thuOpenTime").prop("disabled", false);
+          $("#thuCloseTime").prop("disabled", false);
       } else {
         this.state.thuIsClose = true;
+        $("#thuOpenTime").prop("disabled", true);
+        $("#thuCloseTime").prop("disabled", true);
       }
     } else if (day === "fri") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
+        $("#friOpenTime").prop("disabled", false);
+          $("#friCloseTime").prop("disabled", false);
       } else {
         this.state.friIsClose = true;
+        $("#friOpenTime").prop("disabled", true);
+        $("#friCloseTime").prop("disabled", true);
       }
     } else if (day === "sat") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
+        $("#satOpenTime").prop("disabled", false);
+        $("#satCloseTime").prop("disabled", false);
       } else {
         this.state.satIsClose = true;
+        $("#satOpenTime").prop("disabled", true);
+        $("#satCloseTime").prop("disabled", true);
       }
     } else if (day === "sun") {
       if (this.state.monIsClose == true) {
         this.state.monIsClose = false;
+        $("#sunOpenTime").prop("disabled", false);
+        $("#sunCloseTime").prop("disabled", false);
       } else {
         this.state.sunIsClose = true;
+        $("#sunOpenTime").prop("disabled", true);
+        $("#sunCloseTime").prop("disabled", true);
       }
     }
-
-    if (this.state.monIsClose == true){
-      this.state.disabled = false;
-    }else{
-      this.state.disable = true;
-    }
-
     console.log(this.state);
 
   }
