@@ -115,13 +115,13 @@ class CustomerReviewHistory extends Component {
       return (
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={index} id={'reviewrow' + index}>
-          <tr>
-            <td rowspan="2">{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD hh:mm")}</td>
-            <td rowspan="2" defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
+          
+            <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
+            <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
 
 
-            <td rowspan="2">
-              <textarea row="2" type="text" id="comment" name="comment"
+            <td>
+              <textarea type="text" id="comment" name="comment"
                 onChange={(e) => this.handleChangeInList(e, index)}
                 defaultValue={comment} className="border-none"
                 disabled={(!this.state.reviews[index].contenteditable)}
@@ -132,20 +132,6 @@ class CustomerReviewHistory extends Component {
             <td >
               {
                 this.state.reviews[index].contenteditable ?
-
-                  // <div class="dropdown">
-                  //   <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  //     disabled={(!this.state.reviews[index].contenteditable)}
-                  //     defaultValue={foodRate}
-                  //   >
-                  //     Food Rate
-                  // </button>
-                  //   <div class="dropdown-menu">
-                  //     <a class="dropdown-item" href='#' value={this.state.food1}> ⭐ </a>
-                  //     <a class="dropdown-item" href='#' value={this.state.food2}> ⭐⭐ </a>
-                  //     <a class="dropdown-item" href='#' value={this.state.food3}> ⭐⭐⭐</a>
-                  //   </div>
-                  // </div>
 
                   <div className="Form-group" >
                     <select className="form-conrol"
@@ -171,19 +157,7 @@ class CustomerReviewHistory extends Component {
             <td >
               {
                 this.state.reviews[index].contenteditable ?
-                  //   <div class="dropdown">
-                  //     <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  //       disabled={(!this.state.reviews[index].contenteditable)}
-                  //       defaultValue={serviceRate}
-                  //     >
-                  //       Service Rate
-                  // </button>
-                  //     <div class="dropdown-menu">
-                  //       <a class="dropdown-item" href='#' value={this.state.service1}> ⭐ </a>
-                  //       <a class="dropdown-item" href='#' value={this.state.service2}> ⭐⭐  </a>
-                  //       <a class="dropdown-item" href='#' value={this.state.service3}> ⭐⭐⭐ </a>
-                  //     </div>
-                  // </div> 
+               
 
                   <div className="Form-group">
                     <select className="form-conrol"
@@ -207,20 +181,7 @@ class CustomerReviewHistory extends Component {
             <td >
               {
                 this.state.reviews[index].contenteditable ?
-                  // <div class="dropdown">
-                  //   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  //     disabled={(!this.state.reviews[index].contenteditable)}
-                  //     defaultValue={satisfactionRate}
-                  //   >
-                  //     Satisfaction Rate
-                  // </button>
-                  //   <div class="dropdown-menu">
-                  //     <a class="dropdown-item" href='#' value={this.state.satisfy1} >⭐ </a>
-                  //     <a class="dropdown-item" href='#' value={this.state.satisfy2}> ⭐⭐  </a>
-                  //     <a class="dropdown-item" href='#' value={this.state.satisfy3}> ⭐⭐⭐ </a>
-                  //   </div>
-                  // </div>
-
+                  
                   <div className="Form-group">
                     <select className="form-conrol"
                       id="satisfactionRate"
@@ -244,20 +205,7 @@ class CustomerReviewHistory extends Component {
               {
 
                 this.state.reviews[index].contenteditable ?
-                  // <div class="dropdown">
-                  //   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                  //     disabled={(!this.state.reviews[index].contenteditable)}
-                  //     defaultValue={environmentRate}
-                  //   >
-                  //     Environment Rate
-                  // </button>
-                  //   <div class="dropdown-menu">
-                  //     <a class="dropdown-item" href='#' value={this.state.environ1}> ⭐ </a>
-                  //     <a class="dropdown-item" href='#' value={this.state.environ2}> ⭐⭐  </a>
-                  //     <a class="dropdown-item" href='#' value={this.state.environ3}> ⭐⭐⭐ </a>
-                  //   </div>
-                  // </div>
-
+                 
                   <div className="Form-group" >
                     <select className="form-conrol"
                       id="environmentRate"
@@ -266,9 +214,7 @@ class CustomerReviewHistory extends Component {
                       onChange={(e) => this.handleChangeInList(e, index)}
                       required
                     >
-                      {/* <option value="this.state.service1" >⭐</option>
-                  <option value="this.stae.service2">⭐⭐</option>
-                  <option  value="this.stae.service3">⭐⭐⭐</option> */}
+                   
                       <option value="1">⭐</option>
                       <option value="2">⭐⭐</option>
                       <option value="3">⭐⭐⭐</option>
@@ -282,7 +228,60 @@ class CustomerReviewHistory extends Component {
 
 
 
-            <td rowspan="2">
+            
+          
+            <td colspan="2">
+              <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
+                // onChange={(e) => this.onImageChangepic1(e, index)} 
+                // disabled={(!this.state.reviews[index].contenteditable)}
+                disabled="flase"
+                class="border-0"
+              />
+
+              {
+                this.state.reviews[index].contenteditable ?
+
+                  <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} />
+                  :
+
+                  typeof this.state.reviews[index].pictures[0] !== 'undefined' ?
+
+                    <div>
+                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} />
+
+                    </div>
+                    :
+                    ''
+              }
+
+            </td>
+            <td colspan="2 ">
+              <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
+                // onChange={(e) => this.onImageChangepic2(e, index)} 
+                // disabled={(!this.state.reviews[index].contenteditable)} 
+                disabled="false"
+                class="border-0"
+              />
+
+              {
+                this.state.reviews[index].contenteditable ?
+
+                  <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} />
+                  :
+
+                  typeof this.state.reviews[index].pictures[1] !== 'undefined' ?
+
+                    <div>
+                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} />
+
+                    </div>
+                    :
+                    ''
+              }
+
+            </td>
+
+            <td >
               {" "}
               <div className="form-inline">
                 <div className="form-group">
@@ -314,52 +313,7 @@ class CustomerReviewHistory extends Component {
                 </div>
               </div>
             </td>
-          </tr>
-
-          <tr>
-            <td colspan="2">
-              <input type="file" name="picture1" id="picture1" defaultValue={this.state.picture1}
-                onChange={(e) => this.onImageChangepic1(e, index)} disabled={(!this.state.reviews[index].contenteditable)} />
-
-              {
-                this.state.reviews[index].contenteditable ?
-
-                  <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} />
-                  :
-
-                  typeof this.state.reviews[index].pictures[0] !== 'undefined' ?
-
-                    <div>
-                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} />
-
-                    </div>
-                    :
-                    ''
-              }
-
-            </td>
-            <td colspan="2 ">
-              <input type="file" name="picture2" id="picture2" defaultValue={this.state.picture2}
-                onChange={(e) => this.onImageChangepic2(e, index)} disabled={(!this.state.reviews[index].contenteditable)} />
-
-              {
-                this.state.reviews[index].contenteditable ?
-
-                  <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} />
-                  :
-
-                  typeof this.state.reviews[index].pictures[1] !== 'undefined' ?
-
-                    <div>
-                      <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} />
-
-                    </div>
-                    :
-                    ''
-              }
-
-            </td>
-          </tr>
+          
         </tr>
 
         // </form>
@@ -476,18 +430,22 @@ class CustomerReviewHistory extends Component {
             <h3> My Review List</h3>
 
             <table id='reivews' className="table table-striped col-md-12">
-              <thead>
+              {/* <thead> */}
                 <tr>
-                  <th>Date</th>
-                  <th>Restaurant Name</th>
-                  <th>Review</th>
-                  <th>Food Rate</th>
-                  <th>Service Rate</th>
-                  <th>Satisfaction Rate</th>
-                  <th>Environment Rate</th>
-                  <th></th>
-                </tr>
-              </thead>
+                  {/* <tr> */}
+                    <th>Date</th>
+                    <th>Restaurant</th>
+                    <th>Review</th>
+                    <th>Food Rate</th>    
+                    <th>Service Rate</th>
+                    <th>Satisfaction Rate</th>
+                    <th>Environment Rate</th>
+                    <th>Picture</th>
+                    <th></th>
+                    <th></th>
+                  {/* </tr> */}
+                  </tr>
+              {/* </thead> */}
               <tbody>
                 {this.renderTable()}
               </tbody>
