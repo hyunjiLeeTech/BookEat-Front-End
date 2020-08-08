@@ -11,22 +11,57 @@ function sleep(ms) {
 }
 
 export default {
-  resetPasswordWithTimeStamp(info){
-    return Axios.post(serverAddress + '/resetPasswordWithTimestamp', info).then(res=>{
-      if(res.data.errcode !== 0) throw res.data;
+  getRestaurantWithoutAuth(restaurantId) {
+    return Axios.get("http://localhost:5000/restaurants/" + restaurantId)//TODO: remove if production
+      .then(res => {
+        if (res.data.errcode !== 0) throw res.data
+        return res.data;
+      }).catch(err=>{
+        throw err
+      })
+  },
+  updateReservation(info) {
+    return Axios.post(serverAddress + '/customers/updatereservation', info, { headers: authHeader() })
+      .then(res => {
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data;
+      }).catch(err => {
+        if (err.response && err.response.status === 401) {
+          window.location.href = '/error?Hint=Permission Denied(deleteAccountCustomer)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
+          return;
+        }
+        throw err;
+      })
+  },
+  getReservationById(reservationId) {
+    return Axios.get(serverAddress + '/customers/gerreservationbyid/' + reservationId, { headers: authHeader() })
+      .then((res) => {
+        if (res.data.errcode !== 0) throw res.data
+        return res.data;
+      }).catch(err => {
+        if (err.response && err.response.status === 401) {
+          window.location.href = '/error?Hint=Permission Denied(deleteAccountCustomer)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
+          return;
+        }
+        throw err;
+      })
+  },
+  resetPasswordWithTimeStamp(info) {
+    return Axios.post(serverAddress + '/resetPasswordWithTimestamp', info).then(res => {
+      if (res.data.errcode !== 0) throw res.data;
       return res.data
-    }).catch(err =>{
+    }).catch(err => {
       throw err
     })
   },
-  getResetPasswordEmail(info){
+  getResetPasswordEmail(info) {
     return Axios.post(serverAddress + '/requestResetPasswordEmail', info)
-    .then(res =>{
-      if(res.data.errcode !==0) throw res.data;
-      return res.data;
-    }).catch(err=>{
-      throw err;
-    })
+      .then(res => {
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data;
+      }).catch(err => {
+        throw err;
+      })
   },
   deleteAccountRestaurantOwner() {
     return Axios.get(serverAddress + '/restaurantOwners/deleteAccount', { headers: authHeader() })
@@ -278,7 +313,7 @@ export default {
       headers: authHeader(),
     })
       .then(function (req) {
-        if(req.data.errcode !== 0) throw req.data
+        if (req.data.errcode !== 0) throw req.data
         return req.data;
       })
       .catch((err) => {
@@ -420,7 +455,7 @@ export default {
   createManagerAccount(state) {
     Axios.post(serverAddress + "/managersignup", state, {
       headers: authHeader(),
-    }) 
+    })
       .then((res) => {
         console.log(res);
       })
@@ -455,7 +490,7 @@ export default {
       {
         headers: authHeader(),
       }
-    ) 
+    )
       .then((res) => {
         console.log(res);
       })
@@ -501,7 +536,7 @@ export default {
   async getMenus() {
     return await Axios.get(serverAddress + "/menu/getmenus", {
       headers: authHeader()
-    }).then((res) => { 
+    }).then((res) => {
       return res.data
     }).catch((err) => {
       console.log(err)

@@ -13,29 +13,33 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineShop, AiOutlinePhone } from "react-icons/ai";
 import { RiTimeLine, RiMapPin2Line } from "react-icons/ri";
 import serverAddress from '../Services/ServerUrl';
+import dataService from '../Services/dataService';
 
 class Restaurant extends Component {
     constructor(props) {
         super(props)
         this.state = {
             id: this.props.match.params.id,
+            date: this.props.match.params.date,
+            time: this.props.match.params.time,
+            numOfPeople: this.props.match.params.numOfPeople,
             res: [],
             resultsErr: false,
             isResLoaded: false,
             discount: {},
         }
+        console.log(this.state);
     }
 
 
     async componentWillMount() {
-        Axios.get("http://localhost:5000/restaurants/" + this.state.id)//TODO: remove if production
+        dataService.getRestaurantWithoutAuth(this.state.id)//TODO: remove if production
             .then(res => {
-                if (res.data.errcode === 0)
-                    this.setState({
-                        res: res.data.restaurant,
-                        isResLoaded: true,
-                        discount: res.data.discount
-                    })
+                this.setState({
+                    res: res.restaurant,
+                    isResLoaded: true,
+                    discount: res.discount
+                })
             })
     }
 
@@ -97,7 +101,13 @@ class Restaurant extends Component {
                                 <h5>Make a reservation</h5>
                                 <hr />
                                 <p>Click the button to make a reservation</p>
-                                <Link to={'/customerreserve/' + this.state.res._id} className="btn btn-primary">Reserve Here</Link>
+                                <Link to={() => {
+                                    var tr = '/customerreserve/' + this.state.id
+                                    if (this.state.date) tr += ('/' + this.state.date)
+                                    if (this.state.time) tr += ('/' + this.state.time)
+                                    if (this.state.numOfPeople) tr += ('/' + this.state.numOfPeople)
+                                    return tr;
+                                }} className="btn btn-primary">Reserve Here</Link>
                                 <br />
                                 <br />
                                 <h5>Restaurant Information</h5>

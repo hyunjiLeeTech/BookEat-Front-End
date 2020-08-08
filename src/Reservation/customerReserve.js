@@ -10,13 +10,15 @@ import authHeader from '../Services/authHeader';
 import { withRouter } from "react-router";
 import moment from 'moment'
 import { FaLessThanEqual } from 'react-icons/fa';
+import FullScrrenLoading from '../component/Style/FullscreenLoading';
+import { toast } from 'react-toastify';
 class Reserve extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            numofpeople: this.props.match.params.numOfPeople ? this.props.match.params.numOfPeople: 0 ,
+            numofpeople: this.props.match.params.numOfPeople ? this.props.match.params.numOfPeople : 0,
             dateTime: new Date(),
-            date: this.props.match.params.date? moment(new Date(this.props.match.params.date + ' 01:00')).format('YYYY-MM-DD') : moment().add(1, 'd').format('YYYY-MM-DD'),
+            date: this.props.match.params.date ? moment(new Date(this.props.match.params.date + ' 01:00')).format('YYYY-MM-DD') : moment().add(1, 'd').format('YYYY-MM-DD'),
             time: this.props.match.params.time ? this.props.match.params.time : '12:30',
             resId: this.props.match.params.id, //FIXME FOR DEBUG
             tablestatus: false,
@@ -31,13 +33,17 @@ class Reserve extends Component {
                 Managers: ""
             },
             isReservationSuccess: false,
-            reservefailMessage:'',
+            reservefailMessage: '',
             menuItems: [],
             selectedMenuItems: new Set(),
-            isUpdate: this.props.match.params.isUpdate === 'true'? true : false,
+            isUpdate: this.props.match.params.isUpdate === 'true' ? true : false,
             reservation: {},
             reservationId: this.props.match.params.isUpdate === 'true' ? this.props.match.params.reservationId : '',
             isLoading: false,
+            seletcedMenuItemsFromReservation: [],
+            allowModifyMenuItems: true,
+            restaurant: {},
+            discount: {},
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.back = this.back.bind(this);
@@ -50,8 +56,34 @@ class Reserve extends Component {
         console.log(new Date(this.props.match.params.date))
     }
 
-    componentWillMount(){
-
+    componentWillMount() {
+        this.setState({ isLoading: true });
+        dataService.getRestaurantWithoutAuth(this.state.resId).then(resp =>{
+            this.setState({restaurant: resp.restaurant, discount: resp.discount})
+            console.log(this.state);
+            if (this.state.isUpdate) {
+                dataService.getReservationById(this.state.reservationId).then(res => {
+                    this.selectedtableId = res.reservation.table;
+                    dataService.getFoodOrder(res.reservation.FoodOrder).then(res => {
+                        this.setState({ seletcedMenuItemsFromReservation: res.menus })
+                    }).catch(err => {
+                        console.log(err)
+                        toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
+                    }).finally(() => {
+                        this.setState({ isLoading: false });
+                    })
+                }).catch(err => {
+                    console.log(err)
+                    toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
+                    this.setState({ isLoading: false });
+                })
+            }else{
+                this.setState({ isLoading: false });
+            }
+        }).catch(err=>{
+            toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
+            this.setState({ isLoading: false });
+        })
     }
 
     setTableId(id) {
@@ -80,6 +112,7 @@ class Reserve extends Component {
     handleSubmit(e) {
         // var react = this;
         e.preventDefault();
+        this.state.allowModifyMenuItems = false;
         var numofpeople = $('#numofpeople').val();
         var resId = this.state.resId;
         var dateTime = new Date(Date.parse(this.state.date + ' ' + this.state.time));
@@ -109,21 +142,26 @@ class Reserve extends Component {
         })
     }
     renderForm() {
-        const dateChange = (e) =>{
+        const dateChange = (e) => {
             e.preventDefault();
             var value = e.target.value;
-            this.setState({date: value})
+            this.setState({ date: value })
         }
-        const numofpeopleChange = (e) =>{
+        const numofpeopleChange = (e) => {
             e.preventDefault();
             var value = e.target.value;
-            this.setState({numofpeople: value})
+            this.setState({ numofpeople: value })
         }
         return (
             <form onSubmit={this.handleSubmit} className="needs-validation" noValidate>
                 <div className="page-header text-left" style={{ marginTop: '10%' }}>
                     <Animated animationIn="fadeIn" animationOut="fadeOut" isVisible={true}>
-                        <h3>Please provide your information to reserve</h3>
+                        {this.state.isUpdate ?
+                            <h3>Update your reservation</h3>
+
+                            : <h3>Please provide your information to reserve</h3>
+
+                        }
                     </Animated>
                 </div>
                 <div className="col-xs-12 col-md-12 ">
@@ -132,7 +170,7 @@ class Reserve extends Component {
                         <label htmlFor="numofpeople" className="col-sm-2 col-form-label" > Number of people </label>
                         <div className="col-sm-6">
                             <input type="number" id="numofpeople" name="numofpeople" placeholder="Number of People"
-                                className='form-control' required value={this.state.numofpeople} onChange={numofpeopleChange}/>
+                                className='form-control' required value={this.state.numofpeople} onChange={numofpeopleChange} />
                             {/* <span className="valid-feedback"></span> */}
                         </div>
                     </div>
@@ -154,7 +192,7 @@ class Reserve extends Component {
                             {this.renderTimeOption(this.state.date)}
                         </div>
                     </div>
-                    {this.renderMenuItems(this.state.menuItems)}
+                    {this.renderMenuItems(this.state.menuItems, this.state.seletcedMenuItemsFromReservation)}
                     <button type="submit" className="btn btn-primary" data-toggle="modal" data-target="#signResultModal" >Next</button>
                 </div>
             </form>
@@ -162,6 +200,7 @@ class Reserve extends Component {
     }
 
     back() {
+        this.state.allowModifyMenuItems = true;
         this.setState({
             formIsVisible: true,
             tableIsVisible: false,
@@ -178,70 +217,125 @@ class Reserve extends Component {
     }
 
     book() {
-        console.log(this.state);
-        dataService.customersReserve({
-            numOfPeople: this.state.numofpeople,
-            dateTime: this.state.dateTime,
-            tableId: this.state.selectedtableId,
-            comments: this.state.comments,
-            menuItems: Array.from(this.state.selectedMenuItems),
-        }).then(res => {
-            if (res.errcode === 0) {
-                console.log(res)
-                this.setState({
-                    tableIsVisible: false,
-                    isReservationSuccess: true,
-                    tablestatus: false,
-                })
-                setTimeout(() => {
+        console.log(this.state.selectedMenuItems);
+        console.log(Array.from(this.state.selectedMenuItems))
+        if (this.state.isUpdate) {
+            dataService.updateReservation({
+                reservationId: this.state.reservationId,
+                numOfPeople: this.state.numofpeople,
+                dateTime: this.state.dateTime,
+                tableId: this.state.selectedtableId,
+                comments: this.state.comments,
+                menuItems: Array.from(this.state.selectedMenuItems),
+            }).then(res => {
+                if (res.errcode === 0) {
+                    console.log(res)
                     this.setState({
-                        resultIsVisible: true,
-                        result: res.reservation,
+                        tableIsVisible: false,
+                        isReservationSuccess: true,
+                        tablestatus: false,
                     })
-                }, 500)
-            }else{
-                console.log('err in then')
-                console.log(res)
+                    setTimeout(() => {
+                        this.setState({
+                            resultIsVisible: true,
+                            result: res.reservation,
+                        })
+                    }, 500)
+                } else {
+                    console.log('err in then')
+                    console.log(res)
+                    this.setState({
+                        tableIsVisible: false,
+                        tablestatus: false,
+                        isReservationSuccess: false,
+                        reservefailMessage: res.errmsg
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            resultIsVisible: true,
+                        })
+                    }, 500)
+                }
+            }).catch(err => {
+                console.log('err in catch')
+                console.log(err)
                 this.setState({
                     tableIsVisible: false,
                     tablestatus: false,
                     isReservationSuccess: false,
-                    reservefailMessage: res.errmsg
+                    reservefailMessage: err.errmsg
                 })
                 setTimeout(() => {
                     this.setState({
                         resultIsVisible: true,
                     })
                 }, 500)
-            }
-        }).catch(err => {
-            console.log('err in catch')
-            console.log(err)
-            this.setState({
-                tableIsVisible: false,
-                tablestatus: false,
-                isReservationSuccess: false,
-                reservefailMessage: err.errmsg
             })
-            setTimeout(() => {
+        } else {
+            dataService.customersReserve({
+                numOfPeople: this.state.numofpeople,
+                dateTime: this.state.dateTime,
+                tableId: this.state.selectedtableId,
+                comments: this.state.comments,
+                menuItems: Array.from(this.state.selectedMenuItems),
+            }).then(res => {
+                if (res.errcode === 0) {
+                    console.log(res)
+                    this.setState({
+                        tableIsVisible: false,
+                        isReservationSuccess: true,
+                        tablestatus: false,
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            resultIsVisible: true,
+                            result: res.reservation,
+                        })
+                    }, 500)
+                } else {
+                    console.log('err in then')
+                    console.log(res)
+                    this.setState({
+                        tableIsVisible: false,
+                        tablestatus: false,
+                        isReservationSuccess: false,
+                        reservefailMessage: res.errmsg
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            resultIsVisible: true,
+                        })
+                    }, 500)
+                }
+            }).catch(err => {
+                console.log('err in catch')
+                console.log(err)
                 this.setState({
-                    resultIsVisible: true,
+                    tableIsVisible: false,
+                    tablestatus: false,
+                    isReservationSuccess: false,
+                    reservefailMessage: err.errmsg
                 })
-            }, 500)
-        })
+                setTimeout(() => {
+                    this.setState({
+                        resultIsVisible: true,
+                    })
+                }, 500)
+            })
+        }
     }
 
-    getMenuInfo(){
+    getMenuInfo() {
         var id = this.state.resId;
-        dataService.getMenusCustomer(id).then(res=>{
+        dataService.getMenusCustomer(id).then(res => {
             console.log(res.menus)
             this.setState({
                 menuItems: res.menus,
             })
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err)
         })
-    }    
+    }
 
     renderTimeOption(date) {
         var options = [
@@ -286,11 +380,11 @@ class Reserve extends Component {
             <option {...(new Date(date + ' 23:30') < new Date() ? { disabled: true } : {})} value="23:30">11:30 PM</option>,
         ];
 
-        const timeChange = (e)=>{
+        const timeChange = (e) => {
             e.preventDefault()
             const value = e.target.value;
             console.log(value)
-            this.setState({time: value})            
+            this.setState({ time: value })
         }
 
         return (
@@ -306,30 +400,52 @@ class Reserve extends Component {
                 {options}
             </select>
         )
-
-
-
     }
 
-    renderMenuItems(items){
+    renderMenuItems(items, checked) {
         var tr = [];
         var reactThis = this;
-        var handler = function(e){
-            if(e.target.checked){
-                reactThis.state.selectedMenuItems.add(e.target.value);
-            }else{
-                reactThis.state.selectedMenuItems.delete(e.target.value);
+        var handler = (e) => {
+            if (e.target.checked) {
+                this.state.selectedMenuItems.add(e.target.value);
+            } else {
+                this.state.selectedMenuItems.delete(e.target.value);
             }
-            console.log(reactThis.state.selectedMenuItems)
+            console.log(this.state.selectedMenuItems)
         }
-        for(var item of items){
-            tr.push(
-                <div>
-                <input type='checkbox' value={item._id} onChange={handler}/>
-                <label>{item.menuName}</label>
-            </div>
-            )
+        console.log(checked)
+        for (var item of items) {
+            if (checked) {
+                var flag = false;
+                for (var id of checked) {
+                    if (id._id.toString() === item._id.toString() && this.state.allowModifyMenuItems) {
+                        tr.push(
+                            <div>
+                                <input type='checkbox' defaultChecked value={item._id} onClick={handler} />
+                                <label>{item.menuName} - ${item.menuPrice}</label>
+                            </div>
+                        )
+                        reactThis.state.selectedMenuItems.add(item._id)
+                        flag = true; break;
+                    }
+                }
+                if (flag) continue;
+                tr.push(
+                    <div>
+                        <input type='checkbox' value={item._id} onClick={handler} />
+                        <label>{item.menuName} - ${item.menuPrice}</label>
+                    </div>
+                )
+            } else {
+                tr.push(
+                    <div>
+                        <input type='checkbox' value={item._id} onClick={handler} />
+                        <label>{item.menuName} - ${item.menuPrice}</label>
+                    </div>
+                )
+            }
         }
+
         return tr;
     }
 
@@ -337,12 +453,13 @@ class Reserve extends Component {
         return (
             //partial code from https://tobiasahlin.com/spinkit/, modified.
             <MainContainer>
+                {this.state.isLoading ? FullScrrenLoading({ type: 'balls', color: '#000' }) : null}
                 <div className="row">
                     {this.state.formIsVisible ?
 
                         <div className="row">
                             <div className='col-md-8'>
-                            {this.renderForm()}
+                                {this.renderForm()}
                             </div>
                             <div className='col-md-4'>
                                 <img src="https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?cs=srgb&dl=table-in-vintage-restaurant-6267.jpg&fm=jpg" style={{ marginTop: '5%' }} className="col-md-12" />
@@ -354,39 +471,41 @@ class Reserve extends Component {
 
                     {this.state.tableIsVisible ?
                         <div className="col-xs-12 col-md-12">
-                                <div className="page-header text-left" style={{ marginTop: '5%' }}>
-                                    <h3>Please Select a table</h3>
+                            <div className="page-header text-left" style={{ marginTop: '5%' }}>
+                                <h3>Please Select a table</h3>
+                            </div>
+                            <Layout tables={this.state.tables} setTableId={this.setTableId} />
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <button className="btn btn-warning" onClick={this.back}>Back</button>
                                 </div>
-                                <Layout tables={this.state.tables} setTableId={this.setTableId} />
-                                <div className="row">
-                                    <div className="col-md-3">
-                                        <button className="btn btn-warning" onClick={this.back}>Back</button>
-                                    </div>
-                                    <div className="col-md-6">
 
-                                    </div>
-                                    <div className="col-md-2">
-                                        <button className="btn btn-primary" onClick={this.book}>Book</button>
-                                    </div>
+                                <div className="col-md-6">
+
                                 </div>
+
+                                <div className="col-md-3">
+                                    <button className="btn btn-primary" onClick={this.book}>Book</button>
+                                </div>
+                            </div>
                         </div> : null}
                     {this.state.resultIsVisible ?
-                            <div className="page-header text-left" style={{ marginTop: '5%' }}>
-                                {this.state.isReservationSuccess? 
+                        <div className="page-header text-left" style={{ marginTop: '5%' }}>
+                            {this.state.isReservationSuccess ?
                                 <div>
                                     <h3>Thanks for reserving</h3>
-                                <h4>This is your reservation:</h4>
-                                <p>Customer Name: {this.state.result.customer.firstName + " " + this.state.result.customer.lastName}</p>
-                                <p>Time: {new Date(this.state.result.dateTime).toString()}</p>
-                                <p>Restaurant: {this.state.result.restaurant.resName}</p>
-                                <p>Number of People: {this.state.result.numOfPeople}</p>
-                                <p>Restaurant Phone Number: {this.state.result.restaurant.businessNum}</p>
-                                </div>: <div><h3>Reservation failed</h3>
-                                    
-                                <p>{this.state.reservefailMessage}</p>
+                                    <h4>This is your reservation:</h4>
+                                    <p>Customer Name: {this.state.result.customer.firstName + " " + this.state.result.customer.lastName}</p>
+                                    <p>Time: {new Date(this.state.result.dateTime).toString()}</p>
+                                    <p>Restaurant: {this.state.result.restaurant.resName}</p>
+                                    <p>Number of People: {this.state.result.numOfPeople}</p>
+                                    <p>Restaurant Phone Number: {this.state.result.restaurant.businessNum}</p>
+                                </div> : <div><h3>Reservation failed</h3>
+
+                                    <p>{this.state.reservefailMessage}</p>
                                 </div>}
-                            </div>
-                         : null}
+                        </div>
+                        : null}
 
 
                 </div>
