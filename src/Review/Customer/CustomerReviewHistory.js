@@ -125,7 +125,7 @@ class CustomerReviewHistory extends Component {
         //  <form onSubmit={this.handleSubmit} id="rendTab" >
         <tr key={index} id={'reviewrow' + index}>
           <tr>
-            <td rowspan="2">{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
+            <td rowspan="2">{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD hh:mm")}</td>
             <td rowspan="2" defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
 
 
