@@ -115,6 +115,7 @@ class RestaurantProfile extends Component {
       contentTable: false,
       resultsErr: false,
       isResLoaded: false,
+      disabled: false,
 
       isError: {
         resname: "&#160;",
@@ -550,11 +551,12 @@ class RestaurantProfile extends Component {
 
   //  Edit profile disable button
   handleEdit() {
-    console.log("click disable");
+    console.log("click disable", this.state.disabled);
     this.setState({
       disabled: !this.state.disabled,
     });
     this.changeText();
+    console.log(this.state.disabled);
  
   }
 
