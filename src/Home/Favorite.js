@@ -7,16 +7,18 @@ import Star from '../component/Style/Stars'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import dataService from '../Services/dataService';
 import { toast } from 'react-toastify';
+import serverAddress from '../Services/ServerUrl';
+
 
 class Favorite extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            rastaurants: [
+            restaruants: [
             ]
         }
         dataService.getFavorite().then(res=>{
-            this.setState({restaurants: res.restaurants})
+            this.setState({restaruants: res.restaruants})
             console.log(this.state)
         }).catch(err=>{
             toast('error', {type: 'error'})
@@ -28,11 +30,8 @@ class Favorite extends Component {
     renderRestaurant(r) {
         return (
             <div style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
-
-                <img src={r.resPicture} height='100%' width='100%' />
+                <img src={ serverAddress + '/getImage/'+r.pictures[0]} height='100%' width='100%' />
                 <Link to={'/restaurant/' + r._id}>{r.resName} </Link>
-                <Star isClickAble={false} type='splitedBar' stars={r.starAverage} style={{ margin: '1rem', border: '1px solid #000', width: '10rem', height: '15rem' }} />
-
             </div>
         )
 
@@ -40,7 +39,7 @@ class Favorite extends Component {
 
     renderRestaurants() {
         var tr = [];
-        for (var r of this.state.rastaurants) {
+        for (var r of this.state.restaruants) {
             tr.push(this.renderRestaurant(r))
         }
         return tr;
