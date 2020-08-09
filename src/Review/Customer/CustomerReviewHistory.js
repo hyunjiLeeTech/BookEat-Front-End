@@ -116,7 +116,7 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                     <option value="1">⭐</option>
+                    <option value="1">⭐</option>
                     <option value="2">⭐⭐</option>
                     <option value="3">⭐⭐⭐</option>
                     <option value="4">⭐⭐⭐⭐</option>
@@ -142,7 +142,7 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                     <option value="1">⭐</option>
+                    <option value="1" >⭐</option>
                     <option value="2">⭐⭐</option>
                     <option value="3">⭐⭐⭐</option>
                     <option value="4">⭐⭐⭐⭐</option>
@@ -165,7 +165,7 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                     <option value="1">⭐</option>
+                    <option value="1" >⭐</option>
                     <option value="2">⭐⭐</option>
                     <option value="3">⭐⭐⭐</option>
                     <option value="4">⭐⭐⭐⭐</option>
@@ -201,6 +201,8 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
+          <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
+          <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
 
 
 
@@ -212,9 +214,30 @@ class CustomerReviewHistory extends Component {
               disabled="flase"
               className="border-0"
             />
+          </td>
+
+
+
+
+          <td colSpan="2">
+            <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
+              // onChange={(e) => this.onImageChangepic1(e, index)} 
+              // disabled={(!this.state.reviews[index].contenteditable)}
+              disabled="flase"
+              className="border-0"
+            />
+          </td>
+          <td colSpan="2 ">
+            <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
+              // onChange={(e) => this.onImageChangepic2(e, index)} 
+              // disabled={(!this.state.reviews[index].contenteditable)} 
+              disabled="false"
+              className="border-0"
+            />
 
             {
               this.state.reviews[index].contenteditable ?
+
 
                 <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} alt="Review" />
                 :
@@ -451,7 +474,7 @@ class CustomerReviewHistory extends Component {
                     data-dismiss="modal"
                   >
                     Close
-                  </button>
+                </button>
                 </div>
               </div>
             </div>
