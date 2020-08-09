@@ -61,7 +61,7 @@ class SearchBox extends Component {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         var keyword = urlParams.get('keyword')
-        this.setState({ keyword: keyword });
+        this.setState({ keyword: keyword ? keyword : '' });
         //this.state.keyword = keyword;
         //console.log(this.state.keyword)
         if (urlParams.get('dateTime') != null && urlParams.get('numOfPeople') != null) {

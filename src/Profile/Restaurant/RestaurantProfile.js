@@ -133,7 +133,6 @@ class RestaurantProfile extends Component {
         picture: "&#160;",
         eatingTime: "&#160;"
       }
-
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -363,7 +362,7 @@ class RestaurantProfile extends Component {
             ? restaurant.restaurantDescription
             : "",
         eatingTime:
-          typeof restaurant.eatingTime != "undefined"
+          restaurant.eatingTime
             ? restaurant.eatingTime
             : "",
         cuisineStyle:
