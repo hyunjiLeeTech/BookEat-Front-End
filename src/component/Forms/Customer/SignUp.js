@@ -11,6 +11,9 @@ import serverAddress from '../../../Services/ServerUrl';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import Facebook from '../../../Image/FaceSign.jpg'
 import FullscreenError from '../../Style/FullscreenError'
+import AuthService from "../../../Services/AuthService";
+import dataService from "../../../Services/dataService";
+import { toast } from "react-toastify";
 
 //Validation 
 const regExpEmail = RegExp(
@@ -71,7 +74,10 @@ class SignUp extends Component {
         password: "&#160;",
         confirmpw: "&#160;",
       },
-      resultsErr: false
+      resultsErr: false,
+      isExternal: false,
+      externalType: 0,
+      externalToken: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -124,23 +130,40 @@ class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (formValid(this.state)) {
-      this.state.password = sha256(this.state.password).toString(); //hashing password
-      this.state.confirmpw = sha256(this.state.confirmpw).toString()
-      console.log(this.state)
-      Axios.post(serverAddress + "/customersignup", this.state).then(res => {
-        console.log(res)
-        if (res.data.errcode === 0) {
-          $("#signResultText").text("Congrats, check your email to confirm that you are human").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
-            .addClass("alert-success");
-        } else {
-          $("#signResultText").text("Sorry, " + res.data.errmsg).removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
-            .addClass("alert-danger");;
-        }
-      }).catch(err => {
-        console.log(err)
-      })
 
+
+    if (formValid(this.state)) {
+      if (this.state.isExternal) {
+        dataService.externalSignUp({
+          token: this.state.externalToken,
+          externalType: this.state.externalType,
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
+          email: this.state.email,
+          phonenumber: this.state.phonenumber,
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          toast('error')
+          console.log(err)
+        })
+      } else {
+        this.state.password = sha256(this.state.password).toString(); //hashing password
+        this.state.confirmpw = sha256(this.state.confirmpw).toString()
+        console.log(this.state)
+        Axios.post(serverAddress + "/customersignup", this.state).then(res => {
+          console.log(res)
+          if (res.data.errcode === 0) {
+            $("#signResultText").text("Congrats, check your email to confirm that you are human").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+              .addClass("alert-success");
+          } else {
+            $("#signResultText").text("Sorry, " + res.data.errmsg).removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+              .addClass("alert-danger");;
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
     } else {
       console.log("Form is invalid!");
     }
@@ -148,33 +171,35 @@ class SignUp extends Component {
 
   // Google Sign In 
 
-  onSuccess() {
-    console.log('on success')
-    this.setState({
-      isSignedIn: true,
-      err: null
+  onSuccess(resp) {
+    console.log(resp)
+    AuthService.loginExternal(1, resp.wc.access_token, false).then(res => {
+      if (this.state.isExternal && this.state.externalType == 1)
+        toast("This Google account is already registered, please sign in :)")
+    }).catch(err => {
+      console.log(err)
+      if (err.errcode === 2 && this.state.isExternal && this.state.externalType === 1) { //signup
+        this.setState({ externalToken: resp.wc.access_token, email: err.profile.email, firstname: err.profile.given_name, lastname: err.profile.family_name })
+        $('#email').prop('disabled', 'true')
+        $('#firstname').prop('disabled', 'true')
+        $('#lastname').prop('disabled', 'true')
+      }
     })
+
   }
 
   onLoginFailed(err) {
-    this.setState({
-      isSignedIn: false,
-      error: err,
-    })
   }
 
   getContent() {
-    if (this.state.isSignedIn) {
-      return <p>hello user, you're signed in </p>
-    } else {
-      return (
-        <div>
-          <p>You are not signed in. Click here to sign in.</p>
-          <button id="loginButton">Login with Google</button>
-        </div>
-      )
+    var googleBtn = () => {
+      this.setState({ isExternal: true, externalType: 1, })
     }
-
+    return (
+      <div>
+        <button id="loginButton" onClick={googleBtn} >Login with Google</button>
+      </div>
+    )
   }
 
   componentDidMount() {
@@ -222,7 +247,7 @@ class SignUp extends Component {
         width: 200,
         height: 50,
         client_id: '377822834291-u5q8t038me7rn1k5gieq1b6qrohgqedf.apps.googleusercontent.com',
-        onsuccess: successCallback
+        onsuccess: successCallback,
       }
       gapi.signin2.render('loginButton', opts)
     })
@@ -305,8 +330,7 @@ class SignUp extends Component {
 
                   </div>
                 </div>
-
-                <div className="form-group row">
+                {this.state.isExternal ? null : <div className="form-group row">
                   <label htmlFor="password" className="col-sm-2 col-form-label">Password </label>
                   <div className="col-sm-6">
                     <input name="password" type="password" id="password" className={isError.password.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.password} placeholder="Password"
@@ -314,17 +338,19 @@ class SignUp extends Component {
                     <span className="invalid-feedback">{Parser(isError.password)}</span>
 
                   </div>
-                </div>
+                </div>}
 
-                <div className="form-group row">
-                  <label htmlFor="confirmpw" className="col-sm-2 col-form-label">Password Confirmation </label>
-                  <div className="col-sm-6">
-                    <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
-                      onChange={this.handleChange} required />
-                    <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
+                {this.state.isExternal ? null :
+                  <div className="form-group row">
+                    <label htmlFor="confirmpw" className="col-sm-2 col-form-label">Password Confirmation </label>
+                    <div className="col-sm-6">
+                      <input type="password" name="confirmpw" id="confirmpw" className={isError.confirmpw.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.confirmpw} placeholder="Confirm Password"
+                        onChange={this.handleChange} required />
+                      <span className="invalid-feedback">{Parser(isError.confirmpw)}</span>
 
+                    </div>
                   </div>
-                </div>
+                }
 
                 <div className="form-group ">
                   <div className="form-check checkbox-xl">
@@ -371,7 +397,7 @@ class SignUp extends Component {
                 <p>Want to advertise your restaurant? Sign Up here and be part of the BookEat Family!</p>
                 <div className="text-center">
                   <Link to="/RestaurantSignUp" className="btn btn-primary">
-                   Restaurant Sign Up
+                    Restaurant Sign Up
                   </Link>
                 </div>
 

@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 // import CAFE from '../Image/CAFE.jpg'
 import Star from '../component/Style/Stars'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
+import dataService from '../Services/dataService';
+import { toast } from 'react-toastify';
 
 class Favorite extends Component {
     constructor(props) {

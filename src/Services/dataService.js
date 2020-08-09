@@ -11,6 +11,16 @@ function sleep(ms) {
 }
 
 export default {
+  externalSignUp(info) {
+    return Axios.post(serverAddress + '/signupExternal', info)
+      .then(res => {
+        if (res.data.errcode !== 0) throw res.data
+        console.log(res.data)
+        return res.data;
+      }).catch(err => {
+        throw err
+      })
+  },
   getDaily() {
     return Axios.get(serverAddress + '/daily').then(res => {
       if (res.data.errcode !== 0) throw res.data
