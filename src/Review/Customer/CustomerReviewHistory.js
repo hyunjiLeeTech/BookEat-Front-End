@@ -234,7 +234,7 @@ class CustomerReviewHistory extends Component {
             <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
               // onChange={(e) => this.onImageChangepic2(e, index)} 
               // disabled={(!this.state.reviews[index].contenteditable)} 
-              disabled="false"
+              disabled={false}
               className="border-0"
             />
             {
