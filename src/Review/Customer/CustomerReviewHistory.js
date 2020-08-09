@@ -201,11 +201,11 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
-          <td colSpan="2 ">
-            <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
+          <td>
+            <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
               // onChange={(e) => this.onImageChangepic2(e, index)} 
               // disabled={(!this.state.reviews[index].contenteditable)} 
-              disabled="false"
+              disabled
               className="border-0"
             />
 
@@ -213,13 +213,13 @@ class CustomerReviewHistory extends Component {
               this.state.reviews[index].contenteditable ?
 
 
-                <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} alt="Review" />
+                <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture1} alt="" />
                 :
 
                 typeof this.state.reviews[index].pictures[0] !== 'undefined' ?
 
                   <div>
-                    <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} alt="Review" />
+                    <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[0]} alt="" />
 
                   </div>
                   :
@@ -227,17 +227,23 @@ class CustomerReviewHistory extends Component {
             }
 
           </td>
-          <td colSpan="2 ">
+          <td>
+          <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
+              // onChange={(e) => this.onImageChangepic2(e, index)} 
+              // disabled={(!this.state.reviews[index].contenteditable)} 
+              disabled
+              className="border-0"
+            />
             {
               this.state.reviews[index].contenteditable ?
 
-                <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} alt="Review" />
+                <img id={"picture2" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.reviews[index].picture2} alt="" />
                 :
 
                 typeof this.state.reviews[index].pictures[1] !== 'undefined' ?
 
                   <div>
-                    <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} alt="Review" />
+                    <img id={"picture1" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.reviews[index].pictures[1]} alt="" />
 
                   </div>
                   :
