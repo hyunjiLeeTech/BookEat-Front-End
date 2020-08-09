@@ -324,7 +324,7 @@ class ResReview extends Component {
                             {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                                 return (
                                     <div  key={index.toString()} id={"Images" + 1}>
-                                        <img key={index} src={url} value={index} alt="Review" />
+                                        <img key={index} id="previewPic" src={url} value={index} alt="Review" />
                                     </div>
                                 )
                             }))
