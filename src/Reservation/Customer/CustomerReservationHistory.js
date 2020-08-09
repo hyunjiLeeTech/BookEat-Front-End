@@ -193,60 +193,6 @@ class CustomerReservationHistory extends Component {
           :
           null
         }
-        <form id="reservationEdit"
-        // onSubmit={this.handleSubmit} 
-        >
-          <div className="form-group mt-5">
-            <h3> Upcomming reservation</h3>
-            <table className="table table-striped">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Restaurant</th>
-                  <th>Ordered Food</th>
-                  <th># of Visitor</th>
-                  <th># of Table </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th value={this.state.UpDate}></th>
-                  <th value={this.state.UpRestaurant}></th>
-                  <th value={this.state.UpKindOfFood}></th>
-                  <th value={this.state.UpNumOfPeople}></th>
-                  <th value={this.state.NumOfTable}> </th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-
-          {/* Todo: Do it after finishing reservation  */}
-          <div id="changeReservation" className="form-inline">
-            <div className="form-group">
-              {/* <Link to={'/customerreserve/' + restaurantId._id} className="btn btn-primary"> */}
-              <Link to={"/customerReserve"} >
-                <button
-                  type="button"
-                  className="btn btn-primary btn-sm mr-sm-2 lm-5rem">
-                  Change reservation
-                    </button>
-              </Link>
-            </div>
-
-            <div id="cancelReservation" className="form-group">
-              {/* <Link to="/"> */}
-              <button
-                type="button"
-                className="btn btn-primary btn-sm mr-sm-2"
-                data-toggle="modal" data-target="#DeleteResultModal"
-              >
-                Cancel reservation
-                    </button>
-              {/* </Link> */}
-            </div>
-          </div>
-        </form>
         <form id="reservationhistory" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <br />

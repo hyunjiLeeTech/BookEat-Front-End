@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import MainContainer from "../../component/Style/MainContainer";
 import "./RestaurantProfile.css";
 import Parser from "html-react-parser";
@@ -662,7 +661,7 @@ class RestaurantProfile extends Component {
   handleNotOpen = (day) => {
     console.log(day);
     if (day === "mon") {
-      if (this.state.monIsClose == true) {
+      if (this.state.monIsClose === true) {
         this.state.monIsClose = false;
         $("#monOpenTime").prop("disabled", false);
         $("#monCloseTime").prop("disabled", false);
@@ -673,7 +672,7 @@ class RestaurantProfile extends Component {
         $("#monCloseTime").prop("disabled", true);
       }
     } else if (day === "tue") {
-      if (this.state.tueIsClose == true) {
+      if (this.state.tueIsClose === true) {
         this.state.tueIsClose = false;
         $("#tueOpenTime").prop("disabled", false);
         $("#tueCloseTime").prop("disabled", false);
@@ -683,7 +682,7 @@ class RestaurantProfile extends Component {
         $("#tueCloseTime").prop("disabled", true);
       }
     } else if (day === "wed") {
-      if (this.state.wedIsClose == true) {
+      if (this.state.wedIsClose === true) {
         this.state.wedIsClose = false;
         $("#wedOpenTime").prop("disabled", false);
         $("#wedCloseTime").prop("disabled", false);
@@ -693,7 +692,7 @@ class RestaurantProfile extends Component {
         $("#wedCloseTime").prop("disabled", true);
       }
     } else if (day === "thu") {
-      if (this.state.thuIsClose == true) {
+      if (this.state.thuIsClose === true) {
         this.state.thuIsClose = false;
         $("#thuOpenTime").prop("disabled", false);
         $("#thuCloseTime").prop("disabled", false);
@@ -703,7 +702,7 @@ class RestaurantProfile extends Component {
         $("#thuCloseTime").prop("disabled", true);
       }
     } else if (day === "fri") {
-      if (this.state.friIsClose == true) {
+      if (this.state.friIsClose === true) {
         this.state.friIsClose = false;
         $("#friOpenTime").prop("disabled", false);
         $("#friCloseTime").prop("disabled", false);
@@ -713,7 +712,7 @@ class RestaurantProfile extends Component {
         $("#friCloseTime").prop("disabled", true);
       }
     } else if (day === "sat") {
-      if (this.state.satIsClose == true) {
+      if (this.state.satIsClose === true) {
         this.state.satIsClose = false;
         $("#satOpenTime").prop("disabled", false);
         $("#satCloseTime").prop("disabled", false);
@@ -723,7 +722,7 @@ class RestaurantProfile extends Component {
         $("#satCloseTime").prop("disabled", true);
       }
     } else if (day === "sun") {
-      if (this.state.sunIsClose == true) {
+      if (this.state.sunIsClose === true) {
         this.state.sunIsClose = false;
         $("#sunOpenTime").prop("disabled", false);
         $("#sunCloseTime").prop("disabled", false);
@@ -1609,12 +1608,12 @@ class RestaurantProfile extends Component {
 
 
                       <input type="file" name="picture" id="picture"
-                        onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple />
+                        onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple required/>
 
                       {this.state.resPictures.length > 0 && (this.state.resPictures.map((currValue, index) => {
                         return (
                           <div id="Images1">
-                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} />
+                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} alt="Restaurant"/>
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
                               data-target="#deletePictureModal"
@@ -1629,7 +1628,7 @@ class RestaurantProfile extends Component {
                       {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
                           <div id="Images">
-                            <img key={index} className="previewImage" src={url} value={index} onClick={() => this.onSelectImage(index)} />
+                            <img key={index} className="previewImage" src={url} value={index} onClick={() => this.onSelectImage(index)} alt="Restaurant"/>
                           </div>
                         )
                       }))
