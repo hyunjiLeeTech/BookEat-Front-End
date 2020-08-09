@@ -1609,7 +1609,7 @@ class RestaurantProfile extends Component {
 
 
                       <input type="file" name="picture" id="picture"
-                        onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple />
+                        onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple required/>
 
                       {this.state.resPictures.length > 0 && (this.state.resPictures.map((currValue, index) => {
                         return (
