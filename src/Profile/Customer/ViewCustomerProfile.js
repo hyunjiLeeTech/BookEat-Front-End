@@ -213,11 +213,7 @@ class ViewCustomerProfile extends Component {
                   My profile
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" data-toggle="tab" href="#password">
-                  Password
-                </a>
-              </li>
+
               <li className="nav-item">
                 <a className="nav-link" data-toggle="tab" href="#myReservation">
                   My reservation
@@ -226,6 +222,11 @@ class ViewCustomerProfile extends Component {
               <li className="nav-item">
                 <a className="nav-link" data-toggle="tab" href="#myReview">
                   My review
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" data-toggle="tab" href="#password">
+                  Password
                 </a>
               </li>
             </ul>
