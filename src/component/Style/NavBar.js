@@ -27,59 +27,111 @@ const NavBar = () => {
         }
     }
 
-    var u = authService.getCurrentUser().user;
+    if(user !== null){
+        switch (user.user.userTypeId) {
+            case 1:
+                return (
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-info">
+                        <NavLink to="/" className="nav-link"> 
+                        <img src={BookEat_logo} alt="BookEat" height="28"/>
+                        </NavLink>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+            
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item">
+                                    <NavLink to="/" className="nav-link">Home</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    {renderProfileButtom()}
+                                </li>
+                            </ul>
+            
+                            {user === null ? <NavBarRightLoggedOut /> : <NavBarRightLoggedin />}
+            
+                        </div>
+                    </nav>
+                )
+            case 2:
+                return (
+                    <nav className="navbar navbar-expand-lg navbar-light bg-danger">
+                        <NavLink to="/" className="nav-link"> 
+                        <img src={BookEat_logo_r} alt="BookEat" height="28"/>
+                        </NavLink>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+        
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item">
+                                    <NavLink to="/" className="nav-link">Home</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    {renderProfileButtom()}
+                                </li>
+                            </ul>
+        
+                            {user === null ? <NavBarRightLoggedOut /> : <NavBarRightLoggedin />}
+        
+                        </div>
+                    </nav>
+                )
+            case 3:
+                return (
+                    <nav className="navbar navbar-expand-lg navbar-light bg-danger">
+                        <NavLink to="/" className="nav-link"> 
+                        <img src={BookEat_logo_r} alt="BookEat" height="28"/>
+                        </NavLink>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+        
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item">
+                                    <NavLink to="/" className="nav-link">Home</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    {renderProfileButtom()}
+                                </li>
+                            </ul>
+        
+                            {user === null ? <NavBarRightLoggedOut /> : <NavBarRightLoggedin />}
+        
+                        </div>
+                    </nav>
+                )
+            default:
+                return (
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                        <NavLink to="/" className="nav-link"> 
+                        <img src={BookEat_logo} alt="BookEat" height="28"/>
+                        </NavLink>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                        </button>
+        
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item">
+                                    <NavLink to="/" className="nav-link">Home</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    {renderProfileButtom()}
+                                </li>
+                            </ul>
+        
+                            {user === null ? <NavBarRightLoggedOut /> : <NavBarRightLoggedin />}
+        
+                        </div>
+                    </nav>
+                )
 
-    if(u.userTypeId === 1){
-        return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-info">
-            <NavLink to="/" className="nav-link"> 
-            <img src={BookEat_logo} alt="BookEat" height="28"/>
-            </NavLink>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <NavLink to="/" className="nav-link">Home</NavLink>
-                    </li>
-                    <li className="nav-item">
-                        {renderProfileButtom()}
-                    </li>
-                </ul>
-
-                {user === null ? <NavBarRightLoggedOut /> : <NavBarRightLoggedin />}
-
-            </div>
-        </nav>
-    )
-    }else if (u.userTypeId === 2 || u.userTypeId === 3){
-        return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-danger">
-                <NavLink to="/" className="nav-link"> 
-                <img src={BookEat_logo_r} alt="BookEat" height="28"/>
-                </NavLink>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-    
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <NavLink to="/" className="nav-link">Home</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            {renderProfileButtom()}
-                        </li>
-                    </ul>
-    
-                    {user === null ? <NavBarRightLoggedOut /> : <NavBarRightLoggedin />}
-    
-                </div>
-            </nav>
-        )
-    }else {
+        }
+    }else{
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <NavLink to="/" className="nav-link"> 
@@ -88,7 +140,7 @@ const NavBar = () => {
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-    
+
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
@@ -98,14 +150,14 @@ const NavBar = () => {
                             {renderProfileButtom()}
                         </li>
                     </ul>
-    
+
                     {user === null ? <NavBarRightLoggedOut /> : <NavBarRightLoggedin />}
-    
+
                 </div>
             </nav>
         )
     }
-    
+
 }
 
 export default NavBar;

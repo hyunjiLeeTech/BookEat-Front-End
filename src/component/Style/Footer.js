@@ -1,70 +1,54 @@
 
-import React, { Component } from 'react'
+import React from 'react'
 import './Footer.css'
-// import $ from 'jquery'
+import authService from '../../Services/AuthService';
 
 
-class Footer extends Component{
-  // componentDidUpdate(){
-  //   var screenHeight = $(window).height();
-  //   var headerHeight = $("nav.navbar").height();
-  //   var bodyHeight = $("div.body").height();
-  //   var footerHeight = $("div.footer").height();
-  //   if(bodyHeight === isNaN) bodyHeight = 0;
-  //   if((headerHeight + bodyHeight + footerHeight)<screenHeight){
-  //     console.log("in")
-  //     var fix = screenHeight - headerHeight - footerHeight;
-  //     $("div.body").css("height", fix + "px");
-  //   }  
-  // }
+const Footer = () => {
 
-  // componentDidMount(){
+  const user = authService.getCurrentUser();
 
-    
-  //   window.onresize=function(){
-  //     $("div.body").css("height", "");
-  //     var screenHeight = $(window).height();
-  //     var headerHeight = $("nav.navbar").height();
-  //     var bodyHeight = $("div.body").height();
-  //     var footerHeight = $("div.footer").height();
-  //     if(bodyHeight === isNaN) bodyHeight = 0;
-  //     console.log("resize")
-  //     console.log(screenHeight);
-  //     console.log(headerHeight);
-  //     console.log(footerHeight);
-  //     console.log(bodyHeight);
-  //     if((headerHeight + bodyHeight + footerHeight)<screenHeight){
-  //       console.log("in")
-  //       var fix = screenHeight - headerHeight - footerHeight;
-  //       console.log(fix);
-  //       $("div.body").css("height", fix + "px");
-  //     }
-  //   }
-  //   if(bodyHeight === isNaN) bodyHeight = 0;
 
-  //   var screenHeight = $(window).height();
-  //   var headerHeight = $("nav.navbar").height();
-  //   var bodyHeight = $("div.body").height();
-  //   var footerHeight = $("div.footer").height();
-
-  //   if((headerHeight + bodyHeight + footerHeight)<screenHeight){
-  //     console.log("in")
-  //     var fix = screenHeight - headerHeight - footerHeight;
-  //     $("div.body").css("height", fix + "px");
-  //   }
-  // }
-
-  render(){
-    return (
-   
-      <footer className="page-footer font-small bg-dark">
-
-        <div className="footer-copyright text-center py-3 text-muted">© 2020 Copyright: BookEat
+  if (user !== null) {
+    switch (user.user.userTypeId) {
+      case 1:
+        return (
+          <footer className="page-footer font-small bg-info">
+            <div className="footer-copyright text-center py-3 text-white">© 2020 Copyright: BookEat
         </div>
-       
+          </footer>
+        )
+
+      case 2:
+        return (
+          <footer className="page-footer font-small bg-danger">
+            <div className="footer-copyright text-center py-3">© 2020 Copyright: BookEat
+        </div>
+          </footer>
+        )
+
+      case 3:
+        return (
+          <footer className="page-footer font-small bg-danger">
+            <div className="footer-copyright text-center py-3">© 2020 Copyright: BookEat
+        </div>
+          </footer>
+        )
+
+      default:
+        return (
+          <footer className="page-footer font-small bg-dark">
+            <div className="footer-copyright text-center py-3 text-light">© 2020 Copyright: BookEat
+        </div>
+          </footer>
+        )
+    }
+  } else {
+    return (
+      <footer className="page-footer font-small bg-dark">
+        <div className="footer-copyright text-center py-3 text-light">© 2020 Copyright: BookEat
+        </div>
       </footer>
-     
-     
     );
   }
 }
