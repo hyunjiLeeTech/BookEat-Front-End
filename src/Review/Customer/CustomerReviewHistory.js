@@ -15,7 +15,6 @@ class CustomerReviewHistory extends Component {
         },
 
       ],
-      // id: "", date: new Date(), comment: "", foodRate: 0, serviceRate: 0, satisfactionRate: 0, environmentRate: 1,
       resId: "",
       picture: [],
       disabled: true,
@@ -36,16 +35,6 @@ class CustomerReviewHistory extends Component {
     this.forceUpdate(); //forcing udpate the UI
   }
 
-
-  // async editReview(state) {
-  //   this.setState({ isLoding: true })
-  //   await ds.editCustomerProfile(state).then(() => {
-
-  //   }).finally(async (res) => {
-  //     await this.queryReviews();
-  //     this.setState({ isLoding: false })
-  //   })
-  // }
 
   handleClickDeleteReview(id, reviewPictures) {
     if (reviewPictures.length > 0) {
@@ -84,12 +73,6 @@ class CustomerReviewHistory extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // if (formValid(this.state)) {
-    //   console.log(this.state)
-    //   // ds.reviewHistory(this.state);
-    // } else {
-    //   console.log("Form is invalid!");
-    // }
   };
 
   renderStars(stars) {//stars is a number
@@ -103,9 +86,7 @@ class CustomerReviewHistory extends Component {
   }
 
   renderTable() {
-    console.log(this.state.reviews);
     return this.state.reviews.map((review, index) => {
-      console.log(review);
       const { comment } = review
       return (
         <tr key={index} id={'reviewrow' + index}>
@@ -398,7 +379,6 @@ class CustomerReviewHistory extends Component {
   }
 
   handleChange(e) {
-    console.log(e.target.value);
     this.setState({ id: e.target.value });
   }
 
@@ -412,7 +392,7 @@ class CustomerReviewHistory extends Component {
 
             <h3> My Review List</h3>
 
-            <table id='reivews' className="table table-striped col-md-12">
+            <table id='reivews' className="table table-striped col-md-12 table-responsive">
               <thead>
                 <tr>
                   <th>Date</th>
