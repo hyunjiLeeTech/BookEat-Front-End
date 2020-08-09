@@ -142,8 +142,11 @@ class SignUp extends Component {
           email: this.state.email,
           phonenumber: this.state.phonenumber,
         }).then(res => {
-          console.log(res)
+          $("#signResultText").text("Congrats, check your email to confirm that you are human").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+            .addClass("alert-success");
         }).catch(err => {
+          $("#signResultText").text("Sorry, " + err.errmsg ? err.errmsg : 'we cannot sign up for you').removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+          .addClass("alert-danger");;
           toast('error')
           console.log(err)
         })
@@ -174,8 +177,10 @@ class SignUp extends Component {
   onSuccess(resp) {
     console.log(resp)
     AuthService.loginExternal(1, resp.wc.access_token, false).then(res => {
-      if (this.state.isExternal && this.state.externalType == 1)
+      if (this.state.isExternal && this.state.externalType == 1){
         toast("This Google account is already registered, please sign in :)")
+        this.setState({isExternal: false})
+      }
     }).catch(err => {
       console.log(err)
       if (err.errcode === 2 && this.state.isExternal && this.state.externalType === 1) { //signup
