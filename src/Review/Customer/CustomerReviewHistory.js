@@ -230,12 +230,12 @@ class CustomerReviewHistory extends Component {
 
             
           
-            <td colspan="2">
+            <td colSpan="2">
               <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
                 // onChange={(e) => this.onImageChangepic1(e, index)} 
                 // disabled={(!this.state.reviews[index].contenteditable)}
                 disabled="flase"
-                class="border-0"
+                className="border-0"
               />
 
               {
@@ -255,12 +255,12 @@ class CustomerReviewHistory extends Component {
               }
 
             </td>
-            <td colspan="2 ">
+            <td colSpan="2 ">
               <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
                 // onChange={(e) => this.onImageChangepic2(e, index)} 
                 // disabled={(!this.state.reviews[index].contenteditable)} 
                 disabled="false"
-                class="border-0"
+                className="border-0"
               />
 
               {
@@ -430,7 +430,7 @@ class CustomerReviewHistory extends Component {
             <h3> My Review List</h3>
 
             <table id='reivews' className="table table-striped col-md-12">
-              {/* <thead> */}
+              <thead>
                 <tr>
                   {/* <tr> */}
                     <th>Date</th>
@@ -445,7 +445,7 @@ class CustomerReviewHistory extends Component {
                     <th></th>
                   {/* </tr> */}
                   </tr>
-              {/* </thead> */}
+              </thead>
               <tbody>
                 {this.renderTable()}
               </tbody>
