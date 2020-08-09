@@ -135,11 +135,11 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                    <option value="1"><span role="img" aria-label="star">⭐</span></option>
-                    <option value="2"><span role="img" aria-label="star">⭐⭐</span></option>
-                    <option value="3"><span role="img" aria-label="star">⭐⭐⭐</span></option>
-                    <option value="4"><span role="img" aria-label="star">⭐⭐⭐⭐</span></option>
-                    <option value="5"><span role="img" aria-label="star">⭐⭐⭐⭐⭐</span></option>
+                     <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].food)
@@ -161,11 +161,11 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                    <option value="1"><span role="img" aria-label="star">⭐</span></option>
-                    <option value="2"><span role="img" aria-label="star">⭐⭐</span></option>
-                    <option value="3"><span role="img" aria-label="star">⭐⭐⭐</span></option>
-                    <option value="4"><span role="img" aria-label="star">⭐⭐⭐⭐</span></option>
-                    <option value="5"><span role="img" aria-label="star">⭐⭐⭐⭐⭐</span></option>
+                     <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].service)
@@ -184,11 +184,11 @@ class CustomerReviewHistory extends Component {
                     onChange={(e) => this.handleChangeInList(e, index)}
                     required
                   >
-                    <option value="1"><span role="img" aria-label="star">⭐</span></option>
-                    <option value="2"><span role="img" aria-label="star">⭐⭐</span></option>
-                    <option value="3"><span role="img" aria-label="star">⭐⭐⭐</span></option>
-                    <option value="4"><span role="img" aria-label="star">⭐⭐⭐⭐</span></option>
-                    <option value="5"><span role="img" aria-label="star">⭐⭐⭐⭐⭐</span></option>
+                     <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].satisfaction)
@@ -209,11 +209,11 @@ class CustomerReviewHistory extends Component {
                     required
                   >
 
-                    <option value="1"><span role="img" aria-label="star">⭐</span></option>
-                    <option value="2"><span role="img" aria-label="star">⭐⭐</span></option>
-                    <option value="3"><span role="img" aria-label="star">⭐⭐⭐</span></option>
-                    <option value="4"><span role="img" aria-label="star">⭐⭐⭐⭐</span></option>
-                    <option value="5"><span role="img" aria-label="star">⭐⭐⭐⭐⭐</span></option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
                   </select>
                 </div>
                 : this.renderStars(this.state.reviews[index].environment)
