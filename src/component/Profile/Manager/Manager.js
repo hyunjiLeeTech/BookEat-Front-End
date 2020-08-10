@@ -141,10 +141,11 @@ class RestaurantProfile extends Component {
 
   };
 
-  handleDeleteManager = (manId) => {
+  handleDeleteManager = async (manId) => {
     this.state.deleteManId = manId;
-    ds.deleteManagerAccount(this.state);
+   
     try {
+       await ds.deleteManagerAccount(this.state);
       $("#deleteResultText")
         .text("Manager account is deleted")
         .removeClass("alert-warning")
@@ -154,7 +155,7 @@ class RestaurantProfile extends Component {
     } catch (err) {
 
       $("#deleteResultText")
-        .text("Sorry, " + err)
+        .text("Sorry, " + err.errmsg? err.errmsg : 'unkown error')
         .removeClass("alert-warning")
         .removeClass("alert-danger")
         .removeClass("alert-success")
@@ -172,20 +173,15 @@ class RestaurantProfile extends Component {
   componentDidMount() {
     // Avoid spacing on the form
 
-    // var t2 = document.getElementById("email");
-    // t2.onkeypress = function (e) {
-    //     if (e.keyCode === 32) return false;
-    // };
+    var t2 = document.getElementById("email");
+    t2.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+    };
 
-    // var t6 = document.getElementById("phonenumber");
-    // t6.onkeypress = function (e) {
-    //     if (e.keyCode === 32) return false;
-    // };
-
-    // var t9 = document.getElementById("password");
-    // t9.onkeypress = function (e) {
-    //     if (e.keyCode === 32) return false;
-    // };
+    var t9 = document.getElementById("password");
+    t9.onkeypress = function (e) {
+        if (e.keyCode === 32) return false;
+    };
 
     $("#createManagerBtn").on("click", () => {
       this.setState({

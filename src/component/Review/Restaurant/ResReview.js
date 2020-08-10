@@ -5,7 +5,8 @@ import Parser from "html-react-parser";
 import ds from "../../../Services/dataService";
 import moment from 'moment';
 import serverAddress from '../../../Services/ServerUrl';
-import $ from "jquery";
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
@@ -53,19 +54,37 @@ class ResReview extends Component {
             isError: {
                 comment: "&#160;"
             },
-            reviewPictures: []
+            reviewPictures: [],
+            modal: {
+                isModalShow: false,
+                modalTitle: '',
+                modalText: '',
+                className: '',
+            }
         };
 
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.onImageChange = this.onImageChange.bind(this);
+        this.setModal = this.setModal.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.picture !== this.state.picture) {
             this.state.isPicture = true;
         }
+    }
+
+    setModal(isShown, title, text, className) {
+        this.setState({
+            modal: {
+                isModalShow: isShown,
+                modalTitle: title,
+                modalText: text,
+                className: className ? className : '',
+            }
+        })
     }
 
     onImageChange = (event, index) => {
@@ -135,31 +154,19 @@ class ResReview extends Component {
         }
         state.isPicture = true;
         state.reviewPictures = reviewPicturesId;
-        await ds.addReview(state);
-        try {
-            $("#AddReviewModalText")
-                .text("Your review is added")
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-success");
-        } catch (err) {
-            $("#AddReviewModalText")
-                .text("Sorry, " + err)
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-danger");
-        }
+         await ds.addReview(state);
     }
 
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
-
         if (formValid(this.state)) {
             if (this.state.isPicture) {
-                this.addReviewWithPictures(this.state);
+                this.addReviewWithPictures(this.state).then(() => {
+                this.setModal(true, 'Success', 'Successfully added menu', 'alert alert-success')
+                }).catch((err) => {
+                    this.setModal(true, 'Failed', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger');
+                });
             }
         } else {
             console.log("Review is invalid");
@@ -245,6 +252,17 @@ class ResReview extends Component {
 
     render() {
         const { isError } = this.state;
+        const modal = this.state.modal
+        const handleClose = () =>{
+            this.setState({
+                modal:{
+                    isModalShow: false,
+                    modalTitle: modal.modalTitle,
+                    modalText: modal.modalText,
+                    className: modal.className,
+                }
+            })
+        }
         return (
             <div className="container">
                 <div className="row">
@@ -341,51 +359,21 @@ class ResReview extends Component {
                     </div>
                 </div>
 
-                {/* Add Review Modal */}
-
-                <div
-                    className="modal fade"
-                    id="AddReviewModal"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="AddReviewModalLabel"
-                    aria-hidden="true"
-                >
-
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="AddReviewModalLabel">
-                                    Add Review
-                            </h5>
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="alert alert-warning" id="AddReviewModalText">
-                                    Please Wait...
-                  </p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-dismiss="modal"
-                                >
-                                    Close
-                  </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <Modal show={modal.isModalShow} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{modal.modalTitle} </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className={modal.className}>{modal.modalText}</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
             </div>
+
+            
 
         )
     }
