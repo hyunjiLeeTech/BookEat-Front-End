@@ -466,7 +466,7 @@ class Reserve extends Component {
                 }
                 if (flag) continue;
                 tr.push(
-                    <tr>
+                    <tr key={tr}>
                         <td>
                             <input type='checkbox' id={'menu' + item._id} name={'menu' + item._id} value={item._id} onChange={handler} />
                             <label className='menuItemLable' htmlFor={'menu' + item._id}>{item.menuName}</label>
@@ -552,16 +552,16 @@ class Reserve extends Component {
                                     <p>{this.state.restaurant.phoneNumber}</p>
                                     <hr />
                                     <h6><RiPercentLine />  Promotions</h6>
-                                    <p>{this.state.discount.percent} % Off Call for more information!</p>
+                                    <p>{this.state.discount.isActive ? this.state.discount.percent + "% Off Call for more information!" : "No Promotions at the moment"}</p>
                                     <hr />
                                     <h6><RiTimeLine />  Store Time</h6>
-                                    <p>Monday {this.state.restaurant.monOpenTimeId.storeTimeName} - {this.state.restaurant.monCloseTimeId.storeTimeName}</p>
-                                    <p>Tuesday {this.state.restaurant.tueOpenTimeId.storeTimeName} - {this.state.restaurant.tueCloseTimeId.storeTimeName}</p>
-                                    <p>Wednesday {this.state.restaurant.wedOpenTimeId.storeTimeName} - {this.state.restaurant.wedCloseTimeId.storeTimeName}</p>
-                                    <p>Thursday {this.state.restaurant.thuOpenTimeId.storeTimeName} - {this.state.restaurant.thuCloseTimeId.storeTimeName}</p>
-                                    <p>Friday {this.state.restaurant.friOpenTimeId.storeTimeName} - {this.state.restaurant.friCloseTimeId.storeTimeName}</p>
-                                    <p>Saturday {this.state.restaurant.satOpenTimeId.storeTimeName} - {this.state.restaurant.satCloseTimeId.storeTimeName}</p>
-                                    <p>Sunday {this.state.restaurant.sunOpenTimeId.storeTimeName} - {this.state.restaurant.sunCloseTimeId.storeTimeName}</p>
+                                    <p>Monday {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName) } - {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)}</p>
+                                <p>Tuesday {(this.state.restaurant.tueIsClose ? "Close" : this.state.restaurant.tueOpenTimeId.storeTimeName) } - { (this.state.restaurant.tueIsClose ? "Close" : this.state.restaurant.tueOpenTimeId.storeTimeName) }</p>
+                                <p>Wednesday { (this.state.restaurant.wedIsClose ? "Close" : this.state.restaurant.wedOpenTimeId.storeTimeName) } - { (this.state.restaurant.wedIsClose ? "Close" : this.state.restaurant.wedOpenTimeId.storeTimeName) }</p>
+                                <p>Thursday { (this.state.restaurant.thuIsClose ? "Close" : this.state.restaurant.thuOpenTimeId.storeTimeName) } - {(this.state.restaurant.thuIsClose ? "Close" : this.state.restaurant.thuCloseTimeId.storeTimeName)}</p>
+                                <p>Friday { (this.state.restaurant.friIsClose ? "Close" : this.state.restaurant.friOpenTimeId.storeTimeName)} - { (this.state.restaurant.friIsClose ? "Close" : this.state.restaurant.friCloseTimeId.storeTimeName) }</p>
+                                <p>Saturday { (this.state.restaurant.satIsClose ? "Close" : this.state.restaurant.satOpenTimeId.storeTimeName)} - {(this.state.restaurant.satIsClose ? "Close" : this.state.restaurant.satCloseTimeId.storeTimeName) }</p>
+                                <p>Sunday {(this.state.restaurant.sunIsClose ? "Close" : this.state.restaurant.sunOpenTimeId.storeTimeName)} - {(this.state.restaurant.sunIsClose ? "Close" : this.state.restaurant.sunCloseTimeId.storeTimeName) }</p>
 
                                 </div> : <div className='col-md-4'></div>}
 

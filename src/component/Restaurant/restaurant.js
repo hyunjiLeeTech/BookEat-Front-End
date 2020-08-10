@@ -120,13 +120,14 @@ class Restaurant extends Component {
                                 <p>{this.state.isResLoaded ? this.state.res.phoneNumber : null}</p>
                                 <hr />
                                 <h6><RiTimeLine />  Store Time</h6>
-                                <p>Monday {this.state.isResLoaded ? this.state.res.monOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.monCloseTimeId.storeTimeName : null}</p>
-                                <p>Tuesday {this.state.isResLoaded ? this.state.res.tueOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.tueCloseTimeId.storeTimeName : null}</p>
-                                <p>Wednesday {this.state.isResLoaded ? this.state.res.wedOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.wedCloseTimeId.storeTimeName : null}</p>
-                                <p>Thursday {this.state.isResLoaded ? this.state.res.thuOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.thuCloseTimeId.storeTimeName : null}</p>
-                                <p>Friday {this.state.isResLoaded ? this.state.res.friOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.friCloseTimeId.storeTimeName : null}</p>
-                                <p>Saturday {this.state.isResLoaded ? this.state.res.satOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.satCloseTimeId.storeTimeName : null}</p>
-                                <p>Sunday {this.state.isResLoaded ? this.state.res.sunOpenTimeId.storeTimeName : null} - {this.state.isResLoaded ? this.state.res.sunCloseTimeId.storeTimeName : null}</p>
+                                <p>Monday {this.state.isResLoaded ? (this.state.res.monIsClose ? "Close" : this.state.res.monOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.monIsClose ? "Close" : this.state.res.monOpenTimeId.storeTimeName) : null}</p>
+                                <p>Tuesday {this.state.isResLoaded ? (this.state.res.tueIsClose ? "Close" : this.state.res.tueOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.tueIsClose ? "Close" : this.state.res.tueOpenTimeId.storeTimeName) : null}</p>
+                                <p>Wednesday {this.state.isResLoaded ? (this.state.res.wedIsClose ? "Close" : this.state.res.wedOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.wedIsClose ? "Close" : this.state.res.wedOpenTimeId.storeTimeName) : null}</p>
+                                <p>Thursday {this.state.isResLoaded ? (this.state.res.thuIsClose ? "Close" : this.state.res.thuOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.thuIsClose ? "Close" : this.state.res.thuCloseTimeId.storeTimeName): null}</p>
+                                <p>Friday {this.state.isResLoaded ? (this.state.res.friIsClose ? "Close" : this.state.res.friOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.friIsClose ? "Close" : this.state.res.friCloseTimeId.storeTimeName) : null}</p>
+                                <p>Saturday {this.state.isResLoaded ? (this.state.res.satIsClose ? "Close" : this.state.res.satOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.satIsClose ? "Close" : this.state.res.satCloseTimeId.storeTimeName) : null}</p>
+                                <p>Sunday {this.state.isResLoaded ? (this.state.res.sunIsClose ? "Close" : this.state.res.sunOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.sunIsClose ? "Close" : this.state.res.sunCloseTimeId.storeTimeName) : null}</p>
+                            
                                 <hr />
                                 <h6><GiKnifeFork />  Cuisine Style</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.cuisineStyleId.cuisineName : null}</p>
@@ -138,7 +139,7 @@ class Restaurant extends Component {
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
                                 <h5><RiPercentLine/>  Promotions</h5>
-                                <p>{this.state.isResLoaded ? this.state.discount.percent: null}% Off Call for more information!</p>
+                                <p>{this.state.isResLoaded ? (this.state.discount.isActive ? this.state.discount.percent + "% Off Call for more information!" : "No Promotions at the moment"): null}</p>
 
                             </div>
                         </div>
