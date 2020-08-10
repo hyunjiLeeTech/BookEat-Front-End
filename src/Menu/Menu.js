@@ -49,6 +49,7 @@ class Menu extends Component {
             menuPrice: "",
             menuDescript: "",
             menuType: "",
+            isImage: false,
             disabled: true,
             contenteditable: false,
 
@@ -103,7 +104,8 @@ class Menu extends Component {
             } else {
                 this.setState({
                     // image: URL.createObjectURL(img),
-                    image: event.target.files[0]
+                    image: event.target.files[0],
+                    isImage: true
                 })
             }
 
@@ -211,28 +213,26 @@ class Menu extends Component {
 
     async addMenuWithImage(state) {
         this.setState({ isLoading: true })
-        const formData = new FormData();
-        formData.append('menuImage', state.image);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
+        var menuImageId = ""
+
+        if (state.IsImage) {
+            const formData = new FormData();
+            formData.append('menuImage', state.image);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
             }
-        }
-        try{
             var menuImageId = await ds.addMenuImage(formData, config);
             state.menuImageId = menuImageId;
-        }catch(err){
-            toast('This menu item does not contain picuture.')
         }
-        try{
-            await ds.addMenu(state);
+
+        await ds.addMenu(state).then(() => {
+
+        }).finally(async (res) => {
             await this.queryMenus();
             this.setState({ isLoading: false })
-        }catch(err){
-            console.log(err)
-            this.setState({ isLoading: false })
-            throw err;
-        }
+        })
     }
 
     async editMenuWithImage(state) {
@@ -590,6 +590,8 @@ class Menu extends Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
+                {/* DeleteMenuModal */}
 
 
             </MainContainer>
