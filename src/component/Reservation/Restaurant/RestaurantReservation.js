@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import $ from "jquery";
 import dataService from '../../../Services/dataService';
 import { toast } from 'react-toastify';
-import Axios from 'axios';
-import authHeader from '../../../Services/authHeader';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 //TODO: not attend button
