@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Star from '../Style/Stars'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
 import dataService from '../../Services/dataService';
 import { toast } from 'react-toastify';
@@ -28,7 +27,7 @@ class Feature extends Component {
     renderRestaurant(r) {
         return (
             <div key={'featured'+r._id} style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
-                <img src={ serverAddress + '/getImage/'+r.pictures[0]} height='100%' width='100%' />
+                <img src={ serverAddress + '/getImage/'+r.pictures[0]} height='100%' width='100%' alt="Restaurant"/>
                 <Link to={'/restaurant/' + r._id}>{r.resName} </Link>
             </div>
         )
@@ -45,13 +44,13 @@ class Feature extends Component {
 
 
     render() {
-        const Arrow = ({ text, className }) => {
-            return (
-                <div style={{ fontSize: '3rem' }}
-                    className={className}
-                >{text}</div>
-            );
-        };
+        // const Arrow = ({ text, className }) => {
+        //     return (
+        //         <div style={{ fontSize: '3rem' }}
+        //             className={className}
+        //         >{text}</div>
+        //     );
+        // };
         // const ArrowLeft = Arrow({ text: '<', className: 'arrow-prev' });
         // const ArrowRight = Arrow({ text: '>', className: 'arrow-next' });
 
