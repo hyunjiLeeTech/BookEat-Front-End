@@ -172,7 +172,21 @@ class RestaurantProfile extends Component {
   }
 
   handleDeletePicture(imageId) {
-    ds.deleteImage(imageId);
+    ds.deleteImage(imageId).then(() => {
+      $("#deletePictureModalText")
+      .text("Picture is deleted")
+      .removeClass("alert-warning")
+      .removeClass("alert-danger")
+      .removeClass("alert-success")
+      .addClass("alert-success");
+    }).catch((err) => {
+      $("#deletePictureModalText")
+        .text("Sorry, " + err)
+        .removeClass("alert-warning")
+        .removeClass("alert-danger")
+        .removeClass("alert-success")
+        .addClass("alert-danger");
+    });
     ds.updateResPictures({ id: imageId });
   }
 
@@ -585,34 +599,34 @@ class RestaurantProfile extends Component {
 
   openTime() {
     var open = [
-      <option value="7am">7:00 AM</option>,
-      <option value="730am">7:30 AM</option>,
-      <option value="8am">8:00 AM</option>,
-      <option value="830am">8:30 AM</option>,
-      <option value="9am">9:00 AM</option>,
-      <option value="930am">9:30 AM</option>,
-      <option value="10am">10:00 AM</option>,
-      <option value="1030am">10:30 AM</option>,
-      <option value="11am">11:00 AM</option>,
-      <option value="1130am">11:30 AM</option>,
-      <option value="12pm">12:00 PM</option>,
-      <option value="1230pm">12:30 PM</option>,
-      <option value="1pm">1:00 PM</option>,
-      <option value="130pm">1:30 PM</option>,
-      <option value="2pm">2:00 PM</option>,
-      <option value="230pm">2:30 PM</option>,
-      <option value="3pm">3:00 PM</option>,
-      <option value="330pm">3:30 PM</option>,
-      <option value="4pm">4:00 PM</option>,
-      <option value="430pm">4:30 PM</option>,
-      <option value="5pm">5:00 PM</option>,
-      <option value="530pm">5:30 PM</option>,
-      <option value="6pm">6:00 PM</option>,
-      <option value="630pm">6:30 PM</option>,
-      <option value="7pm">7:00 PM</option>,
-      <option value="730pm">7:30 PM</option>,
-      <option value="8pm">8:00 PM</option>,
-      <option value="830pm">8:30 PM</option>
+      <option key="7am" value="7am">7:00 AM</option>,
+      <option key="730am" value="730am">7:30 AM</option>,
+      <option key="8am" value="8am">8:00 AM</option>,
+      <option key="830am" value="830am">8:30 AM</option>,
+      <option key="9am" value="9am">9:00 AM</option>,
+      <option key="930am" value="930am">9:30 AM</option>,
+      <option key="10am" value="10am">10:00 AM</option>,
+      <option key="1030am" value="1030am">10:30 AM</option>,
+      <option key="11am" value="11am">11:00 AM</option>,
+      <option key="1130am" value="1130am">11:30 AM</option>,
+      <option key="12pm" value="12pm">12:00 PM</option>,
+      <option key="1230pm" value="1230pm">12:30 PM</option>,
+      <option key="1pm" value="1pm">1:00 PM</option>,
+      <option key="130pm" value="130pm">1:30 PM</option>,
+      <option key="2pm" value="2pm">2:00 PM</option>,
+      <option key="230pm" value="230pm">2:30 PM</option>,
+      <option key="3pm" value="3pm">3:00 PM</option>,
+      <option key="330pm" value="330pm">3:30 PM</option>,
+      <option key="4pm" value="4pm">4:00 PM</option>,
+      <option key="430pm" value="430pm">4:30 PM</option>,
+      <option key="5pm" value="5pm">5:00 PM</option>,
+      <option key="530pm" value="530pm">5:30 PM</option>,
+      <option key="6pm" value="6pm">6:00 PM</option>,
+      <option key="630pm" value="630pm">6:30 PM</option>,
+      <option key="7pm" value="7pm">7:00 PM</option>,
+      <option key="730pm" value="730pm">7:30 PM</option>,
+      <option key="8pm" value="8pm">8:00 PM</option>,
+      <option key="830pm" value="830pm">8:30 PM</option>
     ];
 
     return open;
@@ -620,40 +634,40 @@ class RestaurantProfile extends Component {
 
   closeTime() {
     var close = [
-      <option value="9am">9:00 AM</option>,
-      <option value="930am">9:30 AM</option>,
-      <option value="10am"> 10:00 AM</option >,
-      <option value="1030am">10:30 AM</option>,
-      <option value="11am">11:00 AM</option>,
-      <option value="1130am">11:30 AM</option>,
-      <option value="12pm">12:00 PM</option>,
-      <option value="1230pm">12:30 PM</option>,
-      <option value="1pm">1:00 PM</option>,
-      <option value="130pm">1:30 PM</option>,
-      <option value="2pm">2:00 PM</option>,
-      <option value="230pm">2:30 PM</option>,
-      <option value="3pm">3:00 PM</option>,
-      <option value="330pm">3:30 PM</option>,
-      <option value="4pm">4:00 PM</option>,
-      <option value="430pm">4:30 PM</option>,
-      <option value="5pm">5:00 PM</option>,
-      <option value="530pm">5:30 PM</option>,
-      <option value="6pm">6:00 PM</option>,
-      <option value="630pm">6:30 PM</option>,
-      <option value="7pm">7:00 PM</option>,
-      <option value="730pm">7:30 PM</option>,
-      <option value="8pm">8:00 PM</option>,
-      <option value="830pm">8:30 PM</option>,
-      <option value="9pm">9:00 PM</option>,
-      <option value="930pm">9:30 PM</option>,
-      <option value="10pm">10:00 PM</option>,
-      <option value="1030pm">10:30 PM</option>,
-      <option value="11pm">11:00 PM</option>,
-      <option value="1130pm">11:30 PM</option>,
-      <option value="12am">12:00 AM</option>,
-      <option value="1230am">12:30 AM</option>,
-      <option value="1am">1:00 AM</option>,
-      <option value="130am">1:30 AM</option>,
+      <option key="9a" value="9am">9:00 AM</option>,
+      <option key="930a" value="930am">9:30 AM</option>,
+      <option key="10a" value="10am"> 10:00 AM</option >,
+      <option key="1030a" value="1030am">10:30 AM</option>,
+      <option key="11a" value="11am">11:00 AM</option>,
+      <option key="113a" value="1130am">11:30 AM</option>,
+      <option key="12a" value="12pm">12:00 PM</option>,
+      <option key="123a" value="1230pm">12:30 PM</option>,
+      <option key="1p" value="1pm">1:00 PM</option>,
+      <option key="13p" value="130pm">1:30 PM</option>,
+      <option key="2q" value="2pm">2:00 PM</option>,
+      <option key="23q" value="230pm">2:30 PM</option>,
+      <option key="3q" value="3pm">3:00 PM</option>,
+      <option key="333q" value="330pm">3:30 PM</option>,
+      <option key="4q" value="4pm">4:00 PM</option>,
+      <option key="43q" value="430pm">4:30 PM</option>,
+      <option key="5q" value="5pm">5:00 PM</option>,
+      <option key="53a" value="530pm">5:30 PM</option>,
+      <option key="6q" value="6pm">6:00 PM</option>,
+      <option key="332q" value="630pm">6:30 PM</option>,
+      <option key="7q" value="7pm">7:00 PM</option>,
+      <option key="39q" value="730pm">7:30 PM</option>,
+      <option key="8q" value="8pm">8:00 PM</option>,
+      <option key="83q" value="830pm">8:30 PM</option>,
+      <option key="9p" value="9pm">9:00 PM</option>,
+      <option key="93p" value="930pm">9:30 PM</option>,
+      <option key="10p" value="10pm">10:00 PM</option>,
+      <option key="103p" value="1030pm">10:30 PM</option>,
+      <option key="11m" value="11pm">11:00 PM</option>,
+      <option key="1130p" value="1130pm">11:30 PM</option>,
+      <option key="12p" value="12am">12:00 AM</option>,
+      <option key="1230p" value="1230am">12:30 AM</option>,
+      <option key="1kp" value="1am">1:00 AM</option>,
+      <option key="130kp" value="130am">1:30 AM</option>,
     ];
     return close;
   }
@@ -1612,7 +1626,7 @@ class RestaurantProfile extends Component {
 
                       {this.state.resPictures.length > 0 && (this.state.resPictures.map((currValue, index) => {
                         return (
-                          <div id="Images1">
+                          <div key={index + "Images1"} id="Images1">
                             <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} alt="Restaurant"/>
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
@@ -1627,7 +1641,7 @@ class RestaurantProfile extends Component {
                       }))}
                       {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
-                          <div id="Images">
+                          <div id="Images" key={index + "Images"}>
                             <img key={index} className="previewImage" src={url} value={index} onClick={() => this.onSelectImage(index)} alt="Restaurant"/>
                           </div>
                         )

@@ -30,12 +30,10 @@ class Feature extends Component {
 
     renderRestaurant(r) {
         return (
-            <Link to={'/restaurant/' + r._id}>
-                <div style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
-                    <img src={serverAddress + '/getImage/' + r.pictures[0]} height='100%' width='100%' />
-                    <p>{r.resName}</p>
-                </div>
-            </Link>
+            <div key={'featured'+r._id} style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
+                <img src={ serverAddress + '/getImage/'+r.pictures[0]} height='100%' width='100%' />
+                <Link to={'/restaurant/' + r._id}>{r.resName} </Link>
+            </div>
         )
 
     }

@@ -11,6 +11,15 @@ function sleep(ms) {
 }
 
 export default {
+  validateTimeStamp(info){
+    return Axios.post(serverAddress + '/validateResetPasswrodTimestamp', info)
+    .then(res=>{
+      if(res.data.errcode !== 0) throw res.data;
+      return res.data;
+    }).catch(err=>{
+      throw err;
+    })
+  },
   externalSignUp(info) {
     return Axios.post(serverAddress + '/signupExternal', info)
       .then(res => {
@@ -489,11 +498,12 @@ export default {
     });
   },
   createManagerAccount(state) {
-    Axios.post(serverAddress + "/managersignup", state, {
+    return Axios.post(serverAddress + "/managersignup", state, {
       headers: authHeader(),
     })
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode !== 0) throw res.data
+        return res.data
       })
       .catch((err) => {
         console.log(err);
@@ -559,7 +569,8 @@ export default {
     return Axios.post(serverAddress + "/menu/addmenu", state, {
       headers: authHeader()
     }).then((res) => {
-      console.log(res);
+      if (res.data.errcode !== 0) throw res.data;
+      return res.data;
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
@@ -643,6 +654,7 @@ export default {
     return Axios.post(serverAddress + "/discount/editdiscount", state, {
       headers: authHeader()
     }).then((res) => {
+      if (res.data.errcode !== 0) throw res.data
       return res.data;
     }).catch((err) => {
       if (err.response && err.response.status === 401) {

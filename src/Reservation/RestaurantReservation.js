@@ -58,7 +58,6 @@ class RestaurantReservation extends Component {
     }
 
     viewFoodOrder(foodOrderId) {
-        //TODO: Add the food order component 
         console.log(foodOrderId)
         this.setState({ isModalShow: true, modalText: "Loading", modalTitle: 'Food order details' })
         dataService.getFoodOrder(foodOrderId).then((res) => {
@@ -81,8 +80,8 @@ class RestaurantReservation extends Component {
 
     renderPresent() {
         var rows = this.state.upcoming.map((ro, index) =>
-            <tr key={rows} id={ro._id}>
-                <td >
+            <tr key={index} id={ro._id}>
+                <td>
                     {ro.customer.firstName + " " + ro.customer.lastName}
                 </td>
 
@@ -110,7 +109,6 @@ class RestaurantReservation extends Component {
                                 id={ro._id + 'btn'}
                                 value={ro.FoodOrder}
                                 onClick={() => this.viewFoodOrder(this.state.upcoming[index].FoodOrder)}>
-                                {/* TODO:Change onClick to foodorder */}
                                     View Order
                                 </button> : null
                     }
@@ -143,14 +141,26 @@ class RestaurantReservation extends Component {
 
     queryPresent() {
         dataService.getRestaurantUpcomingReservation().then(res => {
+            toast('Upcoming updated')
             this.setState({
                 upcoming: res.reservations,
             })
         })
     }
 
-    renderPast() { //TODO: display reservation status
-        var row = this.state.past.map((r, index) => <tr key={row}>
+    renderPast() { 
+        const renderStatusClassName = (status) => {
+            switch (status) {
+              case 0: return 'alert alert-success'
+              case 1: return 'alert alert-error'
+              case 2: return 'alert alert-info'
+              case 3:
+              case 4: return 'alert alert-warning'
+              default: return ''
+            }
+          }
+        var row = this.state.past.map((r, index) => 
+        <tr key={index} className={renderStatusClassName(r.status)}>
             <td >
                 {r.customer.firstName + " " + r.customer.lastName}
             </td>
@@ -179,7 +189,6 @@ class RestaurantReservation extends Component {
                         <button type="button" className="btn btn-primary btn-sm"
                             id={r._id + 'btn'}
                             onClick={() => this.viewFoodOrder(this.state.past[index].FoodOrder)}>
-                            {/* TODO:Change onClick to foodorder */}
                     View Order
                 </button> : null
                 }</td>
@@ -190,6 +199,7 @@ class RestaurantReservation extends Component {
     querypast() {
         dataService.getRestaurantPastReservation().then(res => {
             console.log(res.reservations);
+            toast('History updated')
             this.setState({
                 past: res.reservations,
             })
@@ -204,9 +214,18 @@ class RestaurantReservation extends Component {
         e.preventDefault();
     }
 
+    queryItemsInfinite(){
+        setTimeout(()=>{
+            this.querypast();
+            this.queryPresent();
+            this.queryItemsInfinite();
+        }, 10000)
+    }
+
     componentWillMount() {
         this.querypast();
         this.queryPresent();
+        this.queryItemsInfinite();
     }
 
     render() {
@@ -259,7 +278,7 @@ class RestaurantReservation extends Component {
 
                         {/* Start Past Reservations */}
                         <div id="pastRes" className="tab-pane fade " role="tabpanel" aria-labelledby="pastRes">
-                            <table className="table table-striped">
+                            <table className="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">Customer</th>
