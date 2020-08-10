@@ -50,6 +50,7 @@ class ResetPassword extends Component {
             isLoading: false,
             accountId: this.props.match.params.id,
             timestamp: this.props.match.params.timestamp,
+            errmsg: null,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -106,6 +107,17 @@ class ResetPassword extends Component {
     };
 
     componentDidMount() {
+        this.setState({isLoading: true})
+        dataService.validateTimeStamp({accountId: this.state.accountId, timestamp: this.state.timestamp})
+        .catch(err=>{
+            if(err.errcode && err.errcode === 3) this.setState({resultsErr: true, errmsg: 'This link is not avaiable anymore.'})
+            else if(err.errcode && err.errcode === 4) this.setState({resultsErr: true, errmsg: 'This link has expired.'})
+            else if(err.errcode && err.errcode === 2) this.setState({resultsErr: true, errmsg: 'Failed to validate the link.'})
+            else if(err.errcode && err.errcode === 1) this.setState({resultsErr: true, errmsg: 'This link is not validated.'})
+            else this.setState({resultsErr: true})
+        }).finally(()=>{
+            this.setState({isLoading: false})
+        })
         var t2 = document.getElementById("newPassword");
         t2.onkeypress = function (e) {
             if (e.keyCode === 32) return false;
@@ -122,7 +134,7 @@ class ResetPassword extends Component {
             <MainContainer>
                 {this.state.resultsErr
                     ?
-                    FullscreenError("An error occured, please try again later")
+                    FullscreenError(this.state.errmsg ? this.state.errmsg : "An error occured, please try again later")
                     :
                     null
                 }

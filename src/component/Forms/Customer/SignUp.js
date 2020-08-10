@@ -157,7 +157,7 @@ class SignUp extends Component {
         Axios.post(serverAddress + "/customersignup", this.state).then(res => {
           console.log(res)
           if (res.data.errcode === 0) {
-            $("#signResultText").text("Congrats, check your email to confirm that you are human").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+            $("#signResultText").text("Congrats, Please Login").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
               .addClass("alert-success");
           } else {
             $("#signResultText").text("Sorry, " + res.data.errmsg).removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")

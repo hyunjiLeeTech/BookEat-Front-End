@@ -11,6 +11,15 @@ function sleep(ms) {
 }
 
 export default {
+  validateTimeStamp(info){
+    return Axios.post(serverAddress + '/validateResetPasswrodTimestamp', info)
+    .then(res=>{
+      if(res.data.errcode !== 0) throw res.data;
+      return res.data;
+    }).catch(err=>{
+      throw err;
+    })
+  },
   externalSignUp(info) {
     return Axios.post(serverAddress + '/signupExternal', info)
       .then(res => {

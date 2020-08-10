@@ -156,7 +156,8 @@ class Login extends Component {
     }).catch(err=>{
       if(err.errcode && Number.parseInt(err.errcode) === 1)
         toast('Failed to validate the external account. Please refresh the page and try agin.')
-      else toast('error, please try again later.')
+      else if(err.errcode && Number.parseInt(err.errcode) === 2) toast('Please sign in first')
+        else toast('error, please try again later.')
       console.log(err)
     })
   }

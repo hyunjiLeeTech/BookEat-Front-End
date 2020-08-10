@@ -215,7 +215,7 @@ class Menu extends Component {
         this.setState({ isLoading: true })
         var menuImageId = ""
 
-        if (state.IsImage) {
+        if (state.isImage) {
             const formData = new FormData();
             formData.append('menuImage', state.image);
             const config = {
