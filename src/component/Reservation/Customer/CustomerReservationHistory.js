@@ -140,7 +140,7 @@ class CustomerReservationHistory extends Component {
 
     return this.state.reservations.map((reservation, index, reservations) => {
 
-      const { _id, dateTime, status, reserveTime, numOfPeople, restaurant } = reservation
+      const { _id, dateTime, status, reserveTime, numOfPeople, restaurant, comments } = reservation
       return (
         <tr key={_id} className={renderStatusClassName(status)}>
           {
@@ -150,6 +150,7 @@ class CustomerReservationHistory extends Component {
           <td>{moment(dateTime).format('YYYY-MM-DD HH:mm')}</td>
           <td><Link to={'/restaurant/' + restaurant._id}>{restaurant.resName}</Link> </td>
           <td>{numOfPeople}</td>
+          <td>{comments}</td>
 
           {
             reservations[index].buttonDisabled ?
@@ -159,9 +160,9 @@ class CustomerReservationHistory extends Component {
 
                 {renderCancelButton(reservations[index])}
                 {reservations[index].status === 2 ? <span>&nbsp;</span> : null}
-                {reservations[index].status === 2 ? <Link className='btn btn-warning' to={'customerreserve/' + restaurant._id + '/' + 
-                moment(dateTime).format('YYYY-MM-DD') + '/' + moment(dateTime).format('HH:mm') + '/' + numOfPeople +'/true/' + _id 
-              }>Edit</Link> : null}
+                {reservations[index].status === 2 ? <Link className='btn btn-warning' to={'customerreserve/' + restaurant._id + '/' +
+                  moment(dateTime).format('YYYY-MM-DD') + '/' + moment(dateTime).format('HH:mm') + '/' + numOfPeople + '/true/' + _id
+                }>Edit</Link> : null}
                 <span>&nbsp;</span>
                 {
                   reservations[index].FoodOrder ?
@@ -205,6 +206,7 @@ class CustomerReservationHistory extends Component {
                   <th>Date</th>
                   <th>Restaurant</th>
                   <th># of Visitor</th>
+                  <th>Comments</th>
                   <th>Operation</th>
                   <th>Reserve date</th>
                 </tr>
@@ -215,7 +217,7 @@ class CustomerReservationHistory extends Component {
             </table>
           </div>
         </form>
-        
+
         <Modal show={this.state.isModalShow} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.modalTitle} </Modal.Title>
@@ -227,50 +229,6 @@ class CustomerReservationHistory extends Component {
                         </Button>
           </Modal.Footer>
         </Modal>
-
-
-        {/* DeleteREservationModal */}
-        <div
-          className="modal fade"
-          id="DeleteResultModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="DeleteResultModal"
-          aria-hidden="true"
-        >
-
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="DeleteResultModal">
-                  Cancel Reservation
-                            </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <p className="alert alert-warning" id="DeleteResultModalText">
-                  Please Wait...
-                                 </p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-dismiss="modal"
-                >
-                  Close
-                                </button>
-              </div>
-            </div>
-          </div>
-        </div>
 
       </Maincontainer>
     )

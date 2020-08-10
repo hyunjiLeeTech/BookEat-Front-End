@@ -156,6 +156,11 @@ class Reserve extends Component {
             var value = e.target.value;
             this.setState({ numofpeople: value })
         }
+        const comments = (e) => {
+            e.preventDefault();
+            var value = e.target.value;
+            this.setState({commets: value})
+        }
         return (
             <form onSubmit={this.handleSubmit} className="needs-validation" noValidate>
                 <div className="page-header text-left" style={{ marginTop: '10%' }}>
@@ -173,8 +178,6 @@ class Reserve extends Component {
                     <div className="form-group row">
                         <label htmlFor="numofpeople" className="col-sm-3 col-form-label" > Number of people </label>
                         <div className="col-sm-6">
-                            {/* <input type="number" id="numofpeople" name="numofpeople" placeholder="Number of People"
-                                className='form-control' required value={this.state.numofpeople} onChange={numofpeopleChange} /> */}
                             <select
                                 className="custom-select"
                                 id="numofpeople"
@@ -214,6 +217,19 @@ class Reserve extends Component {
                         <label htmlFor="time" className="col-sm-3 col-form-label" > Time </label>
                         <div className="col-sm-6">
                             {this.renderTimeOption(this.state.date)}
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label htmlFor="comments" className="col-sm-3 col-form-label" > Comments </label>
+                        <div className="col-sm-6">
+                        <textarea
+                            className="col-sm-12"
+                            rows="4"
+                            id="comments"
+                            name="comments"
+                            defaultValue={this.state.comments}
+                            onChange={comments}
+                        ></textarea>
                         </div>
                     </div>
                     {this.renderMenuItems(this.state.menuItems, this.state.seletcedMenuItemsFromReservation)}
