@@ -194,7 +194,9 @@ class Menu extends Component {
         this.setState({ isLoading: true })
         var menuImageId = ""
 
-        if (state.IsImage) {
+        console.log(state);
+
+        if (state.isImage) {
             const formData = new FormData();
             formData.append('menuImage', state.image);
             const config = {
@@ -245,6 +247,7 @@ class Menu extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(this.state);
         if (formValid(this.state)) {
             this.addMenuWithImage(this.state);
 
@@ -362,6 +365,22 @@ class Menu extends Component {
                                     <option value="Drint"> Drink</option>
                                 </select>
                             </div>
+                            <div className="form-inline" >
+                                <select className="form-conrol"
+                                    id="menuAllergy"
+                                    name="menuAllergy"
+                                    defaultValue={this.state.menus[index].allergy}
+                                    onChange={(e) => this.handleChangeInList(e, index)}
+                                    disabled={(!this.state.menus[index].contenteditable)}
+                                    required
+                                >
+                                    <option value="">Please select the allergy alert</option>
+                                    <option value="No Nut">No Nut</option>
+                                    <option value="Nut">Nut</option>
+                                    <option value="Seafood">Seafood</option>
+                                    <option value="Dairy">Dairy</option>
+                                </select>
+                            </div>
                             <div className="form-inline">
                                 <textarea row="3" id={"menuDescript" + index} name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
                                     className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />
@@ -470,6 +489,22 @@ class Menu extends Component {
                                             <option value="Drint"> Drink</option>
                                         </select>
 
+                                    </div>
+                                    <div className="form-inline" >
+                                        <label htmlFor="allergy" className="col-sm-2 border-0">Allergy</label>
+                                        <select className="form-conrol"
+                                            id="menuAllergy"
+                                            name="menuAllergy"
+                                            value={this.state.menuAllergy}
+                                            onChange={this.handleChange}
+                                            required
+                                        >
+                                            <option value="">Please select the allergy alert</option>
+                                            <option value="No Nut">No Nut</option>
+                                            <option value="Nut">Nut</option>
+                                            <option value="Seafood">Seafood</option>
+                                            <option value="Dairy">Dairy</option>
+                                        </select>
                                     </div>
                                     <div className="form-inline">
                                         <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
