@@ -61,9 +61,9 @@ class App extends Component {
     try {
       console.log('userType')
       console.log(userType)
-      if (userType == 1) {
+      if (userType === 1) {
         user = await ds.getCustomerInformation();
-      } else if (userType == 2) {
+      } else if (userType === 2) {
         user = await ds.getRestaurantInformation();
       } else if (userType === 3){
         user = await ds.getManagerInformation();
@@ -84,9 +84,9 @@ class App extends Component {
         const userType = usr.user.userTypeId;
         u = await this.queryUserInfo(userType);
         if (u) {
-          if (userType == 1) {
+          if (userType === 1) {
             $("#user-status-indicator").text(u.firstName + " " + u.lastName);
-          } else if (userType == 2) {
+          } else if (userType === 2) {
             $("#user-status-indicator").text(u.resName);
           }
         }
