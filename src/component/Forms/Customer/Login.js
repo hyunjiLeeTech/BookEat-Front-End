@@ -4,25 +4,19 @@ import MainContainer from "../../Style/MainContainer";
 import "./SignUp.js";
 import Parser from "html-react-parser";
 import $ from "jquery";
-// import $, { data } from "jquery";
-// import FaceBook from "../../../Image/FACEBOOK.PNG";
-// import Google from "../../../Image/google.PNG";
-// import Axios from "axios";
-// import serverAddress from "../../../Services/ServerUrl";
 import authService from "../../../Services/AuthService";
-// import authHeader from "../../../Services/authHeader";
 import sha256 from "crypto-js/sha256";
-//import FaceBook from "../../../Image/FACEBOOK.PNG";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import ds from "../../../Services/dataService";
 import FullscreenError from '../../Style/FullscreenError';
-import Axios from "axios";
 import { toast } from "react-toastify";
-import dataService from "../../../Services/dataService";
 import AuthService from "../../../Services/AuthService";
+
 //Validation
-const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
+const regExpEmail = RegExp(
+  /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
+);
 
 const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
