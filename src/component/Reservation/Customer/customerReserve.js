@@ -471,7 +471,7 @@ class Reserve extends Component {
                                 </td>
                                 <td>
                                     <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                        <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null}></img>
+                                        <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null} alt="Menu"></img>
                                     </div>
                                 </td>
                             </tr>
