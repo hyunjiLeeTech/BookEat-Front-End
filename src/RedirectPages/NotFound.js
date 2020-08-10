@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MainContainer from '../component/Style/MainContainer';
-import Daily from '../Home/Daily';
+import Daily from '../component/Home/Daily';
 
 
 class NotFound extends Component {

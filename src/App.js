@@ -1,45 +1,44 @@
 import React, { Component } from "react";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import SignUp from "./component/Forms/Customer/SignUp";
-import Home from "./Home/Home";
+import Home from "./component/Home/Home";
 
 import RestaurantSignUp from "./component/Forms/Restaurant/RestaurantSignUp";
 import NavBar from "./component/Style/NavBar";
 import Footer from "./component/Style/Footer";
-import RestaurantProfile from "./Profile/Restaurant/RestaurantProfile";
-import Manager from "./Profile/Restaurant/Manager";
+import RestaurantProfile from "./component/Profile/Restaurant/RestaurantProfile";
+import Manager from "./component/Profile/Manager/Manager";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 
 import Login from "./component/Forms/Customer/Login";
 import ForgotPassword from "./component/Forms/Customer/ForgotPassword";
-import ViewCustomerProfile from "./Profile/Customer/ViewCustomerProfile";
+import ViewCustomerProfile from "./component/Profile/Customer/ViewCustomerProfile";
 import ChangePassword from "./component/Forms/Customer/ChangePassword";
 import Logout from './component/Forms/Logout';
 import Layout from './component/RestaurantLayout/Layout';
-import CustomerReservationHistory from './Reservation/Customer/CustomerReservationHistory'
-import CustomerReviewHistory from './Review/Customer/CustomerReviewHistory'
-import Menu from './Menu/Menu'
+import CustomerReservationHistory from './component/Reservation/Customer/CustomerReservationHistory'
+import CustomerReviewHistory from './component/Review/Customer/CustomerReviewHistory'
+import Menu from './component/Menu/Menu'
 
 import $ from 'jquery'
 
-import authHeader from "./Services/authHeader";
 import ds from "./Services/dataService";
-import ManagerProfile from "./Profile/Manager/ManagerProfile";
+import ManagerProfile from "./component/Profile/Manager/ManagerProfile";
 import EmailConfirmation from "./RedirectPages/EmailConfirmation";
 import NotFound from "./RedirectPages/NotFound";
 import authService from "./Services/AuthService";
-import RestaurantReservation from "./Reservation/RestaurantReservation";
-import CustomerReserve from './Reservation/customerReserve';
+import RestaurantReservation from "./component/Reservation/Restaurant/RestaurantReservation";
+import CustomerReserve from './component/Reservation/Customer/customerReserve';
 
-import Restaurant from './Restaurant/restaurant'
-import SearchResult from "./Home/SearchResult";
-import Daily from "./Home/Daily";
-import Favorite from "./Home/Favorite";
-import Feature from "./Home/Feature";
+import Restaurant from './component/Restaurant/restaurant'
+import SearchResult from "./component/Home/SearchResult";
+import Daily from "./component/Home/Daily";
+import Favorite from "./component/Home/Favorite";
+import Feature from "./component/Home/Feature";
 
-import { ToastContainer, toast, cssTransition } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorPage from "./RedirectPages/Error";
 import ResetPassword from "./RedirectPages/ResetPassword";
