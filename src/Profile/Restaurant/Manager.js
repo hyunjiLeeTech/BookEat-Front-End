@@ -113,51 +113,52 @@ class RestaurantProfile extends Component {
     });
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
       this.state.passwordMan = sha256(this.state.passwordMan).toString(); //hashing password
-      ds.createManagerAccount(this.state);
+      try {
+        await ds.createManagerAccount(this.state);
+
+        $("#manSignResultText")
+          .text("Manager account is created")
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-success");
+      } catch (err) {
+        $("#manSignResultText")
+          .text("Sorry, " + err.errmsg? err.errmsg : 'unkown error')
+          .removeClass("alert-warning")
+          .removeClass("alert-danger")
+          .removeClass("alert-success")
+          .addClass("alert-danger");
+      }
+
     } else {
       console.log("Form is invalid!");
     }
-    try{
-      $("#manSignResultText")
-      .text("Manager account is created")
-      .removeClass("alert-warning")
-      .removeClass("alert-danger")
-      .removeClass("alert-success")
-      .addClass("alert-success");
 
-    }catch(err){
-      $("#manSignResultText")
-      .text("Sorry, " + err)
-      .removeClass("alert-warning")
-      .removeClass("alert-danger")
-      .removeClass("alert-success")
-      .addClass("alert-danger");
-
-    }
   };
 
   handleDeleteManager = (manId) => {
     this.state.deleteManId = manId;
     ds.deleteManagerAccount(this.state);
-    try{
+    try {
       $("#deleteResultText")
-          .text("Manager account is deleted")
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-success");
-    }catch(err){
+        .text("Manager account is deleted")
+        .removeClass("alert-warning")
+        .removeClass("alert-danger")
+        .removeClass("alert-success")
+        .addClass("alert-success");
+    } catch (err) {
 
       $("#deleteResultText")
-          .text("Sorry, " + err)
-          .removeClass("alert-warning")
-          .removeClass("alert-danger")
-          .removeClass("alert-success")
-          .addClass("alert-danger");
+        .text("Sorry, " + err)
+        .removeClass("alert-warning")
+        .removeClass("alert-danger")
+        .removeClass("alert-success")
+        .addClass("alert-danger");
 
     }
   };
@@ -430,9 +431,9 @@ class RestaurantProfile extends Component {
         </thead>
         <tbody>
           {this.renderManagerInfo()}
-         </tbody>
-         </table>
-         
+        </tbody>
+      </table>
+
     );
   }
 
@@ -464,47 +465,47 @@ class RestaurantProfile extends Component {
         </div>
         <br />
         {this.renderManager()}
-         {/* Delete Modal */}
-         <div
-            className="modal fade"
-            id="deleteManagerModal"
-            tabIndex="-1"
-            role="dialog"
-            aria-labelledby="deleteManagerLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="deleteManagerModalLabel">
-                    Delete Manager
+        {/* Delete Modal */}
+        <div
+          className="modal fade"
+          id="deleteManagerModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="deleteManagerLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="deleteManagerModalLabel">
+                  Delete Manager
                   </h5>
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div className="modal-body">
-                  <p className="alert alert-warning" id="deleteResultText">
-                    Please Wait...
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p className="alert alert-warning" id="deleteResultText">
+                  Please Wait...
                   </p>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    data-dismiss="modal"
-                  >
-                    Close
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-dismiss="modal"
+                >
+                  Close
                   </button>
-                </div>
               </div>
             </div>
           </div>
+        </div>
       </MainContainer>
     );
   }

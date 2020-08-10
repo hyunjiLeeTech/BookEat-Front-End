@@ -5,7 +5,9 @@ import $ from "jquery";
 import MainContainer from "../component/Style/MainContainer";
 import FullscreenError from '../component/Style/FullscreenError'
 import FullScrrenLoading from '../component/Style/FullscreenLoading';
-
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import { toast } from 'react-toastify';
 const regExpNumbers = RegExp(/^[0-9]*$/);
 
 const formValid = ({ isError, ...rest }) => {
@@ -42,12 +44,19 @@ class Discount extends Component {
             isError: {
                 discdescription: "&#160;",
                 promdescription: "&#160;"
+            },
+            modal: {
+                isModalShow: false,
+                modalTitle: '',
+                modalText: '',
+                className: '',
             }
         };
         this.handleAddDiscount = this.handleAddDiscount.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeInList = this.handleChangeInList.bind(this);
         this.discountEditButton = this.discountEditButton.bind(this);
+        this.setModal = this.setModal.bind(this);
     }
 
     handleChange(e) {
@@ -74,6 +83,17 @@ class Discount extends Component {
         });
     }
 
+    setModal(isShown, title, text, className) {
+        this.setState({
+            modal: {
+                isModalShow: isShown,
+                modalTitle: title,
+                modalText: text,
+                className: className ? className : '',
+            }
+        })
+    }
+
     handleChangeInList(e, index) {
         e.preventDefault();
         const { name, value } = e.target;
@@ -93,7 +113,7 @@ class Discount extends Component {
             default:
                 break;
         }
-        this.state.discounts[index][e.target.id] = e.target.value;
+        this.state.discounts[index]['percent'] = e.target.value;
         this.forceUpdate();
     }
 
@@ -103,8 +123,8 @@ class Discount extends Component {
             percent: this.state.discdescription,
             descript: this.state.promdescription
         }
-      
-            ds.addDiscount(discount).then(() => {
+
+        ds.addDiscount(discount).then(() => {
             this.queryDiscounts();
             $("#addDiscountText")
                 .text("Disccount is added")
@@ -120,7 +140,7 @@ class Discount extends Component {
                 .removeClass("alert-success")
                 .addClass("alert-danger");
         });
-        
+
     }
 
     componentWillMount() {
@@ -132,7 +152,7 @@ class Discount extends Component {
             isLoading: true
         })
         ds.getDiscounts().then((res) => {
-            
+
             this.setState({
                 discounts: res.discounts
             })
@@ -156,14 +176,23 @@ class Discount extends Component {
         })
 
         this.setState({
-            isLoading:false
+            isLoading: false
         })
     }
 
     discountEditButton(index) {
+        console.log('function called')
         this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
         if (!this.state.discounts[index].contentTable) {
-            ds.editDiscount(this.state.discounts[index]);
+            this.setModal(true, 'Please Wait', 'Please Wait..', 'alert alert-warning')
+            console.log(this.state.discounts[index])
+            ds.editDiscount(this.state.discounts[index]).then((res) => {
+                console.log(res)
+                this.setModal(true, 'Success', 'Successed', 'alert alert-success')
+            }).catch(err => {
+                this.setModal(true, 'Error', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger')
+                console.log(err)
+            })
         }
 
         this.callModal(index);
@@ -213,10 +242,9 @@ class Discount extends Component {
                     <th>
 
                         <input type="text" id={"discdescription" + index} name="discdescription"
-                            defaultValue={this.state.discounts[index].percent} disabled={(!this.state.discounts[index].contentTable)}
+                            value={this.state.discounts[index].percent} 
+                            disabled={(!this.state.discounts[index].contentTable)}
                             onChange={(e) => this.handleChangeInList(e, index)} />
-
-
                     </th>
                     <th>
                         <textarea
@@ -259,6 +287,17 @@ class Discount extends Component {
 
     render() {
         const { isError } = this.state;
+        const modal = this.state.modal
+        const handleClose = () => {
+            this.setState({
+                modal: {
+                    isModalShow: false,
+                    modalTitle: modal.modalTitle,
+                    modalText: modal.modalText,
+                    className: modal.className,
+                }
+            })
+        }
         return (
             <MainContainer>
                 {this.state.resultsErr
@@ -464,52 +503,20 @@ class Discount extends Component {
                         </div>
                     </div>
 
-
-
-                    <div
-                        className="modal fade"
-                        id="DiscountEditResultModal"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-labelledby="DiscountEditResultModal"
-                        aria-hidden="true"
-                    >
-
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="DiscountEditResultModal">
-                                        Edit Discount
-                            </h5>
-                                    <button
-                                        type="button"
-                                        className="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                    >
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    <p className="alert alert-warning" id="DiscountEditResultModalText">
-                                        Please Wait...
-                  </p>
-                                </div>
-                                <div className="modal-footer">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        data-dismiss="modal"
-                                    >
-                                        Close
-                  </button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
                 </div>
+
+                <Modal show={modal.isModalShow} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{modal.modalTitle} </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body className={modal.className}>{modal.modalText}</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
             </MainContainer>
         )
     }
