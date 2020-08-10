@@ -97,7 +97,7 @@ class RestaurantProfile extends Component {
             ? "&#160;"
             : "Atleast 2 character required";
         break;
-      case "password":
+      case "passwordMan":
         isError.passwordMan = regExpPassword.test(value)
           ? "&#160;"
           : "At least 6 characters required";
