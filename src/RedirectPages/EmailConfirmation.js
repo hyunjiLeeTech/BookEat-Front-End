@@ -5,10 +5,6 @@ import { Link } from "react-router-dom";
 import ds from "../Services/dataService"
 
 class EmailConfirmation extends Component {
-
-    //TODO: email confirmation
-    //use: this.props.match.params.id
-
     constructor(props){
         super(props)
         this.state = {
