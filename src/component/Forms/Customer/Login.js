@@ -151,13 +151,13 @@ class Login extends Component {
   //Google Log In
   login(response) {
     console.log(response)
-    AuthService.loginExternal(1, response.accessToken).then(res=>{
+    AuthService.loginExternal(1, response.accessToken).then(res => {
       window.location.href = '/'
-    }).catch(err=>{
-      if(err.errcode && Number.parseInt(err.errcode) === 1)
+    }).catch(err => {
+      if (err.errcode && Number.parseInt(err.errcode) === 1)
         toast('Failed to validate the external account. Please refresh the page and try agin.')
-      else if(err.errcode && Number.parseInt(err.errcode) === 2) toast('Please sign in first')
-        else toast('error, please try again later.')
+      else if (err.errcode && Number.parseInt(err.errcode) === 2) toast('Please sign up first')
+      else toast('error, please try again later.')
       console.log(err)
     })
   }
@@ -224,11 +224,12 @@ class Login extends Component {
   // Facebook
   responseFacebook(response) {
     console.log(response);
-    AuthService.loginExternal(2, response.accessToken).then(res=>{
+    AuthService.loginExternal(2, response.accessToken).then(res => {
       window.location.href = '/'
-    }).catch(err=>{
-      if(err.errcode && Number.parseInt(err.errcode) === 1)
+    }).catch(err => {
+      if (err.errcode && Number.parseInt(err.errcode) === 1)
         toast('Failed to validate the external account. Please refresh the page and try agin.')
+      else if (err.errcode && Number.parseInt(err.errcode) === 2) toast('Please sign up first')
       else toast('error, please try again later.')
       console.log(err)
     })
@@ -239,12 +240,12 @@ class Login extends Component {
 
     return (
       <MainContainer>
-         {this.state.resultsErr
-                    ?
-                    FullscreenError("An error occured, please try again later")
-                    :
-                    null
-                }
+        {this.state.resultsErr
+          ?
+          FullscreenError("An error occured, please try again later")
+          :
+          null
+        }
         <div className="card">
           <div className="card-body">
             <div className="page-header text-center">
@@ -269,16 +270,16 @@ class Login extends Component {
                     onFailure={this.handleLogoutFailure}
                   ></GoogleLogout>
                 ) : (
-                  <GoogleLogin
-                    clientId={CLIENT_ID}
-                    buttonText="Login"
-                    onSuccess={this.login}
-                    autoLoad={false}
-                    onFailure={this.handleLoginFailure}
-                    cookiePolicy={"single_host_origin"}
-                    responseType="code,token"
-                  />
-                )}
+                    <GoogleLogin
+                      clientId={CLIENT_ID}
+                      buttonText="Login"
+                      onSuccess={this.login}
+                      autoLoad={false}
+                      onFailure={this.handleLoginFailure}
+                      cookiePolicy={"single_host_origin"}
+                      responseType="code,token"
+                    />
+                  )}
                 {this.state.accessToken ? (
                   <h5>
                     Your Access Token: <br />
