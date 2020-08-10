@@ -173,22 +173,6 @@ class Menu extends Component {
         let menuContents = await ds.getMenus();
         menuContents = menuContents.menus;
 
-        try {
-            $("#munuAddResultText")
-                .text("Menu is added")
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-success");
-        } catch (err) {
-            $("#munuAddResultText")
-                .text("Sorry, " + err)
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-danger");
-        }
-
         if (typeof menuContents !== 'undefined') {
 
             for (var i = 0; i < menuContents.length; i++) {
@@ -286,21 +270,11 @@ class Menu extends Component {
 
         ds.deleteMenu(menu).then((res) => {
             this.queryMenus();
-            $("#DeleteResultModalText")
-                .text("Menu item is deleted")
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-success");
+            this.setModal(true, 'Success', 'Successfully deleted menu', 'alert alert-success')
 
         }).catch(
             err => {
-                $("#DeleteResultModalText")
-                    .text("Sorry, " + err)
-                    .removeClass("alert-warning")
-                    .removeClass("alert-danger")
-                    .removeClass("alert-success")
-                    .addClass("alert-danger");
+                this.setModal(true, 'Failed', 'Failed to delete menu item', 'alert alert-danger')
             })
 
     }
@@ -569,48 +543,6 @@ class Menu extends Component {
                     </tbody>
                 </table>
 
-                {/* addMenuModal */}
-                <div
-                    className="modal fade"
-                    id="menuAddResultModal"
-                    tabIndex="-1"
-                    role="dialog"
-                    aria-labelledby="menuAddResultModalLabel"
-                    aria-hidden="true"
-                >
-
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="menuAddResultModalLabel">
-                                    Add Menu
-                            </h5>
-                                <button
-                                    type="button"
-                                    className="close"
-                                    data-dismiss="modal"
-                                    aria-label="Close"
-                                >
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <p className="alert alert-warning" id="munuAddResultText">
-                                    Please Wait...
-                  </p>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-dismiss="modal"
-                                >
-                                    Close
-                  </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <Modal show={modal.isModalShow} onHide={handleClose}>
                     <Modal.Header closeButton>
