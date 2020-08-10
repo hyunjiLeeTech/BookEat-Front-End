@@ -5,61 +5,44 @@ import { Link } from 'react-router-dom'
 // import CAFE from '../Image/CAFE.jpg'
 import Star from '../component/Style/Stars'
 import ScrollMenu from 'react-horizontal-scrolling-menu';
+import dataService from '../Services/dataService';
+import { toast } from 'react-toastify';
+import serverAddress from '../Services/ServerUrl';
 
 
 class Feature extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            rastaurants: [
-                { id: "", resName: "Book2", resPicture: "", starAverage: 0.0 },
-                // for testing              
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 5.0 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 4.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.0 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 3.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: .5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
-                { id: "", resName: "Book", resPicture: "CAFE", starAverage: 2.5 },
+            restaruants: [
             ]
         }
-
+        dataService.getFeatured().then(res=>{
+            this.setState({restaruants: res.restaruants})
+            console.log(this.state)
+        }).catch(err=>{
+            toast('error', {type: 'error'})
+        })
+        
     }
 
 
 
     renderRestaurant(r) {
         return (
-            <div style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
-
-                <img src={r.resPicture} height='100%' width='100%' />
-                <Link to={'/restaurant/' + r._id}>{r.resName} </Link>
-                <Star isClickAble={false} type='splitedBar' stars={r.starAverage} style={{ margin: '1rem', border: '1px solid #000', width: '10rem', height: '15rem' }} />
-
-            </div>
+            <Link to={'/restaurant/' + r._id}>
+                <div style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
+                    <img src={serverAddress + '/getImage/' + r.pictures[0]} height='100%' width='100%' />
+                    <p>{r.resName}</p>
+                </div>
+            </Link>
         )
 
     }
 
     renderRestaurants() {
         var tr = [];
-        for (var r of this.state.rastaurants) {
+        for (var r of this.state.restaruants) {
             tr.push(this.renderRestaurant(r))
         }
         return tr;

@@ -8,10 +8,9 @@ export default function () {
     return (
         <ul className="navbar-nav navbar-right">
             <li className="nav-item">
-                <a className="nav-link disabled" id="user-status-indicator"></a>
+                <label className="nav-link disabled" id="user-status-indicator"></label>
             </li>
             <li className="nav-item">
-                {/* <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a> */}
                 <NavLink to="/profile" className="nav-link">{ user === null ? "Unknown user " : user.user.email}</NavLink>
             </li>
             <li className="nav-item">

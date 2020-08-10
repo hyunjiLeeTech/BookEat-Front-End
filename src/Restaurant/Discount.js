@@ -19,7 +19,6 @@ const formValid = ({ isError, ...rest }) => {
     });
 
     Object.values(rest).forEach((val) => {
-        //console.log(rest);
         if (val === null) {
             isValid = false;
         } else {
@@ -104,10 +103,9 @@ class Discount extends Component {
             percent: this.state.discdescription,
             descript: this.state.promdescription
         }
-
-        ds.addDiscount(discount).then(() => {
+      
+            ds.addDiscount(discount).then(() => {
             this.queryDiscounts();
-            console.log("add discount success")
             $("#addDiscountText")
                 .text("Disccount is added")
                 .removeClass("alert-warning")
@@ -122,6 +120,7 @@ class Discount extends Component {
                 .removeClass("alert-success")
                 .addClass("alert-danger");
         });
+        
     }
 
     componentWillMount() {
@@ -209,7 +208,6 @@ class Discount extends Component {
 
     renderDataDiscount() {
         return this.state.discounts.map((discount, index) => {
-            const { id, discdescription, promdescription } = discount;
             return (
                 <tr key={index}>
                     <th>

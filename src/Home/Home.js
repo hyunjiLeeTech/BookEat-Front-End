@@ -69,7 +69,7 @@ class Home extends Component {
                     <br></br>
                     <div className="card" >
                         <div className="card-body">
-                            <h5>Favorite Restaurant</h5>
+                            <h5>BookEat's Favorite Restaurant</h5>
                             <Favorite />
                         </div>
                     </div>

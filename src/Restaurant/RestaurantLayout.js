@@ -120,9 +120,9 @@ class RestaurantLayout extends Component {
             var trr =
                 <tr key={index}>
                     <td>{tables[index].rid}</td>
-                    <td><input type='checkbox' name='open' onClick={(e) => btnClick(e, tables[index])} checked={tables[index].status ? 'checked' : ''}></input></td>
+                    <td><input type='checkbox' name='open' onChange={(e) => btnClick(e, tables[index])} checked={tables[index].status ? 'checked' : ''}></input></td>
                     <td><input type='number' name='size' onChange={(e) => btnClick(e, tables[index])} value={tables[index].size} /></td>
-                    <td>{<input type='checkbox' name='window' onClick={(e) => btnClick(e, tables[index])} checked={tables[index].isNearWindow ? 'checked' : ''}></input>}</td>
+                    <td>{<input type='checkbox' name='window' onChange={(e) => btnClick(e, tables[index])} checked={tables[index].isNearWindow ? 'checked' : ''}></input>}</td>
                     {
                         tables[index].buttonDisabled ?
                             <td>
@@ -189,13 +189,8 @@ class RestaurantLayout extends Component {
         return (
             <div>
                 {this.state.isLoading ? FullScrrenLoading({ type: 'balls', color: '#000' }) : null}
-
-                <p> Insert layout here
                 <Layout tables={this.state.tables} selectedTableId={id => console.log(id)} />
-                    {/* {JSON.stringify(this.state.tables)}
-                    <button onClick={this.addTable} >add</button>
-                    <button onClick={this.delTable} >del</button> */}
-                </p>
+
 
                 <table className="table table table-striped">
                     <thead>
@@ -213,9 +208,9 @@ class RestaurantLayout extends Component {
 
                         <tr>
                             <td>-</td>
-                            <td><input type='checkbox' onClick={click} name='open' checked={t.isOpen ? 'checked' : ''}></input></td>
+                            <td><input type='checkbox' onChange={click} name='open' checked={t.isOpen ? 'checked' : ''}></input></td>
                             <td><input type='number' onChange={click} name='size' value={t.size} /></td>
-                            <td><input type='checkbox' onClick={click} name='window' checked={t.isNearWindow ? 'checked' : ''}></input></td>
+                            <td><input type='checkbox' onChange={click} name='window' checked={t.isNearWindow ? 'checked' : ''}></input></td>
                             <td><Button className='btn btn-Primary' onClick={click} name='add' disabled={t.buttonDisabled ? "disabled" : ''}>{t.buttonDisabled ? "Please Wiat" : 'Add'}</Button></td>
                         </tr>
                     </tbody>

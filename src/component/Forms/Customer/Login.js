@@ -17,6 +17,10 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import ds from "../../../Services/dataService";
 import FullscreenError from '../../Style/FullscreenError';
+import Axios from "axios";
+import { toast } from "react-toastify";
+import dataService from "../../../Services/dataService";
+import AuthService from "../../../Services/AuthService";
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
 
@@ -146,12 +150,23 @@ class Login extends Component {
 
   //Google Log In
   login(response) {
-    if (response.Zi.access_token) {
-      this.setState((state) => ({
-        isLogined: true,
-        accessToken: response.Zi.access_token,
-      }));
-    }
+    console.log(response)
+    AuthService.loginExternal(1, response.accessToken).then(res=>{
+      window.location.href = '/'
+    }).catch(err=>{
+      toast('error')
+      console.log(err)
+    })
+    
+    Axios({
+      url: 'https://www.googleapis.com/oauth2/v2/userinfo',
+      method: 'get',
+      headers: {
+        Authorization: `Bearer ${response.accessToken}`,
+      },
+    }).then((res)=>{
+      console.log(res)
+    })
   }
 
   logout(response) {

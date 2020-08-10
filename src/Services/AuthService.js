@@ -1,10 +1,24 @@
 import axios from "axios";
 import serverAddress from './ServerUrl'
 import authHeader from './authHeader'
+import Axios from "axios";
 
 const API_URL = serverAddress;
 
 class AuthService {
+    loginExternal(externalType, externalAccessToken, isLogin){
+        return Axios.post(API_URL + '/loginExternal', {externalType: externalType, token: externalAccessToken})
+        .then(res => {
+            if(res.data.errcode !== 0) throw res.data;
+            if(isLogin !== false){
+                localStorage.removeItem("user");
+                localStorage.setItem("user", JSON.stringify(res.data));
+            }
+            return res.data
+        }).catch(err=>{
+            throw err
+        })
+    }
     login(email, password) {
         return axios
             .post(API_URL + "/login", {
@@ -13,6 +27,7 @@ class AuthService {
             })
             .then(response => {
                 if (response.data.errcode === 0) {
+                    localStorage.removeItem("user");
                     localStorage.setItem("user", JSON.stringify(response.data));
                 } else {
                     console.log('login failed: ');

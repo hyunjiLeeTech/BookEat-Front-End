@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { AiOutlinePhone } from "react-icons/ai";
 import { RiTimeLine, RiMapPin2Line, RiPercentLine } from "react-icons/ri";
 import serverAddress from "../Services/ServerUrl";
+import './customerReserve.css'
 
 class Reserve extends Component {
     constructor(props) {
@@ -48,6 +49,7 @@ class Reserve extends Component {
             allowModifyMenuItems: true,
             restaurant: {},
             discount: {},
+            isRestaurantLoaded: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.back = this.back.bind(this);
@@ -63,8 +65,8 @@ class Reserve extends Component {
     componentWillMount() {
         this.setState({ isLoading: true });
         dataService.getRestaurantWithoutAuth(this.state.resId).then(resp => {
-            this.setState({ restaurant: resp.restaurant, discount: resp.discount })
-            console.log(this.state);
+            this.setState({ restaurant: resp.restaurant, discount: resp.discount, isRestaurantLoaded: true })
+
             if (this.state.isUpdate) {
                 dataService.getReservationById(this.state.reservationId).then(res => {
                     this.selectedtableId = res.reservation.table;
@@ -439,15 +441,26 @@ class Reserve extends Component {
         }
         console.log(checked)
         for (var item of items) {
+            console.log(item)
             if (checked) {
                 var flag = false;
                 for (var id of checked) {
                     if (id._id.toString() === item._id.toString() && this.state.allowModifyMenuItems) {
                         tr.push(
-                            <div>
-                                <input type='checkbox' defaultChecked value={item._id} onClick={handler} />
-                                <label>{item.menuName} - ${item.menuPrice}</label>
-                            </div>
+                            <tr>
+                                <td>
+                                    <input type='checkbox' id={'menu' + item._id} name={'menu' + item._id} defaultChecked value={item._id} onChange={handler} />
+                                    <label class='menuItemLable' for={'name' + item._id}>{item.menuName}</label>
+                                </td>
+                                <td>
+                                    ${item.menuPrice}
+                                </td>
+                                <td>
+                                    <div style={{ height: '4rem', maxWidth: '100%' }}>
+                                        <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null}></img>
+                                    </div>
+                                </td>
+                            </tr>
                         )
                         reactThis.state.selectedMenuItems.add(item._id)
                         flag = true; break;
@@ -455,22 +468,60 @@ class Reserve extends Component {
                 }
                 if (flag) continue;
                 tr.push(
-                    <div>
-                        <input type='checkbox' value={item._id} onClick={handler} />
-                        <label>{item.menuName} - ${item.menuPrice}</label>
-                    </div>
+                    <tr>
+                        <td>
+                            <input type='checkbox' id={'menu' + item._id} name={'menu' + item._id} value={item._id} onChange={handler} />
+                            <label class='menuItemLable' for={'menu' + item._id}>{item.menuName}</label>
+
+                        </td>
+                        <td>
+                            ${item.menuPrice}
+                        </td>
+                        <td>
+                            <div style={{ height: '4rem', maxWidth: '100%' }}>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null}></img>
+                            </div>
+                        </td>
+                    </tr>
                 )
             } else {
                 tr.push(
-                    <div>
-                        <input type='checkbox' value={item._id} onClick={handler} />
-                        <label>{item.menuName} - ${item.menuPrice}</label>
-                    </div>
+                    <tr>
+                        <td>
+                            <input type='checkbox' id={'menu' + item._id} name={'menu' + item._id} value={item._id} onChange={handler} />
+                            <label class='menuItemLable' for={'menu' + item._id}>{item.menuName}</label>
+
+                        </td>
+                        <td>
+                            ${item.menuPrice}
+                        </td>
+                        <td>
+                            <div style={{ height: '4rem', maxWidth: '100%' }}>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null}></img>
+                            </div>
+                        </td>
+                    </tr>
                 )
             }
         }
 
-        return tr;
+        return(        <div className='menuItemWrapper'>
+            <hr/>
+            <h2>Menu Items</h2>
+            <table className='table'>
+                <thead>
+                    <td>Name</td>
+                    <td>Price</td>
+                    <td>Picture</td>
+                </thead>
+                <tbody>
+                    {tr}
+                </tbody>
+            </table>
+        </div>)
+
+
+
     }
 
     render() {
@@ -485,15 +536,17 @@ class Reserve extends Component {
                             <div className='col-md-8'>
                                 {this.renderForm()}
                             </div>
+                            {this.state.isRestaurantLoaded ? 
+
                             <div className='col-md-4'>
-                                {/* <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" /> */}
+                                <br/>
+                                <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" alt="Restaurant"/>
                                 <br />
                                 <h4 className="text-center">{this.state.restaurant.resName}</h4>
                                 <p>{this.state.restaurant.restaurantDescription}</p>
                                 <hr />
                                 <h6><RiMapPin2Line />  Address</h6>
-                                {/* <p>{this.state.restaurant.addressId.streetNum } {this.state.restaurant.addressId.streetName}
-                    {this.state.restaurant.addressId.city} {this.state.restaurant.addressId.province} {this.state.restaurant.addressId.postalCode}</p> */}
+                                <p>{this.state.restaurant.addressId?.streetNum } {this.state.restaurant.addressId?.streetName} {this.state.restaurant.addressId?.city} {this.state.restaurant.addressId?.province} {this.state.restaurant.addressId?.postalCode}</p>
                                 <hr />
                                 <h6><AiOutlinePhone /> Phone Number</h6>
                                 <p>{this.state.restaurant.phoneNumber}</p>
@@ -502,15 +555,16 @@ class Reserve extends Component {
                                 <p>{this.state.discount.percent} % Off Call for more information!</p>
                                 <hr />
                                 <h6><RiTimeLine />  Store Time</h6>
-                                {/* <p>Monday { this.state.restaurant.monOpenTimeId.storeTimeName } - {this.state.restaurant.monCloseTimeId.storeTimeName}</p>
+                                <p>Monday { this.state.restaurant.monOpenTimeId.storeTimeName } - {this.state.restaurant.monCloseTimeId.storeTimeName}</p>
                                 <p>Tuesday { this.state.restaurant.tueOpenTimeId.storeTimeName } - {this.state.restaurant.tueCloseTimeId.storeTimeName}</p>
                                 <p>Wednesday { this.state.restaurant.wedOpenTimeId.storeTimeName } - { this.state.restaurant.wedCloseTimeId.storeTimeName}</p>
                                 <p>Thursday { this.state.restaurant.thuOpenTimeId.storeTimeName } - { this.state.restaurant.thuCloseTimeId.storeTimeName}</p>
                                 <p>Friday { this.state.restaurant.friOpenTimeId.storeTimeName } - { this.state.restaurant.friCloseTimeId.storeTimeName }</p>
                                 <p>Saturday { this.state.restaurant.satOpenTimeId.storeTimeName } - {this.state.restaurant.satCloseTimeId.storeTimeName}</p>
-                                <p>Sunday { this.state.restaurant.sunOpenTimeId.storeTimeName } - { this.state.restaurant.sunCloseTimeId.storeTimeName}</p> */}
+                                <p>Sunday { this.state.restaurant.sunOpenTimeId.storeTimeName } - { this.state.restaurant.sunCloseTimeId.storeTimeName}</p>
 
-                            </div>
+                            </div> : <div className='col-md-4'></div>}
+
                         </div>
                         : null}
 
