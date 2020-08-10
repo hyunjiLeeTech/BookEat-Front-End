@@ -133,7 +133,7 @@ class Menu extends Component {
             default:
                 break;
         }
-        this.state.menus[index][e.target.id] = e.target.value; //Set state does not allow to set an object inside of an array
+        this.state.menus[index][e.target.name] = e.target.value; //Set state does not allow to set an object inside of an array
         this.forceUpdate(); //forcing udpate the UI
     }
 

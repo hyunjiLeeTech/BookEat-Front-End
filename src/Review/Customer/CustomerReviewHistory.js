@@ -201,32 +201,6 @@ class CustomerReviewHistory extends Component {
             }
           </td>
 
-          <td>{moment(this.state.reviews[index].updatedAt).format("YYYY-MM-DD")}</td>
-          <td defaultValue={this.state.reviews[index].restaurantId.resName}>{this.state.reviews[index].restaurantId.resName}</td>
-
-
-
-
-          <td colSpan="2">
-            <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
-              // onChange={(e) => this.onImageChangepic1(e, index)} 
-              // disabled={(!this.state.reviews[index].contenteditable)}
-              disabled="flase"
-              className="border-0"
-            />
-          </td>
-
-
-
-
-          <td colSpan="2">
-            <input type="text" name="picture1" id="picture1" defaultValue={this.state.picture1}
-              // onChange={(e) => this.onImageChangepic1(e, index)} 
-              // disabled={(!this.state.reviews[index].contenteditable)}
-              disabled="flase"
-              className="border-0"
-            />
-          </td>
           <td colSpan="2 ">
             <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
               // onChange={(e) => this.onImageChangepic2(e, index)} 
@@ -254,12 +228,6 @@ class CustomerReviewHistory extends Component {
 
           </td>
           <td colSpan="2 ">
-            <input type="text" name="picture2" id="picture2" defaultValue={this.state.picture2}
-              // onChange={(e) => this.onImageChangepic2(e, index)} 
-              // disabled={(!this.state.reviews[index].contenteditable)} 
-              disabled={false}
-              className="border-0"
-            />
             {
               this.state.reviews[index].contenteditable ?
 

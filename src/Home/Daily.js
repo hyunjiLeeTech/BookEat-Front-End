@@ -20,11 +20,11 @@ class Daily extends Component {
             restaruants: [
             ]
         }
-        dataService.getDaily().then(res=>{
-            this.setState({restaruants: res.restaruants})
+        dataService.getDaily().then(res => {
+            this.setState({ restaruants: res.restaruants })
             console.log(this.state);
-        }).catch(err=>{
-            toast('error', {type: 'error'})
+        }).catch(err => {
+            toast('error', { type: 'error' })
         })
     }
 

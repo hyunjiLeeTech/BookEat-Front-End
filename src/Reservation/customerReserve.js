@@ -365,45 +365,45 @@ class Reserve extends Component {
 
     renderTimeOption(date) {
         var options = [
-            <option {...(new Date(date + ' 0:00') < new Date() ? { disabled: true } : {})} value="00:00">12:00 AM</option>,
-            <option {...(new Date(date + ' 0:30') < new Date() ? { disabled: true } : {})} value="00:30">12:30 AM</option>,
-            <option {...(new Date(date + ' 1:00') < new Date() ? { disabled: true } : {})} value="01:00">1:00 AM</option>,
-            <option {...(new Date(date + ' 1:30') < new Date() ? { disabled: true } : {})} value="01:30">1:30 AM</option>,
+            <option key="1" {...(new Date(date + ' 0:00') < new Date() ? { disabled: true } : {})} value="00:00">12:00 AM</option>,
+            <option key="2" {...(new Date(date + ' 0:30') < new Date() ? { disabled: true } : {})} value="00:30">12:30 AM</option>,
+            <option key="3" {...(new Date(date + ' 1:00') < new Date() ? { disabled: true } : {})} value="01:00">1:00 AM</option>,
+            <option key="4" {...(new Date(date + ' 1:30') < new Date() ? { disabled: true } : {})} value="01:30">1:30 AM</option>,
 
-            <option {...(new Date(date + ' 7:00') < new Date() ? { disabled: true } : {})} value="07:00">7:00 AM</option>,
-            <option {...(new Date(date + ' 7:30') < new Date() ? { disabled: true } : {})} value="07:30">7:30 AM</option>,
-            <option {...(new Date(date + ' 8:00') < new Date() ? { disabled: true } : {})} value="08:00">8:00 AM</option>,
-            <option {...(new Date(date + ' 8:30') < new Date() ? { disabled: true } : {})} value="08:30">8:30 AM</option>,
-            <option {...(new Date(date + ' 9:00') < new Date() ? { disabled: true } : {})} value="09:00">9:00 AM</option>,
-            <option {...(new Date(date + ' 9:30') < new Date() ? { disabled: true } : {})} value="09:30">9:30 AM</option>,
-            <option {...(new Date(date + ' 10:00') < new Date() ? { disabled: true } : {})} value="10:00">10:00 AM</option>,
-            <option {...(new Date(date + ' 10:30') < new Date() ? { disabled: true } : {})} value="10:30">10:30 AM</option>,
-            <option {...(new Date(date + ' 11:00') < new Date() ? { disabled: true } : {})} value="11:00">11:00 AM</option>,
-            <option {...(new Date(date + ' 11:30') < new Date() ? { disabled: true } : {})} value="11:30">11:30 AM</option>,
-            <option {...(new Date(date + ' 12:00') < new Date() ? { disabled: true } : {})} value="12:00">12:00 PM</option>,
-            <option {...(new Date(date + ' 12:30') < new Date() ? { disabled: true } : {})} value="12:30">12:30 PM</option>,
-            <option {...(new Date(date + ' 13:00') < new Date() ? { disabled: true } : {})} value="13:00">1:00 PM</option>,
-            <option {...(new Date(date + ' 13:30') < new Date() ? { disabled: true } : {})} value="13:30">1:30 PM</option>,
-            <option {...(new Date(date + ' 14:00') < new Date() ? { disabled: true } : {})} value="14:00">2:00 PM</option>,
-            <option {...(new Date(date + ' 14:30') < new Date() ? { disabled: true } : {})} value="14:30">2:30 PM</option>,
-            <option {...(new Date(date + ' 15:00') < new Date() ? { disabled: true } : {})} value="15:00">3:00 PM</option>,
-            <option {...(new Date(date + ' 15:30') < new Date() ? { disabled: true } : {})} value="15:30">3:30 PM</option>,
-            <option {...(new Date(date + ' 16:00') < new Date() ? { disabled: true } : {})} value="16:00">4:00 PM</option>,
-            <option {...(new Date(date + ' 16:30') < new Date() ? { disabled: true } : {})} value="16:30">4:30 PM</option>,
-            <option {...(new Date(date + ' 17:00') < new Date() ? { disabled: true } : {})} value="17:00">5:00 PM</option>,
-            <option {...(new Date(date + ' 17:30') < new Date() ? { disabled: true } : {})} value="17:30">5:30 PM</option>,
-            <option {...(new Date(date + ' 18:00') < new Date() ? { disabled: true } : {})} value="18:00">6:00 PM</option>,
-            <option {...(new Date(date + ' 18:30') < new Date() ? { disabled: true } : {})} value="18:30">6:30 PM</option>,
-            <option {...(new Date(date + ' 19:00') < new Date() ? { disabled: true } : {})} value="19:00">7:00 PM</option>,
-            <option {...(new Date(date + ' 19:30') < new Date() ? { disabled: true } : {})} value="19:30">7:30 PM</option>,
-            <option {...(new Date(date + ' 20:00') < new Date() ? { disabled: true } : {})} value="20:00">8:00 PM</option>,
-            <option {...(new Date(date + ' 20:30') < new Date() ? { disabled: true } : {})} value="20:30">8:30 PM</option>,
-            <option {...(new Date(date + ' 21:00') < new Date() ? { disabled: true } : {})} value="21:00">9:00 PM</option>,
-            <option {...(new Date(date + ' 21:30') < new Date() ? { disabled: true } : {})} value="21:30">9:30 PM</option>,
-            <option {...(new Date(date + ' 22:00') < new Date() ? { disabled: true } : {})} value="22:00">10:00 PM</option>,
-            <option {...(new Date(date + ' 22:30') < new Date() ? { disabled: true } : {})} value="22:30">10:30 PM</option>,
-            <option {...(new Date(date + ' 23:00') < new Date() ? { disabled: true } : {})} value="23:00">11:00 PM</option>,
-            <option {...(new Date(date + ' 23:30') < new Date() ? { disabled: true } : {})} value="23:30">11:30 PM</option>,
+            <option key="5" {...(new Date(date + ' 7:00') < new Date() ? { disabled: true } : {})} value="07:00">7:00 AM</option>,
+            <option key="6" {...(new Date(date + ' 7:30') < new Date() ? { disabled: true } : {})} value="07:30">7:30 AM</option>,
+            <option key="7" {...(new Date(date + ' 8:00') < new Date() ? { disabled: true } : {})} value="08:00">8:00 AM</option>,
+            <option key="8" {...(new Date(date + ' 8:30') < new Date() ? { disabled: true } : {})} value="08:30">8:30 AM</option>,
+            <option key="9" {...(new Date(date + ' 9:00') < new Date() ? { disabled: true } : {})} value="09:00">9:00 AM</option>,
+            <option key="10" {...(new Date(date + ' 9:30') < new Date() ? { disabled: true } : {})} value="09:30">9:30 AM</option>,
+            <option key="11" {...(new Date(date + ' 10:00') < new Date() ? { disabled: true } : {})} value="10:00">10:00 AM</option>,
+            <option key="12" {...(new Date(date + ' 10:30') < new Date() ? { disabled: true } : {})} value="10:30">10:30 AM</option>,
+            <option key="13" {...(new Date(date + ' 11:00') < new Date() ? { disabled: true } : {})} value="11:00">11:00 AM</option>,
+            <option key="14" {...(new Date(date + ' 11:30') < new Date() ? { disabled: true } : {})} value="11:30">11:30 AM</option>,
+            <option key="15" {...(new Date(date + ' 12:00') < new Date() ? { disabled: true } : {})} value="12:00">12:00 PM</option>,
+            <option key="16" {...(new Date(date + ' 12:30') < new Date() ? { disabled: true } : {})} value="12:30">12:30 PM</option>,
+            <option key="17" {...(new Date(date + ' 13:00') < new Date() ? { disabled: true } : {})} value="13:00">1:00 PM</option>,
+            <option key="18" {...(new Date(date + ' 13:30') < new Date() ? { disabled: true } : {})} value="13:30">1:30 PM</option>,
+            <option key="19" {...(new Date(date + ' 14:00') < new Date() ? { disabled: true } : {})} value="14:00">2:00 PM</option>,
+            <option key="20" {...(new Date(date + ' 14:30') < new Date() ? { disabled: true } : {})} value="14:30">2:30 PM</option>,
+            <option key="21" {...(new Date(date + ' 15:00') < new Date() ? { disabled: true } : {})} value="15:00">3:00 PM</option>,
+            <option key="22" {...(new Date(date + ' 15:30') < new Date() ? { disabled: true } : {})} value="15:30">3:30 PM</option>,
+            <option key="23" {...(new Date(date + ' 16:00') < new Date() ? { disabled: true } : {})} value="16:00">4:00 PM</option>,
+            <option key="24" {...(new Date(date + ' 16:30') < new Date() ? { disabled: true } : {})} value="16:30">4:30 PM</option>,
+            <option key="25" {...(new Date(date + ' 17:00') < new Date() ? { disabled: true } : {})} value="17:00">5:00 PM</option>,
+            <option key="26" {...(new Date(date + ' 17:30') < new Date() ? { disabled: true } : {})} value="17:30">5:30 PM</option>,
+            <option key="27" {...(new Date(date + ' 18:00') < new Date() ? { disabled: true } : {})} value="18:00">6:00 PM</option>,
+            <option key="28" {...(new Date(date + ' 18:30') < new Date() ? { disabled: true } : {})} value="18:30">6:30 PM</option>,
+            <option key="29" {...(new Date(date + ' 19:00') < new Date() ? { disabled: true } : {})} value="19:00">7:00 PM</option>,
+            <option key="30" {...(new Date(date + ' 19:30') < new Date() ? { disabled: true } : {})} value="19:30">7:30 PM</option>,
+            <option key="31" {...(new Date(date + ' 20:00') < new Date() ? { disabled: true } : {})} value="20:00">8:00 PM</option>,
+            <option key="32" {...(new Date(date + ' 20:30') < new Date() ? { disabled: true } : {})} value="20:30">8:30 PM</option>,
+            <option key="33" {...(new Date(date + ' 21:00') < new Date() ? { disabled: true } : {})} value="21:00">9:00 PM</option>,
+            <option key="34" {...(new Date(date + ' 21:30') < new Date() ? { disabled: true } : {})} value="21:30">9:30 PM</option>,
+            <option key="35" {...(new Date(date + ' 22:00') < new Date() ? { disabled: true } : {})} value="22:00">10:00 PM</option>,
+            <option key="36" {...(new Date(date + ' 22:30') < new Date() ? { disabled: true } : {})} value="22:30">10:30 PM</option>,
+            <option key="37" {...(new Date(date + ' 23:00') < new Date() ? { disabled: true } : {})} value="23:00">11:00 PM</option>,
+            <option key="38" {...(new Date(date + ' 23:30') < new Date() ? { disabled: true } : {})} value="23:30">11:30 PM</option>,
         ];
 
         const timeChange = (e) => {
@@ -471,7 +471,7 @@ class Reserve extends Component {
                     <tr>
                         <td>
                             <input type='checkbox' id={'menu' + item._id} name={'menu' + item._id} value={item._id} onChange={handler} />
-                            <label class='menuItemLable' for={'menu' + item._id}>{item.menuName}</label>
+                            <label className='menuItemLable' htmlFor={'menu' + item._id}>{item.menuName}</label>
 
                         </td>
                         <td>
@@ -479,7 +479,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null}></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null} alt="mENU"></img>
                             </div>
                         </td>
                     </tr>
@@ -489,7 +489,7 @@ class Reserve extends Component {
                     <tr>
                         <td>
                             <input type='checkbox' id={'menu' + item._id} name={'menu' + item._id} value={item._id} onChange={handler} />
-                            <label class='menuItemLable' for={'menu' + item._id}>{item.menuName}</label>
+                            <label className='menuItemLable' htmlFor={'menu' + item._id}>{item.menuName}</label>
 
                         </td>
                         <td>
@@ -497,7 +497,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null}></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null} alt="Menu"></img>
                             </div>
                         </td>
                     </tr>
@@ -505,14 +505,16 @@ class Reserve extends Component {
             }
         }
 
-        return(        <div className='menuItemWrapper'>
-            <hr/>
+        return (<div className='menuItemWrapper'>
+            <hr />
             <h2>Menu Items</h2>
             <table className='table'>
                 <thead>
-                    <td>Name</td>
-                    <td>Price</td>
-                    <td>Picture</td>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Picture</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {tr}
@@ -536,34 +538,34 @@ class Reserve extends Component {
                             <div className='col-md-8'>
                                 {this.renderForm()}
                             </div>
-                            {this.state.isRestaurantLoaded ? 
+                            {this.state.isRestaurantLoaded ?
 
-                            <div className='col-md-4'>
-                                <br/>
-                                <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" alt="Restaurant"/>
-                                <br />
-                                <h4 className="text-center">{this.state.restaurant.resName}</h4>
-                                <p>{this.state.restaurant.restaurantDescription}</p>
-                                <hr />
-                                <h6><RiMapPin2Line />  Address</h6>
-                                <p>{this.state.restaurant.addressId?.streetNum } {this.state.restaurant.addressId?.streetName} {this.state.restaurant.addressId?.city} {this.state.restaurant.addressId?.province} {this.state.restaurant.addressId?.postalCode}</p>
-                                <hr />
-                                <h6><AiOutlinePhone /> Phone Number</h6>
-                                <p>{this.state.restaurant.phoneNumber}</p>
-                                <hr />
-                                <h6><RiPercentLine />  Promotions</h6>
-                                <p>{this.state.discount.percent} % Off Call for more information!</p>
-                                <hr />
-                                <h6><RiTimeLine />  Store Time</h6>
-                                <p>Monday { this.state.restaurant.monOpenTimeId.storeTimeName } - {this.state.restaurant.monCloseTimeId.storeTimeName}</p>
-                                <p>Tuesday { this.state.restaurant.tueOpenTimeId.storeTimeName } - {this.state.restaurant.tueCloseTimeId.storeTimeName}</p>
-                                <p>Wednesday { this.state.restaurant.wedOpenTimeId.storeTimeName } - { this.state.restaurant.wedCloseTimeId.storeTimeName}</p>
-                                <p>Thursday { this.state.restaurant.thuOpenTimeId.storeTimeName } - { this.state.restaurant.thuCloseTimeId.storeTimeName}</p>
-                                <p>Friday { this.state.restaurant.friOpenTimeId.storeTimeName } - { this.state.restaurant.friCloseTimeId.storeTimeName }</p>
-                                <p>Saturday { this.state.restaurant.satOpenTimeId.storeTimeName } - {this.state.restaurant.satCloseTimeId.storeTimeName}</p>
-                                <p>Sunday { this.state.restaurant.sunOpenTimeId.storeTimeName } - { this.state.restaurant.sunCloseTimeId.storeTimeName}</p>
+                                <div className='col-md-4'>
+                                    <br />
+                                    <img src={serverAddress + '/getimage/' + this.state.restaurant.pictures[0].toString()} style={{ marginTop: '5%' }} className="col-md-12" alt="Restaurant" />
+                                    <br />
+                                    <h4 className="text-center">{this.state.restaurant.resName}</h4>
+                                    <p>{this.state.restaurant.restaurantDescription}</p>
+                                    <hr />
+                                    <h6><RiMapPin2Line />  Address</h6>
+                                    <p>{this.state.restaurant.addressId?.streetNum} {this.state.restaurant.addressId?.streetName} {this.state.restaurant.addressId?.city} {this.state.restaurant.addressId?.province} {this.state.restaurant.addressId?.postalCode}</p>
+                                    <hr />
+                                    <h6><AiOutlinePhone /> Phone Number</h6>
+                                    <p>{this.state.restaurant.phoneNumber}</p>
+                                    <hr />
+                                    <h6><RiPercentLine />  Promotions</h6>
+                                    <p>{this.state.discount.percent} % Off Call for more information!</p>
+                                    <hr />
+                                    <h6><RiTimeLine />  Store Time</h6>
+                                    <p>Monday {this.state.restaurant.monOpenTimeId.storeTimeName} - {this.state.restaurant.monCloseTimeId.storeTimeName}</p>
+                                    <p>Tuesday {this.state.restaurant.tueOpenTimeId.storeTimeName} - {this.state.restaurant.tueCloseTimeId.storeTimeName}</p>
+                                    <p>Wednesday {this.state.restaurant.wedOpenTimeId.storeTimeName} - {this.state.restaurant.wedCloseTimeId.storeTimeName}</p>
+                                    <p>Thursday {this.state.restaurant.thuOpenTimeId.storeTimeName} - {this.state.restaurant.thuCloseTimeId.storeTimeName}</p>
+                                    <p>Friday {this.state.restaurant.friOpenTimeId.storeTimeName} - {this.state.restaurant.friCloseTimeId.storeTimeName}</p>
+                                    <p>Saturday {this.state.restaurant.satOpenTimeId.storeTimeName} - {this.state.restaurant.satCloseTimeId.storeTimeName}</p>
+                                    <p>Sunday {this.state.restaurant.sunOpenTimeId.storeTimeName} - {this.state.restaurant.sunCloseTimeId.storeTimeName}</p>
 
-                            </div> : <div className='col-md-4'></div>}
+                                </div> : <div className='col-md-4'></div>}
 
                         </div>
                         : null}
