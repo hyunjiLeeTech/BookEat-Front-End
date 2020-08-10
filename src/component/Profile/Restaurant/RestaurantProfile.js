@@ -16,6 +16,8 @@ import ViewReview from "../../Review/Restaurant/ViewReview";
 import serverAddress from '../../../Services/ServerUrl';
 import Discount from '../../Restaurant/Discount';
 import dataService from "../../../Services/dataService";
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -24,7 +26,7 @@ const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
 );
 
-const regExpPostal = RegExp(/^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/);
+const regExpPostal = RegExp(/^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/);
 
 const regExpNumbers = RegExp(/^[0-9]*$/);
 
@@ -114,7 +116,6 @@ class RestaurantProfile extends Component {
       contentTable: false,
       resultsErr: false,
       isResLoaded: false,
-
       isError: {
         resname: "&#160;",
         streetnumber: "&#160;",
@@ -181,7 +182,7 @@ class RestaurantProfile extends Component {
       .addClass("alert-success");
     }).catch((err) => {
       $("#deletePictureModalText")
-        .text("Sorry, " + err)
+        .text("Sorry, " + err.errmsg)
         .removeClass("alert-warning")
         .removeClass("alert-danger")
         .removeClass("alert-success")
@@ -313,7 +314,7 @@ class RestaurantProfile extends Component {
         .addClass("alert-success");
     } catch (err) {
       $("#resProfileResultText")
-        .text("Sorry, " + err)
+        .text("Sorry, " + err.errmsg)
         .removeClass("alert-warning")
         .removeClass("alert-danger")
         .removeClass("alert-success")
@@ -760,7 +761,6 @@ class RestaurantProfile extends Component {
         console.log(err)
       })
     }
-
     const { isError } = this.state;
     return (
       <MainContainer>
@@ -1867,7 +1867,7 @@ class RestaurantProfile extends Component {
                   <div className="modal-content">
                     <div className="modal-header">
                       <h5 className="modal-title" id="deletePictureModalLabel">
-                        Delete Restaurant Profile
+                        Delete Picture Profile
                 </h5>
                       <button
                         type="button"
@@ -1899,7 +1899,6 @@ class RestaurantProfile extends Component {
             </div>
           </div>
         </div>
-
       </MainContainer >
     );
   }

@@ -19,7 +19,7 @@ const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
 );
 
-const regExpPostal = RegExp(/^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$/); //TODO: fix validation. e.g. 123456 passed validation while it should not
+const regExpPostal = RegExp(/^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$/);
 
 const regExpNumbers = RegExp(/^[0-9]*$/);
 
