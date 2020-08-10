@@ -81,8 +81,8 @@ class RestaurantReservation extends Component {
 
     renderPresent() {
         var rows = this.state.upcoming.map((ro, index) =>
-            <tr key={rows} id={ro._id}>
-                <td >
+            <tr key={index} id={ro._id}>
+                <td>
                     {ro.customer.firstName + " " + ro.customer.lastName}
                 </td>
 
@@ -150,7 +150,7 @@ class RestaurantReservation extends Component {
     }
 
     renderPast() { //TODO: display reservation status
-        var row = this.state.past.map((r, index) => <tr key={row}>
+        var row = this.state.past.map((r, index) => <tr key={index}>
             <td >
                 {r.customer.firstName + " " + r.customer.lastName}
             </td>
