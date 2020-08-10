@@ -8,7 +8,7 @@ import $ from 'jquery'
 import Axios from 'axios'
 import sha256 from 'crypto-js/sha256';
 import serverAddress from '../../../Services/ServerUrl';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import FacebookLogin from "react-facebook-login";
 import Facebook from '../../../Image/FaceSign.jpg'
 import FullscreenError from '../../Style/FullscreenError'
 import AuthService from "../../../Services/AuthService";
@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 
 //Validation 
 const regExpEmail = RegExp(
-  /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
+  /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
 );
 
 const regExpPhone = RegExp(
@@ -146,7 +146,7 @@ class SignUp extends Component {
             .addClass("alert-success");
         }).catch(err => {
           $("#signResultText").text("Sorry, " + err.errmsg ? err.errmsg : 'we cannot sign up for you').removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
-          .addClass("alert-danger");;
+            .addClass("alert-danger");;
           toast('error')
           console.log(err)
         })
@@ -177,9 +177,9 @@ class SignUp extends Component {
   onSuccess(resp) {
     console.log(resp)
     AuthService.loginExternal(1, resp.wc.access_token, false).then(res => {
-      if (this.state.isExternal && this.state.externalType == 1){
+      if (this.state.isExternal && this.state.externalType == 1) {
         toast("This Google account is already registered, please sign in :)")
-        this.setState({isExternal: false})
+        this.setState({ isExternal: false })
       }
     }).catch(err => {
       console.log(err)
@@ -274,7 +274,19 @@ class SignUp extends Component {
 
   render() {
     const { isError } = this.state;
-
+    const fbcallback = (data) => {
+      console.log(data)
+      this.setState({ isExternal: true, externalType: 2, })
+      this.setState({ externalToken: data.accessToken, email: data.email, firstname: data.first_name, lastname: data.last_name })
+      $('#email').prop('disabled', 'true')
+      $('#firstname').prop('disabled', 'true')
+      $('#lastname').prop('disabled', 'true')
+      AuthService.loginExternal(2, data.accessToken).then(res=>{
+        console.log(res)
+      }).catch(err=>{
+        console.log(err)
+      })
+    }
     return (
       <MainContainer>
 
@@ -381,11 +393,9 @@ class SignUp extends Component {
                   <br></br>
                   <FacebookLogin
                     appId="186311976091336"
-                    //autoLoad={true}
-                    callback={responseFacebook}
-                    render={renderProps => (
-                      <button onClick={renderProps.onClick}><img src={Facebook} alt="" /></button>
-                    )}
+                    autoLoad={false}
+                    fields="first_name,last_name,email,picture"
+                    callback={fbcallback}
                   />
                 </div>
 

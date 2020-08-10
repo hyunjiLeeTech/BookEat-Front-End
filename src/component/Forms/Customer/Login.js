@@ -154,18 +154,10 @@ class Login extends Component {
     AuthService.loginExternal(1, response.accessToken).then(res=>{
       window.location.href = '/'
     }).catch(err=>{
-      toast('error')
+      if(err.errcode && Number.parseInt(err.errcode) === 1)
+        toast('Failed to validate the external account. Please refresh the page and try agin.')
+      else toast('error, please try again later.')
       console.log(err)
-    })
-    
-    Axios({
-      url: 'https://www.googleapis.com/oauth2/v2/userinfo',
-      method: 'get',
-      headers: {
-        Authorization: `Bearer ${response.accessToken}`,
-      },
-    }).then((res)=>{
-      console.log(res)
     })
   }
 
@@ -231,6 +223,14 @@ class Login extends Component {
   // Facebook
   responseFacebook(response) {
     console.log(response);
+    AuthService.loginExternal(2, response.accessToken).then(res=>{
+      window.location.href = '/'
+    }).catch(err=>{
+      if(err.errcode && Number.parseInt(err.errcode) === 1)
+        toast('Failed to validate the external account. Please refresh the page and try agin.')
+      else toast('error, please try again later.')
+      console.log(err)
+    })
   }
 
   render() {
@@ -272,6 +272,7 @@ class Login extends Component {
                     clientId={CLIENT_ID}
                     buttonText="Login"
                     onSuccess={this.login}
+                    autoLoad={false}
                     onFailure={this.handleLoginFailure}
                     cookiePolicy={"single_host_origin"}
                     responseType="code,token"

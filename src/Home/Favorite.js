@@ -29,7 +29,7 @@ class Favorite extends Component {
 
     renderRestaurant(r) {
         return (
-            <div style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
+            <div key={'favorite'+r._id} style={{ margin: '2rem', border: '1px solid #000', width: '15rem', height: '15rem' }}>
                 <img src={ serverAddress + '/getImage/'+r.pictures[0]} height='100%' width='100%' />
                 <Link to={'/restaurant/' + r._id}>{r.resName} </Link>
             </div>
