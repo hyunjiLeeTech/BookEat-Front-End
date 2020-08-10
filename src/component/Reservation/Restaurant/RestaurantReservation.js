@@ -64,14 +64,14 @@ class RestaurantReservation extends Component {
             var tr = [];
             var totalPrice = 0;
             for (var i of res.menus) {
-                tr.push(<p>
+                tr.push(<p key={tr}>
                     {i.menuName} -
                     ${i.menuPrice}
                 </p>)
                 totalPrice += Number.parseFloat(i.menuPrice)
             }
-            tr.push(<hr />)
-            tr.push(<p>Total: ${totalPrice}</p>)
+            tr.push(<hr key={tr + 1} />)
+            tr.push(<p key={tr + 2}>Total: ${totalPrice}</p>)
             this.setState({
                 modalText: tr
             })
