@@ -46,6 +46,7 @@ class Menu extends Component {
             menuPrice: "",
             menuDescript: "",
             menuType: "",
+            isImage: false,
             disabled: true,
             contenteditable: false,
 
@@ -82,7 +83,8 @@ class Menu extends Component {
             } else {
                 this.setState({
                     // image: URL.createObjectURL(img),
-                    image: event.target.files[0]
+                    image: event.target.files[0],
+                    isImage: true
                 })
             }
 
@@ -150,20 +152,20 @@ class Menu extends Component {
         let menuContents = await ds.getMenus();
         menuContents = menuContents.menus;
 
-        try{
+        try {
             $("#munuAddResultText")
-            .text("Menu is added")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-        }catch(err){
+                .text("Menu is added")
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-success");
+        } catch (err) {
             $("#munuAddResultText")
-            .text("Sorry, " + err)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
+                .text("Sorry, " + err)
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-danger");
         }
 
         if (typeof menuContents !== 'undefined') {
@@ -190,15 +192,20 @@ class Menu extends Component {
 
     async addMenuWithImage(state) {
         this.setState({ isLoading: true })
-        const formData = new FormData();
-        formData.append('menuImage', state.image);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
+        var menuImageId = ""
+
+        if (state.IsImage) {
+            const formData = new FormData();
+            formData.append('menuImage', state.image);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
             }
+            var menuImageId = await ds.addMenuImage(formData, config);
+            state.menuImageId = menuImageId;
         }
-        var menuImageId = await ds.addMenuImage(formData, config);
-        state.menuImageId = menuImageId;
+
         await ds.addMenu(state).then(() => {
 
         }).finally(async (res) => {
@@ -255,22 +262,22 @@ class Menu extends Component {
         ds.deleteMenu(menu).then((res) => {
             this.queryMenus();
             $("#DeleteResultModalText")
-            .text("Menu item is deleted")
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-success");
-            
+                .text("Menu item is deleted")
+                .removeClass("alert-warning")
+                .removeClass("alert-danger")
+                .removeClass("alert-success")
+                .addClass("alert-success");
+
         }).catch(
-        err => {
-            $("#DeleteResultModalText")
-            .text("Sorry, " + err)
-            .removeClass("alert-warning")
-            .removeClass("alert-danger")
-            .removeClass("alert-success")
-            .addClass("alert-danger");
-        } )
-        
+            err => {
+                $("#DeleteResultModalText")
+                    .text("Sorry, " + err)
+                    .removeClass("alert-warning")
+                    .removeClass("alert-danger")
+                    .removeClass("alert-success")
+                    .addClass("alert-danger");
+            })
+
     }
 
     menuItemEditButton(index) {
@@ -278,22 +285,22 @@ class Menu extends Component {
         if (!this.state.menus[index].contenteditable) {
             this.editMenuWithImage(this.state.menus[index])
         }
- 
+
         this.callModal(index);
     }
 
     //Edit profile - button
     callModal(index) {
-            this.setState(state =>
-            
-                () => {
-                    if (this.state.menus[index].contenteditable) {
-                        $('this.state.menus[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
-                    }
-                    else {
-                        $('this.state.menus[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
-                    }
-                });
+        this.setState(state =>
+
+            () => {
+                if (this.state.menus[index].contenteditable) {
+                    $('this.state.menus[index].#save_edit_btn').attr("data-toggle", 'modal').attr("data-target", '#EditResultModal').attr('type', 'button')
+                }
+                else {
+                    $('this.state.menus[index].#save_edit_btn').attr("data-toggle", '').attr("data-target", '').attr("type", '')
+                }
+            });
     }
 
 
@@ -304,19 +311,19 @@ class Menu extends Component {
             const { MenuPicture, menuName, menuPrice, menuDescript } = menu
             return (
                 <tr key={index} id={'menurow' + index}>
-                   
+
                     <td contentEditable={(this.state.contenteditable)} >
                         <div>
-                       
+
                             <div className="container">
                                 <div className="row">
                                     <input type="file" name="MenuPicture" id="MenuPicture" defaultValue={MenuPicture}
                                         onChange={(e) => this.onImageChange(e, index)} disabled={(!this.state.menus[index].contenteditable)} />
-                                 
+
                                     {
                                         this.state.menus[index].contenteditable ?
 
-                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} alt="Menu"/>
+                                            <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].MenuPicture} alt="Menu" />
                                             :
 
                                             <div>
@@ -332,39 +339,39 @@ class Menu extends Component {
                     <td>
                         <div className="container-fluid">
                             <div className="form-inline">
-                            <input type="text" id={"menuName"+ index} name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
-                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
+                                <input type="text" id={"menuName" + index} name="menuName" defaultValue={menuName} onChange={(e) => this.handleChangeInList(e, index)}
+                                    className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
                             <div className="form-inline">
-                            <input type="text" id={"menuPrice"+ index} name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
-                                className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
+                                <input type="text" id={"menuPrice" + index} name="menuPrice" defaultValue={menuPrice} onChange={(e) => this.handleChangeInList(e, index)}
+                                    className="border-none" disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
                             <div className="form-inline" >
-                            <select className="form-conrol"
-                                id="menuType"
-                                name="menuType"
-                                defaultValue={this.state.menus[index].foodType}
-                                onChange={(e) => this.handleChangeInList(e, index)}
-                                disabled={(!this.state.menus[index].contenteditable)}
-                                required
-                            >
-                                <option value="">Please select the food type</option>
-                                <option value="Appetizer">Appetizer</option>
-                                <option value="Main"> Main Dish </option>
-                                <option value="Desert"> Desert</option>
-                                <option value="Drint"> Drink</option>
-                            </select>
+                                <select className="form-conrol"
+                                    id="menuType"
+                                    name="menuType"
+                                    defaultValue={this.state.menus[index].foodType}
+                                    onChange={(e) => this.handleChangeInList(e, index)}
+                                    disabled={(!this.state.menus[index].contenteditable)}
+                                    required
+                                >
+                                    <option value="">Please select the food type</option>
+                                    <option value="Appetizer">Appetizer</option>
+                                    <option value="Main"> Main Dish </option>
+                                    <option value="Desert"> Desert</option>
+                                    <option value="Drint"> Drink</option>
+                                </select>
                             </div>
                             <div className="form-inline">
-                            <textarea row="3" id={"menuDescript"+index} name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
+                                <textarea row="3" id={"menuDescript" + index} name="menuDescript" defaultValue={menuDescript} onChange={(e) => this.handleChangeInList(e, index)}
                                     className="form-control border-none " disabled={(!this.state.menus[index].contenteditable)} />
                             </div>
-                          
+
                         </div>
                     </td>
                     <td >
                         <div className="form-group row">
-                          
+
                             <button
                                 id='save_edit_btn'
                                 type="button"
@@ -373,7 +380,7 @@ class Menu extends Component {
                             >
                                 {this.state.menus[index].contenteditable ? "Save Change" : "Edit"}
                             </button>
-                           
+
                         </div>
                     </td>
                     <td >
@@ -429,7 +436,7 @@ class Menu extends Component {
                                 <div className="container">
                                     <div className="row">
                                         <input type="file" name="menuPicture" id="menuPicture" onChange={this.onImageChange} />
-                                        <img src={this.state.image ? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Menu"/>
+                                        <img src={this.state.image ? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Menu" />
 
                                     </div>
                                 </div>
@@ -462,7 +469,7 @@ class Menu extends Component {
                                             <option value="Desert"> Desert</option>
                                             <option value="Drint"> Drink</option>
                                         </select>
-                                       
+
                                     </div>
                                     <div className="form-inline">
                                         <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
@@ -537,7 +544,7 @@ class Menu extends Component {
                     </div>
                 </div>
 
-         
+
                 {/* DeleteMenuModal */}
 
                 <div
