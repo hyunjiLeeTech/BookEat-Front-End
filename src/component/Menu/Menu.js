@@ -197,7 +197,7 @@ class Menu extends Component {
 
     async addMenuWithImage(state) {
         this.setState({ isLoading: true })
-        var menuImageId = ""
+       // var menuImageId = ""
 
         if (state.isImage) {
             const formData = new FormData();
