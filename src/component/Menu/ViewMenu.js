@@ -23,14 +23,14 @@ class Menu extends Component {
     }
 
     componentDidMount() {
-        $(document).ready(function(){
-            $('#menus').DataTable( {
-                "scrollY":        "200px",
+        $(document).ready(function () {
+            $('#menus').DataTable({
+                "scrollY": "200px",
                 "scrollCollapse": true,
-                "paging":         false,
+                "paging": false,
                 "sDom": 'lrtip',
                 "bInfo": false,
-            } );
+            });
         });
     }
 
@@ -52,9 +52,10 @@ class Menu extends Component {
             for (var menu of this.state.menus) {
                 rows.push(
                     <tr key={rows}>
-                        <td>  <img src={serverAddress + '/getImage/' + menu.menuImageId} style={{ maxHeight: '50%', maxWidth: '50%' }} alt="Menu"/></td>
+                        <td>  <img src={serverAddress + '/getImage/' + menu.menuImageId} style={{ maxHeight: '50%', maxWidth: '50%' }} alt="Menu" /></td>
                         <td>{menu.menuName}</td>
                         <td> {menu.foodType}</td>
+                        <td>{menu.allergy}</td>
                         <td>{menu.menuDescript}</td>
                         <td>{menu.menuPrice}</td>
                     </tr>
@@ -73,6 +74,7 @@ class Menu extends Component {
                             <th>Picture</th>
                             <th >Name</th>
                             <th>Type</th>
+                            <th>Allergy</th>
                             <th>Description</th>
                             <th >Price</th>
                         </tr>
