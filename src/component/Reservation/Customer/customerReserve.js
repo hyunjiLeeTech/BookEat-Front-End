@@ -569,7 +569,7 @@ class Reserve extends Component {
                                     <p>{this.state.restaurant.phoneNumber}</p>
                                     <hr />
                                     <h6><RiPercentLine />  Promotions</h6>
-                                    <p>{this.state.discount.isActive ? this.state.discount.percent + "% Off Call for more information!" : "No Promotions at the moment"}</p>
+                                    <p>{(this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent + "% Off Call for more information!" : "No Promotions at the moment"))}</p>
                                     <hr />
                                     <h6><RiTimeLine />  Store Time</h6>
                                     <p>Monday {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)} - {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)}</p>

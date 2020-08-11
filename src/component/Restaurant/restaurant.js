@@ -37,12 +37,13 @@ class Restaurant extends Component {
                 this.setState({
                     res: res.restaurant,
                     isResLoaded: true,
-                    discount: res.discount
+                    discount: res.discount,
                 })
             })
     }
 
     render() {
+        console.log(this.state.discount);
         return (
 
             <MainContainer>
@@ -65,7 +66,7 @@ class Restaurant extends Component {
                 <div className="card mb-3">
                     <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
                         <ol className="carousel-indicators" id="indicator">
-                            {this.state.res.pictures ?  this.state.res.pictures.map((v, i, array) => {
+                            {this.state.res.pictures ? this.state.res.pictures.map((v, i, array) => {
                                 return <li key={v} data-target="#carouselExampleIndicators" data-slide-to={i.toString()} className={i === 0 ? 'active' : ''}></li>
                             }) : null}
                         </ol>
@@ -123,11 +124,11 @@ class Restaurant extends Component {
                                 <p>Monday {this.state.isResLoaded ? (this.state.res.monIsClose ? "Close" : this.state.res.monOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.monIsClose ? "Close" : this.state.res.monOpenTimeId.storeTimeName) : null}</p>
                                 <p>Tuesday {this.state.isResLoaded ? (this.state.res.tueIsClose ? "Close" : this.state.res.tueOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.tueIsClose ? "Close" : this.state.res.tueOpenTimeId.storeTimeName) : null}</p>
                                 <p>Wednesday {this.state.isResLoaded ? (this.state.res.wedIsClose ? "Close" : this.state.res.wedOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.wedIsClose ? "Close" : this.state.res.wedOpenTimeId.storeTimeName) : null}</p>
-                                <p>Thursday {this.state.isResLoaded ? (this.state.res.thuIsClose ? "Close" : this.state.res.thuOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.thuIsClose ? "Close" : this.state.res.thuCloseTimeId.storeTimeName): null}</p>
+                                <p>Thursday {this.state.isResLoaded ? (this.state.res.thuIsClose ? "Close" : this.state.res.thuOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.thuIsClose ? "Close" : this.state.res.thuCloseTimeId.storeTimeName) : null}</p>
                                 <p>Friday {this.state.isResLoaded ? (this.state.res.friIsClose ? "Close" : this.state.res.friOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.friIsClose ? "Close" : this.state.res.friCloseTimeId.storeTimeName) : null}</p>
                                 <p>Saturday {this.state.isResLoaded ? (this.state.res.satIsClose ? "Close" : this.state.res.satOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.satIsClose ? "Close" : this.state.res.satCloseTimeId.storeTimeName) : null}</p>
                                 <p>Sunday {this.state.isResLoaded ? (this.state.res.sunIsClose ? "Close" : this.state.res.sunOpenTimeId.storeTimeName) : null} - {this.state.isResLoaded ? (this.state.res.sunIsClose ? "Close" : this.state.res.sunCloseTimeId.storeTimeName) : null}</p>
-                            
+
                                 <hr />
                                 <h6><GiKnifeFork />  Cuisine Style</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.cuisineStyleId.cuisineName : null}</p>
@@ -138,8 +139,8 @@ class Restaurant extends Component {
                                 <h6><FaRegMoneyBillAlt />  Price Range</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
-                                <h5><RiPercentLine/>  Promotions</h5>
-                                <p>{this.state.isResLoaded ? (this.state.discount.isActive ? this.state.discount.percent + "% Off Call for more information!" : "No Promotions at the moment"): null}</p>
+                                <h5><RiPercentLine />  Promotions</h5>
+                                <p>{this.state.isResLoaded ? (this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent + "% Off Call for more information!" : "No Promotions at the moment")) : null}</p>
 
                             </div>
                         </div>
