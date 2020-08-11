@@ -14,6 +14,7 @@ import { AiOutlinePhone } from "react-icons/ai";
 import { RiTimeLine, RiMapPin2Line, RiPercentLine } from "react-icons/ri";
 import serverAddress from "../../../Services/ServerUrl";
 import './customerReserve.css'
+import ImageNotFound from "../../../Image/image-not-available.jpg";
 
 class Reserve extends Component {
     constructor(props) {
@@ -471,7 +472,7 @@ class Reserve extends Component {
                                 </td>
                                 <td>
                                     <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                        <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/' + item.menuImageId : null} alt="Menu"></img>
+                                        <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/' + item.menuImageId : ImageNotFound} alt="Menu"></img>
                                     </div>
                                 </td>
                             </tr>
@@ -493,7 +494,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId: null} alt="mENU"></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId: ImageNotFound} alt="mENU"></img>
                             </div>
                         </td>
                     </tr>
@@ -511,7 +512,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId : null} alt="Menu"></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId : ImageNotFound} alt="Menu"></img>
                             </div>
                         </td>
                     </tr>
