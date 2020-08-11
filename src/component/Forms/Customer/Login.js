@@ -4,25 +4,19 @@ import MainContainer from "../../Style/MainContainer";
 import "./SignUp.js";
 import Parser from "html-react-parser";
 import $ from "jquery";
-// import $, { data } from "jquery";
-// import FaceBook from "../../../Image/FACEBOOK.PNG";
-// import Google from "../../../Image/google.PNG";
-// import Axios from "axios";
-// import serverAddress from "../../../Services/ServerUrl";
 import authService from "../../../Services/AuthService";
-// import authHeader from "../../../Services/authHeader";
 import sha256 from "crypto-js/sha256";
-//import FaceBook from "../../../Image/FACEBOOK.PNG";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import ds from "../../../Services/dataService";
 import FullscreenError from '../../Style/FullscreenError';
-import Axios from "axios";
 import { toast } from "react-toastify";
-import dataService from "../../../Services/dataService";
 import AuthService from "../../../Services/AuthService";
+
 //Validation
-const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
+const regExpEmail = RegExp(
+  /^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/
+);
 
 const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/

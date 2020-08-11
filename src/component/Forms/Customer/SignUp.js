@@ -9,7 +9,6 @@ import Axios from 'axios'
 import sha256 from 'crypto-js/sha256';
 import serverAddress from '../../../Services/ServerUrl';
 import FacebookLogin from "react-facebook-login";
-import Facebook from '../../../Image/FaceSign.jpg'
 import FullscreenError from '../../Style/FullscreenError'
 import AuthService from "../../../Services/AuthService";
 import dataService from "../../../Services/dataService";
@@ -17,7 +16,7 @@ import { toast } from "react-toastify";
 
 //Validation 
 const regExpEmail = RegExp(
-  /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
+  /^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/
 );
 
 const regExpPhone = RegExp(
@@ -28,10 +27,6 @@ const regExpPassword = RegExp(
   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,32}$/
 );
 
-//Facebook
-const responseFacebook = (response) => {
-  console.log(response);
-};
 
 const formValid = ({ isError, ...rest }) => {
   let isValid = false;
@@ -157,7 +152,7 @@ class SignUp extends Component {
         Axios.post(serverAddress + "/customersignup", this.state).then(res => {
           console.log(res)
           if (res.data.errcode === 0) {
-            $("#signResultText").text("Congrats, Please Login").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+            $("#signResultText").text("Congrats, Please confirm your email").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
               .addClass("alert-success");
           } else {
             $("#signResultText").text("Sorry, " + res.data.errmsg).removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
@@ -177,7 +172,7 @@ class SignUp extends Component {
   onSuccess(resp) {
     console.log(resp)
     AuthService.loginExternal(1, resp.wc.access_token, false).then(res => {
-      if (this.state.isExternal && this.state.externalType == 1) {
+      if (this.state.isExternal && this.state.externalType === 1) {
         toast("This Google account is already registered, please sign in :)")
         this.setState({ isExternal: false })
       }

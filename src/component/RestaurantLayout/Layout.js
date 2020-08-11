@@ -20,7 +20,7 @@ class Layout extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(this.state.tables!=nextProps.tables){
+        if(this.state.tables!==nextProps.tables){
             this.setState({tables: nextProps.tables})
         }
     }
@@ -38,7 +38,7 @@ class Layout extends Component {
             else if (theTable.capacity <= 10) tableImg = table_l;
             row.push(
                 <div key={theTable._id} className={cn + " r-table-s"} id={i}>
-                    <img src={tableImg} className={theTable.isOpen ? " img-responsive" : ""} />
+                    <img src={tableImg} className={theTable.isOpen ? " img-responsive" : ""} alt="Table"/>
                     {theTable.isOpen ?
                         <div className="overlay">
                             <h2>Click to Reserve</h2>
@@ -128,7 +128,7 @@ class Layout extends Component {
             else if (theTable.capacity <= 10) tableImg = table_l;
             row.push(
                 <div key={theTable._id} className={cn + " r-table-s"} id={i}>
-                    <img src={tableImg} className={theTable.isOpen ? " img-responsive" : ""} />
+                    <img src={tableImg} className={theTable.isOpen ? " img-responsive" : ""} alt="Table"/>
                     {theTable.isOpen ?
                         <div className="overlay">
                             <h2>Click to Reserve</h2>
@@ -175,9 +175,9 @@ class Layout extends Component {
         var tempRows = [];
 
 
-        for (var i in rows) { //generate slides
-            i = Number.parseInt(i)
-            if (i !== 0 && i % 3 === 0) {
+        for (var j in rows) { //generate slides
+            j = Number.parseInt(i)
+            if (j !== 0 && j % 3 === 0) {
                 slides.push(<Carousel.Item key={'slide'+slides.length}>
                     <div style={{marginLeft: '15%', marginRight: '15%'}}>
                         {tempRows}

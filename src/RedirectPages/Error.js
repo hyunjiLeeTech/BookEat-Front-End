@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { NavLink } from 'react-router-dom'
 import './Error.css'
 import $ from 'jquery';
 import MainContainer from '../component/Style/MainContainer';
