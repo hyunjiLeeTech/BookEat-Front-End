@@ -8,7 +8,7 @@ import FullScrrenLoading from '../Style/FullscreenLoading';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import ImageNotFound from '../../Image/image-not-available.jpg'
-//TODO: not attend button
+
 
 const regExpPrice = RegExp(
     /(\d+\.\d{2,2})/g
