@@ -155,7 +155,7 @@ class ViewCustomerProfile extends Component {
           .addClass("alert-success");
       }).catch((err) => {
         $("#customerProfileResultText")
-          .text("Sorry, " + err)
+          .text("Sorry, " + err.errmsg)
           .removeClass("alert-warning")
           .removeClass("alert-danger")
           .removeClass("alert-success")
