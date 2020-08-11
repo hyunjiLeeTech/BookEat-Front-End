@@ -10,23 +10,23 @@ function sleep(ms) {
 }
 
 export default {
-  notAttendReservation(reservationId){
-    return Axios.post(serverAddress + '/restaurant/notAttend', {reservationId: reservationId}, {headers: authHeader()})
-    .then(res=>{
-      if(res.data.errcode !== 0) throw res.data;
-      return res.data;
-    }).catch(err=>{
-      throw err;
-    })
+  notAttendReservation(reservationId) {
+    return Axios.post(serverAddress + '/restaurant/notAttend', { reservationId: reservationId }, { headers: authHeader() })
+      .then(res => {
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data;
+      }).catch(err => {
+        throw err;
+      })
   },
-  validateTimeStamp(info){
+  validateTimeStamp(info) {
     return Axios.post(serverAddress + '/validateResetPasswrodTimestamp', info)
-    .then(res=>{
-      if(res.data.errcode !== 0) throw res.data;
-      return res.data;
-    }).catch(err=>{
-      throw err;
-    })
+      .then(res => {
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data;
+      }).catch(err => {
+        throw err;
+      })
   },
   externalSignUp(info) {
     return Axios.post(serverAddress + '/signupExternal', info)
@@ -635,7 +635,7 @@ export default {
     return Axios.post(serverAddress + "/discount/adddiscount", state, {
       headers: authHeader()
     }).then((res) => {
-      if(res.data.errcode !== 0) throw res.data;
+      if (res.data.errcode !== 0) throw res.data;
       return res.data
     }).catch((err) => {
       console.log(err);
