@@ -10,23 +10,23 @@ function sleep(ms) {
 }
 
 export default {
-  notAttendReservation(reservationId){
-    return Axios.post(serverAddress + '/restaurant/notAttend', {reservationId: reservationId}, {headers: authHeader()})
-    .then(res=>{
-      if(res.data.errcode !== 0) throw res.data;
-      return res.data;
-    }).catch(err=>{
-      throw err;
-    })
+  notAttendReservation(reservationId) {
+    return Axios.post(serverAddress + '/restaurant/notAttend', { reservationId: reservationId }, { headers: authHeader() })
+      .then(res => {
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data;
+      }).catch(err => {
+        throw err;
+      })
   },
-  validateTimeStamp(info){
+  validateTimeStamp(info) {
     return Axios.post(serverAddress + '/validateResetPasswrodTimestamp', info)
-    .then(res=>{
-      if(res.data.errcode !== 0) throw res.data;
-      return res.data;
-    }).catch(err=>{
-      throw err;
-    })
+      .then(res => {
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data;
+      }).catch(err => {
+        throw err;
+      })
   },
   externalSignUp(info) {
     return Axios.post(serverAddress + '/signupExternal', info)
@@ -635,7 +635,7 @@ export default {
     return Axios.post(serverAddress + "/discount/adddiscount", state, {
       headers: authHeader()
     }).then((res) => {
-      if(res.data.errcode !== 0) throw res.data;
+      if (res.data.errcode !== 0) throw res.data;
       return res.data
     }).catch((err) => {
       console.log(err);
@@ -671,6 +671,18 @@ export default {
       }
       throw err;
     })
+  },
+  activateManage(state) {
+    return Axios.post(serverAddress + "/discount/activatemanagediscount", state, { headers: authHeader() })
+      .then((res) => {
+        return res.data;
+      }).catch((err) => {
+        if (err.response && err.response.status === 401) {
+          window.location.href = '/error?Hint=Permission Denied(deleteDiscount)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
+          return;
+        }
+        throw err;
+      })
   },
   deleteDiscount(state) {
     return Axios.post(serverAddress + "/discount/deletediscount", state, {
