@@ -672,18 +672,6 @@ export default {
       throw err;
     })
   },
-  activateManage(state) {
-    return Axios.post(serverAddress + "/discount/activatemanagediscount", state, { headers: authHeader() })
-      .then((res) => {
-        return res.data;
-      }).catch((err) => {
-        if (err.response && err.response.status === 401) {
-          window.location.href = '/error?Hint=Permission Denied(deleteDiscount)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
-          return;
-        }
-        throw err;
-      })
-  },
   deleteDiscount(state) {
     return Axios.post(serverAddress + "/discount/deletediscount", state, {
       headers: authHeader()
