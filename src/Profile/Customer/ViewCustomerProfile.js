@@ -9,6 +9,8 @@ import CustomerReservationHistory from "../../Reservation/Customer/CustomerReser
 import CustomerReviewHistory from "../../Review/Customer/CustomerReviewHistory"
 import FullscreenError from "../../component/Style/FullscreenError"
 import dataService from "../../Services//dataService";
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
 const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
@@ -53,10 +55,64 @@ class ViewCustomerProfile extends Component {
       disabled: true,
       resultsErr: false,
       isResLoaded: false,
+      emailConfirm: '',
+      isModalShow: false,
+      modalTitle: '',
+      modalBody: '',
+      modalButtons: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSubmitCustomerProfile = this.handleSubmitCustomerProfile.bind(this);
+    this.deleteAccountModal = this.deleteAccountModal.bind(this);
+
+  }
+
+  deleteAccountModal() {
+
+
+    var handleFinish = () => {
+      var body3 = [<p>Please Wait</p>]
+      this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body3, modalButtons: null })
+      dataService.deleteAccountCustomer().then(res => {
+        console.log(res);
+        this.setState({isDeleted: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>You account is deleted.</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
+      }).catch(err => {
+        this.setState({isModalShow: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>Sorry,{err.errmsg? err.errmsg : 'We cannot delete your account'}</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
+      })
+
+
+    }
+    var handleNext = () => {
+      console.log('Next')
+      var body2 = [<p>Please explain why do you want to leave BookEat(Optional): </p>
+        ,
+      <input type='text' id='delemailconfirm' className='form-control'
+      />]
+      var buttons2 = [<Button variant='danger' onClick={handleFinish} >Delete Account</Button>]
+      this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body2, modalButtons: buttons2 })
+    }
+    var cn = this.state.emailConfirm === this.state.email ? 'form-control is-valid' : 'form-control is-invalid'
+    var body =
+      [<p>Please enter your email first: </p>
+        ,
+      <input type='text' onChange={(e) => {
+        this.setState({ emailConfirm: e.target.value }, () => {
+          console.log(this.state.emailConfirm)
+          console.log(this.state.email)
+          console.log(this.state.emailConfirm === this.state.email)
+          cn = this.state.emailConfirm === this.state.email ? 'form-control is-valid' : 'form-control is-invalid'
+          $('#delemailconfirm').removeClass('form-control is-valid is-invalid').addClass(cn);
+          $('#delmailconfirmbtn').prop('disabled', this.state.emailConfirm === this.state.email ? '' : 'disabled')
+        })
+      }} id='delemailconfirm' className='form-control is-invalid'
+      />
+      ]
+    var buttons = [<Button variant='primary' onClick={handleNext} id='delmailconfirmbtn'>Next</Button>];
+    this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body, modalButtons: buttons }, ()=>{
+      $('#delmailconfirmbtn').prop('disabled', this.state.emailConfirm === this.state.email ? '' : 'disabled')
+
+    })
   }
 
   handleChange = (e) => {
@@ -191,11 +247,12 @@ class ViewCustomerProfile extends Component {
     //TODO: feedbacks
     const deleteAccount = () => {
       console.log('starting delete account')
-      dataService.deleteAccountCustomer().then(res => {
-        console.log(res);
-      }).catch(err => {
-        console.log(err)
-      })
+      this.deleteAccountModal();
+    }
+
+    const handleClose = () => {
+      if(this.state.idDeleted) window.location.href = '/logout'
+      this.setState({ isModalShow: false })
     }
     return (
       <MainContainer>
@@ -325,7 +382,6 @@ class ViewCustomerProfile extends Component {
                   <div className="form-group text-center ">
                     {/* <Link to="/"> */}
                     <button type="button" className="btn btn-primary mr-sm-4 "
-                      data-toggle="modal" data-target="#AccountDeleteResultModal"
                       onClick={deleteAccount}
                     >
                       Delete
@@ -435,7 +491,15 @@ class ViewCustomerProfile extends Component {
             </div>
           </div>
         </div>
-
+        <Modal show={this.state.isModalShow} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.state.modalTitle} </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.modalBody}</Modal.Body>
+          <Modal.Footer>
+            {this.state.modalButtons}
+          </Modal.Footer>
+        </Modal>
       </MainContainer>
     );
   }

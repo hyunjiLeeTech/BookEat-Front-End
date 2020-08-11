@@ -28,11 +28,25 @@ class RestaurantReservation extends Component {
         this.viewFoodOrder = this.viewFoodOrder.bind(this);
     }
 
+    notAttend(reservationId) {
+        const infoToast = toast("Please Wait", { autoClose: false })
+        dataService.restaurantCancelReservation(reservationId).then(res => {
+            toast.update(infoToast, { render: "Not attend reported, thanks!", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
+            $("#" + reservationId + "btnNotAttend").attr('disabled', 'true').text("Cancelled")
+        }).catch(err => {
+            if (err.errcode) {
+                toast.update(infoToast, { render: err.errmsg, type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated' })
+            } else {
+                toast.update(infoToast, { render: "error occured", type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated' })
+            }
+        })
+    }
+
     cancelReservation(reservationId) {
         const infoToast = toast("Please Wait", { autoClose: false })
         dataService.restaurantCancelReservation(reservationId).then(res => {
             toast.update(infoToast, { render: "Reservation cancelled", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
-            $("#" + reservationId + "btn").attr('disabled', 'true').text("Cancelled")
+            $("#" + reservationId + "btnCancel").attr('disabled', 'true').text("Cancelled")
         }).catch(err => {
             if (err.errcode) {
                 toast.update(infoToast, { render: err.errmsg, type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated' })
@@ -46,7 +60,7 @@ class RestaurantReservation extends Component {
         const infoToast = toast("Please Wait", { autoClose: false })
         dataService.restaurantConfirmReservation(reservationId).then(res => {
             toast.update(infoToast, { render: "Reservation confirm", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
-            $("#" + reservationId + "btn").attr('disabled', 'true').text("Confirm")
+            $("#" + reservationId + "btnConfirm").attr('disabled', 'true').text("Confirm")
         }).catch(err => {
             if (err.errcode) {
                 toast.update(infoToast, { render: err.errmsg, type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated' })
@@ -109,7 +123,7 @@ class RestaurantReservation extends Component {
                                 id={ro._id + 'btn'}
                                 value={ro.FoodOrder}
                                 onClick={() => this.viewFoodOrder(this.state.upcoming[index].FoodOrder)}>
-                                    View Order
+                                View Order
                                 </button> : null
                     }
 
@@ -119,7 +133,7 @@ class RestaurantReservation extends Component {
 
                 <td>
                     <button type="button" className="btn btn-success btn-sm"
-                        id={ro._id + 'btn'}
+                        id={ro._id + 'btnConfirm'}
                         onClick={() => this.confirmAttandance(this.state.upcoming[index]._id)}>
                         Confirm Attandance
                         </button>
@@ -127,10 +141,17 @@ class RestaurantReservation extends Component {
 
                 <td>
                     <button type="button" className="btn btn-danger btn-sm"
-                        id={ro._id + 'btn'}
+                        id={ro._id + 'btnCancel'}
                         onClick={() => this.cancelReservation(this.state.upcoming[index]._id)}
                     >
                         Cancel Reservation </button>
+                </td>                
+                <td>
+                    <button type="button" className="btn btn-danger btn-sm"
+                        id={ro._id + 'btnNotAttend'}
+                        onClick={() => this.cancelReservation(this.state.upcoming[index]._id)}
+                    >
+                        Report Not Attend </button>
                 </td>
 
             </tr>
@@ -148,51 +169,51 @@ class RestaurantReservation extends Component {
         })
     }
 
-    renderPast() { 
+    renderPast() {
         const renderStatusClassName = (status) => {
             switch (status) {
-              case 0: return 'alert alert-success'
-              case 1: return 'alert alert-error'
-              case 2: return 'alert alert-info'
-              case 3:
-              case 4: return 'alert alert-warning'
-              default: return ''
+                case 0: return 'alert alert-success'
+                case 1: return 'alert alert-error'
+                case 2: return 'alert alert-info'
+                case 3:
+                case 4: return 'alert alert-warning'
+                default: return ''
             }
-          }
-        var row = this.state.past.map((r, index) => 
-        <tr key={index} className={renderStatusClassName(r.status)}>
-            <td >
-                {r.customer.firstName + " " + r.customer.lastName}
-            </td>
+        }
+        var row = this.state.past.map((r, index) =>
+            <tr key={index} className={renderStatusClassName(r.status)}>
+                <td >
+                    {r.customer.firstName + " " + r.customer.lastName}
+                </td>
 
-            <td >
-                {r.table.rid}
-            </td>
+                <td >
+                    {r.table.rid}
+                </td>
 
-            <td >
-                {r.dateTime}
-            </td>
+                <td >
+                    {r.dateTime}
+                </td>
 
-            <td >
-                {r.numOfPeople}
-            </td>
+                <td >
+                    {r.numOfPeople}
+                </td>
 
-            <td >
-                {r.comments}
-            </td>
-            <td>
-                {
+                <td >
+                    {r.comments}
+                </td>
+                <td>
+                    {
 
 
-                    r.FoodOrder ?
+                        r.FoodOrder ?
 
-                        <button type="button" className="btn btn-primary btn-sm"
-                            id={r._id + 'btn'}
-                            onClick={() => this.viewFoodOrder(this.state.past[index].FoodOrder)}>
-                    View Order
+                            <button type="button" className="btn btn-primary btn-sm"
+                                id={r._id + 'btn'}
+                                onClick={() => this.viewFoodOrder(this.state.past[index].FoodOrder)}>
+                                View Order
                 </button> : null
-                }</td>
-        </tr>)
+                    }</td>
+            </tr>)
         return row;
     }
 
@@ -214,8 +235,8 @@ class RestaurantReservation extends Component {
         e.preventDefault();
     }
 
-    queryItemsInfinite(){
-        setTimeout(()=>{
+    queryItemsInfinite() {
+        setTimeout(() => {
             this.querypast();
             this.queryPresent();
             this.queryItemsInfinite();
