@@ -41,7 +41,6 @@ export default {
   getDaily() {
     return Axios.get(serverAddress + '/daily').then(res => {
       if (res.data.errcode !== 0) throw res.data
-      console.log(res.data)
       return res.data;
     }).catch(err => {
       throw err
@@ -49,7 +48,6 @@ export default {
   }, getFeatured() {
     return Axios.get(serverAddress + '/featured').then(res => {
       if (res.data.errcode !== 0) throw res.data
-      console.log(res.data)
       return res.data;
     }).catch(err => {
       throw err
@@ -57,7 +55,6 @@ export default {
   }, getFavorite() {
     return Axios.get(serverAddress + '/favorite').then(res => {
       if (res.data.errcode !== 0) throw res.data
-      console.log(res.data)
       return res.data;
     }).catch(err => {
       throw err
@@ -67,7 +64,6 @@ export default {
     return Axios.get(serverAddress + "/restaurants/" + restaurantId)//TODO: remove if production
       .then(res => {
         if (res.data.errcode !== 0) throw res.data
-        console.log(res.data)
         return res.data;
       }).catch(err => {
         throw err
@@ -176,7 +172,6 @@ export default {
         }
         return res.data
       }).catch(err => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(addTable)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -193,7 +188,6 @@ export default {
         }
         return res.data
       }).catch(err => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(updateTable)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -210,7 +204,6 @@ export default {
         }
         return res.data
       }).catch(err => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(deleteTable)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -222,6 +215,7 @@ export default {
   confirmEmail(accountId) {
     return Axios.get(serverAddress + '/verifyEmail/' + accountId)
       .then(res => {
+        if (res.data.errcode !== 0) throw res.data;
         return (res.data)
       }).catch(err => {
         throw err
@@ -323,7 +317,6 @@ export default {
           window.location.href = '/error?Hint=Permission Denied(restaurantCancelReservation)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
         }
-        console.log(err);
         throw (err);
         //TODO: errhandling
       })
@@ -339,7 +332,6 @@ export default {
           window.location.href = '/error?Hint=Permission Denied(customerCancelReservation)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
         }
-        console.log(err);
         throw (err);
         //TODO: errhandling
       })
@@ -356,7 +348,6 @@ export default {
         window.location.href = '/error?Hint=Permission Denied(changeAccountPassword)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
       }
-      console.log(err);
       throw (err);
       //TODO: errhandling
     })
@@ -400,10 +391,10 @@ export default {
       headers: authHeader(), //set auth header
     })
       .then(function (res) {
-        return res.data;
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       })
       .catch((err) => {
-        console.log(err)
         throw err;
       }); //TODO: err handling needs to be finished
   },
@@ -412,7 +403,8 @@ export default {
       headers: authHeader(),
     })
       .then(function (res) {
-        return res.data;
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       })
       .catch((err) => {
         throw err;
@@ -423,7 +415,8 @@ export default {
       headers: authHeader(),
     })
       .then((res) => {
-        return res.data;
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       })
       .catch((err) => {
         throw err;
@@ -464,11 +457,10 @@ export default {
       headers: authHeader(),
     })
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode !== 0) throw res.data;
         return res.data
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(editRestaurantProfile)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -481,10 +473,10 @@ export default {
       headers: authHeader(),
     })
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(editManagerProfile)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -496,7 +488,8 @@ export default {
     Axios.post(serverAddress + "/updatecustomerinfo", state, {
       headers: authHeader(),
     }).then((res) => {
-      return res.data;
+      if (res.data.errcode !== 0) throw res.data;
+      return res.data
     }).catch(err => {
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(updateCustomerInformation)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -514,7 +507,6 @@ export default {
         return res.data
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(createManagerAccount)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -546,10 +538,10 @@ export default {
       }
     )
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(deleteManagerAccount)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -562,10 +554,10 @@ export default {
       headers: authHeader(),
     })
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(editCustomerProfile)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -580,7 +572,6 @@ export default {
       if (res.data.errcode !== 0) throw res.data;
       return res.data;
     }).catch((err) => {
-      console.log(err);
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(addMenu)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
@@ -594,7 +585,6 @@ export default {
     }).then((res) => {
       return res.data
     }).catch((err) => {
-      console.log(err)
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(getMenus)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
@@ -621,9 +611,9 @@ export default {
     return Axios.post(serverAddress + "/menu/deletemenu", state, {
       headers: authHeader()
     }).then((res) => {
-      console.log(res);
+      if (res.data.errcode === 1) throw data
+      return res.data;
     }).catch((err) => {
-      console.log(err);
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(deleteMenu)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
@@ -638,7 +628,6 @@ export default {
       if (res.data.errcode !== 0) throw res.data;
       return res.data
     }).catch((err) => {
-      console.log(err);
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(addDiscount)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
@@ -692,7 +681,6 @@ export default {
       return res.data.menuImage;
 
     }).catch(err => {
-      console.log(err)
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(addMenuImage)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
@@ -705,7 +693,6 @@ export default {
     return await Axios.post(serverAddress + "/editMenuImage", formData, config).then((res) => {
       return res.data.menuImage;
     }).catch(err => {
-      console.log(err)
       if (err.response && err.response.status === 401) {
         window.location.href = '/error?Hint=Permission Denied(editMenuImage)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
         return;
@@ -717,11 +704,11 @@ export default {
     console.log("delete image start");
     return await Axios.delete(`${serverAddress}/deleteImage/${state}`)
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode === 1) throw data
+      return res.data;
         return res;
       })
       .catch((err) => {
-        console.log(err);
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(deleteImage)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
           return;
@@ -735,7 +722,7 @@ export default {
         return res;
       })
       .catch((err) => {
-        console.log(err);
+       
 
         throw err
       });
@@ -791,9 +778,7 @@ export default {
       })
   },
   async addPictures(formData, config) {
-    console.log("add pictures start");
     return await Axios.post(serverAddress + "/addPictures", formData, config).then((res) => {
-      console.log("add pictures done");
       return res.data.pictures;
     }).catch(err => {
       if (err.response && err.response.status === 401) {
@@ -807,7 +792,8 @@ export default {
     return Axios.post(serverAddress + "/review/editreview", state,
       { headers: authHeader() })
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode === 1) throw data
+      return res.data;
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(editReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -820,7 +806,8 @@ export default {
   deleteReview(state) {
     return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(deleteReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -832,7 +819,8 @@ export default {
   updateResPictures(state) {
     return Axios.post(serverAddress + "/restaurant/updaterespictures", state, { headers: authHeader() })
       .then((res) => {
-        console.log(res);
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(updateResPictures)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -844,7 +832,8 @@ export default {
   deleteImages(state) {
     return Axios.delete(serverAddress + "/deleteimages", { params: { pictures: state } })
       .then((res) => {
-        console.log(res.data);
+        if (res.data.errcode !== 0) throw res.data;
+        return res.data
       })
   },
   getReviewsWithoutSignup(id) {

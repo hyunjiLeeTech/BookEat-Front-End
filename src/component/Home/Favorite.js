@@ -15,7 +15,6 @@ class Favorite extends Component {
         }
         dataService.getFavorite().then(res=>{
             this.setState({restaruants: res.restaruants})
-            console.log(this.state)
         }).catch(err=>{
             toast('error', {type: 'error'})
         })
