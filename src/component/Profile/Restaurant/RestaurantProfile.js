@@ -16,6 +16,8 @@ import ViewReview from "../../Review/Restaurant/ViewReview";
 import serverAddress from '../../../Services/ServerUrl';
 import Discount from '../../Restaurant/Discount';
 import dataService from "../../../Services/dataService";
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -130,7 +132,12 @@ class RestaurantProfile extends Component {
         description: "&#160;",
         picture: "&#160;",
         eatingTime: "&#160;"
-      }
+      },
+      emailConfirm: '',
+      isModalShow: false,
+      modalTitle: '',
+      modalBody: '',
+      modalButtons: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -142,6 +149,52 @@ class RestaurantProfile extends Component {
     this.editResProfileWithPictures = this.editResProfileWithPictures.bind(this);
     this.handleNotOpen = this.handleNotOpen.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
+    this.deleteAccountModal = this.deleteAccountModal.bind(this);
+  }
+
+  deleteAccountModal() {
+    var handleFinish = () => {
+      var body3 = [<p>Please Wait</p>]
+      this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body3, modalButtons: null })
+      dataService.deleteAccountCustomer().then(res => {
+        console.log(res);
+        this.setState({isDeleted: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>You account is deleted.</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
+      }).catch(err => {
+        this.setState({isModalShow: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>Sorry,{err.errmsg? err.errmsg : 'We cannot delete your account'}</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
+      })
+
+
+    }
+    var handleNext = () => {
+      console.log('Next')
+      var body2 = [<p>Please explain why do you want to leave BookEat(Optional): </p>
+        ,
+      <input type='text' id='delemailconfirm' className='form-control'
+      />]
+      var buttons2 = [<Button variant='danger' onClick={handleFinish} >Delete Account</Button>]
+      this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body2, modalButtons: buttons2 })
+    }
+    var cn = this.state.emailConfirm === this.state.email ? 'form-control is-valid' : 'form-control is-invalid'
+    var body =
+      [<p>Please enter your email first: </p>
+        ,
+      <input type='text' onChange={(e) => {
+        this.setState({ emailConfirm: e.target.value }, () => {
+          console.log(this.state.emailConfirm)
+          console.log(this.state.email)
+          console.log(this.state.emailConfirm === this.state.email)
+          cn = this.state.emailConfirm === this.state.email ? 'form-control is-valid' : 'form-control is-invalid'
+          $('#delemailconfirm').removeClass('form-control is-valid is-invalid').addClass(cn);
+          $('#delmailconfirmbtn').prop('disabled', this.state.emailConfirm === this.state.email ? '' : 'disabled')
+        })
+      }} id='delemailconfirm' className='form-control is-invalid'
+      />
+      ]
+    var buttons = [<Button variant='primary' onClick={handleNext} id='delmailconfirmbtn'>Next</Button>];
+    this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body, modalButtons: buttons }, ()=>{
+      $('#delmailconfirmbtn').prop('disabled', this.state.emailConfirm === this.state.email ? '' : 'disabled')
+
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -754,10 +807,15 @@ class RestaurantProfile extends Component {
   render() {
     const deleteRoAccount = () => {
       dataService.deleteAccountRestaurantOwner().then(res => {
+        this.deleteAccountModal();
         console.log(res)
       }).catch(err => {
         console.log(err)
       })
+    }
+    const handleClose = () => {
+      if(this.state.idDeleted) window.location.href = '/logout'
+      this.setState({ isModalShow: false })
     }
     const { isError } = this.state;
     return (
@@ -1693,7 +1751,7 @@ class RestaurantProfile extends Component {
                       Delete
                     </button>
                       {/* Delete Modal */}
-                      <div
+                      {/* <div
                         className="modal fade"
                         id="deleteRestaurantModal"
                         tabIndex="-1"
@@ -1718,7 +1776,7 @@ class RestaurantProfile extends Component {
                             </div>
                             <div className="modal-body">
                               <p className="alert alert-warning" id="deleteRestaurantText">
-                                Please Wait...
+                                Are you sure?
                 </p>
                             </div>
                             <div className="modal-footer">
@@ -1731,8 +1789,8 @@ class RestaurantProfile extends Component {
                 </button>
                             </div>
                           </div>
-                        </div>
-                      </div>
+                        </div> 
+                      </div>*/}
 
                     </div>
                   </div>
@@ -1893,52 +1951,19 @@ class RestaurantProfile extends Component {
                   </div>
                 </div>
               </div>
-
-              {/* Delete Restaurant Modal */}
-              <div
-                className="modal fade"
-                id="deleteRestaurantModal"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="ddeleteRestaurantModalLabel"
-                aria-hidden="true"
-              >
-                <div className="modal-dialog" role="document">
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="deleteRestaurantModalLabel">
-                        Delete Restaurant Profile
-                </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      <p className="alert alert-warning" id="deleteRestaurantModalText">
-                        Please Wait...
-                </p>
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-primary"
-                        data-dismiss="modal"
-                      >
-                        Close
-                </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+       
             </div>
           </div>
         </div>
+        <Modal show={this.state.isModalShow} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.state.modalTitle} </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>{this.state.modalBody}</Modal.Body>
+          <Modal.Footer>
+            {this.state.modalButtons}
+          </Modal.Footer>
+          </Modal>
       </MainContainer >
     );
   }

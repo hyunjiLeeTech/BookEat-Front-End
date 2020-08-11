@@ -446,50 +446,7 @@ class ViewCustomerProfile extends Component {
             </div>
           </div>
         </div>
-
-        {/* DeleteProfileModal */}
-
-        <div
-          className="modal fade"
-          id="AccountDeleteResultModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="AccountDeleteResultModal"
-          aria-hidden="true"
-        >
-
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="AccountDeleteResultModal">
-                  Delete Profile
-                            </h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <p className="alert alert-warning" id="DeleteResultModalText">
-                  Please Wait...
-                  </p>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-dismiss="modal"
-                >
-                  Close
-                  </button>
-              </div>
-            </div>
-          </div>
-        </div>
+  
         <Modal show={this.state.isModalShow} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.modalTitle} </Modal.Title>
