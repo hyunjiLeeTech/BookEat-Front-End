@@ -61,10 +61,6 @@ class AuthService {
     getCurrentUser() {
         return JSON.parse(localStorage.getItem('user'));;
     }
-    //TODO: get suer from server side
-    getCurrentUserFromServer(){
-        return {};
-    }
 }
 
 export default new AuthService();

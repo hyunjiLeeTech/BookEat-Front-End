@@ -11,7 +11,7 @@ class Star extends Component {
         }
     }
     componentWillReceiveProps(props){
-        if(!props.isClickAble && this.props != props){
+        if(!props.isClickAble && this.props !== props){
             this.setState({
                 isClickAble: props.isClickAble,
                 type: props.type,
@@ -20,11 +20,11 @@ class Star extends Component {
         }
     }
 
-    tr = (isClickAble, type, star, clickedCallback) => {
+    mrender = (isClickAble, type, star, clickedCallback) => {
 
         var bar = (p, width) => {
             return (
-                <div className="progress" style={{ width: width }}>
+                <div key={Math.random()+Math.random()+Math.random} className="progress" style={{ width: width }}>
                     <div className="progress-bar" role="progressbar" aria-valuenow="60"
                         aria-valuemin="0" aria-valuemax="100" style={{ width: p + '%', background: '#ffc107' }}>
                         <span className="sr-only">{p}</span>
@@ -67,14 +67,13 @@ class Star extends Component {
 
         var bars = [];
         var btns = [];
-
+        var tr = '';
         switch (type) {
             default:
             case 'bar':
                 return bar(star * 20, '100%')
-                break;
             case 'splitedBar':
-                for (var i = 0; i < 5; i++) {
+                for (let i = 0; i < 5; i++) {
                     if (star >= 1) {
                         bars.push(bar(100, '20%'));
                         star--;
@@ -86,14 +85,13 @@ class Star extends Component {
                     }
                 }
 
-                var tr = <div className="row">
+                 tr = <div className="row">
                     {bars}
                 </div>
 
                 return tr;
-                break;
             case 'star':
-                for (var i = 0; i < 5; i++) {
+                for (let i = 0; i < 5; i++) {
                     if (star >= 1) {
                         btns.push(starBtn(true, '⭐', isClickAble, i));
                         star--;
@@ -101,7 +99,7 @@ class Star extends Component {
                         btns.push(starBtn(false, '⭐', isClickAble, i))
                     }
                 }
-                var tr = <div className="row">
+                 tr = <div className="row">
                     {btns}
                 </div>
                 return tr;
@@ -114,7 +112,7 @@ class Star extends Component {
                         btns.push(starBtn(false, '', isClickAble, i))
                     }
                 }
-                var tr = <div className="row">
+                 tr = <div className="row">
                     {btns}
                 </div>
                 return tr;
@@ -126,7 +124,7 @@ class Star extends Component {
 
     }
     render() {
-        return this.tr(this.state.isClickAble, this.state.type, this.state.stars, this.props.callback)
+        return this.mrender(this.state.isClickAble, this.state.type, this.state.stars, this.props.callback)
     }
 }
 

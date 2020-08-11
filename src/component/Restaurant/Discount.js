@@ -130,9 +130,8 @@ class Discount extends Component {
         ds.addDiscount(discount).then(() => {
             this.queryDiscounts();
             this.setModal(true, 'Success', 'Discount added', 'alert alert-success');
-
         }).catch((err) => {
-            this.setModal(true, 'Failed', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger');
+            this.setModal(true, 'Failed', err.errmsg && typeof err.errmsg === 'string' ? err.errmsg : 'Error, failed to add discount', 'alert alert-danger');
             console.log(err);
         });
 
@@ -220,21 +219,8 @@ class Discount extends Component {
     }
 
     handleActive = (promotion) =>{
-        console.log( promotion + "click");
-        if(promotion === "curr"){
-           if(this.state.isActive === true){
-               this.state.isActive = false;
-            $("#promdescription").prop("disabled", false);
-            $("#discdescription").prop("disabled", false);
-        }else{
-            this.state.isActive = true;
-            $("#promdescription").prop("disabled", true);
-            $("#discdescription").prop("disabled", true);
-        } 
-        }
-       
-        console.log(this.state);
-        
+        promotion.isActive = !promotion.isActive
+        this.forceUpdate();
     }
 
     renderDataDiscount() {
@@ -245,7 +231,7 @@ class Discount extends Component {
 
                         <input type="text" id="discdescription" name="discdescription"
                             value={this.state.discounts[index].percent}
-                            disabled={(!this.state.discounts[index].contentTable) || this.state.discounts[index].isActive.contentTable}
+                            disabled={(!this.state.discounts[index].contentTable) || !this.state.discounts[index].isActive}
                             onChange={(e) => this.handleChangeInList(e, index)} />
                     </th>
                     <th>
@@ -254,7 +240,7 @@ class Discount extends Component {
                             id="promdescription"
                             name="promdescription"
                             defaultValue={this.state.discounts[index].description}
-                            disabled={(!this.state.discounts[index].contentTable) || this.state.discounts[index].isActive.contentTable}
+                            disabled={(!this.state.discounts[index].contentTable) || !this.state.discounts[index].isActive}
                             onChange={(e) => this.handleChangeInList(e, index)}
                         ></textarea>
 
@@ -262,12 +248,12 @@ class Discount extends Component {
                     </th>
                     <th>
                         <button id="active"
-                        className="btn btn-outline-dark"
-                        onClick={() => this.handleActive("curr")}
+                        className={this.state.discounts[index].isActive ? 'btn btn-primary' : "btn btn-grey"}
+                        onClick={() => this.handleActive(this.state.discounts[index])}
                         disabled={(!this.state.discounts[index].contentTable)}
                         value={this.state.discounts[index].isActive}
                         >
-                            Promotion
+                            {this.state.discounts[index].isActive? 'On' : 'Off'}
                         </button>
                     </th>
                     <th>

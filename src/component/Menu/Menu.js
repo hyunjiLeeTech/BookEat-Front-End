@@ -7,7 +7,7 @@ import serverAddress from '../../Services/ServerUrl';
 import FullScrrenLoading from '../Style/FullscreenLoading';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-
+import ImageNotFound from '../../Image/image-not-available.jpg'
 //TODO: not attend button
 
 const regExpPrice = RegExp(
@@ -326,7 +326,7 @@ class Menu extends Component {
                                             :
 
                                             <div>
-                                                <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={serverAddress + '/getImage/' + this.state.menus[index].menuImageId} alt="Menu" />
+                                                <img id={"MenuPicture" + index} style={{ maxHeight: '100%', maxWidth: '100%' }} src={this.state.menus[index].menuImageId ? serverAddress + '/getImage/' + this.state.menus[index].menuImageId : ImageNotFound} alt="Menu" />
 
                                             </div>
                                     }
@@ -462,7 +462,7 @@ class Menu extends Component {
                                 <div className="container">
                                     <div className="row">
                                         <input type="file" name="menuPicture" id="menuPicture" onChange={this.onImageChange} />
-                                        <img src={this.state.image ? URL.createObjectURL(this.state.image) : null} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Menu" />
+                                        <img src={this.state.image ? URL.createObjectURL(this.state.image) : ImageNotFound} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Menu" />
 
                                     </div>
                                 </div>

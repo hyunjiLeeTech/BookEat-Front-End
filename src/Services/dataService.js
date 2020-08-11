@@ -635,8 +635,8 @@ export default {
     return Axios.post(serverAddress + "/discount/adddiscount", state, {
       headers: authHeader()
     }).then((res) => {
-      console.log(res);
-
+      if(res.data.errcode !== 0) throw res.data;
+      return res.data
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {

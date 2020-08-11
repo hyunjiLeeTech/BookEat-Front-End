@@ -3,22 +3,21 @@ import MainContainer from "../../Style/MainContainer";
 import Parser from "html-react-parser";
 import $ from "jquery";
 import "./ViewCustomerProfile.css";
-import ds from "../../../Services/dataService";
 import ChangePassword from "../../../component/Forms/Customer/ChangePassword"
 import CustomerReservationHistory from "../../Reservation/Customer/CustomerReservationHistory"
 import CustomerReviewHistory from "../../Review/Customer/CustomerReviewHistory"
-import FullscreenError from "../../component/Style/FullscreenError"
-import dataService from "../../Services//dataService";
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
-
+import dataService from "../../../Services/dataService";
+import ds from "../../../Services/dataService";
+import FullscreenError from '../../Style/FullscreenError'
 const regExpPhone = RegExp(
   /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/
 );
 
 const formValid = ({ isError, ...customer }) => {
   let isValid = false;
-
+  
   Object.values(isError).forEach((val) => {
     if (val.length > 0) {
       isValid = false;
@@ -26,7 +25,7 @@ const formValid = ({ isError, ...customer }) => {
       isValid = true;
     }
   });
-
+  
   Object.values(customer).forEach((val) => {
     console.log(customer);
     if (val === null) {

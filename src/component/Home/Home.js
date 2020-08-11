@@ -26,7 +26,7 @@ class Home extends Component {
                 <div className="container">
                     <br />
                     <div id="carouselExampleSlidesOnly" className="carousel slide" data-ride="carousel">
-                        <div className="carousel-inner">
+                        <div className="carousel-inner" id='my-carousel-inner'>
                             <div className="carousel-item active">
                                 <img className="d-block" src={CAFE} alt="First slide" />
                             </div>

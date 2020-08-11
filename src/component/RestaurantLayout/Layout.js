@@ -176,7 +176,7 @@ class Layout extends Component {
 
 
         for (var j in rows) { //generate slides
-            j = Number.parseInt(i)
+            j = Number.parseInt(j)
             if (j !== 0 && j % 3 === 0) {
                 slides.push(<Carousel.Item key={'slide'+slides.length}>
                     <div style={{marginLeft: '15%', marginRight: '15%'}}>
@@ -185,7 +185,7 @@ class Layout extends Component {
                 </Carousel.Item>)
                 tempRows = new Array();
             }
-            tempRows.push(rows[i])
+            tempRows.push(rows[j])
         }
 
 

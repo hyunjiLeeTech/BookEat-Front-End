@@ -16,6 +16,7 @@ class RestaurantReservation extends Component {
             isModalShow: false,
             modalTitle: '',
             modalText: '',
+            timer: null,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -143,7 +144,7 @@ class RestaurantReservation extends Component {
                         onClick={() => this.cancelReservation(this.state.upcoming[index]._id)}
                     >
                         Cancel Reservation </button>
-                </td>                
+                </td>
                 <td>
                     <button type="button" className="btn btn-danger btn-sm"
                         id={ro._id + 'btnNotAttend'}
@@ -160,7 +161,6 @@ class RestaurantReservation extends Component {
 
     queryPresent() {
         dataService.getRestaurantUpcomingReservation().then(res => {
-            toast('Upcoming updated')
             this.setState({
                 upcoming: res.reservations,
             })
@@ -217,8 +217,6 @@ class RestaurantReservation extends Component {
 
     querypast() {
         dataService.getRestaurantPastReservation().then(res => {
-            console.log(res.reservations);
-            toast('History updated')
             this.setState({
                 past: res.reservations,
             })
@@ -234,11 +232,17 @@ class RestaurantReservation extends Component {
     }
 
     queryItemsInfinite() {
-        setTimeout(() => {
-            this.querypast();
-            this.queryPresent();
-            this.queryItemsInfinite();
-        }, 10000)
+        this.setState({
+            timer: setTimeout(() => {
+                this.querypast();
+                this.queryPresent();
+                this.queryItemsInfinite();
+            }, 10000)
+        })
+
+    }
+    componentWillUnmount(){
+        clearTimeout(this.state.timer)
     }
 
     componentWillMount() {

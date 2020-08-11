@@ -47,7 +47,8 @@ class Reserve extends Component {
             allowModifyMenuItems: true,
             restaurant: {},
             discount: {},
-            isRestaurantLoaded: false
+            isRestaurantLoaded: false,
+            comments: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.back = this.back.bind(this);
@@ -157,9 +158,8 @@ class Reserve extends Component {
             this.setState({ numofpeople: value })
         }
         const comments = (e) => {
-            e.preventDefault();
             var value = e.target.value;
-            this.setState({commets: value})
+            this.setState({ comments: value })
         }
         return (
             <form onSubmit={this.handleSubmit} className="needs-validation" noValidate>
@@ -222,14 +222,14 @@ class Reserve extends Component {
                     <div className="form-group row">
                         <label htmlFor="comments" className="col-sm-3 col-form-label" > Comments </label>
                         <div className="col-sm-6">
-                        <textarea
-                            className="col-sm-12"
-                            rows="4"
-                            id="comments"
-                            name="comments"
-                            defaultValue={this.state.comments}
-                            onChange={comments}
-                        ></textarea>
+                            <textarea
+                                className="col-sm-12"
+                                rows="4"
+                                id="comments"
+                                name="comments"
+                                value={this.state.comments}
+                                onChange={comments}
+                            ></textarea>
                         </div>
                     </div>
                     {this.renderMenuItems(this.state.menuItems, this.state.seletcedMenuItemsFromReservation)}
@@ -471,7 +471,7 @@ class Reserve extends Component {
                                 </td>
                                 <td>
                                     <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                        <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null} alt="Menu"></img>
+                                        <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/' + item.menuImageId : null} alt="Menu"></img>
                                     </div>
                                 </td>
                             </tr>
@@ -493,7 +493,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null} alt="mENU"></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId: null} alt="mENU"></img>
                             </div>
                         </td>
                     </tr>
@@ -511,7 +511,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/7edc428c6496b6f431b6792d45cd242f.jpg' : null} alt="Menu"></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId : null} alt="Menu"></img>
                             </div>
                         </td>
                     </tr>
@@ -571,13 +571,13 @@ class Reserve extends Component {
                                     <p>{this.state.discount.isActive ? this.state.discount.percent + "% Off Call for more information!" : "No Promotions at the moment"}</p>
                                     <hr />
                                     <h6><RiTimeLine />  Store Time</h6>
-                                    <p>Monday {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName) } - {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)}</p>
-                                <p>Tuesday {(this.state.restaurant.tueIsClose ? "Close" : this.state.restaurant.tueOpenTimeId.storeTimeName) } - { (this.state.restaurant.tueIsClose ? "Close" : this.state.restaurant.tueOpenTimeId.storeTimeName) }</p>
-                                <p>Wednesday { (this.state.restaurant.wedIsClose ? "Close" : this.state.restaurant.wedOpenTimeId.storeTimeName) } - { (this.state.restaurant.wedIsClose ? "Close" : this.state.restaurant.wedOpenTimeId.storeTimeName) }</p>
-                                <p>Thursday { (this.state.restaurant.thuIsClose ? "Close" : this.state.restaurant.thuOpenTimeId.storeTimeName) } - {(this.state.restaurant.thuIsClose ? "Close" : this.state.restaurant.thuCloseTimeId.storeTimeName)}</p>
-                                <p>Friday { (this.state.restaurant.friIsClose ? "Close" : this.state.restaurant.friOpenTimeId.storeTimeName)} - { (this.state.restaurant.friIsClose ? "Close" : this.state.restaurant.friCloseTimeId.storeTimeName) }</p>
-                                <p>Saturday { (this.state.restaurant.satIsClose ? "Close" : this.state.restaurant.satOpenTimeId.storeTimeName)} - {(this.state.restaurant.satIsClose ? "Close" : this.state.restaurant.satCloseTimeId.storeTimeName) }</p>
-                                <p>Sunday {(this.state.restaurant.sunIsClose ? "Close" : this.state.restaurant.sunOpenTimeId.storeTimeName)} - {(this.state.restaurant.sunIsClose ? "Close" : this.state.restaurant.sunCloseTimeId.storeTimeName) }</p>
+                                    <p>Monday {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)} - {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)}</p>
+                                    <p>Tuesday {(this.state.restaurant.tueIsClose ? "Close" : this.state.restaurant.tueOpenTimeId.storeTimeName)} - {(this.state.restaurant.tueIsClose ? "Close" : this.state.restaurant.tueOpenTimeId.storeTimeName)}</p>
+                                    <p>Wednesday {(this.state.restaurant.wedIsClose ? "Close" : this.state.restaurant.wedOpenTimeId.storeTimeName)} - {(this.state.restaurant.wedIsClose ? "Close" : this.state.restaurant.wedOpenTimeId.storeTimeName)}</p>
+                                    <p>Thursday {(this.state.restaurant.thuIsClose ? "Close" : this.state.restaurant.thuOpenTimeId.storeTimeName)} - {(this.state.restaurant.thuIsClose ? "Close" : this.state.restaurant.thuCloseTimeId.storeTimeName)}</p>
+                                    <p>Friday {(this.state.restaurant.friIsClose ? "Close" : this.state.restaurant.friOpenTimeId.storeTimeName)} - {(this.state.restaurant.friIsClose ? "Close" : this.state.restaurant.friCloseTimeId.storeTimeName)}</p>
+                                    <p>Saturday {(this.state.restaurant.satIsClose ? "Close" : this.state.restaurant.satOpenTimeId.storeTimeName)} - {(this.state.restaurant.satIsClose ? "Close" : this.state.restaurant.satCloseTimeId.storeTimeName)}</p>
+                                    <p>Sunday {(this.state.restaurant.sunIsClose ? "Close" : this.state.restaurant.sunOpenTimeId.storeTimeName)} - {(this.state.restaurant.sunIsClose ? "Close" : this.state.restaurant.sunCloseTimeId.storeTimeName)}</p>
 
                                 </div> : <div className='col-md-4'></div>}
 

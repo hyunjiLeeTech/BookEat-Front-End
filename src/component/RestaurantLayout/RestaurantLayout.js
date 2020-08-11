@@ -189,7 +189,8 @@ class RestaurantLayout extends Component {
         return (
             <div>
                 {this.state.isLoading ? FullScrrenLoading({ type: 'balls', color: '#000' }) : null}
-                <Layout tables={this.state.tables} selectedTableId={id => console.log(id)} />
+                {this.state.tables.length > 0 ?                <Layout tables={this.state.tables} selectedTableId={id => console.log(id)} />
+ : null}
 
 
                 <table className="table table table-striped">
