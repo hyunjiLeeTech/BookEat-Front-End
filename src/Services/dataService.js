@@ -744,7 +744,8 @@ export default {
     return Axios.post(serverAddress + "/review/addreview", state,
       { headers: authHeader() })
       .then((res) => {
-        console.log(res);
+        if(res.data.errcode !== 0) throw res.data;
+      return res.data
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(addReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
