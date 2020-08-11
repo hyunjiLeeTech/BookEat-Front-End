@@ -4,6 +4,7 @@ import ds from "../../Services/dataService"
 import serverAddress from '../../Services/ServerUrl';
 import $ from "jquery";
 import DataTable from 'datatables.net';
+import ImageNotFound from '../../Image/image-not-available.jpg'
 $.DataTable = DataTable
 
 class Menu extends Component {
@@ -52,7 +53,7 @@ class Menu extends Component {
             for (var menu of this.state.menus) {
                 rows.push(
                     <tr key={rows}>
-                        <td>  <img src={serverAddress + '/getImage/' + menu.menuImageId} style={{ maxHeight: '50%', maxWidth: '50%' }} alt="Menu" /></td>
+                        <td>  <img src={menu.menuImageId ? serverAddress + '/getImage/' + menu.menuImageId : ImageNotFound} style={{ maxHeight: '50%', maxWidth: '50%' }} alt="Menu" /></td>
                         <td>{menu.menuName}</td>
                         <td> {menu.foodType}</td>
                         <td>{menu.allergy}</td>
