@@ -331,7 +331,7 @@ class Discount extends Component {
                                             : "form-control"
                                     }
                                     rows="1"
-                                    id="discdescriptiont"
+                                    id="discdescription"
                                     name="discdescription"
                                     value={this.state.discdescription}
                                     onChange={this.handleChange}
@@ -342,7 +342,7 @@ class Discount extends Component {
                                 </span>
                             </div>
                             <label
-                                htmlFor="discdescriptiont"
+                                htmlFor="discdescription"
                                 className="col-sm-2 col-form-label"
                             >
                                 %
