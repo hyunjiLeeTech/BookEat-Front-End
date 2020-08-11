@@ -13,7 +13,7 @@ const regExpNumbers = RegExp(/^[0-9]*$/);
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
     Object.values(isError).forEach((val) => {
-        if (val !== '&#160;') {
+        if (val !== "&#160;") {
             isValid = false;
         } else {
             isValid = true;
@@ -41,6 +41,7 @@ class Discount extends Component {
             resultsErr: false,
             isResLoaded: false,
             isLoading: false,
+            isActive: false,
             isError: {
                 discdescription: "&#160;",
                 promdescription: "&#160;"
@@ -57,6 +58,7 @@ class Discount extends Component {
         this.handleChangeInList = this.handleChangeInList.bind(this);
         this.discountEditButton = this.discountEditButton.bind(this);
         this.setModal = this.setModal.bind(this);
+        this.handleActive = this.handleActive.bind(this);
     }
 
     handleChange(e) {
@@ -124,24 +126,26 @@ class Discount extends Component {
             descript: this.state.promdescription
         }
 
+
         ds.addDiscount(discount).then(() => {
             this.queryDiscounts();
-            $("#addDiscountText")
-                .text("Disccount is added")
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-success");
+            this.setModal(true, 'Success', 'Discount added', 'alert alert-success');
+
         }).catch((err) => {
-            $("#addDiscountText")
-                .text("Sorry, " + err)
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-danger");
+            this.setModal(true, 'Failed', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger');
+            console.log(err);
         });
 
     }
+
+    // async componentDidMount(){
+    //     this.setState((state, props) => {
+    //         return(
+    //             isActive:
+    //             discount.isActive ? true : false
+    //         )
+    //     })
+    // }
 
     componentWillMount() {
         this.queryDiscounts();
@@ -159,20 +163,9 @@ class Discount extends Component {
             for (var discount of this.state.discounts) {
                 discount.contentTable = false;
             }
-            $("#DiscountEditResultModalText")
-                .text("Disccount is change")
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-success");
         }).catch(err => {
             //TODO handling err
-            $("#DiscountEditResultModalText")
-                .text("Sorry, " + err)
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-danger");
+            throw err;
         })
 
         this.setState({
@@ -188,7 +181,7 @@ class Discount extends Component {
             console.log(this.state.discounts[index])
             ds.editDiscount(this.state.discounts[index]).then((res) => {
                 console.log(res)
-                this.setModal(true, 'Success', 'Successed', 'alert alert-success')
+                this.setModal(true, 'Success', 'Discount edited', 'alert alert-success')
             }).catch(err => {
                 this.setModal(true, 'Error', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger')
                 console.log(err)
@@ -201,19 +194,10 @@ class Discount extends Component {
     discountDeleteButton(index) {
         ds.deleteDiscount(this.state.discounts[index]).then(() => {
             this.queryDiscounts();
-            $("#DiscountDDeleteResultModalText")
-                .text("Discount is deleted")
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-success");
+            this.setModal(true, 'Success', 'Discount deleted', 'alert alert-success')
+
         }).catch((err) => {
-            $("#DiscountDDeleteResultModalText")
-                .text("Sorry, " + err)
-                .removeClass("alert-warning")
-                .removeClass("alert-danger")
-                .removeClass("alert-success")
-                .addClass("alert-danger");
+            this.setModal(true, 'Error', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger')
         })
     }
 
@@ -235,15 +219,33 @@ class Discount extends Component {
 
     }
 
+    handleActive = (promotion) =>{
+        console.log( promotion + "click");
+        if(promotion === "curr"){
+           if(this.state.isActive === true){
+               this.state.isActive = false;
+            $("#promdescription").prop("disabled", false);
+            $("#discdescription").prop("disabled", false);
+        }else{
+            this.state.isActive = true;
+            $("#promdescription").prop("disabled", true);
+            $("#discdescription").prop("disabled", true);
+        } 
+        }
+       
+        console.log(this.state);
+        
+    }
+
     renderDataDiscount() {
         return this.state.discounts.map((discount, index) => {
             return (
                 <tr key={index}>
                     <th>
 
-                        <input type="text" id={"discdescription" + index} name="discdescription"
-                            value={this.state.discounts[index].percent} 
-                            disabled={(!this.state.discounts[index].contentTable)}
+                        <input type="text" id="discdescription" name="discdescription"
+                            value={this.state.discounts[index].percent}
+                            disabled={(!this.state.discounts[index].contentTable) || this.state.discounts[index].isActive.contentTable}
                             onChange={(e) => this.handleChangeInList(e, index)} />
                     </th>
                     <th>
@@ -252,11 +254,21 @@ class Discount extends Component {
                             id="promdescription"
                             name="promdescription"
                             defaultValue={this.state.discounts[index].description}
-                            disabled={(!this.state.discounts[index].contentTable)}
+                            disabled={(!this.state.discounts[index].contentTable) || this.state.discounts[index].isActive.contentTable}
                             onChange={(e) => this.handleChangeInList(e, index)}
                         ></textarea>
 
 
+                    </th>
+                    <th>
+                        <button id="active"
+                        className="btn btn-outline-dark"
+                        onClick={() => this.handleActive("curr")}
+                        disabled={(!this.state.discounts[index].contentTable)}
+                        value={this.state.discounts[index].isActive}
+                        >
+                            Promotion
+                        </button>
                     </th>
                     <th>
                         <button id='save_edit_disc_btn'
@@ -333,7 +345,7 @@ class Discount extends Component {
                                             : "form-control"
                                     }
                                     rows="1"
-                                    id="discdescription"
+                                    id="discdescriptiont"
                                     name="discdescription"
                                     value={this.state.discdescription}
                                     onChange={this.handleChange}
@@ -344,7 +356,7 @@ class Discount extends Component {
                                 </span>
                             </div>
                             <label
-                                htmlFor="discdescription"
+                                htmlFor="discdescriptiont"
                                 className="col-sm-2 col-form-label"
                             >
                                 %
@@ -379,7 +391,7 @@ class Discount extends Component {
                         </div>
 
                         <button type="button"
-                            onClick={this.handleAddDiscount.bind(this)}
+                            onClick={this.handleAddDiscount}
                             className="btn btn-info"
                             data-toggle="modal"
                             data-target="#addDiscountResultModal">
@@ -398,6 +410,7 @@ class Discount extends Component {
                                 <tr>
                                     <th scope="col">%</th>
                                     <th scope="col">Description</th>
+                                    <th>Activate</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
@@ -409,98 +422,6 @@ class Discount extends Component {
 
                         </table>
 
-                    </div>
-
-                    <div
-                        className="modal fade"
-                        id="addDiscountResultModal"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-labelledby="addDiscountModalLabel"
-                        aria-hidden="true"
-                    >
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5
-                                        className="modal-title"
-                                        id="addDiscountModalLabel"
-                                    >
-                                        Discount
-                            </h5>
-                                    <button
-                                        type="button"
-                                        className="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                    >
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    <p
-                                        className="alert alert-warning"
-                                        id="addDiscountText"
-                                    >
-                                        Please Wait...
-                            </p>
-                                </div>
-                                <div className="modal-footer">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        data-dismiss="modal"
-                                    >
-                                        Close
-                            </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div
-                        className="modal fade"
-                        id="DiscountDDeleteResultModal"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-labelledby="DiscountDDeleteResultModal"
-                        aria-hidden="true"
-                    >
-
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="DiscountDDeleteResultModal">
-                                        Delete Discount
-                            </h5>
-                                    <button
-                                        type="button"
-                                        className="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                    >
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    <p className="alert alert-warning"
-                                        id="DiscountDDeleteResultModalText">
-                                        Please Wait...
-                  </p>
-                                </div>
-                                <div className="modal-footer">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        data-dismiss="modal"
-                                    >
-                                        Close
-                  </button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
