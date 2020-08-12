@@ -72,7 +72,9 @@ class ResReview extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevState.picture !== this.state.picture) {
-            this.state.isPicture = true;
+            this.setState({
+                isPicture: true,
+            })
         }
     }
 
@@ -163,7 +165,7 @@ class ResReview extends Component {
         if (formValid(this.state)) {
             if (this.state.isPicture) {
                 this.addReviewWithPictures(this.state).then(() => {
-                this.setModal(true, 'Success', 'Successfully added menu', 'alert alert-success')
+                this.setModal(true, 'Success', 'Successfully added Review', 'alert alert-success')
                 }).catch((err) => {
                     this.setModal(true, 'Failed', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger');
                 });
