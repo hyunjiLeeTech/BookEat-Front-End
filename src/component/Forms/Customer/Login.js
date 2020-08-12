@@ -85,7 +85,10 @@ class Login extends Component {
         isError.password = regExpPassword.test(value)
           ? "&#160;"
           : "At least 6 characters required";
-        this.state.password = value;
+        //this.state.password = value;
+        this.setState({
+          password: e.target.value,
+        })
         break;
       default:
         break;
@@ -134,7 +137,10 @@ class Login extends Component {
           alert(res.data.errmsg);
           $("#login-btn").removeAttr("disabled").text("Login");
           $("#passowrd").text("");
-          this.state.password = "";
+          //this.state.password = "";
+          this.setState({
+            password: ''
+          })
         }
       });
     } else {
