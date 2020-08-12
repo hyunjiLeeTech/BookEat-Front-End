@@ -59,7 +59,6 @@ class Reserve extends Component {
         this.getMenuInfo = this.getMenuInfo.bind(this);
         this.renderMenuItems = this.renderMenuItems.bind(this);
         this.renderForm = this.renderForm.bind(this);
-        console.log(new Date(this.props.match.params.date))
     }
 
     componentWillMount() {
@@ -69,17 +68,15 @@ class Reserve extends Component {
 
             if (this.state.isUpdate) {
                 dataService.getReservationById(this.state.reservationId).then(res => {
-                    this.selectedtableId = res.reservation.table;
+                    this.setState({ comments: res.reservation.comments, selectedtableId: res.reservation.table })
                     dataService.getFoodOrder(res.reservation.FoodOrder).then(res => {
                         this.setState({ seletcedMenuItemsFromReservation: res.menus })
                     }).catch(err => {
-                        console.log(err)
                         toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
                     }).finally(() => {
                         this.setState({ isLoading: false });
                     })
                 }).catch(err => {
-                    console.log(err)
                     toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
                     this.setState({ isLoading: false });
                 })
@@ -100,7 +97,6 @@ class Reserve extends Component {
 
     getRoRmInfo() {//TODO: only for testing, should be deleted in production envinroment.
         Axios.post("http://localhost:5000/Restaurant/getRestaurantOwnerAndManagerViaRestaurantId", { restaurantId: this.state.resId }, { headers: authHeader() }).then(res => {
-            console.log(res)
             this.setState({
                 rorminfo: {
                     OwnerAccount: res.data.Owner.account,
@@ -121,7 +117,7 @@ class Reserve extends Component {
         this.setState({
             allowModifyMenuItems: false
         })
-       // this.state.allowModifyMenuItems = false;
+        // this.state.allowModifyMenuItems = false;
         var numofpeople = $('#numofpeople').val();
         var resId = this.state.resId;
         var dateTime = new Date(Date.parse(this.state.date + ' ' + this.state.time));
@@ -145,9 +141,9 @@ class Reserve extends Component {
                 })
             }, 500)
 
-            console.log(this.state)
         }).catch(err => {
             console.log(err)
+            toast('Error occured. ' + err.errmsg ? err.errmsg : 'Please try again later')
         })
     }
     renderForm() {
@@ -262,8 +258,6 @@ class Reserve extends Component {
     }
 
     book() {
-        console.log(this.state.selectedMenuItems);
-        console.log(Array.from(this.state.selectedMenuItems))
         if (this.state.isUpdate) {
             dataService.updateReservation({
                 reservationId: this.state.reservationId,
@@ -274,7 +268,6 @@ class Reserve extends Component {
                 menuItems: Array.from(this.state.selectedMenuItems),
             }).then(res => {
                 if (res.errcode === 0) {
-                    console.log(res)
                     this.setState({
                         tableIsVisible: false,
                         isReservationSuccess: true,
@@ -287,8 +280,7 @@ class Reserve extends Component {
                         })
                     }, 500)
                 } else {
-                    console.log('err in then')
-                    console.log(res)
+
                     this.setState({
                         tableIsVisible: false,
                         tablestatus: false,
@@ -302,8 +294,6 @@ class Reserve extends Component {
                     }, 500)
                 }
             }).catch(err => {
-                console.log('err in catch')
-                console.log(err)
                 this.setState({
                     tableIsVisible: false,
                     tablestatus: false,
@@ -325,7 +315,6 @@ class Reserve extends Component {
                 menuItems: Array.from(this.state.selectedMenuItems),
             }).then(res => {
                 if (res.errcode === 0) {
-                    console.log(res)
                     this.setState({
                         tableIsVisible: false,
                         isReservationSuccess: true,
@@ -338,8 +327,6 @@ class Reserve extends Component {
                         })
                     }, 500)
                 } else {
-                    console.log('err in then')
-                    console.log(res)
                     this.setState({
                         tableIsVisible: false,
                         tablestatus: false,
@@ -353,8 +340,6 @@ class Reserve extends Component {
                     }, 500)
                 }
             }).catch(err => {
-                console.log('err in catch')
-                console.log(err)
                 this.setState({
                     tableIsVisible: false,
                     tablestatus: false,
@@ -373,7 +358,6 @@ class Reserve extends Component {
     getMenuInfo() {
         var id = this.state.resId;
         dataService.getMenusCustomer(id).then(res => {
-            console.log(res.menus)
             this.setState({
                 menuItems: res.menus,
             })
@@ -456,20 +440,17 @@ class Reserve extends Component {
             } else {
                 this.state.selectedMenuItems.delete(e.target.value);
             }
-            console.log(this.state.selectedMenuItems)
         }
-        console.log(checked)
         for (var item of items) {
-            console.log(item)
             if (checked) {
                 var flag = false;
                 for (var id of checked) {
                     if (id._id.toString() === item._id.toString() && this.state.allowModifyMenuItems) {
                         tr.push(
-                            <tr>
+                            <tr key={id._id + '_m'}>
                                 <td>
                                     <input type='checkbox' id={'menu' + item._id} name={'menu' + item._id} defaultChecked value={item._id} onChange={handler} />
-                                    <label class='menuItemLable' for={'name' + item._id}>{item.menuName}</label>
+                                    <label className='menuItemLable' htmlFor={'menu' + item._id}>{item.menuName}</label>
                                 </td>
                                 <td>
                                     ${item.menuPrice}
@@ -498,7 +479,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId: ImageNotFound} alt="mENU"></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/' + item.menuImageId : ImageNotFound} alt="mENU"></img>
                             </div>
                         </td>
                     </tr>
@@ -516,7 +497,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId : ImageNotFound} alt="Menu"></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/' + item.menuImageId : ImageNotFound} alt="Menu"></img>
                             </div>
                         </td>
                     </tr>
@@ -573,7 +554,7 @@ class Reserve extends Component {
                                     <p>{this.state.restaurant.phoneNumber}</p>
                                     <hr />
                                     <h6><RiPercentLine />  Promotions</h6>
-                                    <p>{(this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent + "% Off " +this.state.discount.description: "No Promotions at the moment"))}</p>
+                                    <p>{(this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent + "% Off " + this.state.discount.description : "No Promotions at the moment"))}</p>
                                     <hr />
                                     <h6><RiTimeLine />  Store Time</h6>
                                     <p>Monday {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)} - {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)}</p>
@@ -605,7 +586,7 @@ class Reserve extends Component {
                                 </div>
 
                                 <div className="col-md-3">
-                                    <button className="btn btn-primary" onClick={this.book}>Book</button>
+                                    <button className="btn btn-primary" disabled={this.state.selectedtableId === '' ? true : false} onClick={this.book}>Book</button>
                                 </div>
                             </div>
                         </div> : null}
