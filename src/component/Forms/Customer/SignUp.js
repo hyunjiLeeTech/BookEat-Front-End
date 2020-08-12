@@ -260,9 +260,11 @@ class SignUp extends Component {
     $("#accept-terms").removeAttr("disabled");
     if (result) {
       $("#accept-terms").attr("checked", "checked");
+      this.setState({isCheckedTerm: true})
     }
     if (result === false) {
       $("#accept-terms").removeAttr("checked");
+      this.setState({isCheckedTerm: false})
     }
   }
 
