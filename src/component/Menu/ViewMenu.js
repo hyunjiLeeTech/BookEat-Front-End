@@ -53,7 +53,7 @@ class Menu extends Component {
             for (var menu of this.state.menus) {
                 rows.push(
                     <tr key={rows}>
-                        <td>  <img src={menu.menuImageId ? serverAddress + '/getImage/' + menu.menuImageId : ImageNotFound} style={{ maxHeight: '50%', maxWidth: '50%' }} alt="Menu" /></td>
+                        <td>  <img src={menu.menuImageId ? serverAddress + '/getImage/' + menu.menuImageId : ImageNotFound} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Menu" /></td>
                         <td>{menu.menuName}</td>
                         <td> {menu.foodType}</td>
                         <td>{menu.allergy}</td>
