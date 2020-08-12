@@ -164,7 +164,6 @@ class Discount extends Component {
                 discount.contentTable = false;
             }
         }).catch(err => {
-            //TODO handling err
             throw err;
         })
 
@@ -174,13 +173,10 @@ class Discount extends Component {
     }
 
     discountEditButton(index) {
-        console.log('function called')
         this.state.discounts[index].contentTable = !this.state.discounts[index].contentTable;
         if (!this.state.discounts[index].contentTable) {
             this.setModal(true, 'Please Wait', 'Please Wait..', 'alert alert-warning')
-            console.log(this.state.discounts[index])
             ds.editDiscount(this.state.discounts[index]).then((res) => {
-                console.log(res)
                 this.setModal(true, 'Success', 'Discount edited', 'alert alert-success')
             }).catch(err => {
                 this.setModal(true, 'Error', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger')

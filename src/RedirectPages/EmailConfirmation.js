@@ -14,7 +14,6 @@ class EmailConfirmation extends Component {
 
     emailConfirmation(id){
         ds.confirmEmail(id).then(() => {
-            console.log(id);
             this.setState({
                 id: id
             })

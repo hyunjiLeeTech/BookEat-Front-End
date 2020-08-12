@@ -100,27 +100,21 @@ class Login extends Component {
     e.preventDefault();
     if (formValid(this.state)) {
       $("#login-btn").attr("disabled", "true").text("Please Wait");
-      console.log(this.state);
+      //console.log(this.state);
       var hashedpw = sha256(this.state.password).toString(); //hashing password
       authService.login(this.state.email, hashedpw).then((res) => {
         if (res.data.errcode === 0) {
-          console.log(authService.getCurrentUser());
-          console.log("Testing auth");
           var u = authService.getCurrentUser().user;
           if (u.userTypeId === 1) {
-            console.log("cus");
             ds.getCustomerInformation()
               .then((res) => {
-                console.log(res);
                 window.location.href = "/"; //redirect to home page after login, set location.href to refresh the page.
               })
               .catch((err) => {
                 console.log(err);
               });
           } else if (u.userTypeId === 2) {
-            console.log("res owner");
             ds.getRestaurantInformation().then((res) => {
-              console.log(res);
               window.location.href = "/restaurantprofile"; // redirect to restaurant profile page after login
             });
           } else if (u.userTypeId === 3) {
@@ -144,7 +138,6 @@ class Login extends Component {
 
   //Google Log In
   login(response) {
-    console.log(response)
     AuthService.loginExternal(1, response.accessToken).then(res => {
       window.location.href = '/'
     }).catch(err => {
@@ -217,7 +210,6 @@ class Login extends Component {
 
   // Facebook
   responseFacebook(response) {
-    console.log(response);
     AuthService.loginExternal(2, response.accessToken).then(res => {
       window.location.href = '/'
     }).catch(err => {

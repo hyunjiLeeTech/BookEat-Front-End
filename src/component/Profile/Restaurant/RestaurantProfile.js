@@ -559,7 +559,6 @@ class RestaurantProfile extends Component {
 
   onClick() {
     const usr = authService.getCurrentUser();
-    console.log(usr.user._id);
     this.setState({
       accountId: usr.user._id
     });
@@ -665,7 +664,6 @@ class RestaurantProfile extends Component {
   }
 
   handleNotOpen = (day) => {
-    console.log(day);
     if (day === "mon") {
       if (this.state.monIsClose === true) {
         this.state.monIsClose = false;

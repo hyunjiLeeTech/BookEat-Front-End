@@ -20,7 +20,6 @@ class RestaurantLayout extends Component {
             isLoading: false,
         }
         DataService.getTables().then((res) => {
-            console.log(res);
             for (var t of res.tables) {
                 t.isOpen = t.status
                 t.buttonDisabled = false;

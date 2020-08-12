@@ -69,7 +69,7 @@ class ForgotPassword extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (formValid(this.state)) {
-      console.log(this.state);
+      //console.log(this.state);
     } else {
       console.log("Form is invalid!");
     }

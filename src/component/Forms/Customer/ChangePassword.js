@@ -90,7 +90,6 @@ class ChangePassword extends Component {
   };
 
   handleSubmit = (e) => {
-    console.log("submitting")
     e.preventDefault();
     if (formValid(this.state)) {
       this.state.password = sha256(this.state.password).toString(); //hashing password

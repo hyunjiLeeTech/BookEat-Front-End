@@ -59,8 +59,6 @@ class App extends Component {
   queryUserInfo = async function (userType) {
     let user = null;
     try {
-      console.log('userType')
-      console.log(userType)
       if (userType === 1) {
         user = await ds.getCustomerInformation();
       } else if (userType === 2) {
@@ -108,7 +106,7 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      console.log("Route change! from " + prevProps.location.pathname +' to ' + this.props.location.pathname);
+      //console.log("Route change! from " + prevProps.location.pathname +' to ' + this.props.location.pathname);
     }
   }
   render() {

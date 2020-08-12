@@ -27,7 +27,6 @@ const formValid = ({ isError, ...customer }) => {
   });
   
   Object.values(customer).forEach((val) => {
-    console.log(customer);
     if (val === null) {
       isValid = false;
     } else {
@@ -74,7 +73,6 @@ class ViewCustomerProfile extends Component {
       var body3 = [<p>Please Wait</p>]
       this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body3, modalButtons: null })
       dataService.deleteAccountCustomer().then(res => {
-        console.log(res);
         this.setState({isDeleted: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>You account is deleted.</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
       }).catch(err => {
         this.setState({isModalShow: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>Sorry,{err.errmsg? err.errmsg : 'We cannot delete your account'}</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
@@ -97,9 +95,6 @@ class ViewCustomerProfile extends Component {
         ,
       <input type='text' onChange={(e) => {
         this.setState({ emailConfirm: e.target.value }, () => {
-          console.log(this.state.emailConfirm)
-          console.log(this.state.email)
-          console.log(this.state.emailConfirm === this.state.email)
           cn = this.state.emailConfirm === this.state.email ? 'form-control is-valid' : 'form-control is-invalid'
           $('#delemailconfirm').removeClass('form-control is-valid is-invalid').addClass(cn);
           $('#delmailconfirmbtn').prop('disabled', this.state.emailConfirm === this.state.email ? '' : 'disabled')
@@ -187,7 +182,7 @@ class ViewCustomerProfile extends Component {
               .removeClass("alert-success");
           }
         });
-      console.log(this.state);
+  
     } else {
       console.log("Form is invalid!");
     }
@@ -245,7 +240,6 @@ class ViewCustomerProfile extends Component {
     const { isError } = this.state;
     //TODO: feedbacks
     const deleteAccount = () => {
-      console.log('starting delete account')
       this.deleteAccountModal();
     }
 

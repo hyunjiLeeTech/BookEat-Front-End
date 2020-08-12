@@ -37,7 +37,6 @@ class AuthService {
             }).catch(err => console.log("AuthService Login: err: " + err));
     }
     logout() {
-        console.log(authHeader());
         return axios
             .get(API_URL + "/logout", {
                 headers: authHeader()

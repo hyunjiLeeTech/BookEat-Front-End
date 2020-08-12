@@ -71,7 +71,6 @@ class RestaurantReservation extends Component {
     }
 
     viewFoodOrder(foodOrderId) {
-        console.log(foodOrderId)
         this.setState({ isModalShow: true, modalText: "Loading", modalTitle: 'Food order details' })
         dataService.getFoodOrder(foodOrderId).then((res) => {
             var tr = [];

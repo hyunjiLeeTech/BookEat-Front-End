@@ -32,7 +32,7 @@ export default {
     return Axios.post(serverAddress + '/signupExternal', info)
       .then(res => {
         if (res.data.errcode !== 0) throw res.data
-        console.log(res.data)
+        
         return res.data;
       }).catch(err => {
         throw err
@@ -41,7 +41,7 @@ export default {
   getDaily() {
     return Axios.get(serverAddress + '/daily').then(res => {
       if (res.data.errcode !== 0) throw res.data
-      console.log(res.data)
+      
       return res.data;
     }).catch(err => {
       throw err
@@ -49,7 +49,7 @@ export default {
   }, getFeatured() {
     return Axios.get(serverAddress + '/featured').then(res => {
       if (res.data.errcode !== 0) throw res.data
-      console.log(res.data)
+      
       return res.data;
     }).catch(err => {
       throw err
@@ -57,17 +57,17 @@ export default {
   }, getFavorite() {
     return Axios.get(serverAddress + '/favorite').then(res => {
       if (res.data.errcode !== 0) throw res.data
-      console.log(res.data)
+      
       return res.data;
     }).catch(err => {
       throw err
     })
   },
   getRestaurantWithoutAuth(restaurantId) {
-    return Axios.get(serverAddress + "/restaurants/" + restaurantId)//TODO: remove if production
+    return Axios.get(serverAddress + "/restaurants/" + restaurantId)
       .then(res => {
         if (res.data.errcode !== 0) throw res.data
-        console.log(res.data)
+        
         return res.data;
       }).catch(err => {
         throw err
@@ -384,7 +384,7 @@ export default {
       headers: authHeader(), //set auth header
     })
       .then(function (res) {
-        //console.log(res);
+        //
         return res.data;
       })
       .catch((err) => {
@@ -464,7 +464,7 @@ export default {
       headers: authHeader(),
     })
       .then((res) => {
-        console.log(res);
+        
         return res.data
       })
       .catch((err) => {
@@ -481,7 +481,7 @@ export default {
       headers: authHeader(),
     })
       .then((res) => {
-        console.log(res);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -546,7 +546,7 @@ export default {
       }
     )
       .then((res) => {
-        console.log(res);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -562,7 +562,7 @@ export default {
       headers: authHeader(),
     })
       .then((res) => {
-        console.log(res);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -621,7 +621,7 @@ export default {
     return Axios.post(serverAddress + "/menu/deletemenu", state, {
       headers: authHeader()
     }).then((res) => {
-      console.log(res);
+      
     }).catch((err) => {
       console.log(err);
       if (err.response && err.response.status === 401) {
@@ -717,7 +717,7 @@ export default {
     console.log("delete image start");
     return await Axios.delete(`${serverAddress}/deleteImage/${state}`)
       .then((res) => {
-        console.log(res);
+        
         return res;
       })
       .catch((err) => {
@@ -807,7 +807,7 @@ export default {
     return Axios.post(serverAddress + "/review/editreview", state,
       { headers: authHeader() })
       .then((res) => {
-        console.log(res);
+        
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(editReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -820,7 +820,7 @@ export default {
   deleteReview(state) {
     return Axios.post(serverAddress + "/review/deletereview", state, { headers: authHeader() })
       .then((res) => {
-        console.log(res);
+        
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(deleteReview)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -832,7 +832,7 @@ export default {
   updateResPictures(state) {
     return Axios.post(serverAddress + "/restaurant/updaterespictures", state, { headers: authHeader() })
       .then((res) => {
-        console.log(res);
+        
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(updateResPictures)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
@@ -844,7 +844,7 @@ export default {
   deleteImages(state) {
     return Axios.delete(serverAddress + "/deleteimages", { params: { pictures: state } })
       .then((res) => {
-        console.log(res.data);
+        
       })
   },
   getReviewsWithoutSignup(id) {

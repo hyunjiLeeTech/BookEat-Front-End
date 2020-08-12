@@ -168,7 +168,7 @@ class RestaurantProfile extends Component {
 
   onClick() {
     const usr = authService.getCurrentUser();
-    console.log(usr.user._id);
+
     this.setState({ showForm: true });
   }
 

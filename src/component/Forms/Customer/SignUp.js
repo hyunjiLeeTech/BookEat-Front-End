@@ -129,6 +129,7 @@ class SignUp extends Component {
     if(!this.state.isCheckedTerm){
       $("#signResultText").text("You must accept the term and conditions before sign up").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
       .addClass("alert-danger");
+      return;
     }
 
     if (formValid(this.state)) {
@@ -153,7 +154,6 @@ class SignUp extends Component {
         this.state.password = sha256(this.state.password).toString(); //hashing password
         this.state.confirmpw = sha256(this.state.confirmpw).toString()
         Axios.post(serverAddress + "/customersignup", this.state).then(res => {
-          console.log(res)
           if (res.data.errcode === 0) {
             $("#signResultText").text("Congrats, Please confirm your email").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
               .addClass("alert-success");
@@ -173,7 +173,6 @@ class SignUp extends Component {
   // Google Sign In 
 
   onSuccess(resp) {
-    console.log(resp)
     AuthService.loginExternal(1, resp.wc.access_token, false).then(res => {
       if (this.state.isExternal && this.state.externalType === 1) {
         toast("This Google account is already registered, please sign in :)")
@@ -236,7 +235,6 @@ class SignUp extends Component {
       })
 
       this.auth2.then(() => {
-        console.log('on init');
         this.setState({
           isSignedIn: this.auth2.isSignedIn.get(),
         });
@@ -259,21 +257,18 @@ class SignUp extends Component {
   }
 
   handleTerms(result, dom) {
-    console.log(result)
     $("#accept-terms").removeAttr("disabled");
     if (result) {
       $("#accept-terms").attr("checked", "checked");
     }
     if (result === false) {
       $("#accept-terms").removeAttr("checked");
-      console.log("log")
     }
   }
 
   render() {
     const { isError } = this.state;
     const fbcallback = (data) => {
-      console.log(data)
       this.setState({ isExternal: true, externalType: 2, })
       this.setState({ externalToken: data.accessToken, email: data.email, firstname: data.first_name, lastname: data.last_name })
       $('#email').prop('disabled', 'true')

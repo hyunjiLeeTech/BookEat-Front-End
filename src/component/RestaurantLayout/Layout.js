@@ -56,8 +56,7 @@ class Layout extends Component {
     }
 
     componentDidUpdate(){
-        console.log(this.state.tables)
-        console.log(this.props.tables);
+
     }
 
 

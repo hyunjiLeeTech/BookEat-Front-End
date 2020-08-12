@@ -412,7 +412,6 @@ class Reserve extends Component {
         const timeChange = (e) => {
             e.preventDefault()
             const value = e.target.value;
-            console.log(value)
             this.setState({ time: value })
         }
 

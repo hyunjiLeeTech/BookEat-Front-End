@@ -160,7 +160,6 @@ class RestaurantSignUp extends Component {
     if (formValid(this.state)) {
       this.state.password = sha256(this.state.password).toString(); //hashing password
       this.state.confirmpw = sha256(this.state.confirmpw).toString();
-      console.log(this.state);
       Axios.post(serverAddress + "/restaurantownersignup", this.state)
         .then((res) => {
           console.log(res);

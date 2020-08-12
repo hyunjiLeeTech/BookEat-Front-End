@@ -244,7 +244,6 @@ class Menu extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(this.state);
         if (formValid(this.state)) {
             this.addMenuWithImage(this.state).then(()=>{
                 this.setModal(true, 'Success', 'Successfully added menu', 'alert alert-success')

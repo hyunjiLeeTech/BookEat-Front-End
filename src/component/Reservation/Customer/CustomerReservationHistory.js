@@ -27,7 +27,6 @@ class CustomerReservationHistory extends Component {
     DataService.getCustomerReservations().then((res) => {
       for (var r of res.reservations) r.buttonDisabled = false;
       this.setState({ reservations: res.reservations });
-      console.log(res.reservations)
     }).catch(err => {
       console.log(err)
     })
