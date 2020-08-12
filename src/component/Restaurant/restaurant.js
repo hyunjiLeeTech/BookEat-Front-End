@@ -140,7 +140,7 @@ class Restaurant extends Component {
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
                                 <h5><RiPercentLine />  Promotions</h5>
-                                <p>{this.state.isResLoaded ? (this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent +  "% Off " +this.state.discount.description : "No Promotions at the moment")) : null}</p>
+                                <p>{this.state.isResLoaded ? (this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent + "% Off Call for more information!" : "No Promotions at the moment")) : null}</p>
 
                             </div>
                         </div>
