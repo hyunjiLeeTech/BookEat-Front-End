@@ -101,7 +101,9 @@ class RestaurantProfile extends Component {
         isError.passwordMan = regExpPassword.test(value)
           ? "&#160;"
           : "At least 6 characters required";
-        this.state.passwordMan = value;
+          this.setState({
+            [e.target.passwordMan] : e.target.value
+          })
         break;
       default:
         break;
