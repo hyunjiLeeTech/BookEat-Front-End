@@ -26,6 +26,7 @@ class Restaurant extends Component {
             resultsErr: false,
             isResLoaded: false,
             discount: {},
+            discountIsAtLeastOneActive: false,
         }
     }
 
@@ -33,12 +34,18 @@ class Restaurant extends Component {
     async componentWillMount() {
         dataService.getRestaurantWithoutAuth(this.state.id)
             .then(res => {
+                console.log(res.discount)
+                for(var dis of res.discount) {
+                    if(dis.isActive){
+                        this.setState({discountIsAtLeastOneActive: true})
+                        break;
+                    }
+                }
                 this.setState({
                     res: res.restaurant,
                     isResLoaded: true,
                     discount: res.discount,
                 })
-                console.log(res.discount);
             })
     }
 
@@ -137,8 +144,9 @@ class Restaurant extends Component {
                                 <p>{this.state.isResLoaded ? this.state.res.priceRangeId.priceRangeName : null} </p>
                                 <hr />
                                 <h5><RiPercentLine />  Promotions</h5>
-                                <p>{this.state.isResLoaded ? (this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent +  "% Off " +this.state.discount.description : "No Promotions at the moment")) : null}</p>
-
+                                {this.state.isResLoaded ? (this.state.discountIsAtLeastOneActive ? this.state.discount.map((v, i, discounts) => {
+                                    return v.isActive ? <p>{v.percent + "% Off " + (v.description ? v.description : '')}</p> : null
+                                }) : "No Promotions at the momemnt") : null}
                             </div>
                         </div>
                     </div>

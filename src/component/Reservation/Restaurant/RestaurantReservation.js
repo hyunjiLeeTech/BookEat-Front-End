@@ -28,9 +28,9 @@ class RestaurantReservation extends Component {
 
     notAttend(reservationId) {
         const infoToast = toast("Please Wait", { autoClose: false })
-        dataService.restaurantCancelReservation(reservationId).then(res => {
+        dataService.notAttendReservation(reservationId).then(res => {
             toast.update(infoToast, { render: "Not attend reported, thanks!", type: toast.TYPE.SUCCESS, autoClose: 5000, className: 'pulse animated' })
-            $("#" + reservationId + "btnNotAttend").attr('disabled', 'true').text("Cancelled")
+            $("#" + reservationId + "btnNotAttend").attr('disabled', 'true').text("Reported Not Attend")
         }).catch(err => {
             if (err.errcode) {
                 toast.update(infoToast, { render: err.errmsg, type: toast.TYPE.ERROR, autoClose: 5000, className: 'pulse animated' })
@@ -169,7 +169,7 @@ class RestaurantReservation extends Component {
         const renderStatusClassName = (status) => {
             switch (status) {
                 case 0: return 'alert alert-success'
-                case 1: return 'alert alert-error'
+                case 1: return 'alert alert-danger'
                 case 2: return 'alert alert-info'
                 case 3:
                 case 4: return 'alert alert-warning'
@@ -261,7 +261,6 @@ class RestaurantReservation extends Component {
                             <a className="nav-link active" data-toggle="tab" role="tab" href="#upcomingRes" aria-controls="upcomingRes" aria-selected="true">
                                 Upcoming Reservation
                                 </a>
-
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" data-toggle="tab" role="tab" href="#pastRes" aria-controls="pastRes" aria-selected="false">
@@ -299,6 +298,9 @@ class RestaurantReservation extends Component {
 
                         {/* Start Past Reservations */}
                         <div id="pastRes" className="tab-pane fade " role="tabpanel" aria-labelledby="pastRes">
+                        <p className='alert alert-success'>Finished Reservation</p>
+                        <p className='alert alert-danger'>Not Attend Reservation</p>
+                        <p className='alert alert-warning'>Cancelled Reservation</p>
                             <table className="table">
                                 <thead>
                                     <tr>
