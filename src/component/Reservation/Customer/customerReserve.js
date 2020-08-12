@@ -59,7 +59,6 @@ class Reserve extends Component {
         this.getMenuInfo = this.getMenuInfo.bind(this);
         this.renderMenuItems = this.renderMenuItems.bind(this);
         this.renderForm = this.renderForm.bind(this);
-        console.log(new Date(this.props.match.params.date))
     }
 
     componentWillMount() {
@@ -69,18 +68,15 @@ class Reserve extends Component {
 
             if (this.state.isUpdate) {
                 dataService.getReservationById(this.state.reservationId).then(res => {
-                    console.log(res)
                     this.setState({ comments: res.reservation.comments, selectedtableId: res.reservation.table })
                     dataService.getFoodOrder(res.reservation.FoodOrder).then(res => {
                         this.setState({ seletcedMenuItemsFromReservation: res.menus })
                     }).catch(err => {
-                        console.log(err)
                         toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
                     }).finally(() => {
                         this.setState({ isLoading: false });
                     })
                 }).catch(err => {
-                    console.log(err)
                     toast(err.errmsg ? err.errmsg : 'error', { type: 'error' })
                     this.setState({ isLoading: false });
                 })
@@ -101,7 +97,6 @@ class Reserve extends Component {
 
     getRoRmInfo() {//TODO: only for testing, should be deleted in production envinroment.
         Axios.post("http://localhost:5000/Restaurant/getRestaurantOwnerAndManagerViaRestaurantId", { restaurantId: this.state.resId }, { headers: authHeader() }).then(res => {
-            console.log(res)
             this.setState({
                 rorminfo: {
                     OwnerAccount: res.data.Owner.account,
@@ -146,9 +141,9 @@ class Reserve extends Component {
                 })
             }, 500)
 
-            console.log(this.state)
         }).catch(err => {
             console.log(err)
+            toast('Error occured. ' + err.errmsg ? err.errmsg : 'Please try again later')
         })
     }
     renderForm() {
@@ -263,8 +258,6 @@ class Reserve extends Component {
     }
 
     book() {
-        console.log(this.state.selectedMenuItems);
-        console.log(Array.from(this.state.selectedMenuItems))
         if (this.state.isUpdate) {
             dataService.updateReservation({
                 reservationId: this.state.reservationId,
@@ -275,7 +268,6 @@ class Reserve extends Component {
                 menuItems: Array.from(this.state.selectedMenuItems),
             }).then(res => {
                 if (res.errcode === 0) {
-                    console.log(res)
                     this.setState({
                         tableIsVisible: false,
                         isReservationSuccess: true,
@@ -288,8 +280,7 @@ class Reserve extends Component {
                         })
                     }, 500)
                 } else {
-                    console.log('err in then')
-                    console.log(res)
+
                     this.setState({
                         tableIsVisible: false,
                         tablestatus: false,
@@ -303,8 +294,6 @@ class Reserve extends Component {
                     }, 500)
                 }
             }).catch(err => {
-                console.log('err in catch')
-                console.log(err)
                 this.setState({
                     tableIsVisible: false,
                     tablestatus: false,
@@ -326,7 +315,6 @@ class Reserve extends Component {
                 menuItems: Array.from(this.state.selectedMenuItems),
             }).then(res => {
                 if (res.errcode === 0) {
-                    console.log(res)
                     this.setState({
                         tableIsVisible: false,
                         isReservationSuccess: true,
@@ -339,8 +327,6 @@ class Reserve extends Component {
                         })
                     }, 500)
                 } else {
-                    console.log('err in then')
-                    console.log(res)
                     this.setState({
                         tableIsVisible: false,
                         tablestatus: false,
@@ -354,8 +340,6 @@ class Reserve extends Component {
                     }, 500)
                 }
             }).catch(err => {
-                console.log('err in catch')
-                console.log(err)
                 this.setState({
                     tableIsVisible: false,
                     tablestatus: false,
@@ -374,7 +358,6 @@ class Reserve extends Component {
     getMenuInfo() {
         var id = this.state.resId;
         dataService.getMenusCustomer(id).then(res => {
-            console.log(res.menus)
             this.setState({
                 menuItems: res.menus,
             })
@@ -452,17 +435,13 @@ class Reserve extends Component {
         var tr = [];
         var reactThis = this;
         var handler = (e) => {
-            console.log('chcked')
             if (e.target.checked) {
                 this.state.selectedMenuItems.add(e.target.value);
             } else {
                 this.state.selectedMenuItems.delete(e.target.value);
             }
-            console.log(this.state.selectedMenuItems)
         }
-        console.log(checked)
         for (var item of items) {
-            console.log(item)
             if (checked) {
                 var flag = false;
                 for (var id of checked) {
