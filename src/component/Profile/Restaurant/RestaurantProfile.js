@@ -144,7 +144,10 @@ class RestaurantProfile extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.picture !== this.state.picture) {
-      this.state.isPicture = true;
+     // this.state.isPicture = true;
+      this.setState({
+        isPicture: true
+      })
     }
   }
 
@@ -668,72 +671,114 @@ class RestaurantProfile extends Component {
     console.log(day);
     if (day === "mon") {
       if (this.state.monIsClose === true) {
-        this.state.monIsClose = false;
+        //this.state.monIsClose = false;
+        this.setState({
+          monIsClose: false
+        })
         $("#monOpenTime").prop("disabled", false);
         $("#monCloseTime").prop("disabled", false);
 
       } else {
-        this.state.monIsClose = true;
+        //this.state.monIsClose = true;
+        this.setState({
+          monIsClose: true
+        })
         $("#monOpenTime").prop("disabled", true);
         $("#monCloseTime").prop("disabled", true);
       }
     } else if (day === "tue") {
       if (this.state.tueIsClose === true) {
-        this.state.tueIsClose = false;
+        //this.state.tueIsClose = false;
+        this.setState({
+          tueIsClose: false
+        })
         $("#tueOpenTime").prop("disabled", false);
         $("#tueCloseTime").prop("disabled", false);
       } else {
-        this.state.tueIsClose = true;
+       // this.state.tueIsClose = true;
+       this.setState({
+        tueIsClose: true
+      })
         $("#tueOpenTime").prop("disabled", true);
         $("#tueCloseTime").prop("disabled", true);
       }
     } else if (day === "wed") {
       if (this.state.wedIsClose === true) {
-        this.state.wedIsClose = false;
+       // this.state.wedIsClose = false;
+        this.setState({
+          wedIsClose: false
+        })
         $("#wedOpenTime").prop("disabled", false);
         $("#wedCloseTime").prop("disabled", false);
       } else {
-        this.state.wedIsClose = true;
+        //this.state.wedIsClose = true;
+        this.setState({
+          wedIsClose: true
+        })
         $("#wedOpenTime").prop("disabled", true);
         $("#wedCloseTime").prop("disabled", true);
       }
     } else if (day === "thu") {
       if (this.state.thuIsClose === true) {
-        this.state.thuIsClose = false;
+       // this.state.thuIsClose = false;
+       this.setState({
+        thuIsClose: false
+      })
         $("#thuOpenTime").prop("disabled", false);
         $("#thuCloseTime").prop("disabled", false);
       } else {
-        this.state.thuIsClose = true;
+        //this.state.thuIsClose = true;
+        this.setState({
+          thuIsClose: true
+        })
         $("#thuOpenTime").prop("disabled", true);
         $("#thuCloseTime").prop("disabled", true);
       }
     } else if (day === "fri") {
       if (this.state.friIsClose === true) {
-        this.state.friIsClose = false;
+        //this.state.friIsClose = false;
+        this.setState({
+          friIsClose: false
+        })
         $("#friOpenTime").prop("disabled", false);
         $("#friCloseTime").prop("disabled", false);
       } else {
-        this.state.friIsClose = true;
+        //this.state.friIsClose = true;
+        this.setState({
+          friIsClose: true
+        })
         $("#friOpenTime").prop("disabled", true);
         $("#friCloseTime").prop("disabled", true);
       }
     } else if (day === "sat") {
       if (this.state.satIsClose === true) {
-        this.state.satIsClose = false;
+        //this.state.satIsClose = false;
+        this.setState({
+          satIsClose: false
+        })
         $("#satOpenTime").prop("disabled", false);
         $("#satCloseTime").prop("disabled", false);
       } else {
-        this.state.satIsClose = true;
+        //this.state.satIsClose = true;
+        this.setState({
+          satIsClose: true
+        })
         $("#satOpenTime").prop("disabled", true);
         $("#satCloseTime").prop("disabled", true);
       }
     } else if (day === "sun") {
       if (this.state.sunIsClose === true) {
-        this.state.sunIsClose = false;
+        //this.state.sunIsClose = false;
+        this.setState({
+          sunIsClose: false
+        })
         $("#sunOpenTime").prop("disabled", false);
         $("#sunCloseTime").prop("disabled", false);
       } else {
-        this.state.sunIsClose = true;
+       // this.state.sunIsClose = true;
+        this.setState({
+          sunIsClose: true
+        })
         $("#sunOpenTime").prop("disabled", true);
         $("#sunCloseTime").prop("disabled", true);
       }
