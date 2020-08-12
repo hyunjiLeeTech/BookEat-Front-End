@@ -51,7 +51,6 @@ class Reserve extends Component {
         this.back = this.back.bind(this);
         this.book = this.book.bind(this);
         this.setTableId = this.setTableId.bind(this);
-        this.getRoRmInfo = this.getRoRmInfo.bind(this);
         this.getMenuInfo = this.getMenuInfo.bind(this);
         this.renderMenuItems = this.renderMenuItems.bind(this);
         this.renderForm = this.renderForm.bind(this);

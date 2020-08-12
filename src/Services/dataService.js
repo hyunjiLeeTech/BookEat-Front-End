@@ -229,7 +229,6 @@ export default {
   },
   getMenusCustomer(id) {
     return Axios.get(serverAddress + '/menus/restaurants/' + id, { headers: authHeader() }).then((req) => {
-      console.log(req)
       if (req.data.errcode !== 0) throw (req.data);
       return (req.data);
     }).catch((err) => {
