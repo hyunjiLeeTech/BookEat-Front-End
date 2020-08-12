@@ -6,7 +6,7 @@ import $ from 'jquery';
 
 class Logout extends Component {
     componentDidMount() {
-        const user = authService.getCurrentUser();
+        //const user = authService.getCurrentUser();
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         if(urlParams.has("message")){

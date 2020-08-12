@@ -29,8 +29,6 @@ class CustomerReviewHistory extends Component {
 
   handleChangeInList(e, index) {
     e.preventDefault();
-    const { name, value } = e.target;
-
     this.state.reviews[index][e.target.id] = e.target.value; //Set state does not allow to set an object inside of an array
     this.forceUpdate(); //forcing udpate the UI
   }

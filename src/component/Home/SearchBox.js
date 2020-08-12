@@ -52,7 +52,12 @@ class SearchBox extends Component {
             dateTime: dateTime,
             numofpeople: numofpeople
         })
-        if(this.state.keyword === null) this.state.keyword = ''
+        if(this.state.keyword === null){
+           // this.state.keyword = ''
+           this.setState({
+               keyword: ''
+           })
+        } 
         window.location.href = '/searchResult?dateTime=' + dateTime + '&numOfPeople=' + numofpeople + "&keyword=" + this.state.keyword;
     }
 

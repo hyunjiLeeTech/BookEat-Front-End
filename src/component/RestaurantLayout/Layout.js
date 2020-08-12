@@ -27,7 +27,6 @@ class Layout extends Component {
     
     componentWillUpdate(){
         var tables = this.state.tables
-        var tableCount = tables.length;
         var row = [];
         for (var i in tables) {
             var theTable = tables[i];
@@ -51,7 +50,6 @@ class Layout extends Component {
             )
         }
 
-        //this.rowhtmls = rowshtmls;
         this.rows = row;
     }
 
@@ -61,62 +59,12 @@ class Layout extends Component {
 
 
     componentWillMount() {
-        //fetch tables data from serverside
-        //...
-        //sample data:
-        var tables = [
-            //id - table id in database, unique in database.
-            //rtid - table id in the restaurant  
-            //isOpen - table open status from server side.
-            //prefers - table prefers decided from server side.
-            { id: 101, rtid: 1, restaurantId: 1, isOpen: true, capacity: 4, prefers: "door washroom" },
-            //{ id: 102, rtid: 2, restaurantId: 1, isOpen: false, capacity: 4, prefers: "door washroom" },
-            { id: 103, rtid: 3, restaurantId: 1, isOpen: false, capacity: 4, prefers: "quite" },
-            { id: 104, rtid: 4, restaurantId: 1, isOpen: true, capacity: 4, prefers: "kitchen" },
-            { id: 106, rtid: 5, restaurantId: 1, isOpen: false, capacity: 6, prefers: "door" },
-            { id: 108, rtid: 6, restaurantId: 1, isOpen: true, capacity: 6, prefers: "washroom" },
-            { id: 111, rtid: 7, restaurantId: 1, isOpen: false, capacity: 6, prefers: "" },
-            //{ id: 112, rtid: 8, restaurantId: 1, isOpen: false, capacity: 9, prefers: "quite" },
-            //{ id: 115, rtid: 9, restaurantId: 1, isOpen: false, capacity: 9, prefers: "" },
-            { id: 119, rtid: 10, restaurantId: 1, isOpen: false, capacity: 9, prefers: "kitchen" },
-        ]
+        var tables = [];
         if (!this.state.tables)
             this.state.tables = tables;
         else {
             tables = this.state.tables;
         }
-        var rowshtmls = [];
-        // var tableCount = tables.length > 9 ? 9 : tables.length;
-        // for (var i = 0; i < tableCount / 3; i++) {
-        //     var row = [];
-        //     for (var j = 0; j < 3; j++) {
-        //         if ((3 * i + j) >= tableCount) continue;
-        //         var theTable = tables[3 * i + j];
-        //         var cn = theTable.prefers + " r-table col-md-4 hovereffect" + (theTable.isOpen ? " open" : " close");
-        //         var tableImg = table_s;
-        //         if (theTable.capacity <= 4) tableImg=table_s;
-        //         else if(theTable.capacity <= 7) tableImg=table_m;
-        //         else if(theTable.capacity <= 10) tableImg=table_l;
-        //         row.push(
-        //             <div key={theTable.id} className={cn + " r-table-s"} id={(3 * i + j)}>
-        //                 <img src={tableImg} className={theTable.isOpen ? " img-responsive" : ""} />
-        //                 {theTable.isOpen ?
-        //                     <div className="overlay">
-        //                         <h2>Click to Reserve</h2>
-        //                     </div> : <div>
-        //                         <div className="overlay">
-        //                             <p className="info">Unavalible</p>
-        //                         </div>
-        //                     </div>}
-        //             </div>
-        //         )
-
-        //     }
-        //     rowshtmls.push(<div key={"r" + i} className="row">
-        //         {row}
-        //     </div>);
-        // }
-        var tableCount = tables.length;
         var row = [];
         for (var i in tables) {
             var theTable = tables[i];
@@ -140,7 +88,7 @@ class Layout extends Component {
             )
         }
 
-        //this.rowhtmls = rowshtmls;
+     
         this.rows = row;
     }
 
@@ -204,16 +152,6 @@ class Layout extends Component {
         );
     }
 
-
-
-
-
-
-
-
-
-
-
     componentDidMount() { 
         var reactThis = this; //get react reference.
         $(".r-table.open").on("click", function () {
@@ -229,8 +167,6 @@ class Layout extends Component {
         })
 
     }
-
-
 
     render() {
         return (

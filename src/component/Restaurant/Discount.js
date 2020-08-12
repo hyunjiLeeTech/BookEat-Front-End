@@ -138,15 +138,6 @@ class Discount extends Component {
 
     }
 
-    // async componentDidMount(){
-    //     this.setState((state, props) => {
-    //         return(
-    //             isActive:
-    //             discount.isActive ? true : false
-    //         )
-    //     })
-    // }
-
     componentWillMount() {
         this.queryDiscounts();
     }
