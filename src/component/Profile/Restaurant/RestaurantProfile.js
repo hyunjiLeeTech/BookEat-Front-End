@@ -11,13 +11,10 @@ import Menu from "../../Menu/Menu"
 import RestaurantReservation from "../../Reservation/Restaurant/RestaurantReservation";
 import RestaurantLayout from "../../RestaurantLayout/RestaurantLayout";
 import FullscreenError from '../../Style/FullscreenError'
-import FullScrrenLoading from '../../Style/FullscreenLoading';
 import ViewReview from "../../Review/Restaurant/ViewReview";
 import serverAddress from '../../../Services/ServerUrl';
 import Discount from '../../Restaurant/Discount';
 import dataService from "../../../Services/dataService";
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 
 //Validation
 const regExpEmail = RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
@@ -42,7 +39,6 @@ const formValid = ({ isError, ...rest }) => {
   });
 
   Object.values(rest).forEach((val) => {
-    //console.log(rest);
     if (val === null) {
       isValid = false;
     } else {
@@ -132,12 +128,7 @@ class RestaurantProfile extends Component {
         description: "&#160;",
         picture: "&#160;",
         eatingTime: "&#160;"
-      },
-      emailConfirm: '',
-      isModalShow: false,
-      modalTitle: '',
-      modalBody: '',
-      modalButtons: '',
+      }
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -149,52 +140,6 @@ class RestaurantProfile extends Component {
     this.editResProfileWithPictures = this.editResProfileWithPictures.bind(this);
     this.handleNotOpen = this.handleNotOpen.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    this.deleteAccountModal = this.deleteAccountModal.bind(this);
-  }
-
-  deleteAccountModal() {
-    var handleFinish = () => {
-      var body3 = [<p>Please Wait</p>]
-      this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body3, modalButtons: null })
-      dataService.deleteAccountCustomer().then(res => {
-        console.log(res);
-        this.setState({isDeleted: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>You account is deleted.</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
-      }).catch(err => {
-        this.setState({isModalShow: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>Sorry,{err.errmsg? err.errmsg : 'We cannot delete your account'}</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
-      })
-
-
-    }
-    var handleNext = () => {
-      console.log('Next')
-      var body2 = [<p>Please explain why do you want to leave BookEat(Optional): </p>
-        ,
-      <input type='text' id='delemailconfirm' className='form-control'
-      />]
-      var buttons2 = [<Button variant='danger' onClick={handleFinish} >Delete Account</Button>]
-      this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body2, modalButtons: buttons2 })
-    }
-    var cn = this.state.emailConfirm === this.state.email ? 'form-control is-valid' : 'form-control is-invalid'
-    var body =
-      [<p>Please enter your email first: </p>
-        ,
-      <input type='text' onChange={(e) => {
-        this.setState({ emailConfirm: e.target.value }, () => {
-          console.log(this.state.emailConfirm)
-          console.log(this.state.email)
-          console.log(this.state.emailConfirm === this.state.email)
-          cn = this.state.emailConfirm === this.state.email ? 'form-control is-valid' : 'form-control is-invalid'
-          $('#delemailconfirm').removeClass('form-control is-valid is-invalid').addClass(cn);
-          $('#delmailconfirmbtn').prop('disabled', this.state.emailConfirm === this.state.email ? '' : 'disabled')
-        })
-      }} id='delemailconfirm' className='form-control is-invalid'
-      />
-      ]
-    var buttons = [<Button variant='primary' onClick={handleNext} id='delmailconfirmbtn'>Next</Button>];
-    this.setState({ isModalShow: true, modalTitle: 'Delete your account', modalBody: body, modalButtons: buttons }, ()=>{
-      $('#delmailconfirmbtn').prop('disabled', this.state.emailConfirm === this.state.email ? '' : 'disabled')
-
-    })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -256,10 +201,8 @@ class RestaurantProfile extends Component {
         pictures: event.target.files
       })
     } else {
-
+      console.log("Something Wrong!")
     }
-
-    console.log(this.state);
   };
 
 
@@ -346,7 +289,6 @@ class RestaurantProfile extends Component {
 
   handleSubmitResProfile = async (e) => {
     e.preventDefault();
-    console.log(this.state);
     if (formValid(this.state)) {
       if (this.state.isPicture) {
         this.editResProfileWithPictures(this.state);
@@ -386,9 +328,7 @@ class RestaurantProfile extends Component {
   async componentDidMount() {
     const usr = authService.getCurrentUser();
     const restaurant = await ds.getRestaurantInformation();
-    console.log(restaurant);
-
-    // this.state = { resName: restaurant.resName };
+  
     this.setState((state, props) => {
       return {
         resname:
@@ -799,23 +739,26 @@ class RestaurantProfile extends Component {
       }
     }
     this.forceUpdate();
-    console.log(this.state);
-
   }
 
 
   render() {
     const deleteRoAccount = () => {
       dataService.deleteAccountRestaurantOwner().then(res => {
-        this.deleteAccountModal();
-        console.log(res)
+        $("#deleteResModalText")
+        .text("Profile is deleted")
+        .removeClass("alert-warning")
+        .removeClass("alert-danger")
+        .removeClass("alert-success")
+        .addClass("alert-success");
       }).catch(err => {
-        console.log(err)
+        $("#deleteResModalText")
+        .text("Sorry, " + err.errmsg)
+        .removeClass("alert-warning")
+        .removeClass("alert-danger")
+        .removeClass("alert-success")
+        .addClass("alert-danger");
       })
-    }
-    const handleClose = () => {
-      if(this.state.idDeleted) window.location.href = '/logout'
-      this.setState({ isModalShow: false })
     }
     const { isError } = this.state;
     return (
@@ -827,13 +770,6 @@ class RestaurantProfile extends Component {
           null
         }
 
-
-        {/* {!this.state.isResLoaded
-                    ?
-                    FullScrrenLoading({ type: 'cubes', color: '#000' })
-                    :
-                    null
-                } */}
         <div className="card">
           <div className="card-header">
             <ul className="nav nav-tabs card-header-tabs">
@@ -1746,7 +1682,7 @@ class RestaurantProfile extends Component {
 
                       <button type="button" className="btn btn-danger mr-sm-4 "
                         data-toggle="modal"
-                        data-target="#deleteRestaurantModal" onClick={deleteRoAccount}>
+                        data-target="#deleteResModal" onClick={deleteRoAccount}>
                         {/* When the user click the delete button, their account will be deleted and redirect to homepage as log out status. */}
                       Delete
                     </button>
@@ -1916,7 +1852,7 @@ class RestaurantProfile extends Component {
                 id="deletePictureModal"
                 tabIndex="-1"
                 role="dialog"
-                aria-labelledby="ddeletePictureModalLabel"
+                aria-labelledby="deletePictureModalLabel"
                 aria-hidden="true"
               >
                 <div className="modal-dialog" role="document">
@@ -1951,11 +1887,55 @@ class RestaurantProfile extends Component {
                   </div>
                 </div>
               </div>
+
+
+              {/* Delete Picture */}
+
+              <div
+                className="modal fade"
+                id="deleteResModal"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="deletePictureModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="deleteResModalLabel">
+                        Delete Restaurant Profile
+                </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body">
+                      <p className="alert alert-warning" id="deleteResModalText">
+                        Please Wait...
+                </p>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
        
             </div>
           </div>
         </div>
-        <Modal show={this.state.isModalShow} onHide={handleClose}>
+        {/* <Modal show={this.state.isModalShow} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.modalTitle} </Modal.Title>
           </Modal.Header>
@@ -1963,7 +1943,7 @@ class RestaurantProfile extends Component {
           <Modal.Footer>
             {this.state.modalButtons}
           </Modal.Footer>
-          </Modal>
+          </Modal> */}
       </MainContainer >
     );
   }
