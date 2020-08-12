@@ -19,7 +19,6 @@ class SearchResult extends Component {
         this.state = {
             numberOfPeople: 8,
             dateTime: new Date('2020-07-21 23:00'),
-            //resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
             restaurants: [],
             filters: {
                 priceRange: new Set(),
@@ -67,7 +66,6 @@ class SearchResult extends Component {
             // not a date
         }
 
-        //TODO: filter information from url
 
         if (!isNaN(Number.parseInt(numberOfPeople))) {
             this.state.numberOfPeople = Number.parseInt(numberOfPeople)
@@ -116,13 +114,12 @@ class SearchResult extends Component {
                     resultsReady: true
                 });
 
-            }).catch(err => {//TODO: err handling
+            }).catch(err => {
                 this.setState({
                     resultsErr: true
                 });
             })
 
-        //TODO; update filters in url
     }
 
     handleCheck(e) {

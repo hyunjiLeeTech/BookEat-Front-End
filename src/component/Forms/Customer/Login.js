@@ -123,7 +123,6 @@ class Login extends Component {
             // redirect to management page after login
           }
         } else {
-          //TODO: Login operation failed on serverside
           console.log(res.data.errmsg);
           alert(res.data.errmsg);
           $("#login-btn").removeAttr("disabled").text("Login");

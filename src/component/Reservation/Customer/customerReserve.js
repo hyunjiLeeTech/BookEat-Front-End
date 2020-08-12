@@ -24,7 +24,7 @@ class Reserve extends Component {
             dateTime: new Date(),
             date: this.props.match.params.date ? moment(new Date(this.props.match.params.date + ' 01:00')).format('YYYY-MM-DD') : moment().add(1, 'd').format('YYYY-MM-DD'),
             time: this.props.match.params.time ? this.props.match.params.time : '12:30',
-            resId: this.props.match.params.id, //FIXME FOR DEBUG
+            resId: this.props.match.params.id, 
             tablestatus: false,
             tables: [],
             formIsVisible: true,
@@ -32,10 +32,6 @@ class Reserve extends Component {
             resultIsVisible: false,
             selectedtableId: '',
             result: {},
-            rorminfo: {
-                OwnerAccount: "",
-                Managers: ""
-            },
             isReservationSuccess: false,
             reservefailMessage: '',
             menuItems: [],
@@ -95,19 +91,8 @@ class Reserve extends Component {
         })
     }
 
-    getRoRmInfo() {//TODO: only for testing, should be deleted in production envinroment.
-        Axios.post("http://localhost:5000/Restaurant/getRestaurantOwnerAndManagerViaRestaurantId", { restaurantId: this.state.resId }, { headers: authHeader() }).then(res => {
-            this.setState({
-                rorminfo: {
-                    OwnerAccount: res.data.Owner.account,
-                    Managers: res.data.Managers
-                }
-            })
-        })
-    }
 
     componentDidMount() {
-        this.getRoRmInfo();
         this.getMenuInfo();
     }
 

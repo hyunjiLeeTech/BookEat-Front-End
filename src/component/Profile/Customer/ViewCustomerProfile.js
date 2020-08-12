@@ -238,7 +238,6 @@ class ViewCustomerProfile extends Component {
 
   render() {
     const { isError } = this.state;
-    //TODO: feedbacks
     const deleteAccount = () => {
       this.deleteAccountModal();
     }

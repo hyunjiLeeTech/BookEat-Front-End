@@ -182,7 +182,7 @@ export default {
           return;
         }
         throw (err);
-        //TODO: errhandling
+        
       })
   },
   updateTable(info) {
@@ -199,7 +199,7 @@ export default {
           return;
         }
         throw (err);
-        //TODO: errhandling
+        
       })
   },
   deleteTable(tableId) {
@@ -216,7 +216,7 @@ export default {
           return;
         }
         throw (err);
-        //TODO: errhandling
+        
       })
   },
   confirmEmail(accountId) {
@@ -262,7 +262,7 @@ export default {
       })
       .catch((err) => {
 
-        //TODO: errhandling
+        
         throw err
       });
   },
@@ -272,7 +272,7 @@ export default {
         return req.data;
       })
       .catch((err) => {
-        //TODO: errhandling
+        
         throw err
       });
   },
@@ -282,7 +282,7 @@ export default {
         return req.data;
       })
       .catch((err) => {
-        //TODO: errhandling
+        
         throw err
       });
   },
@@ -292,7 +292,7 @@ export default {
         return req.data;
       })
       .catch((err) => {
-        //TODO: errhandling
+        
         throw err
       });
   },
@@ -309,7 +309,7 @@ export default {
         }
         console.log(err);
         throw (err);
-        //TODO: errhandling
+        
       })
   },
   restaurantCancelReservation(reservationId) {
@@ -325,7 +325,7 @@ export default {
         }
         console.log(err);
         throw (err);
-        //TODO: errhandling
+        
       })
   },
   customerCancelReservation(reservationId) {
@@ -341,7 +341,7 @@ export default {
         }
         console.log(err);
         throw (err);
-        //TODO: errhandling
+        
       })
   },
 
@@ -358,7 +358,7 @@ export default {
       }
       console.log(err);
       throw (err);
-      //TODO: errhandling
+      
     })
   },
   customersReserve(info) {
@@ -375,7 +375,7 @@ export default {
           return;
         }
         throw err
-        //TODO: errhandling
+        
       });
   },
 
@@ -393,7 +393,7 @@ export default {
           return;
         }
         throw err;
-      }); //TODO: err handling needs to be finished
+      }); 
   },
   getCustomerInformation() {
     return Axios.get(serverAddress + "/customers/getcustomerinfo", {
@@ -405,7 +405,7 @@ export default {
       .catch((err) => {
         console.log(err)
         throw err;
-      }); //TODO: err handling needs to be finished
+      }); 
   },
   getRestaurantInformation() {
     return Axios.get(serverAddress + "/restaurantOwners/getrestaurantinfo", {

@@ -11,7 +11,6 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import dataService from "../../../Services/dataService";
 import { toast } from "react-toastify";
 
-//TODO: Edit reservation button
 class CustomerReservationHistory extends Component {
 
   constructor(props) {

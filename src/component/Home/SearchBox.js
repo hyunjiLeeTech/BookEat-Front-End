@@ -8,7 +8,6 @@ class SearchBox extends Component {
         this.state = {
             numberOfPeople: '4',
             dateTime: new Date(),
-            //resId: '5efa8fc9dd9918ba08ac9ade', //FIXME FOR DEBUG
             date: moment().add(1, 'd').format('YYYY-MM-DD'),
             time: '12:30',
             keyword: '',

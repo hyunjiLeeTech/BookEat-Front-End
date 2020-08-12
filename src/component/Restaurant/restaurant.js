@@ -31,7 +31,7 @@ class Restaurant extends Component {
 
 
     async componentWillMount() {
-        dataService.getRestaurantWithoutAuth(this.state.id)//TODO: remove if production
+        dataService.getRestaurantWithoutAuth(this.state.id)
             .then(res => {
                 this.setState({
                     res: res.restaurant,

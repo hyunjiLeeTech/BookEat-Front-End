@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import table_s from '../../Image/table-s.png'
-import table_m from '../../Image/table-m.png' //TODO: find table_m picture
-import table_l from '../../Image/table-l.png' //TODO: find table_l picture
+import table_m from '../../Image/table-m.png' 
+import table_l from '../../Image/table-l.png' 
 import './Layout.css'
 import $ from 'jquery';
 import Carousel from 'react-bootstrap/Carousel'
@@ -214,13 +214,12 @@ class Layout extends Component {
 
 
 
-    componentDidMount() { //TODO: add prefer icon depends on the table prefereces, e.g. quite, door, etc.
+    componentDidMount() { 
         var reactThis = this; //get react reference.
         $(".r-table.open").on("click", function () {
             $('.r-table').css("background-color", "")
             var id = parseInt($(this).attr("id"));
             $(this).css("background-color", "red")
-            //alert('Clicked table: ' + JSON.stringify(reactThis.tables[id]));
             reactThis.props.setTableId(reactThis.tables[id]._id);
             this.selectedTable = reactThis.tables[id];
         })
