@@ -94,16 +94,12 @@ class Menu extends Component {
     onImageChange = (event, index) => {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
-            // this.setState({
-            //   image: URL.createObjectURL(img)
-            // });
             if (index !== undefined) {//in menu item  TRY YOUR BEST REWRITE THIS CODE 
                 this.state.menus[index].MenuPicture = URL.createObjectURL(img)
                 this.state.menus[index].image = img
                 this.forceUpdate();
             } else {
                 this.setState({
-                    // image: URL.createObjectURL(img),
                     image: event.target.files[0],
                     isImage: true
                 })
