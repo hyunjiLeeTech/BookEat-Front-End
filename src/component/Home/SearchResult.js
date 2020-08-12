@@ -32,6 +32,7 @@ class SearchResult extends Component {
             resultsErr: false,
             keyword: '',
             times: [],
+            errmsg: null,
         }
         this.querySearchResults = this.querySearchResults.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
@@ -57,7 +58,9 @@ class SearchResult extends Component {
         if (Object.prototype.toString.call(dt) === "[object Date]") {
             // it is a date
             if (isNaN(dt.getTime())) {  // d.valueOf() could also work
-                this.setState({ resultsErr: true })
+                this.state.resultsErr = true
+                this.state.errmsg ='Date and time are required, please go back and search again.'
+                this.forceUpdate();
             } else {
                 //set state is an async function. we need sync set date time here
                 this.state.dateTime = urlParams.get('dateTime')
@@ -71,6 +74,7 @@ class SearchResult extends Component {
             this.state.numberOfPeople = Number.parseInt(numberOfPeople)
         } else {
             this.state.resultsErr = true
+            this.state.errmsg ='Number of people is required, please go back and search again.'
             this.forceUpdate();
         }
 
@@ -325,7 +329,7 @@ class SearchResult extends Component {
 
                 {this.state.resultsErr
                     ?
-                    FullscreenError("An error occured, please try again later")
+                    FullscreenError(this.state.errmsg ? this.state.errmsg : "An error occured, please try again later")
                     :
                     null
                 }
