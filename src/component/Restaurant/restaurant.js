@@ -27,7 +27,6 @@ class Restaurant extends Component {
             isResLoaded: false,
             discount: {},
         }
-        console.log(this.state);
     }
 
 
@@ -43,7 +42,6 @@ class Restaurant extends Component {
     }
 
     render() {
-        console.log(this.state.discount);
         return (
 
             <MainContainer>
