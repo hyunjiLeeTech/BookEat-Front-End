@@ -145,7 +145,7 @@ class Restaurant extends Component {
                                 <hr />
                                 <h5><RiPercentLine />  Promotions</h5>
                                 {this.state.isResLoaded ? (this.state.discountIsAtLeastOneActive ? this.state.discount.map((v, i, discounts) => {
-                                    return v.isActive ? <p>{v.percent + "% Off " + (v.description ? v.description : '')}</p> : null
+                                    return v.isActive ? <p key={'disc_'+v._id}>{v.percent + "% Off " + (v.description ? v.description : '')}</p> : null
                                 }) : "No Promotions at the momemnt") : null}
                             </div>
                         </div>
