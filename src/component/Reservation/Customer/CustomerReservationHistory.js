@@ -120,7 +120,7 @@ class CustomerReservationHistory extends Component {
       }
     }
     const renderCancelButton = (resv) => {
-      const { _id, dateTime, status, reserveTime, numOfPeople, restaurant } = resv
+      const { dateTime } = resv
       if (resv.status === 2) return moment(new Date(dateTime)).diff(new Date(), 'h') < 12
         ?
         <OverlayTrigger
@@ -137,7 +137,6 @@ class CustomerReservationHistory extends Component {
     }
 
     this.state.reservations = [...upcoming, ...notUpcoming];
-
     return this.state.reservations.map((reservation, index, reservations) => {
 
       const { _id, dateTime, status, reserveTime, numOfPeople, restaurant, comments } = reservation
