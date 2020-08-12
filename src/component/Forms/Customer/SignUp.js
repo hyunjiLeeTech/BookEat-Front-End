@@ -73,6 +73,7 @@ class SignUp extends Component {
       isExternal: false,
       externalType: 0,
       externalToken: '',
+      isCheckedTerm: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -125,7 +126,10 @@ class SignUp extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
+    if(!this.state.isCheckedTerm){
+      $("#signResultText").text("You must accept the term and conditions before sign up").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+      .addClass("alert-danger");
+    }
 
     if (formValid(this.state)) {
       if (this.state.isExternal) {
@@ -137,7 +141,7 @@ class SignUp extends Component {
           email: this.state.email,
           phonenumber: this.state.phonenumber,
         }).then(res => {
-          $("#signResultText").text("Congrats, check your email to confirm that you are human").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
+          $("#signResultText").text("Congrats, Please Login").removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
             .addClass("alert-success");
         }).catch(err => {
           $("#signResultText").text("Sorry, " + err.errmsg ? err.errmsg : 'we cannot sign up for you').removeClass("alert-warning").removeClass("alert-danger").removeClass("alert-success")
@@ -148,7 +152,6 @@ class SignUp extends Component {
       } else {
         this.state.password = sha256(this.state.password).toString(); //hashing password
         this.state.confirmpw = sha256(this.state.confirmpw).toString()
-        console.log(this.state)
         Axios.post(serverAddress + "/customersignup", this.state).then(res => {
           console.log(res)
           if (res.data.errcode === 0) {
@@ -277,10 +280,12 @@ class SignUp extends Component {
       $('#firstname').prop('disabled', 'true')
       $('#lastname').prop('disabled', 'true')
       AuthService.loginExternal(2, data.accessToken).then(res=>{
-        console.log(res)
       }).catch(err=>{
         console.log(err)
       })
+    }
+    const termCheck = (e) => {
+      this.setState({isCheckedTerm: e.target.checked})
     }
     return (
       <MainContainer>
@@ -367,7 +372,7 @@ class SignUp extends Component {
                 <div className="form-group ">
                   <div className="form-check checkbox-xl">
                     {/* <input type="checkbox" id="accept-terms" disabled className="form-check-input" required /> */}
-                    <input type="checkbox" id="accept-terms" className="form-check-input" required disabled />
+                    <input type="checkbox" id="accept-terms" name='accept-terms' onChange={termCheck} className="form-check-input" required disabled />
 
                     <button type="button" id="termsmodal" className="btn btn-primary" data-toggle="modal" data-target="#TmersModal">
                       Terms and Conditions
