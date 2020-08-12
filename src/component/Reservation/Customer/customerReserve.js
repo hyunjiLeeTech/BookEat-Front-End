@@ -118,7 +118,10 @@ class Reserve extends Component {
     handleSubmit(e) {
         // var react = this;
         e.preventDefault();
-        this.state.allowModifyMenuItems = false;
+        this.setState({
+            allowModifyMenuItems: false
+        })
+       // this.state.allowModifyMenuItems = false;
         var numofpeople = $('#numofpeople').val();
         var resId = this.state.resId;
         var dateTime = new Date(Date.parse(this.state.date + ' ' + this.state.time));
@@ -241,10 +244,11 @@ class Reserve extends Component {
     }
 
     back() {
-        this.state.allowModifyMenuItems = true;
+        //this.state.allowModifyMenuItems = true;
         this.setState({
             formIsVisible: true,
             tableIsVisible: false,
+            allowModifyMenuItems: true,
         })
         setTimeout(() => {
             this.setState({
