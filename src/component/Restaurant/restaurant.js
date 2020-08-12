@@ -113,9 +113,7 @@ class Restaurant extends Component {
                                 <h5>Restaurant Information</h5>
                                 <hr />
                                 <h6><RiMapPin2Line />  Address</h6>
-                                <p>{this.state.isResLoaded ? this.state.res.addressId.streetNum : null} {this.state.isResLoaded ? this.state.res.addressId.streetName : null}
-                                    {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null}
-                                    {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
+                                <p>{this.state.isResLoaded ? this.state.res.addressId.streetNum : null} {this.state.isResLoaded ? this.state.res.addressId.streetName : null} {this.state.isResLoaded ? this.state.res.addressId.city : null}  {this.state.isResLoaded ? this.state.res.addressId.province : null} {this.state.isResLoaded ? this.state.res.addressId.postalCode : null}</p>
                                 <hr />
                                 <h6><AiOutlinePhone /> Phone Number</h6>
                                 <p>{this.state.isResLoaded ? this.state.res.phoneNumber : null}</p>
