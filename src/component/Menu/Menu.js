@@ -467,13 +467,17 @@ class Menu extends Component {
                                 <div className="col container-fluid">
                                     <div className="form-inline mb-2" >
                                         <label htmlFor="menuName" className="col-sm-2 border-0">Name </label>
-                                        <input type="text" id="menuName" name="menuName" className="form-control col-smd-10 mt-sm-2" value={this.state.menuName}
+                                        <input type="text" id="menuName" name="menuName" 
+                                        //className="form-control col-smd-10 mt-sm-2"
+                                         value={this.state.menuName}
                                             className={isError.menuName.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                                         />
                                     </div>
                                     <div className=" form-inline mb-2">
                                         <label htmlFor="menuPrice" className="col-sm-2 border-0">Price</label>
-                                        <input type="text" id="menuPrice" name="menuPrice" className="form-control col-sm-10 mt-sm-2" placeholder="price format: 12.30" value={this.state.menuPrice}
+                                        <input type="text" id="menuPrice" name="menuPrice" 
+                                       // className="form-control col-sm-10 mt-sm-2" 
+                                        placeholder="price format: 12.30" value={this.state.menuPrice}
                                             className={isError.menuPrice.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required />
                                     </div>
                                     <div className=" form-inline mb-2">
@@ -511,8 +515,10 @@ class Menu extends Component {
                                     </div>
                                     <div className="form-inline">
                                         <label htmlFor="menuDescript" className="col-sm-2 border-0">Description</label>
-                                        <textarea row="3" required type="text" id="menuDescript" name="menuDescript" className="form-control col-sm-10 mt-sm-2 mb-sm-2" value={this.state.menuDescript}
-                                            className={isError.menuDescript.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
+                                        <textarea row="3" required type="text" id="menuDescript" name="menuDescript" 
+                                        //className="form-control col-sm-10 mt-sm-2 mb-sm-2" 
+                                        value={this.state.menuDescript}
+                                            className={isError.menuDescript.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} 
                                         />
                                     </div>
                                 </div>
