@@ -7,6 +7,7 @@ import moment from 'moment';
 import serverAddress from '../../../Services/ServerUrl';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import FullScrrenLoading from '../../Style/FullscreenLoading';
 
 const formValid = ({ isError, ...rest }) => {
     let isValid = false;
@@ -51,6 +52,7 @@ class ResReview extends Component {
             picture: "",
             pictures: [],
             isPicture: false,
+            isLoading: false,
             isError: {
                 comment: "&#160;"
             },
@@ -111,6 +113,7 @@ class ResReview extends Component {
     }
 
     async queryReviews(resId) {
+        this.setState({ isLoading: true })
 
         var reviews = await ds.getReviewsWithoutSignup(resId);
 
@@ -137,9 +140,12 @@ class ResReview extends Component {
             satisfactionAvg: satisAvg / reviews.length,
         })
 
+        this.setState({ isLoading: false })
+
     }
 
     async addReviewWithPictures(state) {
+        this.setState({ isLoading: true })
         var formData = new FormData();
         Array.from(state.pictures).forEach((f) => {
             formData.append('pictures[]', f)
@@ -157,6 +163,7 @@ class ResReview extends Component {
         state.isPicture = true;
         state.reviewPictures = reviewPicturesId;
          await ds.addReview(state);
+         this.setState({ isLoading: false})
     }
 
 
@@ -267,6 +274,9 @@ class ResReview extends Component {
         }
         return (
             <div className="container">
+                {this.state.isLoading ?
+                    FullScrrenLoading({ type: 'balls', color: '#000' }) : null
+                }
                 <div className="row">
 
                     <div className="col-sm-4">
