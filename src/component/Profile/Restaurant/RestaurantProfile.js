@@ -173,11 +173,11 @@ class RestaurantProfile extends Component {
   handleDeletePicture(imageId) {
     ds.deleteImage(imageId).then(() => {
       $("#deletePictureModalText")
-      .text("Picture is deleted")
-      .removeClass("alert-warning")
-      .removeClass("alert-danger")
-      .removeClass("alert-success")
-      .addClass("alert-success");
+        .text("Picture is deleted")
+        .removeClass("alert-warning")
+        .removeClass("alert-danger")
+        .removeClass("alert-success")
+        .addClass("alert-success");
     }).catch((err) => {
       $("#deletePictureModalText")
         .text("Sorry, " + err.errmsg)
@@ -296,28 +296,46 @@ class RestaurantProfile extends Component {
     console.log(this.state);
     if (formValid(this.state)) {
       if (this.state.isPicture) {
-        this.editResProfileWithPictures(this.state);
+        this.editResProfileWithPictures(this.state).then((result) => {
+          try {
+            $("#resProfileResultText")
+              .text("Profiled is edited")
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success")
+              .addClass("alert-success");
+          } catch (err) {
+            $("#resProfileResultText")
+              .text("Sorry, " + err.errmsg)
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success")
+              .addClass("alert-danger");
+          }
+        });
       } else {
-        ds.editRestaurantProfile(this.state);
+        ds.editRestaurantProfile(this.state).then((result) => {
+          try {
+            $("#resProfileResultText")
+              .text("Profiled is edited")
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success")
+              .addClass("alert-success");
+          } catch (err) {
+            $("#resProfileResultText")
+              .text("Sorry, " + err.errmsg)
+              .removeClass("alert-warning")
+              .removeClass("alert-danger")
+              .removeClass("alert-success")
+              .addClass("alert-danger");
+          }
+        });
       }
     } else {
       console.log("Form is invalid!");
     }
-    try {
-      $("#resProfileResultText")
-        .text("Profiled is edited")
-        .removeClass("alert-warning")
-        .removeClass("alert-danger")
-        .removeClass("alert-success")
-        .addClass("alert-success");
-    } catch (err) {
-      $("#resProfileResultText")
-        .text("Sorry, " + err.errmsg)
-        .removeClass("alert-warning")
-        .removeClass("alert-danger")
-        .removeClass("alert-success")
-        .addClass("alert-danger");
-    }
+
   };
 
 
@@ -450,19 +468,19 @@ class RestaurantProfile extends Component {
             ? restaurant.pictures
             : "",
         monIsClose:
-           restaurant.monIsClose ? true : false,
+          restaurant.monIsClose ? true : false,
         tueIsClose:
-           restaurant.tueIsClose  ?  true : false,
+          restaurant.tueIsClose ? true : false,
         wedIsClose:
-          restaurant.wedIsClose  ?  true : false,
+          restaurant.wedIsClose ? true : false,
         thuIsClose:
-           restaurant.thuIsClose ?  true : false,
+          restaurant.thuIsClose ? true : false,
         friIsClose:
-           restaurant.friIsClose?  true : false,
+          restaurant.friIsClose ? true : false,
         satIsClose:
-           restaurant.satIsClose ?  true : false,
+          restaurant.satIsClose ? true : false,
         sunIsClose:
-         restaurant.sunIsClose ?  true : false,
+          restaurant.sunIsClose ? true : false,
       };
     });
 
@@ -1307,7 +1325,7 @@ class RestaurantProfile extends Component {
                           name="monCloseTime"
                           value={this.state.monCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.monIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.monIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1341,7 +1359,7 @@ class RestaurantProfile extends Component {
                           name="tueOpenTime"
                           value={this.state.tueOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.tueIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.tueIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1354,7 +1372,7 @@ class RestaurantProfile extends Component {
                           name="tueCloseTime"
                           value={this.state.tueCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.tueIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.tueIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1388,7 +1406,7 @@ class RestaurantProfile extends Component {
                           name="wedOpenTime"
                           value={this.state.wedOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.wedIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.wedIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1401,7 +1419,7 @@ class RestaurantProfile extends Component {
                           name="wedCloseTime"
                           value={this.state.wedCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.wedIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.wedIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1435,7 +1453,7 @@ class RestaurantProfile extends Component {
                           name="thuOpenTime"
                           value={this.state.thuOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.thuIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.thuIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1448,7 +1466,7 @@ class RestaurantProfile extends Component {
                           name="thuCloseTime"
                           value={this.state.thuCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.thuIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.thuIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1482,7 +1500,7 @@ class RestaurantProfile extends Component {
                           name="friOpenTime"
                           value={this.state.friOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.friIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.friIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1495,7 +1513,7 @@ class RestaurantProfile extends Component {
                           name="friCloseTime"
                           value={this.state.friCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.friIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.friIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1529,7 +1547,7 @@ class RestaurantProfile extends Component {
                           name="satOpenTime"
                           value={this.state.satOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.satIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.satIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1542,7 +1560,7 @@ class RestaurantProfile extends Component {
                           name="satCloseTime"
                           value={this.state.satCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.satIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.satIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1576,7 +1594,7 @@ class RestaurantProfile extends Component {
                           name="sunOpenTime"
                           value={this.state.sunOpenTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.sunIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.sunIsClose)}
                           required
                         >
                           <option value="">Choose Open Time</option>
@@ -1589,7 +1607,7 @@ class RestaurantProfile extends Component {
                           name="sunCloseTime"
                           value={this.state.sunCloseTime}
                           onChange={this.handleChange}
-                          disabled={(!this.state.disabled)|| (this.state.sunIsClose)}
+                          disabled={(!this.state.disabled) || (this.state.sunIsClose)}
                           required
                         >
                           <option value="">Choose Close Time</option>
@@ -1620,12 +1638,12 @@ class RestaurantProfile extends Component {
 
 
                       <input type="file" name="picture" id="picture"
-                        onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple required/>
+                        onChange={this.onImageChange} disabled={(!this.state.disabled)} multiple required />
 
                       {this.state.resPictures.length > 0 && (this.state.resPictures.map((currValue, index) => {
                         return (
                           <div key={index + "Images1"} id="Images1">
-                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} alt="Restaurant"/>
+                            <img key={index} className="previewImage" src={serverAddress + '/getImage/' + currValue} alt="Restaurant" />
                             <button type="button" className="btn mr-sm-4 btn-danger"
                               data-toggle="modal"
                               data-target="#deletePictureModal"
@@ -1640,7 +1658,7 @@ class RestaurantProfile extends Component {
                       {this.state.picture.length > 0 && (this.state.picture.map((url, index) => {
                         return (
                           <div id="Images" key={index + "Images"}>
-                            <img key={index} className="previewImage" src={url} value={index} onClick={() => this.onSelectImage(index)} alt="Restaurant"/>
+                            <img key={index} className="previewImage" src={url} value={index} onClick={() => this.onSelectImage(index)} alt="Restaurant" />
                           </div>
                         )
                       }))
