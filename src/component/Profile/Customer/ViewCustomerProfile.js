@@ -77,7 +77,7 @@ class ViewCustomerProfile extends Component {
         console.log(res);
         this.setState({isDeleted: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>You account is deleted.</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
       }).catch(err => {
-        this.setState({isModalShow: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>Sorry,{err.errmsg? err.errmsg : 'We cannot delete your account'}</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
+        this.setState({isDeleted: true, isModalShow: true, modalTitle: 'Delete your account', modalBody: <p>Sorry,{err.errmsg? err.errmsg : 'We cannot delete your account'}</p>, modalButtons: <Button variant='primary' onClick={()=>{window.location.href='/logout'}}>Finsihed</Button> })
       })
 
 
@@ -308,7 +308,6 @@ class ViewCustomerProfile extends Component {
                       id="firstname"
                       name="firstname"
                       value={this.state.firstname}
-                      className="form-control"
                       disabled={(this.state.disabled)}
                       className={isError.firstname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                     />
@@ -326,7 +325,6 @@ class ViewCustomerProfile extends Component {
                       id="lastname"
                       name="lastname"
                       value={this.state.lastname}
-                      className="form-control"
                       disabled={(this.state.disabled)}
                       className={isError.lastname.length > 6 ? "is-invalid form-control" : "form-control"} onChange={this.handleChange} required
                     />
@@ -347,9 +345,9 @@ class ViewCustomerProfile extends Component {
                       id="phonenumber"
                       name="phonenumber"
                       value={this.state.phonenumber}
-                      className="form-control"
                       disabled={(this.state.disabled)}
-                      className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} value={this.state.phonenumber} placeholder="Phone Number"
+                      className={isError.phonenumber.length > 6 ? "is-invalid form-control" : "form-control"} 
+                       placeholder="Phone Number"
                       onChange={this.handleChange} required
                     />
                     <span className="invalid-feedback">{Parser(isError.phonenumber)}</span>
