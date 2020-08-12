@@ -10,6 +10,7 @@ const NavBar = () => {
     const user = authService.getCurrentUser();
 
     var renderProfileButtom = function () {
+        console.log(user);
         if (user !== null) {
             switch (user.user.userTypeId) {
                 case 1:

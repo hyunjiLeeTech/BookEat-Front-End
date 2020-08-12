@@ -17,6 +17,7 @@ class Daily extends Component {
         }
         dataService.getDaily().then(res => {
             this.setState({ restaruants: res.restaruants })
+            console.log(this.state);
         }).catch(err => {
             toast('error', { type: 'error' })
         })
