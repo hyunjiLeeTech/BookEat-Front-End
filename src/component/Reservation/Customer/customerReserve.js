@@ -69,7 +69,8 @@ class Reserve extends Component {
 
             if (this.state.isUpdate) {
                 dataService.getReservationById(this.state.reservationId).then(res => {
-                    this.selectedtableId = res.reservation.table;
+                    console.log(res)
+                    this.setState({ comments: res.reservation.comments, selectedtableId: res.reservation.table })
                     dataService.getFoodOrder(res.reservation.FoodOrder).then(res => {
                         this.setState({ seletcedMenuItemsFromReservation: res.menus })
                     }).catch(err => {
@@ -121,7 +122,7 @@ class Reserve extends Component {
         this.setState({
             allowModifyMenuItems: false
         })
-       // this.state.allowModifyMenuItems = false;
+        // this.state.allowModifyMenuItems = false;
         var numofpeople = $('#numofpeople').val();
         var resId = this.state.resId;
         var dateTime = new Date(Date.parse(this.state.date + ' ' + this.state.time));
@@ -451,6 +452,7 @@ class Reserve extends Component {
         var tr = [];
         var reactThis = this;
         var handler = (e) => {
+            console.log('chcked')
             if (e.target.checked) {
                 this.state.selectedMenuItems.add(e.target.value);
             } else {
@@ -466,10 +468,10 @@ class Reserve extends Component {
                 for (var id of checked) {
                     if (id._id.toString() === item._id.toString() && this.state.allowModifyMenuItems) {
                         tr.push(
-                            <tr>
+                            <tr key={id._id + '_m'}>
                                 <td>
                                     <input type='checkbox' id={'menu' + item._id} name={'menu' + item._id} defaultChecked value={item._id} onChange={handler} />
-                                    <label class='menuItemLable' for={'name' + item._id}>{item.menuName}</label>
+                                    <label className='menuItemLable' htmlFor={'menu' + item._id}>{item.menuName}</label>
                                 </td>
                                 <td>
                                     ${item.menuPrice}
@@ -498,7 +500,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId: ImageNotFound} alt="mENU"></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/' + item.menuImageId : ImageNotFound} alt="mENU"></img>
                             </div>
                         </td>
                     </tr>
@@ -516,7 +518,7 @@ class Reserve extends Component {
                         </td>
                         <td>
                             <div style={{ height: '4rem', maxWidth: '100%' }}>
-                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/'  + item.menuImageId : ImageNotFound} alt="Menu"></img>
+                                <img style={{ maxHeight: '100%', maxWidth: '100%' }} src={item.menuImageId ? serverAddress + '/getimage/' + item.menuImageId : ImageNotFound} alt="Menu"></img>
                             </div>
                         </td>
                     </tr>
@@ -573,7 +575,7 @@ class Reserve extends Component {
                                     <p>{this.state.restaurant.phoneNumber}</p>
                                     <hr />
                                     <h6><RiPercentLine />  Promotions</h6>
-                                    <p>{(this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent + "% Off " +this.state.discount.description: "No Promotions at the moment"))}</p>
+                                    <p>{(this.state.discount === null ? "No Promotions at the momemnt" : (this.state.discount.isActive ? this.state.discount.percent + "% Off " + this.state.discount.description : "No Promotions at the moment"))}</p>
                                     <hr />
                                     <h6><RiTimeLine />  Store Time</h6>
                                     <p>Monday {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)} - {(this.state.restaurant.monIsClose ? "Close" : this.state.restaurant.monOpenTimeId.storeTimeName)}</p>
@@ -605,7 +607,7 @@ class Reserve extends Component {
                                 </div>
 
                                 <div className="col-md-3">
-                                    <button className="btn btn-primary" onClick={this.book}>Book</button>
+                                    <button className="btn btn-primary" disabled={this.state.selectedtableId === '' ? true : false} onClick={this.book}>Book</button>
                                 </div>
                             </div>
                         </div> : null}

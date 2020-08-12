@@ -105,17 +105,18 @@ class Discount extends Component {
                 isError.discdescription = regExpNumbers.test(value)
                     ? "&#160;"
                     : "Please put some promotional numbers";
+                this.state.discounts[index]['percent'] = e.target.value;
                 break;
             case "promdescription":
                 isError.promdescription =
                     value.length >= 1 && value.length <= 255
                         ? "&#160;"
                         : "Atleast write something";
+                this.state.discounts[index]['description'] = e.target.value;
                 break;
             default:
                 break;
         }
-        this.state.discounts[index]['percent'] = e.target.value;
         this.forceUpdate();
     }
 
@@ -218,7 +219,7 @@ class Discount extends Component {
 
     }
 
-    handleActive = (promotion) =>{
+    handleActive = (promotion) => {
         promotion.isActive = !promotion.isActive
         this.forceUpdate();
     }
@@ -239,7 +240,7 @@ class Discount extends Component {
                             rows="5"
                             id="promdescription"
                             name="promdescription"
-                            defaultValue={this.state.discounts[index].description}
+                            value={this.state.discounts[index].description}
                             disabled={(!this.state.discounts[index].contentTable) || !this.state.discounts[index].isActive}
                             onChange={(e) => this.handleChangeInList(e, index)}
                         ></textarea>
@@ -248,12 +249,12 @@ class Discount extends Component {
                     </th>
                     <th>
                         <button id="active"
-                        className={this.state.discounts[index].isActive ? 'btn btn-primary' : "btn btn-grey"}
-                        onClick={() => this.handleActive(this.state.discounts[index])}
-                        disabled={(!this.state.discounts[index].contentTable)}
-                        value={this.state.discounts[index].isActive}
+                            className={this.state.discounts[index].isActive ? 'btn btn-primary' : "btn btn-grey"}
+                            onClick={() => this.handleActive(this.state.discounts[index])}
+                            disabled={(!this.state.discounts[index].contentTable)}
+                            value={this.state.discounts[index].isActive}
                         >
-                            {this.state.discounts[index].isActive? 'On' : 'Off'}
+                            {this.state.discounts[index].isActive ? 'On' : 'Off'}
                         </button>
                     </th>
                     <th>
