@@ -170,8 +170,11 @@ class RestaurantProfile extends Component {
     await ds.editRestaurantProfile(state);
   }
 
-  handleDeletePicture(imageId) {
-    ds.deleteImage(imageId).then(() => {
+  async handleDeletePicture(imageId) {
+    await ds.updateResPictures({ id: imageId }).then((pictures) => {
+      this.setState({
+        resPictures: pictures
+      })
       $("#deletePictureModalText")
         .text("Picture is deleted")
         .removeClass("alert-warning")
@@ -186,7 +189,7 @@ class RestaurantProfile extends Component {
         .removeClass("alert-success")
         .addClass("alert-danger");
     });
-    ds.updateResPictures({ id: imageId });
+
   }
 
   onImageChange = (event, index) => {

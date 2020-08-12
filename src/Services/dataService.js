@@ -832,6 +832,7 @@ export default {
     return Axios.post(serverAddress + "/restaurant/updaterespictures", state, { headers: authHeader() })
       .then((res) => {
         console.log(res);
+        return res.data.pictures;
       }).catch((err) => {
         if (err.response && err.response.status === 401) {
           window.location.href = '/error?Hint=Permission Denied(updateResPictures)&message=Your permision is denied, may be your account has been logged in on another device, please login again&foreceLogout=true'
