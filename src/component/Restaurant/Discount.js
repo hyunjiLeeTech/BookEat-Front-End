@@ -191,7 +191,6 @@ class Discount extends Component {
         ds.deleteDiscount(this.state.discounts[index]).then(() => {
             this.queryDiscounts();
             this.setModal(true, 'Success', 'Discount deleted', 'alert alert-success')
-
         }).catch((err) => {
             this.setModal(true, 'Error', err.errmsg ? err.errmsg : 'Error', 'alert alert-danger')
         })

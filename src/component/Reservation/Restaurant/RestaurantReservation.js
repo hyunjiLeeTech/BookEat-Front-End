@@ -146,7 +146,7 @@ class RestaurantReservation extends Component {
                 <td>
                     <button type="button" className="btn btn-danger btn-sm"
                         id={ro._id + 'btnNotAttend'}
-                        onClick={() => this.cancelReservation(this.state.upcoming[index]._id)}
+                        onClick={() => this.notAttend(this.state.upcoming[index]._id)}
                     >
                         Report Not Attend </button>
                 </td>

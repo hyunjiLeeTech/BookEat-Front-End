@@ -38,6 +38,7 @@ class Restaurant extends Component {
                     isResLoaded: true,
                     discount: res.discount,
                 })
+                console.log(res.discount);
             })
     }
 
